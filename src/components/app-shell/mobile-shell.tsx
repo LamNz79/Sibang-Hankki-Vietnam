@@ -27,10 +27,35 @@ export function MobileShell({
   bottomNav,
 }: MobileShellProps) {
   return (
-    <Box className="min-h-screen bg-[radial-gradient(circle_at_top,#f8fff8_0%,#edf5f1_38%,#dce8e3_100%)] px-0 py-0 md:px-6 md:py-8">
-      <Box className="mx-auto flex h-screen w-full max-w-[420px] flex-col overflow-hidden bg-[#f7faf8] md:h-[880px] md:rounded-[34px] md:border md:border-white/60 md:shadow-[0_24px_80px_rgba(21,35,30,0.16)]">
-        <Box className="shrink-0 px-4 pt-4">
-          <Card radius="xl" p="md" shadow="sm" className="border border-white/70 bg-white/90 backdrop-blur">
+    <Box
+      mih="100vh"
+      bg="linear-gradient(180deg, #fffaf4 0%, #f7efe3 48%, #efe7db 100%)"
+      p={0}
+    >
+      <Box
+        mx="auto"
+        w="100%"
+        maw={500}
+        h={"100vh"}
+        miw={0}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          background: "#fffaf4",
+        }}
+      >
+        <Box px={16} pt={16} style={{ flexShrink: 0 }}>
+          <Card
+            radius="xl"
+            p="md"
+            shadow="sm"
+            style={{
+              border: "1px solid rgba(202, 181, 150, 0.26)",
+              background: "rgba(255,248,241,0.92)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
             <Group justify="space-between" align="flex-start" wrap="nowrap">
               <Group align="flex-start" wrap="nowrap">
                 {showBack ? (
@@ -47,14 +72,14 @@ export function MobileShell({
                 ) : null}
 
                 <Stack gap={2}>
-                  <Badge color="teal" variant="light" w="fit-content">
+                  <Badge color="sand" variant="light" w="fit-content">
                     Mobile first
                   </Badge>
-                  <Title order={3} size="h4">
+                  <Title order={3} size="h4" c="#17352f">
                     {title}
                   </Title>
                   {subtitle ? (
-                    <Text c="dimmed" size="sm">
+                    <Text c="#6f7b74" size="sm">
                       {subtitle}
                     </Text>
                   ) : null}
@@ -68,12 +93,22 @@ export function MobileShell({
           </Card>
         </Box>
 
-        <Box className="min-h-0 flex-1 overflow-y-auto px-4 pt-4 pb-6">
+        <Box
+          px={16}
+          pt={16}
+          pb={24}
+          className="hide-scrollbar"
+          style={{
+            minHeight: 0,
+            flex: 1,
+            overflowY: "auto",
+          }}
+        >
           <Stack gap="md">{children}</Stack>
         </Box>
 
         {bottomNav ? (
-          <Box className="shrink-0 px-4 pb-4 pt-2">
+          <Box px={16} pt={8} pb={16} style={{ flexShrink: 0 }}>
             {bottomNav}
           </Box>
         ) : null}
