@@ -32,7 +32,7 @@ export function MobileShell({
   return (
     <Box
       mih="100vh"
-      bg="linear-gradient(180deg, #fffaf4 0%, #f7f1e7 44%, #efe5d7 100%)"
+      bg="#f3f5f4"
       p={0}
     >
       <Box
@@ -45,8 +45,7 @@ export function MobileShell({
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
-          background:
-            "linear-gradient(180deg, rgba(255,250,244,0.98) 0%, rgba(252,246,238,0.98) 100%)",
+          background: "#ffffff",
         }}
       >
         <Box
@@ -60,7 +59,7 @@ export function MobileShell({
             zIndex: 20,
             backdropFilter: "blur(14px)",
             background:
-              "linear-gradient(180deg, rgba(255,250,244,0.96) 0%, rgba(255,250,244,0.82) 72%, rgba(255,250,244,0) 100%)",
+              "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.82) 72%, rgba(255,255,255,0) 100%)",
           }}
         >
           {headerContent ? (
@@ -72,7 +71,7 @@ export function MobileShell({
               shadow="sm"
               style={{
                 border: "1px solid rgba(207, 183, 145, 0.24)",
-                background: "rgba(255,251,247,0.88)",
+                background: "rgba(255,255,255,0.92)",
                 backdropFilter: "blur(16px)",
                 boxShadow: "0 12px 30px rgba(100, 71, 34, 0.08)",
               }}
@@ -141,7 +140,7 @@ export function MobileShell({
               zIndex: 20,
               backdropFilter: "blur(14px)",
               background:
-                "linear-gradient(180deg, rgba(255,250,244,0) 0%, rgba(255,250,244,0.82) 26%, rgba(255,250,244,0.96) 100%)",
+                "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.82) 26%, rgba(255,255,255,0.96) 100%)",
             }}
           >
             {bottomNav}
