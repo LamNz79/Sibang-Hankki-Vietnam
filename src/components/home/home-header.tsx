@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  ActionIcon,
-  Badge,
-  Group,
-  Stack,
-  Text,
-  TextInput,
-  UnstyledButton,
-} from "@mantine/core";
+import { ActionIcon, Badge, Box, Group, Stack, Text, TextInput, UnstyledButton } from "@mantine/core";
 import { IconBell, IconChevronDown, IconMapPinFilled, IconSearch } from "@tabler/icons-react";
 
 type HomeHeaderProps = {
@@ -18,69 +10,70 @@ type HomeHeaderProps = {
 
 export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
   return (
-    <Stack gap={14}>
-      <Group justify="space-between" align="flex-start" wrap="nowrap">
-        <Stack gap={6}>
-          <UnstyledButton onClick={onOpenLocation}>
-            <Group gap={6} wrap="nowrap">
-              <IconMapPinFilled size={18} color="#0a8292" />
-              <Text fw={800} size="xl" c="#1f2c2a">
-                {location}
-              </Text>
-              <IconChevronDown size={18} color="#5f6c67" />
-            </Group>
-          </UnstyledButton>
-
-          <Badge
-            radius="xl"
-            color="oligoOrange"
-            variant="light"
-            w="fit-content"
-            styles={{ root: { color: "#9b562b", background: "#fbefe8" } }}
-          >
-            Current location
-          </Badge>
-        </Stack>
+    <Stack gap={16}>
+      <Box
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+        }}
+      >
+        <Text fw={800} size="32px" lh={1.1} c="#005f70">
+          Sibang Hankki
+        </Text>
 
         <ActionIcon
           variant="light"
-          color="oligoOrange"
+          color="gray"
           radius="xl"
           size="xl"
-          style={{ boxShadow: "0 8px 20px rgba(191, 110, 60, 0.12)" }}
+          style={{
+            background: "#f7f7f4",
+            color: "#556562",
+          }}
         >
           <IconBell size={20} />
         </ActionIcon>
+      </Box>
+
+      <Group justify="space-between" align="center">
+        <UnstyledButton onClick={onOpenLocation}>
+          <Group gap={6} wrap="nowrap">
+            <IconMapPinFilled size={16} color="#005f70" />
+            <Text fw={700} size="sm" c="#20312c">
+              {location}
+            </Text>
+            <IconChevronDown size={16} color="#6f7d78" />
+          </Group>
+        </UnstyledButton>
+
+        <Badge
+          radius="xl"
+          variant="light"
+          color="oligoTeal"
+          styles={{ root: { background: "#f3f7f6", color: "#436761" } }}
+        >
+          Current location
+        </Badge>
       </Group>
 
       <TextInput
-        radius="xl"
+        radius="md"
         size="md"
-        placeholder="Search restaurants, cuisines, or areas"
+        placeholder="Search restaurants or cities"
         leftSection={<IconSearch size={16} />}
         styles={{
           input: {
-            border: "1px solid rgba(191, 110, 60, 0.14)",
-            background: "rgba(255, 251, 247, 0.92)",
-            height: 50,
+            border: "1px solid #d5dfdc",
+            background: "#ffffff",
+            height: 52,
             color: "#22312d",
-            boxShadow: "0 10px 24px rgba(100, 71, 34, 0.05)",
+            boxShadow: "none",
           },
           section: { color: "#7f8a85" },
         }}
       />
-
-      <Group gap="sm" wrap="nowrap" className="hide-scrollbar" style={{ overflowX: "auto" }}>
-        <Badge radius="xl" variant="light" color="oligoTeal" styles={{ root: { height: 34, paddingInline: 14 } }}>
-          Nearby now
-        </Badge>
-        <Badge radius="xl" variant="light" color="sand" styles={{ root: { height: 34, paddingInline: 14 } }}>
-          Instant booking
-        </Badge>
-        <Badge radius="xl" variant="light" color="oligoOrange" styles={{ root: { height: 34, paddingInline: 14 } }}>
-          Staff picks
-        </Badge>
-      </Group>
     </Stack>
   );
 }

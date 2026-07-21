@@ -20,10 +20,9 @@ export function BottomNav({ activePath }: { activePath: string }) {
       p={8}
       shadow="sm"
       style={{
-        border: "1px solid rgba(207, 183, 145, 0.24)",
-        background: "rgba(255,251,247,0.88)",
-        backdropFilter: "blur(16px)",
-        boxShadow: "0 10px 28px rgba(100, 71, 34, 0.08)",
+        background: "#fbfcfc",
+        border: "1px solid #d5dfdc",
+        boxShadow: "0 8px 24px rgba(85, 101, 98, 0.08)",
       }}
     >
       <Group grow>
@@ -42,7 +41,7 @@ export function BottomNav({ activePath }: { activePath: string }) {
                   style={
                     active
                       ? { boxShadow: "0 8px 18px rgba(0, 116, 135, 0.24)" }
-                      : { color: "#9c7a3b", background: "#f8efe1" }
+                      : { color: "#7c8f89", background: "#f4f7f6" }
                   }
                 >
                   <Icon size={18} />

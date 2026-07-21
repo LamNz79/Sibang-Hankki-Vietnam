@@ -7,54 +7,34 @@ import {
 } from "@tabler/icons-react";
 
 export const categories = [
-  { label: "Michelin", slug: "michelin", icon: IconStar, color: "#d46d5b" },
-  { label: "Buffet", slug: "buffet", icon: IconFlame, color: "#cb9830" },
-  { label: "Deals", slug: "deals", icon: IconPercentage, color: "#007487" },
-  { label: "Date Night", slug: "date-night", icon: IconHeart, color: "#cc6c73" },
-  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: "#0a8292" },
-];
-
-export const quickStats = [
-  { label: "Open tonight", value: "128+" },
-  { label: "Instant confirm", value: "42" },
-  { label: "Hot deals", value: "16" },
+  { label: "Michelin", slug: "michelin", icon: IconStar, color: "#5b7b72" },
+  { label: "Buffet", slug: "buffet", icon: IconFlame, color: "#5b7b72" },
+  { label: "Special deal", slug: "special-deal", icon: IconPercentage, color: "#5b7b72" },
+  { label: "Date night", slug: "date-night", icon: IconHeart, color: "#5b7b72" },
+  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: "#5b7b72" },
 ];
 
 export const cityTiles = [
   {
-    label: "District 1",
-    badge: "Popular",
-    background: "linear-gradient(135deg, #84613d 0%, #d4a46f 100%)",
-  },
-  {
-    label: "District 7",
+    label: "Ho Chi Minh City",
     badge: undefined,
-    background: "linear-gradient(135deg, #5a8eb6 0%, #b7d4eb 100%)",
+    background: "linear-gradient(135deg, #6da1c3 0%, #c4d9ea 100%)",
   },
   {
-    label: "Binh Thanh",
-    badge: "Hot",
-    background: "linear-gradient(135deg, #6089aa 0%, #d6e8f7 100%)",
-  },
-  {
-    label: "Thu Duc",
+    label: "Hanoi",
     badge: undefined,
-    background: "linear-gradient(135deg, #6d987b 0%, #d7eadc 100%)",
+    background: "linear-gradient(135deg, #6b635e 0%, #afa59d 100%)",
   },
   {
-    label: "Phu Nhuan",
+    label: "Da Nang",
     badge: undefined,
-    background: "linear-gradient(135deg, #5fa0b4 0%, #d2edf1 100%)",
-  },
-  {
-    label: "Tan Binh",
-    badge: "New",
-    background: "linear-gradient(135deg, #83614d 0%, #e6b58f 100%)",
+    background: "linear-gradient(135deg, #90b7d8 0%, #cfe2f1 100%)",
   },
 ];
 
 export const cuisines = ["Western", "Chinese", "Vietnamese", "Japanese"];
-export const priceRanges = ["Under 150K", "150K~300K", "Over 300K"];
+export const priceRanges = ["Under 150K", "150K-300K", "Over 300K"];
+
 export const popularAreas = ["District 1", "District 7", "Binh Thanh", "Thu Duc", "Phu Nhuan"];
 export const recentAreas = ["District 1", "Binh Thanh", "Thu Duc"];
 
