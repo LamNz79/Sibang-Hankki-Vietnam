@@ -99,14 +99,6 @@ export function HeroBanner() {
   );
 }
 
-export function SectionTitle({ title }: { title: string }) {
-  return (
-    <Title order={2} size={22} fw={600} c="#20312c">
-      {title}
-    </Title>
-  );
-}
-
 export function FilterSection({
   title,
   description,

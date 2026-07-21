@@ -12,8 +12,8 @@ import {
   CityTileGrid,
   FilterSection,
   HeroBanner,
-  SectionTitle,
 } from "@/components/home/home-sections";
+import { SectionTitle } from "@/components/ui/section-title";
 
 export default function Home() {
   const [location, setLocation] = useState("Ho Chi Minh");
