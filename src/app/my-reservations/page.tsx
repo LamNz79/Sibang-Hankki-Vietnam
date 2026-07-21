@@ -25,16 +25,31 @@ export default function MyReservationsPage() {
       bottomNav={<BottomNav activePath="/my-reservations" />}
     >
       {bookings.map((booking) => (
-        <Card key={`${booking.restaurant}-${booking.date}`} radius="xl" p="lg" withBorder>
+        <Card
+          key={`${booking.restaurant}-${booking.date}`}
+          radius="xl"
+          p="lg"
+          style={{
+            border: "1px solid rgba(207, 183, 145, 0.24)",
+            background: "rgba(255,251,247,0.88)",
+            boxShadow: "0 12px 28px rgba(100, 71, 34, 0.06)",
+          }}
+        >
           <Group justify="space-between" align="flex-start">
             <Stack gap={4}>
-              <Text fw={700}>{booking.restaurant}</Text>
-              <Text size="sm" c="dimmed">
+              <Text fw={700} size="lg">
+                {booking.restaurant}
+              </Text>
+              <Text size="sm" c="#68716c">
                 {booking.date} · {booking.time}
               </Text>
             </Stack>
 
-            <Badge color={booking.status === "Confirmed" ? "teal" : "orange"} variant="light">
+            <Badge
+              color={booking.status === "Confirmed" ? "teal" : "orange"}
+              variant="light"
+              radius="xl"
+            >
               {booking.status}
             </Badge>
           </Group>

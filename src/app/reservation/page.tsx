@@ -1,4 +1,13 @@
-import { Badge, Button, Card, Group, SegmentedControl, Stack, Text, TextInput } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  Card,
+  Group,
+  SegmentedControl,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
 
@@ -10,11 +19,21 @@ export default function ReservationPage() {
       showBack
       bottomNav={<BottomNav activePath="/reservation" />}
     >
-      <Card radius="xl" p="lg" withBorder>
+      <Card
+        radius="xl"
+        p="lg"
+        style={{
+          border: "1px solid rgba(207, 183, 145, 0.24)",
+          background: "rgba(255,251,247,0.88)",
+          boxShadow: "0 12px 28px rgba(100, 71, 34, 0.06)",
+        }}
+      >
         <Stack gap="md">
           <Group justify="space-between">
-            <Text fw={700}>Seoul Garden BBQ</Text>
-            <Badge color="teal" variant="light">
+            <Text fw={700} size="lg">
+              Seoul Garden BBQ
+            </Text>
+            <Badge color="teal" variant="light" radius="xl">
               District 1
             </Badge>
           </Group>
@@ -33,7 +52,7 @@ export default function ReservationPage() {
             ]}
           />
 
-          <Button radius="xl" size="md">
+          <Button radius="xl" size="lg" color="teal">
             Create reservation
           </Button>
         </Stack>

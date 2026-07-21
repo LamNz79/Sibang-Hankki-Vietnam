@@ -1,190 +1,120 @@
-import {
-  Card,
-  Chip,
-  Group,
-  SimpleGrid,
-  Stack,
-  Text,
-  TextInput,
-  ThemeIcon,
-  Title,
-} from "@mantine/core";
-import {
-  IconFlame,
-  IconHeart,
-  IconPercentage,
-  IconSearch,
-  IconStar,
-  IconTrendingUp,
-} from "@tabler/icons-react";
+"use client";
+
+import { Badge, Box, Card, Group, SimpleGrid, Text, ThemeIcon, Title } from "@mantine/core";
+import { useState } from "react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
-
-const categories = [
-  { label: "Michelin", icon: IconStar, color: "#d46d5b" },
-  { label: "Buffet", icon: IconFlame, color: "#cb9830" },
-  { label: "Deals", icon: IconPercentage, color: "#0f7e68" },
-  { label: "Date Night", icon: IconHeart, color: "#cc6c73" },
-  { label: "Trending", icon: IconTrendingUp, color: "#b78824" },
-];
-
-const cities = ["Ho Chi Minh", "Hanoi", "Da Nang"];
-const cuisines = ["Western", "Chinese", "Vietnamese", "Japanese"];
-const priceRanges = ["Under 150K", "150K~300K", "Over 300K"];
+import { HomeHeader } from "@/components/home/home-header";
+import { categories, cityTiles, cuisines, priceRanges } from "@/components/home/home-data";
+import { LocationDrawer } from "@/components/home/location-drawer";
+import {
+  ChipRow,
+  CityTileGrid,
+  FilterSection,
+  HeroBanner,
+  SectionTitle,
+} from "@/components/home/home-sections";
 
 export default function Home() {
+  const [location, setLocation] = useState("Ho Chi Minh");
+  const [locationOpened, setLocationOpened] = useState(false);
+
   return (
     <MobileShell
-      title="Sibang Hanki"
-      subtitle={undefined}
+      title="Sibang Hankki"
+      subtitle="Find a table fast and book with confidence."
       bottomNav={<BottomNav activePath="/" />}
+      headerContent={
+        <HomeHeader location={location} onOpenLocation={() => setLocationOpened(true)} />
+      }
     >
-      <TextInput
-        radius="xl"
-        size="md"
-        placeholder="Search restaurants or cities"
-        leftSection={<IconSearch size={16} />}
-        styles={{
-          input: {
-            border: "1px solid rgba(202, 181, 150, 0.24)",
-            background: "#f7f0e6",
-            height: 52,
-            color: "#22312d",
-          },
+      <LocationDrawer
+        opened={locationOpened}
+        onClose={() => setLocationOpened(false)}
+        selectedLocation={location}
+        onSelectLocation={(nextLocation) => {
+          setLocation(nextLocation);
+          setLocationOpened(false);
         }}
       />
 
-      <Card
-        radius="xl"
-        padding={20}
-        style={{
-          background: "linear-gradient(135deg, #0f5f56 0%, #16776d 54%, #209182 100%)",
-          color: "white",
-        }}
-      >
-        <Group justify="space-between" align="center" wrap="nowrap">
-          <Stack gap={10}>
-            <Title order={2} size={34} fw={500} c="white">
-              Today&apos;s Dining Picks
-            </Title>
-            <Text size="lg" c="rgba(255,255,255,0.84)">
-              Reserve now and enjoy benefits
-            </Text>
-            <Text size="sm" c="rgba(255,255,255,0.72)">
-              1 / 3
-            </Text>
-          </Stack>
-
-            <ThemeIcon
-            size={120}
-            radius="xl"
-            style={{ background: "#37a89b", flexShrink: 0 }}
-          >
-            <ThemeIcon size={58} radius="xl" style={{ background: "#f1be69" }} />
-          </ThemeIcon>
-        </Group>
-      </Card>
+      <HeroBanner />
 
       <SectionTitle title="Featured Categories" />
-      <SimpleGrid cols={5} spacing="sm">
+      <SimpleGrid cols={3} spacing="sm" verticalSpacing="sm">
         {categories.map((item) => {
           const Icon = item.icon;
 
           return (
-            <Stack key={item.label} gap={8} align="center">
-              <Card
-                radius="xl"
-                p="md"
-                style={{
-                  width: 64,
-                  height: 64,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "#f7f1e7",
-                  boxShadow: "none",
-                }}
-              >
+            <Card
+              key={item.label}
+              radius="xl"
+              p="sm"
+              style={{
+                background: "rgba(255, 251, 247, 0.9)",
+                border: "1px solid rgba(207, 183, 145, 0.18)",
+              }}
+            >
+              <Group gap={10} wrap="nowrap">
                 <ThemeIcon
                   variant="light"
                   radius="xl"
-                  size={34}
+                  size={38}
                   style={{
                     color: item.color,
                     background: "white",
                     border: `1px solid ${item.color}`,
+                    flexShrink: 0,
                   }}
                 >
                   <Icon size={18} />
                 </ThemeIcon>
-              </Card>
-              <Text size="xs" ta="center">
-                {item.label}
-              </Text>
-            </Stack>
+                <Text size="sm" fw={600} c="#24322e">
+                  {item.label}
+                </Text>
+              </Group>
+            </Card>
           );
         })}
       </SimpleGrid>
 
-      <SectionTitle title="City" />
-      <ChipRow items={cities} defaultValue="Ho Chi Minh" />
+      <FilterSection title="City" description="Choose where you want to dine first.">
+        <CityTileGrid items={cityTiles} />
+      </FilterSection>
 
-      <SectionTitle title="Cuisine" />
-      <ChipRow items={cuisines} />
+      <SimpleGrid cols={2} spacing="md" verticalSpacing="md">
+        <FilterSection title="Cuisine" description="Pick a dining mood.">
+          <ChipRow items={cuisines} />
+        </FilterSection>
 
-      <SectionTitle title="Price Range" />
-      <ChipRow items={priceRanges} />
+        <FilterSection title="Price Range" description="Match the budget.">
+          <ChipRow items={priceRanges} defaultValue="150K~300K" compact />
+        </FilterSection>
+      </SimpleGrid>
+
+      <Card
+        radius="xl"
+        p="lg"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.98) 100%)",
+          border: "1px solid rgba(207, 183, 145, 0.2)",
+        }}
+      >
+        <Group justify="space-between" align="center">
+          <Box>
+            <Text size="sm" c="#7d7366">
+              This week&apos;s focus
+            </Text>
+            <Title order={3} size="h4" c="#21312c">
+              Instant booking first
+            </Title>
+          </Box>
+          <Badge color="oligoTeal" radius="xl" variant="light">
+            MVP priority
+          </Badge>
+        </Group>
+      </Card>
     </MobileShell>
-  );
-}
-
-function SectionTitle({ title }: { title: string }) {
-  return (
-    <Title order={2} size={28} fw={500}>
-      {title}
-    </Title>
-  );
-}
-
-function ChipRow({
-  items,
-  defaultValue,
-}: {
-  items: string[];
-  defaultValue?: string;
-}) {
-  return (
-    <SimpleGrid cols={items.length} spacing="sm">
-      {items.map((item) => (
-        <Chip
-          key={item}
-          radius="xl"
-          size="lg"
-          defaultChecked={item === defaultValue}
-          styles={{
-            root: {
-              width: "100%",
-            },
-            label: {
-              width: "100%",
-              textAlign: "center",
-              borderRadius: 999,
-              background: "#f4ede4",
-              border: "1px solid transparent",
-              minHeight: 48,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#23312c",
-            },
-            iconWrapper: {
-              display: "none",
-            },
-          }}
-        >
-          {item}
-        </Chip>
-      ))}
-    </SimpleGrid>
   );
 }

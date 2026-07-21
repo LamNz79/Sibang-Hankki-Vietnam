@@ -4,13 +4,37 @@ import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 
 const theme = createTheme({
-  primaryColor: "teal",
+  primaryColor: "oligoTeal",
   defaultRadius: "lg",
   fontFamily: "var(--font-geist-sans), sans-serif",
   headings: {
     fontFamily: "var(--font-geist-sans), sans-serif",
   },
   colors: {
+    oligoTeal: [
+      "#e8f7f8",
+      "#d1eeef",
+      "#a6dbdf",
+      "#78c8cf",
+      "#53b8c2",
+      "#39adba",
+      "#2ca8b6",
+      "#1a92a1",
+      "#0a8292",
+      "#007487",
+    ],
+    oligoOrange: [
+      "#fbf1eb",
+      "#f3dfd3",
+      "#e7bda7",
+      "#da9a79",
+      "#cf7d53",
+      "#c56d3f",
+      "#bf6e3c",
+      "#aa5d2f",
+      "#964f26",
+      "#81411b",
+    ],
     teal: [
       "#eef8f5",
       "#d8eee8",

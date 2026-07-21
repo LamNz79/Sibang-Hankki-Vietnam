@@ -17,12 +17,13 @@ export function BottomNav({ activePath }: { activePath: string }) {
   return (
     <Card
       radius="xl"
-      p="sm"
+      p={8}
       shadow="sm"
       style={{
-        border: "1px solid rgba(202, 181, 150, 0.26)",
-        background: "rgba(255,248,241,0.95)",
-        backdropFilter: "blur(12px)",
+        border: "1px solid rgba(207, 183, 145, 0.24)",
+        background: "rgba(255,251,247,0.88)",
+        backdropFilter: "blur(16px)",
+        boxShadow: "0 10px 28px rgba(100, 71, 34, 0.08)",
       }}
     >
       <Group grow>
@@ -35,13 +36,18 @@ export function BottomNav({ activePath }: { activePath: string }) {
               <Stack gap={4} align="center">
                 <ThemeIcon
                   variant={active ? "filled" : "light"}
-                  color={active ? "teal" : "gray"}
+                  color={active ? "oligoTeal" : "sand"}
                   radius="xl"
-                  size={40}
+                  size={42}
+                  style={
+                    active
+                      ? { boxShadow: "0 8px 18px rgba(0, 116, 135, 0.24)" }
+                      : { color: "#9c7a3b", background: "#f8efe1" }
+                  }
                 >
                   <Icon size={18} />
                 </ThemeIcon>
-                <Text size="xs" c={active ? "teal.8" : "dimmed"} fw={active ? 700 : 500}>
+                <Text size="xs" c={active ? "oligoTeal.8" : "#7b7367"} fw={active ? 700 : 500}>
                   {item.label}
                 </Text>
               </Stack>
