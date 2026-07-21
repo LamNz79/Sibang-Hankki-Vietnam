@@ -14,6 +14,7 @@ import {
   HeroBanner,
 } from "@/components/home/home-sections";
 import { SectionTitle } from "@/components/ui/section-title";
+import Link from "next/link";
 
 export default function Home() {
   const [location, setLocation] = useState("Ho Chi Minh");
@@ -46,7 +47,7 @@ export default function Home() {
           const Icon = item.icon;
 
           return (
-            <a
+            <Link
               key={item.label}
               href={`/restaurants?category=${item.slug}`}
               style={{ textDecoration: "none" }}
@@ -78,7 +79,7 @@ export default function Home() {
                   </Text>
                 </Group>
               </Card>
-            </a>
+            </Link>
           );
         })}
       </SimpleGrid>
