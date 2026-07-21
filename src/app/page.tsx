@@ -1,92 +1,125 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Group,
-  SimpleGrid,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import {
-  IconArrowRight,
-  IconCalendarTime,
-  IconMapPin,
-  IconUsersGroup,
-} from "@tabler/icons-react";
+"use client";
+
+import { Badge, Box, Card, Group, SimpleGrid, Text, ThemeIcon, Title } from "@mantine/core";
+import { useState } from "react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
+import { HomeHeader } from "@/components/home/home-header";
+import { categories, cityTiles, cuisines, priceRanges } from "@/components/home/home-data";
+import { LocationDrawer } from "@/components/home/location-drawer";
+import {
+  ChipRow,
+  CityTileGrid,
+  FilterSection,
+  HeroBanner,
+  SectionTitle,
+} from "@/components/home/home-sections";
 
 export default function Home() {
+  const [location, setLocation] = useState("Ho Chi Minh");
+  const [locationOpened, setLocationOpened] = useState(false);
+
   return (
     <MobileShell
       title="Sibang Hankki"
-      subtitle="Mobile-first customer app starter"
+      subtitle="Find a table fast and book with confidence."
       bottomNav={<BottomNav activePath="/" />}
+      headerContent={
+        <HomeHeader location={location} onOpenLocation={() => setLocationOpened(true)} />
+      }
     >
-      <Card radius="xl" padding={24} className="border border-white/70 bg-white/85 shadow-sm backdrop-blur">
-        <Stack gap={18}>
-          <Badge color="orange" variant="light" w="fit-content">
-            MVP kickoff
-          </Badge>
-          <Title order={1} size={34} lh={1.08}>
-            Discover restaurants and book a table in a clean customer flow.
-          </Title>
-          <Text c="dimmed" size="sm">
-            We are now building this project as a mobile-view web app first, based on the
-            customer wireframe and the reservation-focused MVP scope.
-          </Text>
-          <Group>
-            <Button component="a" href="/restaurants" rightSection={<IconArrowRight size={16} />} size="md" radius="xl">
-              Explore restaurants
-            </Button>
-          </Group>
-        </Stack>
-      </Card>
+      <LocationDrawer
+        opened={locationOpened}
+        onClose={() => setLocationOpened(false)}
+        selectedLocation={location}
+        onSelectLocation={(nextLocation) => {
+          setLocation(nextLocation);
+          setLocationOpened(false);
+        }}
+      />
 
-      <SimpleGrid cols={1} spacing="md">
-        <FeatureCard
-          icon={<IconMapPin size={18} />}
-          title="Restaurant discovery"
-          description="List, filter, and compare restaurants by area, cuisine, and availability."
-        />
-        <FeatureCard
-          icon={<IconCalendarTime size={18} />}
-          title="Reservation flow"
-          description="Move from restaurant details into booking with date, time, and party size."
-        />
-        <FeatureCard
-          icon={<IconUsersGroup size={18} />}
-          title="My reservations"
-          description="Give customers a clear place to review booking status and next actions."
-        />
+      <HeroBanner />
+
+      <SectionTitle title="Featured Categories" />
+      <SimpleGrid cols={3} spacing="sm" verticalSpacing="sm">
+        {categories.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <a
+              key={item.label}
+              href={`/restaurants?category=${item.slug}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Card
+                radius="xl"
+                p="sm"
+                style={{
+                  background: "rgba(255, 251, 247, 0.9)",
+                  border: "1px solid rgba(207, 183, 145, 0.18)",
+                }}
+              >
+                <Group gap={10} wrap="nowrap">
+                  <ThemeIcon
+                    variant="light"
+                    radius="xl"
+                    size={38}
+                    style={{
+                      color: item.color,
+                      background: "white",
+                      border: `1px solid ${item.color}`,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Icon size={18} />
+                  </ThemeIcon>
+                  <Text size="sm" fw={600} c="#24322e">
+                    {item.label}
+                  </Text>
+                </Group>
+              </Card>
+            </a>
+          );
+        })}
       </SimpleGrid>
-    </MobileShell>
-  );
-}
 
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <Card radius="lg" padding="lg" withBorder>
-      <Group align="flex-start" wrap="nowrap">
-        <Badge color="teal" variant="light" circle size={42}>
-          {icon}
-        </Badge>
-        <Stack gap={4}>
-          <Text fw={700}>{title}</Text>
-          <Text c="dimmed" size="sm">
-            {description}
-          </Text>
-        </Stack>
-      </Group>
-    </Card>
+      <FilterSection title="City" description="Choose where you want to dine first.">
+        <CityTileGrid items={cityTiles} />
+      </FilterSection>
+
+      <SimpleGrid cols={2} spacing="md" verticalSpacing="md">
+        <FilterSection title="Cuisine" description="Pick a dining mood.">
+          <ChipRow items={cuisines} />
+        </FilterSection>
+
+        <FilterSection title="Price Range" description="Match the budget.">
+          <ChipRow items={priceRanges} defaultValue="150K~300K" compact />
+        </FilterSection>
+      </SimpleGrid>
+
+      <Card
+        radius="xl"
+        p="lg"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.98) 100%)",
+          border: "1px solid rgba(207, 183, 145, 0.2)",
+        }}
+      >
+        <Group justify="space-between" align="center">
+          <Box>
+            <Text size="sm" c="#7d7366">
+              This week&apos;s focus
+            </Text>
+            <Title order={3} size="h4" c="#21312c">
+              Instant booking first
+            </Title>
+          </Box>
+          <Badge color="oligoTeal" radius="xl" variant="light">
+            MVP priority
+          </Badge>
+        </Group>
+      </Card>
+    </MobileShell>
   );
 }

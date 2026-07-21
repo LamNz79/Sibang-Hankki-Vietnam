@@ -4,6 +4,7 @@ import {
   Box,
   Card,
   Group,
+  rem,
   Stack,
   Text,
   Title,
@@ -17,6 +18,7 @@ type MobileShellProps = {
   showBack?: boolean;
   children: ReactNode;
   bottomNav?: ReactNode;
+  headerContent?: ReactNode;
 };
 
 export function MobileShell({
@@ -25,55 +27,123 @@ export function MobileShell({
   showBack = false,
   children,
   bottomNav,
+  headerContent,
 }: MobileShellProps) {
   return (
-    <Box className="min-h-screen bg-[radial-gradient(circle_at_top,#f8fff8_0%,#edf5f1_38%,#dce8e3_100%)] px-0 py-0 md:px-6 md:py-8">
-      <Box className="mx-auto flex h-screen w-full max-w-[420px] flex-col overflow-hidden bg-[#f7faf8] md:h-[880px] md:rounded-[34px] md:border md:border-white/60 md:shadow-[0_24px_80px_rgba(21,35,30,0.16)]">
-        <Box className="shrink-0 px-4 pt-4">
-          <Card radius="xl" p="md" shadow="sm" className="border border-white/70 bg-white/90 backdrop-blur">
-            <Group justify="space-between" align="flex-start" wrap="nowrap">
-              <Group align="flex-start" wrap="nowrap">
-                {showBack ? (
-                  <ActionIcon
-                    component="a"
-                    href="/"
-                    variant="subtle"
-                    color="gray"
-                    radius="xl"
-                    size="lg"
-                  >
-                    <IconChevronLeft size={18} />
-                  </ActionIcon>
-                ) : null}
-
-                <Stack gap={2}>
-                  <Badge color="teal" variant="light" w="fit-content">
-                    Mobile first
-                  </Badge>
-                  <Title order={3} size="h4">
-                    {title}
-                  </Title>
-                  {subtitle ? (
-                    <Text c="dimmed" size="sm">
-                      {subtitle}
-                    </Text>
+    <Box
+      mih="100vh"
+      bg="linear-gradient(180deg, #fffaf4 0%, #f7f1e7 44%, #efe5d7 100%)"
+      p={0}
+    >
+      <Box
+        mx="auto"
+        w="100%"
+        maw={560}
+        h={"100vh"}
+        miw={0}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          background:
+            "linear-gradient(180deg, rgba(255,250,244,0.98) 0%, rgba(252,246,238,0.98) 100%)",
+        }}
+      >
+        <Box
+          px={16}
+          pt={`max(${rem(12)}, env(safe-area-inset-top))`}
+          pb={12}
+          style={{
+            flexShrink: 0,
+            position: "sticky",
+            top: 0,
+            zIndex: 20,
+            backdropFilter: "blur(14px)",
+            background:
+              "linear-gradient(180deg, rgba(255,250,244,0.96) 0%, rgba(255,250,244,0.82) 72%, rgba(255,250,244,0) 100%)",
+          }}
+        >
+          {headerContent ? (
+            headerContent
+          ) : (
+            <Card
+              radius="xl"
+              p="md"
+              shadow="sm"
+              style={{
+                border: "1px solid rgba(207, 183, 145, 0.24)",
+                background: "rgba(255,251,247,0.88)",
+                backdropFilter: "blur(16px)",
+                boxShadow: "0 12px 30px rgba(100, 71, 34, 0.08)",
+              }}
+            >
+              <Group justify="space-between" align="flex-start" wrap="nowrap">
+                <Group align="flex-start" wrap="nowrap">
+                  {showBack ? (
+                    <ActionIcon
+                      component="a"
+                      href="/"
+                      variant="subtle"
+                      color="gray"
+                      radius="xl"
+                      size="lg"
+                    >
+                      <IconChevronLeft size={18} />
+                    </ActionIcon>
                   ) : null}
-                </Stack>
-              </Group>
 
-              <ActionIcon variant="light" color="teal" radius="xl" size="lg">
-                <IconBell size={18} />
-              </ActionIcon>
-            </Group>
-          </Card>
+                  <Stack gap={2}>
+                    <Badge color="oligoOrange" variant="light" w="fit-content" size="sm">
+                      Sibang customer
+                    </Badge>
+                    <Title order={3} size="h4" c="#17352f">
+                      {title}
+                    </Title>
+                    {subtitle ? (
+                      <Text c="#6f7b74" size="sm">
+                        {subtitle}
+                      </Text>
+                    ) : null}
+                  </Stack>
+                </Group>
+
+                <ActionIcon variant="light" color="oligoTeal" radius="xl" size="lg">
+                  <IconBell size={18} />
+                </ActionIcon>
+              </Group>
+            </Card>
+          )}
         </Box>
 
-        <Box className="min-h-0 flex-1 overflow-y-auto px-4 pt-4 pb-6">
-          <Stack gap="md">{children}</Stack>
+        <Box
+          px={16}
+          pt={4}
+          pb={12}
+          className="hide-scrollbar"
+          style={{
+            minHeight: 0,
+            flex: 1,
+            overflowY: "auto",
+          }}
+        >
+          <Stack gap={18}>{children}</Stack>
         </Box>
 
         {bottomNav ? (
-          <Box className="shrink-0 px-4 pb-4 pt-2">
+          <Box
+            px={16}
+            pt={8}
+            pb={`max(${rem(12)}, env(safe-area-inset-bottom))`}
+            style={{
+              flexShrink: 0,
+              position: "sticky",
+              bottom: 0,
+              zIndex: 20,
+              backdropFilter: "blur(14px)",
+              background:
+                "linear-gradient(180deg, rgba(255,250,244,0) 0%, rgba(255,250,244,0.82) 26%, rgba(255,250,244,0.96) 100%)",
+            }}
+          >
             {bottomNav}
           </Box>
         ) : null}
