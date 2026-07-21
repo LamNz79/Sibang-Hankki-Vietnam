@@ -46,34 +46,39 @@ export default function Home() {
           const Icon = item.icon;
 
           return (
-            <Card
+            <a
               key={item.label}
-              radius="xl"
-              p="sm"
-              style={{
-                background: "rgba(255, 251, 247, 0.9)",
-                border: "1px solid rgba(207, 183, 145, 0.18)",
-              }}
+              href={`/restaurants?category=${item.slug}`}
+              style={{ textDecoration: "none" }}
             >
-              <Group gap={10} wrap="nowrap">
-                <ThemeIcon
-                  variant="light"
-                  radius="xl"
-                  size={38}
-                  style={{
-                    color: item.color,
-                    background: "white",
-                    border: `1px solid ${item.color}`,
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon size={18} />
-                </ThemeIcon>
-                <Text size="sm" fw={600} c="#24322e">
-                  {item.label}
-                </Text>
-              </Group>
-            </Card>
+              <Card
+                radius="xl"
+                p="sm"
+                style={{
+                  background: "rgba(255, 251, 247, 0.9)",
+                  border: "1px solid rgba(207, 183, 145, 0.18)",
+                }}
+              >
+                <Group gap={10} wrap="nowrap">
+                  <ThemeIcon
+                    variant="light"
+                    radius="xl"
+                    size={38}
+                    style={{
+                      color: item.color,
+                      background: "white",
+                      border: `1px solid ${item.color}`,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Icon size={18} />
+                  </ThemeIcon>
+                  <Text size="sm" fw={600} c="#24322e">
+                    {item.label}
+                  </Text>
+                </Group>
+              </Card>
+            </a>
           );
         })}
       </SimpleGrid>

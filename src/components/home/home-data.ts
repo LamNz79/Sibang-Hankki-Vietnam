@@ -7,11 +7,11 @@ import {
 } from "@tabler/icons-react";
 
 export const categories = [
-  { label: "Michelin", icon: IconStar, color: "#d46d5b" },
-  { label: "Buffet", icon: IconFlame, color: "#cb9830" },
-  { label: "Deals", icon: IconPercentage, color: "#007487" },
-  { label: "Date Night", icon: IconHeart, color: "#cc6c73" },
-  { label: "Trending", icon: IconTrendingUp, color: "#0a8292" },
+  { label: "Michelin", slug: "michelin", icon: IconStar, color: "#d46d5b" },
+  { label: "Buffet", slug: "buffet", icon: IconFlame, color: "#cb9830" },
+  { label: "Deals", slug: "deals", icon: IconPercentage, color: "#007487" },
+  { label: "Date Night", slug: "date-night", icon: IconHeart, color: "#cc6c73" },
+  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: "#0a8292" },
 ];
 
 export const quickStats = [

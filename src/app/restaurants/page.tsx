@@ -19,8 +19,9 @@ import {
 } from "@tabler/icons-react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
+import { categories } from "@/components/home/home-data";
 
-const filters = ["All", "Korean", "Japanese", "Buffet", "Deals"];
+const filters = ["Recommended", "Filter", "Price", "Cuisine"];
 
 const restaurants = [
   {
@@ -49,10 +50,20 @@ const restaurants = [
   },
 ];
 
-export default function RestaurantsPage() {
+type RestaurantsPageProps = {
+  searchParams?: Promise<{
+    category?: string;
+  }>;
+};
+
+export default async function RestaurantsPage({ searchParams }: RestaurantsPageProps) {
+  const params = searchParams ? await searchParams : undefined;
+  const selectedCategory = categories.find((item) => item.slug === params?.category);
+  const pageTitle = selectedCategory ? `${selectedCategory.label} Restaurants` : "Restaurant List";
+
   return (
     <MobileShell
-      title="Restaurant List"
+      title={pageTitle}
       subtitle="Browse, compare, and pick a table quickly."
       showBack
       bottomNav={<BottomNav activePath="/restaurants" />}
@@ -101,23 +112,81 @@ export default function RestaurantsPage() {
       </Group>
 
       <Stack gap={10}>
-        <Title order={4} size="h5" c="#20312c">
-          Quick filters
-        </Title>
+        <Group gap="sm" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
+          <Chip
+            radius="xl"
+            size="md"
+            checked={Boolean(selectedCategory)}
+            readOnly
+            styles={{
+              label: {
+                borderRadius: 999,
+                background: selectedCategory ? "#007487" : "#f6efe6",
+                border: "1px solid rgba(205, 183, 151, 0.2)",
+                minHeight: 42,
+                color: selectedCategory ? "#ffffff" : "#23312c",
+              },
+              iconWrapper: { display: "none" },
+            }}
+          >
+            {selectedCategory?.label ?? "All"}
+          </Chip>
+
+          <Chip
+            radius="xl"
+            size="md"
+            checked
+            readOnly
+            styles={{
+              label: {
+                borderRadius: 999,
+                background: "#f6efe6",
+                border: "1px solid rgba(205, 183, 151, 0.2)",
+                minHeight: 42,
+                color: "#23312c",
+              },
+              iconWrapper: { display: "none" },
+            }}
+          >
+            Ho Chi Minh
+          </Chip>
+
+          <Chip
+            radius="xl"
+            size="md"
+            checked
+            readOnly
+            styles={{
+              label: {
+                borderRadius: 999,
+                background: "#f6efe6",
+                border: "1px solid rgba(205, 183, 151, 0.2)",
+                minHeight: 42,
+                color: "#23312c",
+              },
+              iconWrapper: { display: "none" },
+            }}
+          >
+            Available
+          </Chip>
+        </Group>
         <Group gap="sm" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
           {filters.map((filter, index) => (
             <Chip
               key={filter}
               radius="xl"
               size="md"
-              defaultChecked={index === 0}
+              defaultChecked={index === 1}
               styles={{
                 label: {
                   borderRadius: 999,
-                  background: "#f6efe6",
-                  border: "1px solid rgba(205, 183, 151, 0.2)",
+                  background: index === 1 ? "#e4f2ef" : "#ffffff",
+                  border:
+                    index === 1
+                      ? "1px solid rgba(0, 116, 135, 0.55)"
+                      : "1px solid rgba(205, 183, 151, 0.2)",
                   minHeight: 42,
-                  color: "#23312c",
+                  color: index === 1 ? "#006b7c" : "#23312c",
                 },
                 iconWrapper: { display: "none" },
               }}
@@ -127,6 +196,15 @@ export default function RestaurantsPage() {
           ))}
         </Group>
       </Stack>
+
+      <Group justify="space-between" align="center">
+        <Title order={2} size={selectedCategory ? 26 : 24} fw={500} c="#20312c">
+          {pageTitle}
+        </Title>
+        <Text size="lg" c="#8a8f89">
+          24 places
+        </Text>
+      </Group>
 
       {restaurants.map((restaurant) => (
         <Card
