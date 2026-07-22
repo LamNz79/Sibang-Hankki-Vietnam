@@ -1,0 +1,17 @@
+export const uiColors = {
+  appBackground: "#f3f5f4",
+  surface: "#ffffff",
+  surfaceAlt: "#fbfcfc",
+  surfaceMuted: "#f4f7f6",
+  border: "#d5dfdc",
+  borderStrong: "#cfd9d5",
+  textPrimary: "#20312c",
+  textSecondary: "#6f7d78",
+  textMuted: "#8a8f89",
+  brandPrimary: "#007487",
+  brandPrimarySoft: "#f2f8f8",
+  brandPrimaryShadow: "rgba(0, 116, 135, 0.14)",
+  brandOrange: "#bf6e3c",
+  brandOrangeSoft: "#fbefe8",
+  shadowSoft: "rgba(85, 101, 98, 0.08)",
+} as const;

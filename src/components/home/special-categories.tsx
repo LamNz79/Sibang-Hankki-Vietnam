@@ -1,6 +1,7 @@
 import { Card, ThemeIcon, Text } from '@mantine/core'
 import { IconProps } from '@tabler/icons-react';
 import React, { ForwardRefExoticComponent, RefAttributes } from 'react'
+import { uiColors } from "@/components/ui/theme-tokens";
 type SpecialCategoryProps = {
   item: {
     label: string;
@@ -18,8 +19,8 @@ export default function SpecialCategories(specialCategoryProps: SpecialCategoryP
       radius="md"
       p="sm"
       style={{
-        background: "#fbfcfc",
-        border: "1px solid #d5dfdc",
+        background: uiColors.surfaceAlt,
+        border: `1px solid ${uiColors.border}`,
         height: 96,
         display: "flex",
         flexDirection: "column",

@@ -54,7 +54,7 @@ export default function Home() {
           return (
             <Link
               key={item.label}
-              href={`/restaurants?category=${item.slug}`}
+              href={`/restaurants?category=${item.slug}&location=${encodeURIComponent(location)}`}
               style={{ textDecoration: "none", display: "block" }}
             >
               <SpecialCategories item={item} />
@@ -64,16 +64,12 @@ export default function Home() {
       </SimpleGrid>
 
       <Group justify="space-between" align="flex-end">
-        <SectionTitle title="Popular cities" />
+        <SectionTitle title="Explore by city" />
         <Text size="sm" c="#6f7d78" mb={4}>
           View all
         </Text>
       </Group>
-      <CityTileGrid
-        items={cityTiles}
-        selectedValue={location}
-        onSelect={setLocation}
-      />
+      <CityTileGrid items={cityTiles} />
 
       <Box>
         <SectionTitle title="Cuisine" />

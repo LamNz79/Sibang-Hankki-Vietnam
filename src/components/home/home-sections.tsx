@@ -1,4 +1,7 @@
-import { Box, Card, Chip, Group, Stack, Text, Title } from "@mantine/core";
+import Link from "next/link";
+import { Box, Card, Group, Stack, Text, Title } from "@mantine/core";
+import { SelectionChip } from "@/components/ui/selection-chip";
+import { uiColors } from "@/components/ui/theme-tokens";
 
 export function HeroBanner() {
   return (
@@ -6,7 +9,7 @@ export function HeroBanner() {
       radius="md"
       p="lg"
       style={{
-        border: "1px solid #cfd9d5",
+        border: `1px solid ${uiColors.borderStrong}`,
         background:
           "repeating-linear-gradient(-45deg, #f7faf8 0, #f7faf8 12px, #eef3f0 12px, #eef3f0 24px)",
         boxShadow: "none",
@@ -29,23 +32,18 @@ export function HeroBanner() {
 
 export function CityTileGrid({
   items,
-  selectedValue,
-  onSelect,
 }: {
-  items: Array<{ label: string; badge?: string; background: string }>;
-  selectedValue?: string;
-  onSelect?: (value: string) => void;
+  items: Array<{ label: string; slug: string; badge?: string; background: string }>;
 }) {
   return (
     <Group grow gap="sm" wrap="nowrap">
       {items.map((item) => (
-        <Stack
+        <Link
           key={item.label}
-          gap={6}
-          align="center"
-          style={{ cursor: onSelect ? "pointer" : "default" }}
-          onClick={() => onSelect?.(item.label)}
+          href={`/restaurants?city=${item.slug}`}
+          style={{ flex: 1, color: "inherit", textDecoration: "none" }}
         >
+          <Stack gap={6} align="center" style={{ cursor: "pointer" }}>
           <Box
             w="100%"
             style={{
@@ -54,14 +52,8 @@ export function CityTileGrid({
               background: item.background,
               position: "relative",
               overflow: "hidden",
-              border:
-                item.label === selectedValue
-                  ? "2px solid #007487"
-                  : "1px solid #d5dfdc",
-              boxShadow:
-                item.label === selectedValue
-                  ? "0 6px 16px rgba(0,116,135,0.12)"
-                  : "none",
+              border: `1px solid ${uiColors.border}`,
+              boxShadow: "none",
             }}
           >
             <Box
@@ -75,13 +67,14 @@ export function CityTileGrid({
           </Box>
           <Text
             ta="center"
-            fw={item.label === selectedValue ? 700 : 600}
+            fw={600}
             size="xs"
             c="#23312c"
           >
             {item.label}
           </Text>
-        </Stack>
+          </Stack>
+        </Link>
       ))}
     </Group>
   );
@@ -105,35 +98,14 @@ export function ChipRow({
   return (
     <Group gap="xs" align="flex-start">
       {items.map((item) => (
-        <Chip
+        <SelectionChip
           key={item}
-          radius="xl"
-          size="sm"
           checked={item === selectedValue}
           onChange={() => onChange?.(item)}
-          styles={{
-            root: { width: "fit-content" },
-            label: {
-              width: "fit-content",
-              textAlign: "center",
-              borderRadius: 999,
-              background: "#ffffff",
-              border: item === selectedValue ? "1px solid #007487" : "1px solid #cfd9d5",
-              minHeight: compact ? 32 : 36,
-              paddingLeft: compact ? 12 : 14,
-              paddingRight: compact ? 12 : 14,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#23312c",
-              fontWeight: item === selectedValue ? 700 : 500,
-              boxShadow: "none",
-            },
-            iconWrapper: { display: "none" },
-          }}
+          compact={compact}
         >
           {item}
-        </Chip>
+        </SelectionChip>
       ))}
     </Group>
   );

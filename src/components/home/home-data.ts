@@ -17,16 +17,19 @@ export const categories = [
 export const cityTiles = [
   {
     label: "Ho Chi Minh City",
+    slug: "ho-chi-minh-city",
     badge: undefined,
     background: "linear-gradient(135deg, #6da1c3 0%, #c4d9ea 100%)",
   },
   {
     label: "Hanoi",
+    slug: "hanoi",
     badge: undefined,
     background: "linear-gradient(135deg, #6b635e 0%, #afa59d 100%)",
   },
   {
     label: "Da Nang",
+    slug: "da-nang",
     badge: undefined,
     background: "linear-gradient(135deg, #90b7d8 0%, #cfe2f1 100%)",
   },
