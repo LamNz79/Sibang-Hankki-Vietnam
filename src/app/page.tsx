@@ -1,24 +1,22 @@
 "use client";
 
-import { Badge, Box, Card, Group, SimpleGrid, Text, ThemeIcon, Title } from "@mantine/core";
+import { Box, Group, SimpleGrid, Text } from "@mantine/core";
+import Link from "next/link";
 import { useState } from "react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
 import { HomeHeader } from "@/components/home/home-header";
 import { categories, cityTiles, cuisines, priceRanges } from "@/components/home/home-data";
+import { ChipRow, CityTileGrid, HeroBanner } from "@/components/home/home-sections";
 import { LocationDrawer } from "@/components/home/location-drawer";
-import {
-  ChipRow,
-  CityTileGrid,
-  FilterSection,
-  HeroBanner,
-} from "@/components/home/home-sections";
 import { SectionTitle } from "@/components/ui/section-title";
-import Link from "next/link";
+import SpecialCategories from "@/components/home/special-categories";
 
 export default function Home() {
-  const [location, setLocation] = useState("Ho Chi Minh");
+  const [location, setLocation] = useState("Ho Chi Minh City");
   const [locationOpened, setLocationOpened] = useState(false);
+  const [selectedCuisine, setSelectedCuisine] = useState(cuisines[0]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState(priceRanges[0]);
 
   return (
     <MobileShell
@@ -26,7 +24,10 @@ export default function Home() {
       subtitle="Find a table fast and book with confidence."
       bottomNav={<BottomNav activePath="/" />}
       headerContent={
-        <HomeHeader location={location} onOpenLocation={() => setLocationOpened(true)} />
+        <HomeHeader
+          location={location}
+          onOpenLocation={() => setLocationOpened(true)}
+        />
       }
     >
       <LocationDrawer
@@ -41,86 +42,53 @@ export default function Home() {
 
       <HeroBanner />
 
-      <SectionTitle title="Featured Categories" />
-      <SimpleGrid cols={3} spacing="sm" verticalSpacing="sm">
-        {categories.map((item) => {
-          const Icon = item.icon;
+      <Group justify="space-between" align="flex-end">
+        <SectionTitle title="Special categories" />
+        <Text size="sm" c="#8a8f89" mb={4}>
+          Up to 5
+        </Text>
+      </Group>
 
+      <SimpleGrid cols={5} spacing="sm" verticalSpacing="sm">
+        {categories.map((item) => {
           return (
             <Link
               key={item.label}
-              href={`/restaurants?category=${item.slug}`}
-              style={{ textDecoration: "none" }}
+              href={`/restaurants?category=${item.slug}&location=${encodeURIComponent(location)}`}
+              style={{ textDecoration: "none", display: "block" }}
             >
-              <Card
-                radius="xl"
-                p="sm"
-                style={{
-                  background: "rgba(255, 251, 247, 0.9)",
-                  border: "1px solid rgba(207, 183, 145, 0.18)",
-                }}
-              >
-                <Group gap={10} wrap="nowrap">
-                  <ThemeIcon
-                    variant="light"
-                    radius="xl"
-                    size={38}
-                    style={{
-                      color: item.color,
-                      background: "white",
-                      border: `1px solid ${item.color}`,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={18} />
-                  </ThemeIcon>
-                  <Text size="sm" fw={600} c="#24322e">
-                    {item.label}
-                  </Text>
-                </Group>
-              </Card>
+              <SpecialCategories item={item} />
             </Link>
           );
         })}
       </SimpleGrid>
 
-      <FilterSection title="City" description="Choose where you want to dine first.">
-        <CityTileGrid items={cityTiles} />
-      </FilterSection>
+      <Group justify="space-between" align="flex-end">
+        <SectionTitle title="Explore by city" />
+        <Text size="sm" c="#6f7d78" mb={4}>
+          View all
+        </Text>
+      </Group>
+      <CityTileGrid items={cityTiles} />
 
-      <SimpleGrid cols={2} spacing="md" verticalSpacing="md">
-        <FilterSection title="Cuisine" description="Pick a dining mood.">
-          <ChipRow items={cuisines} />
-        </FilterSection>
+      <Box>
+        <SectionTitle title="Cuisine" />
+        <ChipRow
+          items={cuisines}
+          value={selectedCuisine}
+          onChange={setSelectedCuisine}
+        />
+      </Box>
 
-        <FilterSection title="Price Range" description="Match the budget.">
-          <ChipRow items={priceRanges} defaultValue="150K~300K" compact />
-        </FilterSection>
-      </SimpleGrid>
-
-      <Card
-        radius="xl"
-        p="lg"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.98) 100%)",
-          border: "1px solid rgba(207, 183, 145, 0.2)",
-        }}
-      >
-        <Group justify="space-between" align="center">
-          <Box>
-            <Text size="sm" c="#7d7366">
-              This week&apos;s focus
-            </Text>
-            <Title order={3} size="h4" c="#21312c">
-              Instant booking first
-            </Title>
-          </Box>
-          <Badge color="oligoTeal" radius="xl" variant="light">
-            MVP priority
-          </Badge>
-        </Group>
-      </Card>
+      <Box>
+        <SectionTitle title="Price range" />
+        <ChipRow
+          items={priceRanges}
+          value={selectedPriceRange}
+          onChange={setSelectedPriceRange}
+          compact
+        />
+      </Box>
     </MobileShell>
   );
 }
