@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Box,
@@ -56,7 +56,7 @@ const actionChipStyles = { label: { borderRadius: 999, background: uiColors.surf
 function nextOption<T>(list: readonly T[], current: T): T { const i = list.indexOf(current); return list[(i + 1) % list.length]; }
 function filterChipStyles(active: boolean) { return active ? { label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 42, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : { label: { borderRadius: 10, background: uiColors.surface, border: `1px solid ${uiColors.border}`, minHeight: 42, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } }; }
 
-export default function RestaurantsPage() {
+function RestaurantsContent() {
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category") ?? undefined;
   const citySlug = searchParams.get("city") ?? undefined;
@@ -181,5 +181,13 @@ export default function RestaurantsPage() {
         </Box>
       </Drawer>
     </>
+  );
+}
+
+export default function RestaurantsPage() {
+  return (
+    <Suspense fallback={<MobileShell title="Restaurant List" subtitle="Loading restaurants..."><Text>Loading...</Text></MobileShell>}>
+      <RestaurantsContent />
+    </Suspense>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
 import { DatePicker } from "@mantine/dates";
@@ -23,7 +23,7 @@ function getFirstAvailableDate(slotMatrix: Record<string, Record<string, string[
     .find(([, guests]) => Object.values(guests).some((slots) => slots.length > 0))?.[0] ?? bookingStartDate.format("YYYY-MM-DD");
 }
 
-export default function ReservationPage() {
+function ReservationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const slug = searchParams.get("restaurant") ?? "royal-pavilion";
@@ -251,5 +251,13 @@ export default function ReservationPage() {
         ) : null}
       </Modal>
     </MobileShell>
+  );
+}
+
+export default function ReservationPage() {
+  return (
+    <Suspense fallback={<MobileShell title="Book a table" subtitle="Loading booking details..." bottomNav={null}><Text>Loading...</Text></MobileShell>}>
+      <ReservationContent />
+    </Suspense>
   );
 }
