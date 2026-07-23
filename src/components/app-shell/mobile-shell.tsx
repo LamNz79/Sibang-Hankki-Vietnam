@@ -16,8 +16,10 @@ type MobileShellProps = {
   title: string;
   subtitle?: string;
   showBack?: boolean;
+  backHref?: string;
   children: ReactNode;
   bottomNav?: ReactNode;
+  footerContent?: ReactNode;
   headerContent?: ReactNode;
 };
 
@@ -25,13 +27,15 @@ export function MobileShell({
   title,
   subtitle,
   showBack = false,
+  backHref = "/",
   children,
   bottomNav,
+  footerContent,
   headerContent,
 }: MobileShellProps) {
   return (
     <Box
-      mih="100vh"
+      mih="100dvh"
       bg="#f3f5f4"
       p={0}
     >
@@ -39,7 +43,7 @@ export function MobileShell({
         mx="auto"
         w="100%"
         maw={560}
-        h={"100vh"}
+        h="100dvh"
         miw={0}
         style={{
           display: "flex",
@@ -81,7 +85,7 @@ export function MobileShell({
                   {showBack ? (
                     <ActionIcon
                       component="a"
-                      href="/"
+                      href={backHref}
                       variant="subtle"
                       color="gray"
                       radius="xl"
@@ -128,7 +132,7 @@ export function MobileShell({
           <Stack gap={18}>{children}</Stack>
         </Box>
 
-        {bottomNav ? (
+        {footerContent || bottomNav ? (
           <Box
             px={16}
             pt={8}
@@ -143,7 +147,7 @@ export function MobileShell({
                 "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.82) 26%, rgba(255,255,255,0.96) 100%)",
             }}
           >
-            {bottomNav}
+            {footerContent ?? bottomNav}
           </Box>
         ) : null}
       </Box>

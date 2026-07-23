@@ -19,7 +19,15 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
       title="Restaurant Details"
       subtitle="Restaurant profile"
       showBack
+      backHref="/restaurants"
       bottomNav={null}
+      footerContent={
+        <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
+          <Button fullWidth radius="md" size="lg" color="oligoTeal">
+            Select date & time
+          </Button>
+        </Link>
+      }
     >
       <Box
         h={280}
@@ -82,13 +90,6 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
 
       <Text c={uiColors.textSecondary}>{restaurant.summary}</Text>
 
-      <Box style={{ marginTop: "auto" }}>
-        <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
-          <Button fullWidth radius="md" size="lg" color="oligoTeal">
-            Select date & time
-          </Button>
-        </Link>
-      </Box>
     </MobileShell>
   );
 }
