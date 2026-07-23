@@ -54,6 +54,9 @@ const cityLabels: Record<string, string> = {
 
 const actionChipStyles = { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.borderStrong}`, minHeight: 40, paddingInline: 14, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } };
 function nextOption<T>(list: readonly T[], current: T): T { const i = list.indexOf(current); return list[(i + 1) % list.length]; }
+function isOption<T extends string>(options: readonly T[], value: string | null): value is T {
+  return value !== null && (options as readonly string[]).includes(value);
+}
 function filterChipStyles(active: boolean) { return active ? { label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 42, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : { label: { borderRadius: 10, background: uiColors.surface, border: `1px solid ${uiColors.border}`, minHeight: 42, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } }; }
 
 function RestaurantsContent() {
@@ -69,9 +72,18 @@ function RestaurantsContent() {
     : selectedCity
       ? `Restaurants in ${selectedCity}`
       : "Restaurant List";
-  const [sortBy, setSortBy] = useState<SortKey>("recommended");
-  const [priceFilter, setPriceFilter] = useState<PriceKey>("all");
-  const [cuisineFilter, setCuisineFilter] = useState<CuisineKey | "all">("all");
+  const [sortBy, setSortBy] = useState<SortKey>(() => {
+    const requested = searchParams.get("sort");
+    return isOption(sortOptions, requested) ? requested : "recommended";
+  });
+  const [priceFilter, setPriceFilter] = useState<PriceKey>(() => {
+    const requested = searchParams.get("price");
+    return isOption(priceOptions, requested) ? requested : "all";
+  });
+  const [cuisineFilter, setCuisineFilter] = useState<CuisineKey | "all">(() => {
+    const requested = searchParams.get("cuisine");
+    return isOption(cuisineOptions, requested) ? requested : "all";
+  });
   const [selectedBenefits, setSelectedBenefits] = useState<BenefitKey[]>([]);
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [query, setQuery] = useState("");

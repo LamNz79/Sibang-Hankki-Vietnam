@@ -3,6 +3,7 @@
 import { Box, Group, SimpleGrid, Text } from "@mantine/core";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
 import { HomeHeader } from "@/components/home/home-header";
@@ -12,11 +13,33 @@ import { LocationDrawer } from "@/components/home/location-drawer";
 import { SectionTitle } from "@/components/ui/section-title";
 import SpecialCategories from "@/components/home/special-categories";
 
+const quickSortOptions = ["Recommended", "Top rated", "Earliest available"];
+const sortQueryValues: Record<string, string> = {
+  Recommended: "recommended",
+  "Top rated": "rating",
+  "Earliest available": "earliest",
+};
+const cuisineQueryValues: Record<string, string> = {
+  Western: "western",
+  Chinese: "chinese",
+  Vietnamese: "vietnamese",
+  Japanese: "japanese",
+};
+const priceQueryValues: Record<string, string> = {
+  "Under 150K": "under150",
+  "150K-300K": "under300",
+  "Over 300K": "over300",
+};
+
 export default function Home() {
+  const router = useRouter();
   const [location, setLocation] = useState("Ho Chi Minh City");
   const [locationOpened, setLocationOpened] = useState(false);
-  const [selectedCuisine, setSelectedCuisine] = useState(cuisines[0]);
-  const [selectedPriceRange, setSelectedPriceRange] = useState(priceRanges[0]);
+
+  const openRestaurantList = (key: "sort" | "cuisine" | "price", value: string) => {
+    const params = new URLSearchParams({ location, [key]: value });
+    router.push(`/restaurants?${params.toString()}`);
+  };
 
   return (
     <MobileShell
@@ -72,11 +95,18 @@ export default function Home() {
       <CityTileGrid items={cityTiles} />
 
       <Box>
+        <SectionTitle title="Sort by" />
+        <ChipRow
+          items={quickSortOptions}
+          onChange={(value) => openRestaurantList("sort", sortQueryValues[value])}
+        />
+      </Box>
+
+      <Box>
         <SectionTitle title="Cuisine" />
         <ChipRow
           items={cuisines}
-          value={selectedCuisine}
-          onChange={setSelectedCuisine}
+          onChange={(value) => openRestaurantList("cuisine", cuisineQueryValues[value])}
         />
       </Box>
 
@@ -84,8 +114,7 @@ export default function Home() {
         <SectionTitle title="Price range" />
         <ChipRow
           items={priceRanges}
-          value={selectedPriceRange}
-          onChange={setSelectedPriceRange}
+          onChange={(value) => openRestaurantList("price", priceQueryValues[value])}
           compact
         />
       </Box>
