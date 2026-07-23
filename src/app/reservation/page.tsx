@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
@@ -13,8 +12,8 @@ import { CustomerReservation, saveReservation } from "@/features/reservations/re
 import { uiColors } from "@/components/ui/theme-tokens";
 
 const guestOptions = [2, 4, 6] as const;
-const bookingStartDate = dayjs("2026-07-22");
-const bookingEndDate = dayjs("2026-08-31");
+const bookingStartDate = dayjs().startOf("day");
+const bookingEndDate = bookingStartDate.add(60, "day");
 
 function getFirstAvailableDate(slotMatrix: Record<string, Record<string, string[]>>) {
   return Object.entries(slotMatrix)
@@ -66,8 +65,25 @@ function ReservationContent() {
   };
 
   return (
-    <MobileShell title="Book a table" subtitle="Table booking" showBack bottomNav={null}>
-      <Card radius="xl" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+    <MobileShell
+      title="Book a table"
+      subtitle="Table booking"
+      backHref={`/restaurants/${restaurant.slug}`}
+      bottomNav={null}
+      footerContent={
+        <Button
+          fullWidth
+          radius="md"
+          size="lg"
+          color="oligoTeal"
+          disabled={!selectedTime}
+          onClick={confirmReservation}
+        >
+          {selectedTime ? `Confirm ${selectedTime}` : "Select an available time"}
+        </Button>
+      }
+    >
+      <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
         <Group wrap="nowrap">
           <Box w={60} h={60} style={{ borderRadius: 12, background: `repeating-linear-gradient(135deg, ${restaurant.heroAccent} 0 8px, #ffffff 8px 16px)` }} />
           <Stack gap={2}>
@@ -79,7 +95,7 @@ function ReservationContent() {
 
       <Stack gap="sm">
         <Text fw={700} size="lg">Date</Text>
-        <Card radius="xl" p="sm" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+        <Card radius="lg" p="sm" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
           <Stack gap="sm">
             <DatePicker
               fullWidth
@@ -174,7 +190,7 @@ function ReservationContent() {
             })}
           </SimpleGrid>
         ) : (
-          <Card radius="xl" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surfaceAlt }}>
+          <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surfaceAlt }}>
             <Stack gap={4}>
               <Text fw={700} c={uiColors.textPrimary}>No slots for this date yet</Text>
               <Text size="sm" c={uiColors.textSecondary}>Try another date or guest count. We only show available times once the restaurant opens slots.</Text>
@@ -182,15 +198,6 @@ function ReservationContent() {
           </Card>
         )}
       </Stack>
-
-      <Box style={{ marginTop: "auto" }}>
-        <Button fullWidth radius="md" size="lg" color="oligoTeal" disabled={!selectedTime} onClick={confirmReservation}>
-          {selectedTime ? `Confirm ${selectedTime}` : "No slots available"}
-        </Button>
-        <Link href={`/restaurants/${restaurant.slug}`} style={{ display: "block", marginTop: 12, textAlign: "center", color: uiColors.textSecondary, textDecoration: "none" }}>
-          Back to details
-        </Link>
-      </Box>
 
       <Modal
         opened={successOpened}

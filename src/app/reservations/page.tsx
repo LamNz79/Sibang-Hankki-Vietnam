@@ -42,7 +42,7 @@ export default function ReservationsPage() {
               key={reservation.id}
               component={Link}
               href={`/restaurants/${reservation.restaurantSlug}`}
-              radius="xl"
+              radius="lg"
               p="md"
               style={{
                 color: "inherit",
@@ -85,11 +85,19 @@ export default function ReservationsPage() {
           ))}
         </Stack>
       ) : (
-        <Card radius="xl" p="xl" style={{ border: `1px dashed ${uiColors.borderStrong}`, background: uiColors.surfaceAlt }}>
+        <Card radius="lg" p="xl" style={{ border: `1px dashed ${uiColors.borderStrong}`, background: uiColors.surfaceAlt }}>
           <Stack align="center" gap="sm">
             <Text fw={700} c={uiColors.textPrimary}>No upcoming reservations</Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>Your confirmed restaurant bookings will appear here.</Text>
-            <Button component={Link} href="/restaurants" color="oligoTeal" radius="md">
+            <Button
+              component={Link}
+              href="/restaurants"
+              color="oligoTeal"
+              radius="md"
+              size="md"
+              fullWidth
+              style={{ background: uiColors.brandPrimary, color: uiColors.surface }}
+            >
               Explore restaurants
             </Button>
           </Stack>
@@ -98,7 +106,7 @@ export default function ReservationsPage() {
 
       <Stack gap="sm">
         <Text fw={700} size="lg" c={uiColors.textPrimary}>Past reservations</Text>
-        <Card radius="lg" p="lg" style={{ border: `1px dashed ${uiColors.borderStrong}`, background: uiColors.surface }}>
+        <Card radius="md" p="lg" style={{ border: `1px dashed ${uiColors.borderStrong}`, background: uiColors.surface }}>
           <Text size="sm" ta="center" c={uiColors.textSecondary}>Completed visits and reviews will appear here.</Text>
         </Card>
       </Stack>

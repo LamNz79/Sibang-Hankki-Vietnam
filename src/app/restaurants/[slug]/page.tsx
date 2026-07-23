@@ -18,8 +18,15 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
     <MobileShell
       title="Restaurant Details"
       subtitle="Restaurant profile"
-      showBack
+      backHref="/restaurants"
       bottomNav={null}
+      footerContent={
+        <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
+          <Button fullWidth radius="md" size="lg" color="oligoTeal">
+            Select date & time
+          </Button>
+        </Link>
+      }
     >
       <Box
         h={280}
@@ -55,7 +62,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
         </Group>
       </Stack>
 
-      <Card radius="xl" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+      <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
         <Stack gap="md">
           <Group gap="xs">
             <IconClock size={16} color={uiColors.textSecondary} />
@@ -68,7 +75,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
         </Stack>
       </Card>
 
-      <Card radius="xl" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.brandPrimarySoft }}>
+      <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.brandPrimarySoft }}>
         <Group gap="sm" wrap="nowrap" align="flex-start">
           <ThemeIcon radius="xl" size={38} variant="light" style={{ background: "rgba(255,255,255,0.72)", color: uiColors.brandPrimary, flexShrink: 0 }}>
             <IconCalendarTime size={18} />
@@ -82,13 +89,6 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
 
       <Text c={uiColors.textSecondary}>{restaurant.summary}</Text>
 
-      <Box style={{ marginTop: "auto" }}>
-        <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
-          <Button fullWidth radius="md" size="lg" color="oligoTeal">
-            Select date & time
-          </Button>
-        </Link>
-      </Box>
     </MobileShell>
   );
 }
