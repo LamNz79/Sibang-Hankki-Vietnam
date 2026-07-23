@@ -18,7 +18,6 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
     <MobileShell
       title="Restaurant Details"
       subtitle="Restaurant profile"
-      showBack
       backHref="/restaurants"
       bottomNav={null}
       footerContent={
@@ -63,7 +62,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
         </Group>
       </Stack>
 
-      <Card radius="xl" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+      <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
         <Stack gap="md">
           <Group gap="xs">
             <IconClock size={16} color={uiColors.textSecondary} />
@@ -76,7 +75,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
         </Stack>
       </Card>
 
-      <Card radius="xl" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.brandPrimarySoft }}>
+      <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.brandPrimarySoft }}>
         <Group gap="sm" wrap="nowrap" align="flex-start">
           <ThemeIcon radius="xl" size={38} variant="light" style={{ background: "rgba(255,255,255,0.72)", color: uiColors.brandPrimary, flexShrink: 0 }}>
             <IconCalendarTime size={18} />

@@ -68,7 +68,6 @@ function ReservationContent() {
     <MobileShell
       title="Book a table"
       subtitle="Table booking"
-      showBack
       backHref={`/restaurants/${restaurant.slug}`}
       bottomNav={null}
       footerContent={
@@ -84,7 +83,7 @@ function ReservationContent() {
         </Button>
       }
     >
-      <Card radius="xl" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+      <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
         <Group wrap="nowrap">
           <Box w={60} h={60} style={{ borderRadius: 12, background: `repeating-linear-gradient(135deg, ${restaurant.heroAccent} 0 8px, #ffffff 8px 16px)` }} />
           <Stack gap={2}>
@@ -96,7 +95,7 @@ function ReservationContent() {
 
       <Stack gap="sm">
         <Text fw={700} size="lg">Date</Text>
-        <Card radius="xl" p="sm" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+        <Card radius="lg" p="sm" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
           <Stack gap="sm">
             <DatePicker
               fullWidth
@@ -191,7 +190,7 @@ function ReservationContent() {
             })}
           </SimpleGrid>
         ) : (
-          <Card radius="xl" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surfaceAlt }}>
+          <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surfaceAlt }}>
             <Stack gap={4}>
               <Text fw={700} c={uiColors.textPrimary}>No slots for this date yet</Text>
               <Text size="sm" c={uiColors.textSecondary}>Try another date or guest count. We only show available times once the restaurant opens slots.</Text>

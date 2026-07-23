@@ -116,10 +116,10 @@ function RestaurantsContent() {
 
   return (
     <>
-      <MobileShell title={pageTitle} subtitle="Filtered results" showBack bottomNav={<BottomNav activePath="/restaurants" />}>
+      <MobileShell title={pageTitle} subtitle="Filtered results" backHref="/" bottomNav={<BottomNav activePath="/restaurants" />}>
         <TextInput radius="xl" size="md" placeholder="Search restaurant or area" value={query} onChange={(e) => setQuery(e.currentTarget.value)} leftSection={<IconSearch size={16} color={uiColors.textSecondary} />} styles={{ input: { border: `1px solid ${uiColors.border}`, background: uiColors.surface, height: 50, color: uiColors.textPrimary } }} />
 
-        <Card radius="xl" p="md" style={{ background: uiColors.surfaceAlt, border: `1px solid ${uiColors.border}` }}>
+        <Card radius="lg" p="md" style={{ background: uiColors.surfaceAlt, border: `1px solid ${uiColors.border}` }}>
           <Group wrap="nowrap" align="flex-start">
             <ThemeIcon radius="xl" size={40} variant="light" style={{ background: uiColors.brandPrimarySoft, color: uiColors.brandPrimary, flexShrink: 0 }}>
               <IconClock size={18} />
@@ -154,7 +154,7 @@ function RestaurantsContent() {
 
           return (
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
-              <Card radius="xl" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
+              <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
                 <Group gap={0} wrap="nowrap" align="stretch">
                   <Box w={96} miw={96} style={{ background: `repeating-linear-gradient(135deg, ${restaurant.heroAccent} 0 8px, #ffffff 8px 16px)`, display: "flex", alignItems: "center", justifyContent: "center", color: uiColors.textSecondary, fontWeight: 700, fontSize: 12 }}>
                     IMAGE

@@ -5,6 +5,7 @@ import { Notifications } from "@mantine/notifications";
 
 const theme = createTheme({
   primaryColor: "oligoTeal",
+  primaryShade: 9,
   defaultRadius: "lg",
   fontFamily: "var(--font-geist-sans), sans-serif",
   headings: {

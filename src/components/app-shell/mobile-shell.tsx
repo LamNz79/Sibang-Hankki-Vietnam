@@ -1,21 +1,17 @@
 import {
-  ActionIcon,
-  Badge,
   Box,
-  Card,
   Group,
   rem,
   Stack,
-  Text,
   Title,
 } from "@mantine/core";
-import { IconBell, IconChevronLeft } from "@tabler/icons-react";
+import { IconChevronLeft } from "@tabler/icons-react";
 import { ReactNode } from "react";
+import { uiColors } from "@/components/ui/theme-tokens";
 
 type MobileShellProps = {
   title: string;
   subtitle?: string;
-  showBack?: boolean;
   backHref?: string;
   children: ReactNode;
   bottomNav?: ReactNode;
@@ -26,8 +22,7 @@ type MobileShellProps = {
 export function MobileShell({
   title,
   subtitle,
-  showBack = false,
-  backHref = "/",
+  backHref,
   children,
   bottomNav,
   footerContent,
@@ -54,67 +49,61 @@ export function MobileShell({
       >
         <Box
           px={16}
-          pt={`max(${rem(12)}, env(safe-area-inset-top))`}
-          pb={12}
+          pt={`max(${rem(8)}, env(safe-area-inset-top))`}
+          pb={8}
           style={{
             flexShrink: 0,
             position: "sticky",
             top: 0,
             zIndex: 20,
-            backdropFilter: "blur(14px)",
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.82) 72%, rgba(255,255,255,0) 100%)",
+            background: "rgba(255,255,255,0.98)",
+            borderBottom: `1px solid ${uiColors.border}`,
           }}
         >
           {headerContent ? (
             headerContent
           ) : (
-            <Card
-              radius="xl"
-              p="md"
-              shadow="sm"
-              style={{
-                border: "1px solid rgba(207, 183, 145, 0.24)",
-                background: "rgba(255,255,255,0.92)",
-                backdropFilter: "blur(16px)",
-                boxShadow: "0 12px 30px rgba(100, 71, 34, 0.08)",
-              }}
+            <Group
+              h={44}
+              gap="sm"
+              wrap="nowrap"
+              aria-label={subtitle ? `${title}: ${subtitle}` : title}
             >
-              <Group justify="space-between" align="flex-start" wrap="nowrap">
-                <Group align="flex-start" wrap="nowrap">
-                  {showBack ? (
-                    <ActionIcon
-                      component="a"
-                      href={backHref}
-                      variant="subtle"
-                      color="gray"
-                      radius="xl"
-                      size="lg"
-                    >
-                      <IconChevronLeft size={18} />
-                    </ActionIcon>
-                  ) : null}
+              <Box w={40} miw={40}>
+                {backHref ? (
+                  <a
+                    href={backHref}
+                    aria-label="Go back"
+                    style={{
+                      width: 40,
+                      height: 40,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 999,
+                      color: uiColors.textPrimary,
+                      background: uiColors.surfaceMuted,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <IconChevronLeft size={22} />
+                  </a>
+                ) : null}
+              </Box>
 
-                  <Stack gap={2}>
-                    <Badge color="oligoOrange" variant="light" w="fit-content" size="sm">
-                      Sibang customer
-                    </Badge>
-                    <Title order={3} size="h4" c="#17352f">
-                      {title}
-                    </Title>
-                    {subtitle ? (
-                      <Text c="#6f7b74" size="sm">
-                        {subtitle}
-                      </Text>
-                    ) : null}
-                  </Stack>
-                </Group>
+              <Title
+                order={2}
+                size="md"
+                ta="center"
+                lineClamp={1}
+                c={uiColors.textPrimary}
+                style={{ flex: 1 }}
+              >
+                {title}
+              </Title>
 
-                <ActionIcon variant="light" color="oligoTeal" radius="xl" size="lg">
-                  <IconBell size={18} />
-                </ActionIcon>
-              </Group>
-            </Card>
+              <Box w={40} miw={40} />
+            </Group>
           )}
         </Box>
 
