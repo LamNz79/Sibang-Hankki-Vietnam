@@ -1,5 +1,5 @@
 import { Chip } from "@mantine/core";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 type SelectionChipProps = {
   checked?: boolean;

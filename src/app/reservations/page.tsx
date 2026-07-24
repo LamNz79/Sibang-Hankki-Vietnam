@@ -12,7 +12,7 @@ import {
   getReservationsSnapshot,
   subscribeToReservations,
 } from "@/features/reservations/reservation-storage";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 export default function ReservationsPage() {
   const reservations = useSyncExternalStore(

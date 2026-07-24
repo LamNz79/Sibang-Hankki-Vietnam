@@ -3,7 +3,7 @@ import { Badge, Button, Card, Group, Stack, Text } from "@mantine/core";
 import { IconSwitchHorizontal } from "@tabler/icons-react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const profileSections = [
   { title: "Account", description: "Name, phone number, and email preferences" },

@@ -1,7 +1,7 @@
 import { Card, ThemeIcon, Text } from '@mantine/core'
 import { IconProps } from '@tabler/icons-react';
 import React, { ForwardRefExoticComponent, RefAttributes } from 'react'
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 type SpecialCategoryProps = {
   item: {
     label: string;
