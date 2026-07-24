@@ -22,7 +22,7 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/components/owner/owner-shell";
 import { ownerCampaigns } from "@/features/owner/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 export default function OwnerMarketingPage() {
   const [campaignOpened, setCampaignOpened] = useState(false);

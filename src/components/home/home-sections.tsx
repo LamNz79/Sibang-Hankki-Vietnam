@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Box, Card, Group, Stack, Text, Title } from "@mantine/core";
 import { SelectionChip } from "@/components/ui/selection-chip";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 export function HeroBanner() {
   return (

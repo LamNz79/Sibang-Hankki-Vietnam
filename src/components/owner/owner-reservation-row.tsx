@@ -6,7 +6,7 @@ import {
   GuestContextBadges,
   ReservationStatusBadge,
 } from "@/components/owner/owner-badges";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 export function OwnerReservationRow({
   reservation,

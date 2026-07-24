@@ -4,7 +4,7 @@ import { Box, Button, Card, Group, Stack, Text, ThemeIcon, Title } from "@mantin
 import { IconCalendarTime, IconClock, IconMapPin, IconStarFilled } from "@tabler/icons-react";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
 import { getRestaurantAvailabilitySummary, getRestaurantBySlug } from "@/features/restaurants/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 export default async function RestaurantDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

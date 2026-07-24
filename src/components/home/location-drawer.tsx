@@ -15,7 +15,7 @@ import {
 import { IconCheck, IconCurrentLocation } from "@tabler/icons-react";
 import { useState } from "react";
 import { locationGroups, popularAreas, recentAreas } from "@/components/home/home-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 type LocationDrawerProps = {
   opened: boolean;
@@ -70,7 +70,7 @@ export function LocationDrawer({
         </Group>
 
         <Stack gap="sm">
-          <Text fw={700} c="#20312c">
+          <Text fw={700} c={uiColors.textPrimary}>
             Popular areas
           </Text>
           <Group
@@ -111,7 +111,11 @@ export function LocationDrawer({
                   ta="center"
                   fw={selectedLocation === area ? 700 : 600}
                   size="sm"
-                  c={selectedLocation === area ? "#005f70" : "#23312c"}
+                  c={
+                    selectedLocation === area
+                      ? uiColors.brandPrimaryStrong
+                      : uiColors.textPrimary
+                  }
                 >
                   {area}
                 </Text>
@@ -121,7 +125,7 @@ export function LocationDrawer({
         </Stack>
 
         <Stack gap="sm">
-          <Text fw={700} c="#20312c">
+          <Text fw={700} c={uiColors.textPrimary}>
             Recent locations
           </Text>
           <ScrollArea
@@ -135,7 +139,7 @@ export function LocationDrawer({
                 background: "transparent",
               },
               thumb: {
-                background: "#d5dfdc",
+                background: uiColors.border,
               },
             }}
           >
@@ -173,7 +177,7 @@ export function LocationDrawer({
         <Grid align="stretch">
           <Grid.Col span={4} style={{ display: "flex" }}>
             <Stack gap={8} style={{ flex: 1 }}>
-              <Text fw={700} c="#20312c">
+              <Text fw={700} c={uiColors.textPrimary}>
                 Cities
               </Text>
               <Stack
@@ -215,7 +219,7 @@ export function LocationDrawer({
           </Grid.Col>
           <Grid.Col span={8}>
             <Stack gap={8}>
-              <Text fw={700} c="#20312c">
+              <Text fw={700} c={uiColors.textPrimary}>
                 Areas
               </Text>
               <ScrollArea
@@ -230,7 +234,7 @@ export function LocationDrawer({
                     background: "transparent",
                   },
                   thumb: {
-                    background: "#d5dfdc",
+                    background: uiColors.border,
                   },
                 }}
               >

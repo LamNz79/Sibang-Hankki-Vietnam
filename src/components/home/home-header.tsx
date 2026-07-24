@@ -2,6 +2,7 @@
 
 import { ActionIcon, Badge, Box, Group, Stack, Text, TextInput, UnstyledButton } from "@mantine/core";
 import { IconBell, IconChevronDown, IconMapPinFilled, IconSearch } from "@tabler/icons-react";
+import { uiColors } from "@/theme";
 
 type HomeHeaderProps = {
   location: string;
@@ -19,7 +20,7 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
           gap: 12,
         }}
       >
-        <Text fw={800} size="32px" lh={1.1} c="#005f70">
+        <Text fw={800} size="32px" lh={1.1} c={uiColors.brandPrimaryStrong}>
           Sibang Hankki
         </Text>
 
@@ -40,11 +41,11 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
       <Group justify="space-between" align="center">
         <UnstyledButton onClick={onOpenLocation}>
           <Group gap={6} wrap="nowrap">
-            <IconMapPinFilled size={16} color="#005f70" />
-            <Text fw={700} size="sm" c="#20312c">
+            <IconMapPinFilled size={16} color={uiColors.brandPrimaryStrong} />
+            <Text fw={700} size="sm" c={uiColors.textPrimary}>
               {location}
             </Text>
-            <IconChevronDown size={16} color="#6f7d78" />
+            <IconChevronDown size={16} color={uiColors.textSecondary} />
           </Group>
         </UnstyledButton>
 
@@ -65,8 +66,8 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
         leftSection={<IconSearch size={16} />}
         styles={{
           input: {
-            border: "1px solid #d5dfdc",
-            background: "#ffffff",
+            border: `1px solid ${uiColors.border}`,
+            background: uiColors.surface,
             height: 52,
             color: "#22312d",
             boxShadow: "none",

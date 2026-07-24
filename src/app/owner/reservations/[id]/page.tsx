@@ -28,7 +28,7 @@ import {
   getOwnerReservation,
   type OwnerReservationStatus,
 } from "@/features/owner/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 function visitActionStyle(active = false) {
   return {
@@ -111,21 +111,21 @@ export default function OwnerGuestArrivalPage() {
           radius="lg"
           p="md"
           style={{
-            background: "#fffaf2",
-            border: "1px solid #ead1a8",
+            background: uiColors.statusWarningSurface,
+            border: `1px solid ${uiColors.statusWarningBorder}`,
           }}
         >
           <Group gap="sm" align="flex-start" wrap="nowrap">
             <IconMessage
               size={18}
-              color="#8b5a14"
+              color={uiColors.statusWarningText}
               style={{ marginTop: 2 }}
             />
             <Stack gap={4}>
-              <Text fw={750} size="sm" c="#6f4810">
+              <Text fw={750} size="sm" c={uiColors.statusWarningTextStrong}>
                 Service notes
               </Text>
-              <Text size="sm" c="#6f4810">
+              <Text size="sm" c={uiColors.statusWarningTextStrong}>
                 Prefers window seating · Korean sharing set pre-ordered ·
                 birthday dessert request
               </Text>
