@@ -20,7 +20,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 type OwnerShellProps = {
   title: string;
@@ -117,7 +117,7 @@ export function OwnerShell({
           style={{
             flexShrink: 0,
             zIndex: 20,
-            background: "rgba(255,255,255,0.98)",
+            background: uiColors.surfaceOverlay,
             borderBottom: `1px solid ${uiColors.border}`,
           }}
         >
@@ -198,7 +198,7 @@ export function OwnerShell({
             py={10}
             style={{
               flexShrink: 0,
-              background: "rgba(255,255,255,0.98)",
+              background: uiColors.surfaceOverlay,
               borderTop: `1px solid ${uiColors.border}`,
             }}
           >
@@ -213,7 +213,7 @@ export function OwnerShell({
             pb="max(7px, env(safe-area-inset-bottom))"
             style={{
               flexShrink: 0,
-              background: "rgba(255,255,255,0.98)",
+              background: uiColors.surfaceOverlay,
               borderTop: `1px solid ${uiColors.border}`,
             }}
           >

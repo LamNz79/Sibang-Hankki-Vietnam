@@ -6,7 +6,7 @@ import {
   IconMapSearch,
   IconUserCircle,
 } from "@tabler/icons-react";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const items = [
   { href: "/", label: "Home", icon: IconHome2 },

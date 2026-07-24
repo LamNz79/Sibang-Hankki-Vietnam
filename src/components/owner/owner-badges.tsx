@@ -3,7 +3,7 @@ import type {
   GuestTier,
   OwnerReservationStatus,
 } from "@/features/owner/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const statusLabels: Record<OwnerReservationStatus, string> = {
   confirmed: "Confirmed",
@@ -26,8 +26,12 @@ export function ReservationStatusBadge({
       variant="light"
       styles={{
         root: {
-          background: isPending ? "#fff2dd" : uiColors.brandPrimarySoft,
-          color: isPending ? "#9a5a00" : uiColors.brandPrimary,
+          background: isPending
+            ? uiColors.statusWarningSurface
+            : uiColors.statusSuccessSurface,
+          color: isPending
+            ? uiColors.statusWarningText
+            : uiColors.statusSuccessText,
           textTransform: "none",
           fontWeight: 700,
         },
@@ -78,8 +82,8 @@ export function GuestContextBadges({
           variant="light"
           styles={{
             root: {
-              background: "#eef4ff",
-              color: "#406397",
+              background: uiColors.statusInfoSurface,
+              color: uiColors.statusInfoText,
               textTransform: "none",
               fontWeight: 700,
             },

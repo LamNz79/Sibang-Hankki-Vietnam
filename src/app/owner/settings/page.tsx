@@ -16,7 +16,7 @@ import {
   IconArmchair,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/components/owner/owner-shell";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const settings = [
   {

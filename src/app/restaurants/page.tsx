@@ -32,7 +32,7 @@ import {
   type BenefitKey,
   type CuisineKey,
 } from "@/features/restaurants/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 type SortKey = "recommended" | "rating" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
@@ -136,7 +136,7 @@ function RestaurantsContent() {
           {[searchScope, "Available"].map((item) => <Chip key={item} radius="xl" size="sm" checked readOnly styles={{ label: { borderRadius: 10, background: uiColors.surfaceMuted, border: `1px solid ${uiColors.border}`, minHeight: 30, paddingInline: 10, color: uiColors.textPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } }}>{item}</Chip>)}
         </Group>
 
-        <Box style={{ position: "sticky", top: 0, zIndex: 30, marginInline: -16, marginTop: -6, paddingInline: 16, paddingTop: 10, paddingBottom: 12, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(16px)", borderTop: `1px solid ${uiColors.surface}`, borderBottom: `1px solid ${uiColors.border}`, boxShadow: "0 10px 24px rgba(32, 49, 44, 0.08)" }}>
+        <Box style={{ position: "sticky", top: 0, zIndex: 30, marginInline: -16, marginTop: -6, paddingInline: 16, paddingTop: 10, paddingBottom: 12, background: uiColors.surfaceOverlay, backdropFilter: "blur(16px)", borderTop: `1px solid ${uiColors.surface}`, borderBottom: `1px solid ${uiColors.border}`, boxShadow: `0 10px 24px ${uiColors.shadowSoft}` }}>
           <Group gap="sm" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
             <Chip radius="xl" size="md" checked={sortBy !== "recommended"} onChange={() => setSortBy((current) => nextOption(sortOptions, current))} styles={sortBy !== "recommended" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconArrowsSort size={14} />}>{sortLabels[sortBy]}</Chip>
             <Chip radius="xl" size="md" checked={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0} onChange={() => setFiltersOpened(true)} styles={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0 ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconAdjustmentsHorizontal size={14} />}>Filters</Chip>
@@ -188,7 +188,7 @@ function RestaurantsContent() {
           <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">Cuisine</Text><Group gap="sm">{cuisineOptions.filter((item) => item !== "all").map((item) => <Chip key={item} checked={cuisineFilter === item} onChange={() => setCuisineFilter(cuisineFilter === item ? "all" : item)} styles={filterChipStyles(cuisineFilter === item)}>{cuisineLabels[item]}</Chip>)}</Group></Stack></Box>
           <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">Special benefits</Text><Group gap="sm">{benefitOptions.map((item) => { const active = selectedBenefits.includes(item); return <Chip key={item} checked={active} onChange={() => setSelectedBenefits((current) => active ? current.filter((value) => value !== item) : [...current, item])} styles={filterChipStyles(active)}>{benefitLabels[item]}</Chip>; })}</Group></Stack></Box>
         </Stack>
-        <Box style={{ position: "sticky", bottom: 0, marginTop: "auto", paddingTop: 16, paddingBottom: 16, background: "rgba(255,255,255,0.98)", borderTop: `1px solid ${uiColors.border}` }}>
+        <Box style={{ position: "sticky", bottom: 0, marginTop: "auto", paddingTop: 16, paddingBottom: 16, background: uiColors.surfaceOverlay, borderTop: `1px solid ${uiColors.border}` }}>
           <Button radius="md" fullWidth size="lg" color="oligoTeal" onClick={() => setFiltersOpened(false)}>Show {filteredRestaurants.length} restaurants</Button>
         </Box>
       </Drawer>

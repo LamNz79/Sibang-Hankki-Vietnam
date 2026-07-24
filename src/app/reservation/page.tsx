@@ -9,7 +9,7 @@ import { IconCalendarEvent, IconCheck, IconClock, IconUsers } from "@tabler/icon
 import { MobileShell } from "@/components/app-shell/mobile-shell";
 import { getRestaurantBySlug, restaurantRecords } from "@/features/restaurants/mock-data";
 import { CustomerReservation, saveReservation } from "@/features/reservations/reservation-storage";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const guestOptions = [2, 4, 6] as const;
 const bookingStartDate = dayjs().startOf("day");

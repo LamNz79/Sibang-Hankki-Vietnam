@@ -19,7 +19,7 @@ import {
 import { OwnerShell } from "@/components/owner/owner-shell";
 import { OwnerReservationRow } from "@/components/owner/owner-reservation-row";
 import { ownerReservations } from "@/features/owner/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const metrics = [
   {

@@ -15,7 +15,7 @@ import { IconChevronRight, IconSearch } from "@tabler/icons-react";
 import { OwnerShell } from "@/components/owner/owner-shell";
 import { GuestContextBadges } from "@/components/owner/owner-badges";
 import { ownerGuests } from "@/features/owner/mock-data";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 const guestStats = [
   { value: "1,248", label: "Guest profiles" },

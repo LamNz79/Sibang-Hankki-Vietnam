@@ -11,6 +11,7 @@ import { categories, cityTiles, cuisines, priceRanges } from "@/components/home/
 import { ChipRow, CityTileGrid, HeroBanner } from "@/components/home/home-sections";
 import { LocationDrawer } from "@/components/home/location-drawer";
 import { SectionTitle } from "@/components/ui/section-title";
+import { uiColors } from "@/theme";
 import SpecialCategories from "@/components/home/special-categories";
 
 const quickSortOptions = ["Recommended", "Top rated", "Earliest available"];
@@ -67,7 +68,7 @@ export default function Home() {
 
       <Group justify="space-between" align="flex-end">
         <SectionTitle title="Special categories" />
-        <Text size="sm" c="#8a8f89" mb={4}>
+        <Text size="sm" c={uiColors.textMuted} mb={4}>
           Up to 5
         </Text>
       </Group>
@@ -88,7 +89,7 @@ export default function Home() {
 
       <Group justify="space-between" align="flex-end">
         <SectionTitle title="Explore by city" />
-        <Text size="sm" c="#6f7d78" mb={4}>
+        <Text size="sm" c={uiColors.textSecondary} mb={4}>
           View all
         </Text>
       </Group>

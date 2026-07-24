@@ -7,7 +7,7 @@ import {
 } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { ReactNode } from "react";
-import { uiColors } from "@/components/ui/theme-tokens";
+import { uiColors } from "@/theme";
 
 type MobileShellProps = {
   title: string;
@@ -31,7 +31,7 @@ export function MobileShell({
   return (
     <Box
       mih="100dvh"
-      bg="#f3f5f4"
+      bg={uiColors.appBackground}
       p={0}
     >
       <Box
@@ -44,7 +44,7 @@ export function MobileShell({
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
-          background: "#ffffff",
+          background: uiColors.surface,
         }}
       >
         <Box
@@ -56,7 +56,7 @@ export function MobileShell({
             position: "sticky",
             top: 0,
             zIndex: 20,
-            background: "rgba(255,255,255,0.98)",
+            background: uiColors.surfaceOverlay,
             borderBottom: `1px solid ${uiColors.border}`,
           }}
         >
