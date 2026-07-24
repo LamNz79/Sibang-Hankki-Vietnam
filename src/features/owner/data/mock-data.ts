@@ -1,28 +1,8 @@
-export type OwnerReservationStatus =
-  | "confirmed"
-  | "pending"
-  | "arrived"
-  | "seated"
-  | "completed";
-
-export type GuestTier = "vip" | "regular" | "new";
-
-export type OwnerReservation = {
-  id: string;
-  time: string;
-  guestName: string;
-  initials: string;
-  partySize: number;
-  status: OwnerReservationStatus;
-  tier?: GuestTier;
-  preOrder?: boolean;
-  note?: string;
-  phone?: string;
-  reference: string;
-  visits: number;
-  points: number;
-  lastVisit?: string;
-};
+import type {
+  OwnerCampaign,
+  OwnerGuest,
+  OwnerReservation,
+} from "@/features/owner/types";
 
 export const ownerReservations: OwnerReservation[] = [
   {
@@ -86,13 +66,13 @@ export const ownerReservations: OwnerReservation[] = [
   },
 ];
 
-export const ownerGuests = [
+export const ownerGuests: OwnerGuest[] = [
   {
     id: "guest-001",
     name: "Kim Minji",
     initials: "KM",
     visits: 7,
-    tier: "vip" as const,
+    tier: "vip",
     note: "Window seating",
   },
   {
@@ -100,7 +80,7 @@ export const ownerGuests = [
     name: "Park Ara",
     initials: "PA",
     visits: 3,
-    tier: "regular" as const,
+    tier: "regular",
     note: "Allergy note",
   },
   {
@@ -108,12 +88,12 @@ export const ownerGuests = [
     name: "Lee Hwan",
     initials: "LH",
     visits: 0,
-    tier: "new" as const,
+    tier: "new",
     note: "First visit scheduled",
   },
 ];
 
-export const ownerCampaigns = [
+export const ownerCampaigns: OwnerCampaign[] = [
   {
     id: "campaign-001",
     name: "Weekday table benefit",

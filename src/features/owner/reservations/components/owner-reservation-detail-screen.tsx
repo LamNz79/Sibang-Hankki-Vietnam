@@ -19,15 +19,15 @@ import {
   IconSofa,
   IconUserCheck,
 } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
+import { OwnerShell } from "@/features/owner/shared";
 import {
   GuestContextBadges,
   ReservationStatusBadge,
-} from "@/components/owner/owner-badges";
+} from "./reservation-badges";
 import {
   getOwnerReservation,
-  type OwnerReservationStatus,
-} from "@/features/owner/mock-data";
+} from "@/features/owner/data/mock-data";
+import type { OwnerReservationStatus } from "@/features/owner/types";
 import { uiColors } from "@/theme";
 
 function visitActionStyle(active = false) {
@@ -42,7 +42,7 @@ function visitActionStyle(active = false) {
   };
 }
 
-export default function OwnerGuestArrivalPage() {
+export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const reservation = getOwnerReservation(params.id);
   const [status, setStatus] = useState<OwnerReservationStatus>(

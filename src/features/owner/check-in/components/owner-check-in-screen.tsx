@@ -20,9 +20,9 @@ import {
   IconQrcode,
   IconSearch,
 } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
-import { GuestContextBadges } from "@/components/owner/owner-badges";
-import { ownerReservations } from "@/features/owner/mock-data";
+import { GuestContextBadges } from "@/features/owner/reservations";
+import { OwnerShell } from "@/features/owner/shared";
+import { ownerReservations } from "@/features/owner/data/mock-data";
 import { uiColors } from "@/theme";
 
 function OwnerCheckInContent() {
@@ -140,7 +140,7 @@ function OwnerCheckInContent() {
   );
 }
 
-export default function OwnerCheckInPage() {
+export function OwnerCheckInScreen() {
   return (
     <Suspense
       fallback={

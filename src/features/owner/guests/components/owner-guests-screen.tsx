@@ -12,9 +12,9 @@ import {
   Title,
 } from "@mantine/core";
 import { IconChevronRight, IconSearch } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
-import { GuestContextBadges } from "@/components/owner/owner-badges";
-import { ownerGuests } from "@/features/owner/mock-data";
+import { GuestContextBadges } from "@/features/owner/reservations";
+import { OwnerShell } from "@/features/owner/shared";
+import { ownerGuests } from "@/features/owner/data/mock-data";
 import { uiColors } from "@/theme";
 
 const guestStats = [
@@ -23,7 +23,7 @@ const guestStats = [
   { value: "27%", label: "Return rate" },
 ];
 
-export default function OwnerGuestsPage() {
+export function OwnerGuestsScreen() {
   const [query, setQuery] = useState("");
 
   const guests = useMemo(() => {

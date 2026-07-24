@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Box, Group, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import type { OwnerReservation } from "@/features/owner/mock-data";
+import type { OwnerReservation } from "@/features/owner/types";
 import {
   GuestContextBadges,
   ReservationStatusBadge,
-} from "@/components/owner/owner-badges";
+} from "./reservation-badges";
 import { uiColors } from "@/theme";
 
 export function OwnerReservationRow({

@@ -19,14 +19,14 @@ import {
   IconChevronRight,
   IconPlus,
 } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
-import { OwnerReservationRow } from "@/components/owner/owner-reservation-row";
-import { ownerReservations } from "@/features/owner/mock-data";
+import { OwnerShell } from "@/features/owner/shared";
+import { ownerReservations } from "@/features/owner/data/mock-data";
+import { OwnerReservationRow } from "./owner-reservation-row";
 import { uiColors } from "@/theme";
 
 type ReservationFilter = "all" | "confirmed" | "vip" | "preorder";
 
-export default function OwnerReservationsPage() {
+export function OwnerReservationsScreen() {
   const [filter, setFilter] = useState<ReservationFilter>("all");
   const [walkInOpened, setWalkInOpened] = useState(false);
 
