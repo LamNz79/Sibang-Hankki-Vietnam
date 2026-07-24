@@ -1,6 +1,9 @@
-import { Badge, Card, Group, Stack, Text } from "@mantine/core";
+import Link from "next/link";
+import { Badge, Button, Card, Group, Stack, Text } from "@mantine/core";
+import { IconSwitchHorizontal } from "@tabler/icons-react";
 import { BottomNav } from "@/components/app-shell/bottom-nav";
 import { MobileShell } from "@/components/app-shell/mobile-shell";
+import { uiColors } from "@/components/ui/theme-tokens";
 
 const profileSections = [
   { title: "Account", description: "Name, phone number, and email preferences" },
@@ -40,6 +43,38 @@ export default function MyReservationsPage() {
             Verified
           </Badge>
         </Group>
+      </Card>
+
+      <Card
+        radius="lg"
+        p="lg"
+        style={{
+          border: `1px solid ${uiColors.border}`,
+          background: uiColors.brandPrimarySoft,
+          boxShadow: "none",
+        }}
+      >
+        <Stack gap="md">
+          <Stack gap={4}>
+            <Text fw={750} size="lg" c={uiColors.textPrimary}>
+              Restaurant workspace
+            </Text>
+            <Text size="sm" c={uiColors.textSecondary}>
+              Manage reservations, guest arrivals, marketing, and store
+              settings.
+            </Text>
+          </Stack>
+
+          <Link href="/owner" style={{ textDecoration: "none" }}>
+            <Button
+              fullWidth
+              radius="md"
+              leftSection={<IconSwitchHorizontal size={18} />}
+            >
+              Switch to Owner workspace
+            </Button>
+          </Link>
+        </Stack>
       </Card>
 
       {profileSections.map((section) => (
