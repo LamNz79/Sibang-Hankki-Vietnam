@@ -16,9 +16,9 @@ import {
   IconToolsKitchen3,
   IconUsers,
 } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
-import { OwnerReservationRow } from "@/components/owner/owner-reservation-row";
-import { ownerReservations } from "@/features/owner/mock-data";
+import { OwnerReservationRow } from "@/features/owner/reservations";
+import { OwnerShell } from "@/features/owner/shared";
+import { ownerReservations } from "@/features/owner/data/mock-data";
 import { uiColors } from "@/theme";
 
 const metrics = [
@@ -32,7 +32,7 @@ const metrics = [
   { value: "3", label: "VIP guests", icon: IconRosetteDiscountCheck },
 ];
 
-export default function OwnerTodayPage() {
+export function OwnerDashboardScreen() {
   const nextArrival = ownerReservations[1];
 
   return (

@@ -15,7 +15,7 @@ import {
   IconToolsKitchen3,
   IconArmchair,
 } from "@tabler/icons-react";
-import { OwnerShell } from "@/components/owner/owner-shell";
+import { OwnerShell } from "@/features/owner/shared";
 import { uiColors } from "@/theme";
 
 const settings = [
@@ -46,7 +46,7 @@ const settings = [
   },
 ];
 
-export default function OwnerSettingsPage() {
+export function OwnerSettingsScreen() {
   return (
     <OwnerShell
       title="Store settings"

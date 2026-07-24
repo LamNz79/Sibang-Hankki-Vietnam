@@ -2,7 +2,7 @@ import { Badge, Group } from "@mantine/core";
 import type {
   GuestTier,
   OwnerReservationStatus,
-} from "@/features/owner/mock-data";
+} from "@/features/owner/types";
 import { uiColors } from "@/theme";
 
 const statusLabels: Record<OwnerReservationStatus, string> = {
