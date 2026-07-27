@@ -13,7 +13,6 @@ import {
   Text,
   TextInput,
   ThemeIcon,
-  Title,
 } from "@mantine/core";
 import {
   IconChevronRight,
@@ -22,6 +21,7 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
 import { ownerCampaigns } from "@/features/owner/data/mock-data";
+import { MetricCard, PrimaryActionButton } from "@/components/ui";
 import { uiColors } from "@/theme";
 
 export function OwnerMarketingScreen() {
@@ -46,13 +46,12 @@ export function OwnerMarketingScreen() {
           </ActionIcon>
         }
         footerAction={
-          <Button
-            fullWidth
+          <PrimaryActionButton
             leftSection={<IconPlus size={20} />}
             onClick={openCampaign}
           >
             Create campaign
-          </Button>
+          </PrimaryActionButton>
         }
       >
         <Stack gap="md">
@@ -87,36 +86,8 @@ export function OwnerMarketingScreen() {
           </Card>
 
           <SimpleGrid cols={2} spacing="sm">
-            <Card
-              radius="lg"
-              p="md"
-              style={{
-                background: uiColors.surface,
-                border: `1px solid ${uiColors.border}`,
-              }}
-            >
-              <Title order={2} size="h3">
-                86
-              </Title>
-              <Text size="xs" c={uiColors.textSecondary}>
-                Attributed bookings
-              </Text>
-            </Card>
-            <Card
-              radius="lg"
-              p="md"
-              style={{
-                background: uiColors.surface,
-                border: `1px solid ${uiColors.border}`,
-              }}
-            >
-              <Title order={2} size="h3">
-                ₫18.6M
-              </Title>
-              <Text size="xs" c={uiColors.textSecondary}>
-                Expected sales
-              </Text>
-            </Card>
+            <MetricCard value="86" label="Attributed bookings" />
+            <MetricCard value="₫18.6M" label="Expected sales" />
           </SimpleGrid>
 
           <Card

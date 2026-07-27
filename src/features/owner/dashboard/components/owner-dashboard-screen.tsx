@@ -19,6 +19,7 @@ import {
 import { OwnerReservationRow } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import { ownerReservations } from "@/features/owner/data/mock-data";
+import { MetricCard } from "@/components/ui";
 import { uiColors } from "@/theme";
 
 const metrics = [
@@ -79,32 +80,9 @@ export function OwnerDashboardScreen() {
         </Link>
 
         <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="sm">
-          {metrics.map((metric) => {
-            const Icon = metric.icon;
-
-            return (
-              <Card
-                key={metric.label}
-                radius="lg"
-                p="md"
-                style={{
-                  background: uiColors.surface,
-                  border: `1px solid ${uiColors.border}`,
-                  boxShadow: "none",
-                }}
-              >
-                <Stack gap={6}>
-                  <Icon size={20} color={uiColors.brandPrimary} />
-                  <Title order={2} size="h3" c={uiColors.textPrimary}>
-                    {metric.value}
-                  </Title>
-                  <Text size="xs" c={uiColors.textSecondary}>
-                    {metric.label}
-                  </Text>
-                </Stack>
-              </Card>
-            );
-          })}
+          {metrics.map((metric) => (
+            <MetricCard key={metric.label} {...metric} />
+          ))}
         </SimpleGrid>
 
         <Card

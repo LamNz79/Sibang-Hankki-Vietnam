@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   Group,
   Stack,
@@ -16,6 +15,7 @@ import {
   IconArmchair,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
+import { PrimaryActionButton } from "@/components/ui";
 import { uiColors } from "@/theme";
 
 const settings = [
@@ -53,7 +53,7 @@ export function OwnerSettingsScreen() {
       eyebrow="Service configuration"
       backHref="/owner"
       hideMobileNavigation
-      footerAction={<Button fullWidth>Save changes</Button>}
+      footerAction={<PrimaryActionButton>Save changes</PrimaryActionButton>}
     >
       <Stack gap="md">
         <Card

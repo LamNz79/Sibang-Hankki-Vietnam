@@ -21,6 +21,7 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
 import { ownerReservations } from "@/features/owner/data/mock-data";
+import { PrimaryActionButton } from "@/components/ui";
 import { OwnerReservationRow } from "./owner-reservation-row";
 import { uiColors } from "@/theme";
 
@@ -67,15 +68,12 @@ export function OwnerReservationsScreen() {
           </ActionIcon>
         }
         footerAction={
-          <Button
-            fullWidth
-            size="md"
-            radius="md"
+          <PrimaryActionButton
             leftSection={<IconPlus size={20} />}
             onClick={openWalkIn}
           >
             Add walk-in
-          </Button>
+          </PrimaryActionButton>
         }
       >
         <Stack gap="md">
