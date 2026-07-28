@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { Badge, Button, Card, Group, Stack, Text } from "@mantine/core";
 import { IconSwitchHorizontal } from "@tabler/icons-react";
-import { BottomNav } from "@/components/app-shell/bottom-nav";
-import { MobileShell } from "@/components/app-shell/mobile-shell";
+import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { uiColors } from "@/theme";
 
 const profileSections = [
@@ -13,7 +12,7 @@ const profileSections = [
   { title: "Support", description: "Help center, terms, and contact information" },
 ];
 
-export default function MyReservationsPage() {
+export function AccountScreen() {
   return (
     <MobileShell
       title="My Account"

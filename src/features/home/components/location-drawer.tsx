@@ -14,7 +14,11 @@ import {
 } from "@mantine/core";
 import { IconCheck, IconCurrentLocation } from "@tabler/icons-react";
 import { useState } from "react";
-import { locationGroups, popularAreas, recentAreas } from "@/components/home/home-data";
+import {
+  locationGroups,
+  popularAreas,
+  recentAreas,
+} from "@/features/home/data/home-data";
 import { uiColors } from "@/theme";
 
 type LocationDrawerProps = {

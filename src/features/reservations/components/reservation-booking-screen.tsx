@@ -6,9 +6,15 @@ import dayjs from "dayjs";
 import { DatePicker } from "@mantine/dates";
 import { Box, Button, Card, Group, Modal, SimpleGrid, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconCalendarEvent, IconCheck, IconClock, IconUsers } from "@tabler/icons-react";
-import { MobileShell } from "@/components/app-shell/mobile-shell";
-import { getRestaurantBySlug, restaurantRecords } from "@/features/restaurants/mock-data";
-import { CustomerReservation, saveReservation } from "@/features/reservations/reservation-storage";
+import { MobileShell } from "@/components/layout/customer";
+import {
+  getRestaurantBySlug,
+  restaurantRecords,
+} from "@/features/restaurants/data/mock-data";
+import {
+  type CustomerReservation,
+  saveReservation,
+} from "@/features/reservations/data/reservation-storage";
 import { uiColors } from "@/theme";
 
 const guestOptions = [2, 4, 6] as const;
@@ -261,7 +267,7 @@ function ReservationContent() {
   );
 }
 
-export default function ReservationPage() {
+export function ReservationBookingScreen() {
   return (
     <Suspense fallback={<MobileShell title="Book a table" subtitle="Loading booking details..." bottomNav={null}><Text>Loading...</Text></MobileShell>}>
       <ReservationContent />

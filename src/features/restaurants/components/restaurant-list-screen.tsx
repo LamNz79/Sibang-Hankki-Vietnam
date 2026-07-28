@@ -23,15 +23,14 @@ import {
   IconSearch,
   IconStarFilled,
 } from "@tabler/icons-react";
-import { BottomNav } from "@/components/app-shell/bottom-nav";
-import { MobileShell } from "@/components/app-shell/mobile-shell";
-import { categories } from "@/components/home/home-data";
+import { BottomNav, MobileShell } from "@/components/layout/customer";
+import { categories } from "@/features/home/data/home-data";
 import {
   getRestaurantAvailabilitySummary,
   restaurantRecords,
   type BenefitKey,
   type CuisineKey,
-} from "@/features/restaurants/mock-data";
+} from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 
 type SortKey = "recommended" | "rating" | "earliest";
@@ -196,7 +195,7 @@ function RestaurantsContent() {
   );
 }
 
-export default function RestaurantsPage() {
+export function RestaurantListScreen() {
   return (
     <Suspense fallback={<MobileShell title="Restaurant List" subtitle="Loading restaurants..."><Text>Loading...</Text></MobileShell>}>
       <RestaurantsContent />

@@ -10,7 +10,7 @@ type SpecialCategoryProps = {
     color: string;
   }
 }
-export default function SpecialCategories(specialCategoryProps: SpecialCategoryProps) {
+export function SpecialCategories(specialCategoryProps: SpecialCategoryProps) {
   const { item } = specialCategoryProps;
   const Icon = item.icon;
 

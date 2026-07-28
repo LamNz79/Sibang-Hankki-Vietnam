@@ -12,7 +12,7 @@ export const categories = [
   { label: "Special deal", slug: "special-deal", icon: IconPercentage, color: "#5b7b72" },
   { label: "Date night", slug: "date-night", icon: IconHeart, color: "#5b7b72" },
   { label: "Trending", slug: "trending", icon: IconTrendingUp, color: "#5b7b72" },
-];
+] as const;
 
 export const cityTiles = [
   {
