@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
   Avatar,
-  Button,
   Card,
   Group,
   SimpleGrid,
@@ -28,19 +27,8 @@ import {
   getOwnerReservation,
 } from "@/features/owner/data/mock-data";
 import type { OwnerReservationStatus } from "@/features/owner/types";
+import { ChoiceButton } from "@/components/ui";
 import { uiColors } from "@/theme";
-
-function visitActionStyle(active = false) {
-  return {
-    height: 54,
-    border: `1px solid ${
-      active ? uiColors.brandPrimary : uiColors.borderStrong
-    }`,
-    background: active ? uiColors.brandPrimarySoft : uiColors.surface,
-    color: active ? uiColors.brandPrimary : uiColors.textPrimary,
-    boxShadow: "none",
-  };
-}
 
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
@@ -136,46 +124,34 @@ export function OwnerReservationDetailScreen() {
         <Stack gap="sm">
           <Text fw={800}>Visit status</Text>
           <SimpleGrid cols={2} spacing="sm">
-            <Button
-              variant="default"
-              radius="md"
+            <ChoiceButton
+              selected={status === "confirmed"}
               leftSection={<IconCheck size={17} />}
               onClick={() => setStatus("confirmed")}
-              style={visitActionStyle(status === "confirmed")}
-              styles={{ label: { fontWeight: 750 } }}
             >
               Confirmed
-            </Button>
-            <Button
-              variant="default"
-              radius="md"
+            </ChoiceButton>
+            <ChoiceButton
+              selected={status === "arrived"}
               leftSection={<IconUserCheck size={17} />}
               onClick={() => setStatus("arrived")}
-              style={visitActionStyle(status === "arrived")}
-              styles={{ label: { fontWeight: 750 } }}
             >
               Arrived
-            </Button>
-            <Button
-              variant="default"
-              radius="md"
+            </ChoiceButton>
+            <ChoiceButton
+              selected={status === "seated"}
               leftSection={<IconSofa size={17} />}
               onClick={() => setStatus("seated")}
-              style={visitActionStyle(status === "seated")}
-              styles={{ label: { fontWeight: 750 } }}
             >
               Seated
-            </Button>
-            <Button
-              variant="default"
-              radius="md"
+            </ChoiceButton>
+            <ChoiceButton
+              selected={status === "completed"}
               leftSection={<IconCircleCheck size={17} />}
               onClick={() => setStatus("completed")}
-              style={visitActionStyle(status === "completed")}
-              styles={{ label: { fontWeight: 750 } }}
             >
               Completed
-            </Button>
+            </ChoiceButton>
           </SimpleGrid>
         </Stack>
 

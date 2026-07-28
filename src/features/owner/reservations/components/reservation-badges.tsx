@@ -1,9 +1,9 @@
-import { Badge, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
+import { StatusBadge } from "@/components/ui";
 import type {
   GuestTier,
   OwnerReservationStatus,
 } from "@/features/owner/types";
-import { uiColors } from "@/theme";
 
 const statusLabels: Record<OwnerReservationStatus, string> = {
   confirmed: "Confirmed",
@@ -18,27 +18,10 @@ export function ReservationStatusBadge({
 }: {
   status: OwnerReservationStatus;
 }) {
-  const isPending = status === "pending";
-
   return (
-    <Badge
-      radius="sm"
-      variant="light"
-      styles={{
-        root: {
-          background: isPending
-            ? uiColors.statusWarningSurface
-            : uiColors.statusSuccessSurface,
-          color: isPending
-            ? uiColors.statusWarningText
-            : uiColors.statusSuccessText,
-          textTransform: "none",
-          fontWeight: 700,
-        },
-      }}
-    >
+    <StatusBadge tone={status === "pending" ? "warning" : "success"}>
       {statusLabels[status]}
-    </Badge>
+    </StatusBadge>
   );
 }
 
@@ -54,43 +37,15 @@ export function GuestContextBadges({
   return (
     <Group gap={6}>
       {tier ? (
-        <Badge
-          radius="sm"
-          variant="light"
-          styles={{
-            root: {
-              background:
-                tier === "vip"
-                  ? uiColors.brandOrangeSoft
-                  : uiColors.surfaceMuted,
-              color:
-                tier === "vip"
-                  ? uiColors.brandOrange
-                  : uiColors.textSecondary,
-              textTransform: "none",
-              fontWeight: 700,
-            },
-          }}
-        >
+        <StatusBadge tone={tier === "vip" ? "brand" : "neutral"}>
           {tier === "vip" ? "VIP" : tier === "regular" ? "Regular" : "New"}
-        </Badge>
+        </StatusBadge>
       ) : null}
 
       {preOrder ? (
-        <Badge
-          radius="sm"
-          variant="light"
-          styles={{
-            root: {
-              background: uiColors.statusInfoSurface,
-              color: uiColors.statusInfoText,
-              textTransform: "none",
-              fontWeight: 700,
-            },
-          }}
-        >
+        <StatusBadge tone="info">
           Pre-order
-        </Badge>
+        </StatusBadge>
       ) : null}
     </Group>
   );
