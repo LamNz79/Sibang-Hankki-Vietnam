@@ -1,29 +1,17 @@
 import type { MantineColorsTuple } from "@mantine/core";
 
 export const brandPalettes = {
-  oligoTeal: [
-    "#e8f7f8",
-    "#d1eeef",
-    "#a6dbdf",
-    "#78c8cf",
-    "#53b8c2",
-    "#39adba",
-    "#2ca8b6",
-    "#1a92a1",
-    "#0a8292",
-    "#007487",
-  ] as MantineColorsTuple,
-  oligoOrange: [
-    "#fbf1eb",
-    "#f3dfd3",
-    "#e7bda7",
-    "#da9a79",
-    "#cf7d53",
-    "#c56d3f",
-    "#bf6e3c",
-    "#aa5d2f",
-    "#964f26",
-    "#81411b",
+  warmCoral: [
+    "#fff6f2",
+    "#fce9e2",
+    "#f8d1c5",
+    "#f2ad99",
+    "#e9866d",
+    "#d9664d",
+    "#c84f36",
+    "#b84a2f",
+    "#a63d2f",
+    "#8f2d23",
   ] as MantineColorsTuple,
   teal: [
     "#eef8f5",
@@ -52,37 +40,42 @@ export const brandPalettes = {
 } as const;
 
 export const uiColors = {
-  appBackground: "#f3f5f4",
+  appBackground: "#f3f1f0",
   surface: "#ffffff",
-  surfaceAlt: "#fbfcfc",
-  surfaceMuted: "#f4f7f6",
+  surfaceAlt: "#fff7f3",
+  surfaceMuted: "#f8f2ef",
   surfaceOverlay: "rgba(255, 255, 255, 0.98)",
 
-  border: "#d5dfdc",
-  borderStrong: "#cfd9d5",
+  border: "#e7d6d0",
+  borderStrong: "#d8c2ba",
 
-  textPrimary: "#20312c",
-  textSecondary: "#6f7d78",
-  textMuted: "#8a8f89",
+  textPrimary: "#2a1714",
+  textSecondary: "#6f5a54",
+  textMuted: "#8b7770",
 
-  brandPrimary: "#007487",
-  brandPrimaryStrong: "#005f70",
-  brandPrimarySoft: "#f2f8f8",
-  brandPrimaryMuted: "#5b7b72",
-  brandPrimaryShadow: "rgba(0, 116, 135, 0.14)",
-  brandOrange: "#bf6e3c",
-  brandOrangeSoft: "#fbefe8",
+  brandPrimary: "#b84a2f",
+  brandPrimaryStrong: "#a63d2f",
+  brandPrimarySoft: "#fce9e2",
+  brandPrimarySubtle: "#fff6f2",
+  brandPrimaryMuted: "#8f5f51",
+  brandPrimaryShadow: "rgba(184, 74, 47, 0.18)",
 
-  statusSuccessSurface: "#eaf6f2",
-  statusSuccessText: "#08725f",
-  statusWarningSurface: "#fff2dd",
-  statusWarningText: "#9a5a00",
+  accentVipSurface: "#f9e9ef",
+  accentVipText: "#a33b5c",
+  rating: "#a66a00",
+
+  statusSuccessSurface: "#e8f4ef",
+  statusSuccessText: "#217a5b",
+  statusWarningSurface: "#fff4db",
+  statusWarningText: "#9a6700",
   statusWarningBorder: "#ead1a8",
   statusWarningTextStrong: "#6f4810",
-  statusInfoSurface: "#eef4ff",
-  statusInfoText: "#406397",
+  statusInfoSurface: "#edf4f7",
+  statusInfoText: "#355e77",
+  statusErrorSurface: "#feeceb",
+  statusErrorText: "#b42318",
 
-  shadowSoft: "rgba(85, 101, 98, 0.08)",
+  shadowSoft: "rgba(80, 47, 38, 0.08)",
 } as const;
 
 export const uiRadii = {

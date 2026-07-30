@@ -69,7 +69,7 @@ export function OwnerSettingsScreen() {
               size={44}
               radius="md"
               variant="light"
-              color="oligoTeal"
+              color="warmCoral"
             >
               <IconBuildingStore size={22} />
             </ThemeIcon>
@@ -105,7 +105,7 @@ export function OwnerSettingsScreen() {
                   size={36}
                   radius="md"
                   variant="light"
-                  color="oligoTeal"
+                  color="warmCoral"
                 >
                   <Icon size={18} />
                 </ThemeIcon>

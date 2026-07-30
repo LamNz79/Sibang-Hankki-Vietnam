@@ -163,7 +163,7 @@ function RestaurantsContent() {
                     <Title order={3} size="h4" fw={700} c={uiColors.textPrimary}>{restaurant.name}</Title>
                     <Text size="sm" c={uiColors.textSecondary}>{restaurant.cuisineLabel}</Text>
                     <Group gap={6}>
-                      <IconStarFilled size={14} color={uiColors.brandOrange} />
+                      <IconStarFilled size={14} color={uiColors.rating} />
                       <Text size="sm" c={uiColors.textPrimary}>{restaurant.rating.toFixed(1)}<Text span c={uiColors.textSecondary}> · {restaurant.area}</Text></Text>
                     </Group>
                     <Group gap={6} align="flex-start" wrap="nowrap">
@@ -189,7 +189,7 @@ function RestaurantsContent() {
           <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">Special benefits</Text><Group gap="sm">{benefitOptions.map((item) => { const active = selectedBenefits.includes(item); return <Chip key={item} checked={active} onChange={() => setSelectedBenefits((current) => active ? current.filter((value) => value !== item) : [...current, item])} styles={filterChipStyles(active)}>{benefitLabels[item]}</Chip>; })}</Group></Stack></Box>
         </Stack>
         <Box style={{ position: "sticky", bottom: 0, marginTop: "auto", paddingTop: 16, paddingBottom: 16, background: uiColors.surfaceOverlay, borderTop: `1px solid ${uiColors.border}` }}>
-          <Button radius="md" fullWidth size="lg" color="oligoTeal" onClick={() => setFiltersOpened(false)}>Show {filteredRestaurants.length} restaurants</Button>
+          <Button radius="md" fullWidth size="lg" color="warmCoral" onClick={() => setFiltersOpened(false)}>Show {filteredRestaurants.length} restaurants</Button>
         </Box>
       </Drawer>
     </>

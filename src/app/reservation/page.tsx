@@ -75,7 +75,7 @@ function ReservationContent() {
           fullWidth
           radius="md"
           size="lg"
-          color="oligoTeal"
+          color="warmCoral"
           disabled={!selectedTime}
           onClick={confirmReservation}
         >
@@ -215,7 +215,7 @@ function ReservationContent() {
       >
         {confirmedReservation ? (
           <Stack gap="lg" align="center">
-            <ThemeIcon size={68} radius={999} color="oligoTeal" variant="light">
+            <ThemeIcon size={68} radius={999} color="warmCoral" variant="light">
               <IconCheck size={34} stroke={2.5} />
             </ThemeIcon>
 
@@ -247,7 +247,7 @@ function ReservationContent() {
             </Card>
 
             <Stack w="100%" gap="sm">
-              <Button fullWidth size="lg" radius="md" color="oligoTeal" onClick={() => router.push("/reservations")}>
+              <Button fullWidth size="lg" radius="md" color="warmCoral" onClick={() => router.push("/reservations")}>
                 View my reservation
               </Button>
               <Button fullWidth size="lg" radius="md" variant="subtle" color="gray" onClick={() => router.push("/restaurants")}>

@@ -11,18 +11,18 @@ export function HeroBanner() {
       style={{
         border: `1px solid ${uiColors.borderStrong}`,
         background:
-          "repeating-linear-gradient(-45deg, #f7faf8 0, #f7faf8 12px, #eef3f0 12px, #eef3f0 24px)",
+          "repeating-linear-gradient(-45deg, #fff7f3 0, #fff7f3 12px, #fce9e2 12px, #fce9e2 24px)",
         boxShadow: "none",
       }}
     >
       <Stack gap={10}>
-        <Text size="sm" fw={700} c="#75857f" tt="uppercase">
+        <Text size="sm" fw={700} c={uiColors.brandPrimaryMuted} tt="uppercase">
           Main banner
         </Text>
-        <Title order={2} size="h2" c="#1f2c2a">
+        <Title order={2} size="h2" c={uiColors.textPrimary}>
           Today&apos;s dining benefits
         </Title>
-        <Text size="sm" c="#7d8b86">
+        <Text size="sm" c={uiColors.textSecondary}>
           Banner area
         </Text>
       </Stack>
@@ -69,7 +69,7 @@ export function CityTileGrid({
             ta="center"
             fw={600}
             size="xs"
-            c="#23312c"
+            c={uiColors.textPrimary}
           >
             {item.label}
           </Text>
