@@ -43,17 +43,28 @@ type DetailRowProps = {
   icon: typeof IconCalendarEvent;
   label: string;
   value: string;
+  iconBackground: string;
+  iconColor: string;
 };
 
-function DetailRow({ icon: Icon, label, value }: DetailRowProps) {
+function DetailRow({
+  icon: Icon,
+  label,
+  value,
+  iconBackground,
+  iconColor,
+}: DetailRowProps) {
   return (
     <Group gap="sm" wrap="nowrap" py="sm">
       <ThemeIcon
         size={34}
         radius="md"
-        variant="light"
-        color="warmCoral"
-        style={{ flexShrink: 0 }}
+        variant="filled"
+        style={{
+          flexShrink: 0,
+          background: iconBackground,
+          color: iconColor,
+        }}
       >
         <Icon size={17} />
       </ThemeIcon>
@@ -262,24 +273,32 @@ export function ReservationDetailScreen() {
           icon={IconCalendarEvent}
           label="Date"
           value={dayjs(reservation.date).format("dddd, MMM D, YYYY")}
+          iconBackground={uiColors.detailDateSurface}
+          iconColor={uiColors.detailDateText}
         />
         <Divider color={uiColors.border} />
         <DetailRow
           icon={IconUsers}
           label="Time · guests"
           value={`${reservation.time} · ${reservation.guests} guests`}
+          iconBackground={uiColors.detailGuestsSurface}
+          iconColor={uiColors.detailGuestsText}
         />
         <Divider color={uiColors.border} />
         <DetailRow
           icon={IconToolsKitchen3}
           label="Pre-order"
           value={reservation.preOrder ?? "Not added"}
+          iconBackground={uiColors.detailPreOrderSurface}
+          iconColor={uiColors.detailPreOrderText}
         />
         <Divider color={uiColors.border} />
         <DetailRow
           icon={IconMessage}
           label="Request"
           value={reservation.specialRequest ?? "No special requests"}
+          iconBackground={uiColors.detailRequestSurface}
+          iconColor={uiColors.detailRequestText}
         />
       </Card>
 
