@@ -258,8 +258,8 @@ function ReservationContent() {
             </Card>
 
             <Stack w="100%" gap="sm">
-              <Button fullWidth size="lg" radius="md" color="warmCoral" onClick={() => router.push("/reservations")}>
-                View my reservations
+              <Button fullWidth size="lg" radius="md" color="warmCoral" onClick={() => router.push(`/reservations/${submittedReservation.id}`)}>
+                View reservation details
               </Button>
               <Button fullWidth size="lg" radius="md" variant="subtle" color="gray" onClick={() => router.push("/restaurants")}>
                 Explore more restaurants
