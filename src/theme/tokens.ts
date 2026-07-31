@@ -64,6 +64,15 @@ export const uiColors = {
   accentVipText: "#a33b5c",
   rating: "#a66a00",
 
+  detailDateSurface: "#eaf2ff",
+  detailDateText: "#3568a8",
+  detailGuestsSurface: "#f1ebfb",
+  detailGuestsText: "#7048a6",
+  detailPreOrderSurface: "#fff1df",
+  detailPreOrderText: "#a85b17",
+  detailRequestSurface: "#e8f5f1",
+  detailRequestText: "#24745e",
+
   statusSuccessSurface: "#e8f4ef",
   statusSuccessText: "#217a5b",
   statusWarningSurface: "#fff4db",

@@ -10,6 +10,8 @@ export interface CustomerReservation {
   time: string;
   guests: number;
   status: CustomerReservationStatus;
+  preOrder?: string;
+  specialRequest?: string;
   createdAt: string;
 }
 
@@ -72,4 +74,12 @@ export function saveReservation(reservation: CustomerReservation) {
   cachedRaw = raw;
   cachedReservations = next;
   window.dispatchEvent(new Event(changedEvent));
+}
+
+export function getReservationReference(reservation: CustomerReservation) {
+  const datePart = reservation.date.replaceAll("-", "").slice(2);
+  const numericId = reservation.id.replace(/\D/g, "");
+  const suffix = numericId.slice(-4).padStart(4, "0");
+
+  return `SHK-${datePart}-${suffix}`;
 }
