@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
 import { DatePicker } from "@mantine/dates";
 import { Box, Button, Card, Group, Modal, SimpleGrid, Stack, Text, ThemeIcon } from "@mantine/core";
-import { IconCalendarEvent, IconCheck, IconClock, IconUsers } from "@tabler/icons-react";
+import { IconCalendarEvent, IconClock, IconUsers } from "@tabler/icons-react";
 import { MobileShell } from "@/components/layout/customer";
+import { StatusBadge } from "@/components/ui";
 import {
   getRestaurantBySlug,
   restaurantRecords,
@@ -38,7 +39,7 @@ function ReservationContent() {
   const [selectedDate, setSelectedDate] = useState<string | null>(defaultDate);
   const [selectedGuests, setSelectedGuests] = useState<number>(2);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [confirmedReservation, setConfirmedReservation] = useState<CustomerReservation | null>(null);
+  const [submittedReservation, setSubmittedReservation] = useState<CustomerReservation | null>(null);
   const [successOpened, setSuccessOpened] = useState(false);
 
   const selectedDateIso = selectedDate ?? bookingStartDate.format("YYYY-MM-DD");
@@ -49,7 +50,7 @@ function ReservationContent() {
     return matrix?.[String(selectedGuests)] ?? [];
   }, [restaurant, selectedDateIso, selectedGuests]);
 
-  const confirmReservation = () => {
+  const submitReservationRequest = () => {
     if (!selectedDate || !selectedTime) return;
 
     const reservation: CustomerReservation = {
@@ -61,12 +62,12 @@ function ReservationContent() {
       date: selectedDate,
       time: selectedTime,
       guests: selectedGuests,
-      status: "confirmed",
+      status: "pending",
       createdAt: new Date().toISOString(),
     };
 
     saveReservation(reservation);
-    setConfirmedReservation(reservation);
+    setSubmittedReservation(reservation);
     setSuccessOpened(true);
   };
 
@@ -83,9 +84,9 @@ function ReservationContent() {
           size="lg"
           color="warmCoral"
           disabled={!selectedTime}
-          onClick={confirmReservation}
+          onClick={submitReservationRequest}
         >
-          {selectedTime ? `Confirm ${selectedTime}` : "Select an available time"}
+          {selectedTime ? "Request reservation" : "Select an available time"}
         </Button>
       }
     >
@@ -219,42 +220,46 @@ function ReservationContent() {
           body: { paddingTop: 8 },
         }}
       >
-        {confirmedReservation ? (
+        {submittedReservation ? (
           <Stack gap="lg" align="center">
             <ThemeIcon size={68} radius={999} color="warmCoral" variant="light">
-              <IconCheck size={34} stroke={2.5} />
+              <IconClock size={34} stroke={2.3} />
             </ThemeIcon>
 
             <Stack gap={4} align="center">
               <Text fw={800} size="xl" ta="center" c={uiColors.textPrimary}>
-                Reservation confirmed
+                Reservation request sent
               </Text>
               <Text size="sm" ta="center" c={uiColors.textSecondary}>
-                Your table at {confirmedReservation.restaurantName} is ready in your reservations.
+                The restaurant will review your request and confirm it or contact
+                you if anything needs to change.
               </Text>
             </Stack>
 
             <Card w="100%" radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surfaceAlt }}>
               <Stack gap="sm">
-                <Text fw={700} c={uiColors.textPrimary}>{confirmedReservation.restaurantName}</Text>
+                <Group justify="space-between" align="center">
+                  <Text fw={700} c={uiColors.textPrimary}>{submittedReservation.restaurantName}</Text>
+                  <StatusBadge tone="warning">Pending confirmation</StatusBadge>
+                </Group>
                 <Group gap="xs" wrap="nowrap">
                   <IconCalendarEvent size={17} color={uiColors.brandPrimary} />
-                  <Text size="sm">{dayjs(confirmedReservation.date).format("ddd, MMM D, YYYY")}</Text>
+                  <Text size="sm">{dayjs(submittedReservation.date).format("ddd, MMM D, YYYY")}</Text>
                 </Group>
                 <Group gap="xs" wrap="nowrap">
                   <IconClock size={17} color={uiColors.brandPrimary} />
-                  <Text size="sm">{confirmedReservation.time}</Text>
+                  <Text size="sm">{submittedReservation.time}</Text>
                 </Group>
                 <Group gap="xs" wrap="nowrap">
                   <IconUsers size={17} color={uiColors.brandPrimary} />
-                  <Text size="sm">{confirmedReservation.guests} guests · {confirmedReservation.district}</Text>
+                  <Text size="sm">{submittedReservation.guests} guests · {submittedReservation.district}</Text>
                 </Group>
               </Stack>
             </Card>
 
             <Stack w="100%" gap="sm">
               <Button fullWidth size="lg" radius="md" color="warmCoral" onClick={() => router.push("/reservations")}>
-                View my reservation
+                View my reservations
               </Button>
               <Button fullWidth size="lg" radius="md" variant="subtle" color="gray" onClick={() => router.push("/restaurants")}>
                 Explore more restaurants
