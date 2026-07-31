@@ -4,15 +4,23 @@ import { Box, Group, SimpleGrid, Text } from "@mantine/core";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { BottomNav } from "@/components/app-shell/bottom-nav";
-import { MobileShell } from "@/components/app-shell/mobile-shell";
-import { HomeHeader } from "@/components/home/home-header";
-import { categories, cityTiles, cuisines, priceRanges } from "@/components/home/home-data";
-import { ChipRow, CityTileGrid, HeroBanner } from "@/components/home/home-sections";
-import { LocationDrawer } from "@/components/home/location-drawer";
-import { SectionTitle } from "@/components/ui/section-title";
+import { BottomNav, MobileShell } from "@/components/layout/customer";
+import { SectionTitle } from "@/components/ui";
+import { HomeHeader } from "@/features/home/components/home-header";
+import {
+  ChipRow,
+  CityTileGrid,
+  HeroBanner,
+} from "@/features/home/components/home-sections";
+import { LocationDrawer } from "@/features/home/components/location-drawer";
+import { SpecialCategories } from "@/features/home/components/special-categories";
+import {
+  categories,
+  cityTiles,
+  cuisines,
+  priceRanges,
+} from "@/features/home/data/home-data";
 import { uiColors } from "@/theme";
-import SpecialCategories from "@/components/home/special-categories";
 
 const quickSortOptions = ["Recommended", "Top rated", "Earliest available"];
 const sortQueryValues: Record<string, string> = {
@@ -32,7 +40,7 @@ const priceQueryValues: Record<string, string> = {
   "Over 300K": "over300",
 };
 
-export default function Home() {
+export function HomeScreen() {
   const router = useRouter();
   const [location, setLocation] = useState("Ho Chi Minh City");
   const [locationOpened, setLocationOpened] = useState(false);

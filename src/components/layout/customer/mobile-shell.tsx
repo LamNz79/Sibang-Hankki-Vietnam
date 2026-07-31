@@ -6,7 +6,7 @@ import {
   Title,
 } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { uiColors } from "@/theme";
 
 type MobileShellProps = {

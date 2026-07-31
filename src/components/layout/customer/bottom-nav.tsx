@@ -15,7 +15,9 @@ const items = [
   { href: "/my-reservations", label: "My", icon: IconUserCircle },
 ];
 
-export function BottomNav({ activePath }: { activePath: string }) {
+export type BottomNavProps = { activePath: string };
+
+export function BottomNav({ activePath }: BottomNavProps) {
   return (
     <Card
       radius="xl"

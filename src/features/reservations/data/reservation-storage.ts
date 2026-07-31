@@ -1,4 +1,4 @@
-export type CustomerReservation = {
+export interface CustomerReservation {
   id: string;
   restaurantSlug: string;
   restaurantName: string;
@@ -9,7 +9,7 @@ export type CustomerReservation = {
   guests: number;
   status: "confirmed";
   createdAt: string;
-};
+}
 
 const storageKey = "sibang-customer-reservations";
 const changedEvent = "sibang-reservations-changed";

@@ -1,4 +1,9 @@
-export type CuisineKey = "korean" | "chinese" | "vietnamese" | "japanese" | "western";
+export type CuisineKey =
+  | "korean"
+  | "chinese"
+  | "vietnamese"
+  | "japanese"
+  | "western";
 export type BenefitKey = "special_deal" | "available" | "date_night" | "michelin";
 
 export type RestaurantRecord = {

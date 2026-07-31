@@ -4,7 +4,7 @@ import { ActionIcon, Badge, Box, Group, Stack, Text, TextInput, UnstyledButton }
 import { IconBell, IconChevronDown, IconMapPinFilled, IconSearch } from "@tabler/icons-react";
 import { uiColors } from "@/theme";
 
-type HomeHeaderProps = {
+export type HomeHeaderProps = {
   location: string;
   onOpenLocation: () => void;
 };

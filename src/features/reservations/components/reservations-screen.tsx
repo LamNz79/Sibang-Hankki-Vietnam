@@ -5,16 +5,15 @@ import { useSyncExternalStore } from "react";
 import dayjs from "dayjs";
 import { Badge, Box, Button, Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconCalendarCheck, IconCalendarEvent, IconChevronRight, IconClock, IconUsers } from "@tabler/icons-react";
-import { BottomNav } from "@/components/app-shell/bottom-nav";
-import { MobileShell } from "@/components/app-shell/mobile-shell";
+import { BottomNav, MobileShell } from "@/components/layout/customer";
 import {
   getReservationsServerSnapshot,
   getReservationsSnapshot,
   subscribeToReservations,
-} from "@/features/reservations/reservation-storage";
+} from "@/features/reservations/data/reservation-storage";
 import { uiColors } from "@/theme";
 
-export default function ReservationsPage() {
+export function ReservationsScreen() {
   const reservations = useSyncExternalStore(
     subscribeToReservations,
     getReservationsSnapshot,
