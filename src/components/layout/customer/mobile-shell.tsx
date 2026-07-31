@@ -17,6 +17,8 @@ type MobileShellProps = {
   bottomNav?: ReactNode;
   footerContent?: ReactNode;
   headerContent?: ReactNode;
+  headerAction?: ReactNode;
+  withHeaderBorder?: boolean;
 };
 
 export function MobileShell({
@@ -27,6 +29,8 @@ export function MobileShell({
   bottomNav,
   footerContent,
   headerContent,
+  headerAction,
+  withHeaderBorder = true,
 }: MobileShellProps) {
   return (
     <Box
@@ -57,7 +61,9 @@ export function MobileShell({
             top: 0,
             zIndex: 20,
             background: uiColors.surfaceOverlay,
-            borderBottom: `1px solid ${uiColors.border}`,
+            borderBottom: withHeaderBorder
+              ? `1px solid ${uiColors.border}`
+              : "none",
           }}
         >
           {headerContent ? (
@@ -102,7 +108,17 @@ export function MobileShell({
                 {title}
               </Title>
 
-              <Box w={40} miw={40} />
+              <Box
+                w={40}
+                miw={40}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
+                {headerAction}
+              </Box>
             </Group>
           )}
         </Box>

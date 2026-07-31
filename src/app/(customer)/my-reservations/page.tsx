@@ -1,5 +1,5 @@
-import { AccountScreen } from "@/features/account";
+import { redirect } from "next/navigation";
 
-export default function CustomerAccountPage() {
-  return <AccountScreen />;
+export default function LegacyCustomerAccountPage() {
+  redirect("/my");
 }

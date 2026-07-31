@@ -11,8 +11,8 @@ import { uiColors } from "@/theme";
 const items = [
   { href: "/", label: "Home", icon: IconHome2 },
   { href: undefined, label: "Nearby", icon: IconMapSearch },
-  { href: "/reservations", label: "Bookings", icon: IconCalendarTime },
-  { href: "/my-reservations", label: "My", icon: IconUserCircle },
+  { href: "/reservations", label: "Reservations", icon: IconCalendarTime },
+  { href: "/my", label: "My", icon: IconUserCircle },
 ];
 
 export type BottomNavProps = { activePath: string };

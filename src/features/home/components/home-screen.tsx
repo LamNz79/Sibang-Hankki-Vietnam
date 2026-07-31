@@ -54,6 +54,7 @@ export function HomeScreen() {
     <MobileShell
       title="Sibang Hankki"
       subtitle="Find a table fast and book with confidence."
+      withHeaderBorder={false}
       bottomNav={<BottomNav activePath="/" />}
       headerContent={
         <HomeHeader
