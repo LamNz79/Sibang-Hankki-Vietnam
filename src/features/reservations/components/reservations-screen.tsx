@@ -44,7 +44,7 @@ export function ReservationsScreen() {
               <Card
                 key={reservation.id}
                 component={Link}
-                href={`/restaurants/${reservation.restaurantSlug}`}
+                href={`/reservations/${reservation.id}`}
                 radius="lg"
                 p="md"
                 style={{

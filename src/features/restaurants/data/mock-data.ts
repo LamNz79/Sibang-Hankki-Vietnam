@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export type CuisineKey =
   | "korean"
   | "chinese"
@@ -30,6 +32,66 @@ export type RestaurantRecord = {
   slotMatrix: Record<string, Record<string, string[]>>;
 };
 
+const demoSlotPatterns = [
+  {
+    "2": ["18:00", "18:30", "19:00", "19:30", "20:00"],
+    "4": ["18:30", "19:00", "20:00"],
+    "6": ["19:30", "20:30"],
+  },
+  {
+    "2": ["17:30", "18:30", "19:30", "20:30"],
+    "4": ["18:00", "19:00", "20:30"],
+    "6": ["20:00"],
+  },
+  {
+    "2": ["18:30", "19:00", "20:00", "20:30"],
+    "4": ["19:00", "19:30"],
+    "6": ["20:30"],
+  },
+  {
+    "2": ["18:00", "19:00", "19:30"],
+    "4": ["18:30", "20:00"],
+    "6": ["19:30"],
+  },
+] as const;
+
+function createDemoSlotMatrix(
+  restaurantVariant: number,
+): Record<string, Record<string, string[]>> {
+  const startDate = dayjs().startOf("day");
+
+  return Object.fromEntries(
+    Array.from({ length: 61 }, (_, offset) => {
+      const date = startDate.add(offset, "day");
+      const weekday = date.day();
+      const isClosed =
+        (restaurantVariant % 2 === 0 && weekday === 1) ||
+        (restaurantVariant % 2 === 1 && weekday === 2);
+
+      if (isClosed) {
+        return [
+          date.format("YYYY-MM-DD"),
+          { "2": [], "4": [], "6": [] },
+        ];
+      }
+
+      const pattern =
+        demoSlotPatterns[
+          (offset + weekday + restaurantVariant) % demoSlotPatterns.length
+        ];
+
+      return [
+        date.format("YYYY-MM-DD"),
+        {
+          "2": [...pattern["2"]],
+          "4": [...pattern["4"]],
+          "6": [...pattern["6"]],
+        },
+      ];
+    }),
+  );
+}
+
 export const restaurantRecords: RestaurantRecord[] = [
   {
     slug: "anan-saigon",
@@ -52,11 +114,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Michelin", "Special deal", "Date night"],
     galleryCount: 5,
     summary: "Modern Vietnamese tasting menus with refined plating and a lively city-dining atmosphere.",
-    slotMatrix: {
-      "2026-07-22": { "2": ["18:30", "19:00", "19:30", "20:00"], "4": ["19:00", "19:30"], "6": ["20:00"] },
-      "2026-07-23": { "2": ["18:00", "18:30", "19:00", "20:00"], "4": ["18:30", "19:30"], "6": ["20:00"] },
-      "2026-07-24": { "2": ["18:30", "19:00", "20:30"], "4": ["19:00", "20:30"], "6": ["20:30"] },
-    },
+    slotMatrix: createDemoSlotMatrix(0),
   },
   {
     slug: "royal-pavilion",
@@ -79,11 +137,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Michelin", "Special deal", "Date night"],
     galleryCount: 5,
     summary: "Elegant Cantonese dining with private-table ambience and evening reservation demand.",
-    slotMatrix: {
-      "2026-07-22": { "2": ["18:30", "19:00", "19:30", "20:00", "20:30"], "4": ["18:30", "19:00", "20:00"], "6": ["19:30", "20:30"] },
-      "2026-07-23": { "2": ["18:00", "18:30", "19:00", "19:30"], "4": ["18:30", "19:30"], "6": ["20:00"] },
-      "2026-07-24": { "2": ["18:30", "19:00", "20:00"], "4": ["19:00", "20:00"], "6": ["20:30"] },
-    },
+    slotMatrix: createDemoSlotMatrix(1),
   },
   {
     slug: "refinery",
@@ -106,11 +160,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Date night"],
     galleryCount: 4,
     summary: "French comfort dining in a restored colonial setting with strong dinner demand.",
-    slotMatrix: {
-      "2026-07-22": { "2": [], "4": [], "6": [] },
-      "2026-07-23": { "2": [], "4": [], "6": [] },
-      "2026-07-24": { "2": [], "4": [], "6": [] },
-    },
+    slotMatrix: createDemoSlotMatrix(2),
   },
   {
     slug: "mori-teppan",
@@ -133,11 +183,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Available"],
     galleryCount: 3,
     summary: "Interactive teppan-style dinner counters that work best for small evening parties.",
-    slotMatrix: {
-      "2026-07-22": { "2": [], "4": [], "6": [] },
-      "2026-07-23": { "2": ["18:30", "19:00", "20:00"], "4": ["19:30"], "6": ["20:30"] },
-      "2026-07-24": { "2": ["19:30", "20:00", "20:30"], "4": ["20:00"], "6": [] },
-    },
+    slotMatrix: createDemoSlotMatrix(3),
   },
   {
     slug: "hanoi-hearth",
@@ -160,11 +206,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Available", "Date night"],
     galleryCount: 4,
     summary: "Contemporary northern Vietnamese dishes in a warm dining room near the Old Quarter.",
-    slotMatrix: {
-      "2026-07-22": { "2": ["18:00", "18:30", "19:30"], "4": ["18:30", "20:00"], "6": ["20:00"] },
-      "2026-07-23": { "2": ["18:00", "19:00", "20:00"], "4": ["19:00"], "6": ["20:00"] },
-      "2026-07-24": { "2": ["18:30", "19:30"], "4": ["19:30"], "6": [] },
-    },
+    slotMatrix: createDemoSlotMatrix(4),
   },
   {
     slug: "han-river-dining",
@@ -187,18 +229,17 @@ export const restaurantRecords: RestaurantRecord[] = [
     tags: ["Available", "Special deal"],
     galleryCount: 5,
     summary: "Relaxed riverside dining focused on central Vietnamese seafood and shareable evening menus.",
-    slotMatrix: {
-      "2026-07-22": { "2": ["18:30", "19:00", "20:00"], "4": ["19:00", "20:00"], "6": ["20:30"] },
-      "2026-07-23": { "2": ["18:00", "19:30"], "4": ["18:30", "20:00"], "6": ["20:00"] },
-      "2026-07-24": { "2": ["18:30", "19:00", "20:30"], "4": ["19:30"], "6": ["20:30"] },
-    },
+    slotMatrix: createDemoSlotMatrix(5),
   },
 ];
 
 export function getRestaurantBySlug(slug: string) {
   return restaurantRecords.find((restaurant) => restaurant.slug === slug);
 }
-export function getRestaurantAvailabilitySummary(restaurant: RestaurantRecord, referenceDate = "2026-07-22") {
+export function getRestaurantAvailabilitySummary(
+  restaurant: RestaurantRecord,
+  referenceDate = dayjs().format("YYYY-MM-DD"),
+) {
   const todaySlots = Object.values(restaurant.slotMatrix[referenceDate] ?? {}).flat();
   const earliestToday = [...todaySlots].sort()[0];
 
