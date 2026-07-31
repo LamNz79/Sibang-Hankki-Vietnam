@@ -1,3 +1,5 @@
+export type CustomerReservationStatus = "pending" | "confirmed";
+
 export interface CustomerReservation {
   id: string;
   restaurantSlug: string;
@@ -7,7 +9,7 @@ export interface CustomerReservation {
   date: string;
   time: string;
   guests: number;
-  status: "confirmed";
+  status: CustomerReservationStatus;
   createdAt: string;
 }
 
