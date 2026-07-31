@@ -22,7 +22,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
       bottomNav={null}
       footerContent={
         <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
-          <Button fullWidth radius="md" size="lg" color="oligoTeal">
+          <Button fullWidth radius="md" size="lg" color="warmCoral">
             Select date & time
           </Button>
         </Link>
@@ -49,7 +49,7 @@ export default async function RestaurantDetailsPage({ params }: { params: Promis
         <Title order={1} size="h1" c={uiColors.textPrimary}>{restaurant.name}</Title>
 
         <Group gap="xs">
-          <IconStarFilled size={16} color={uiColors.brandOrange} />
+          <IconStarFilled size={16} color={uiColors.rating} />
           <Text fw={600} c={uiColors.textPrimary}>{restaurant.rating.toFixed(1)} ({restaurant.ratingCount}) · {restaurant.priceRangeLabel}</Text>
         </Group>
 

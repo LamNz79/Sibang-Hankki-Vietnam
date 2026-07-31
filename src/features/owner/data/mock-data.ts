@@ -108,7 +108,7 @@ export const ownerCampaigns: OwnerCampaign[] = [
     status: "Scheduled",
     detail: "Starts Jul 24",
     bookings: "42",
-    color: "#bf6e3c",
+    color: "#9a6700",
   },
   {
     id: "campaign-003",

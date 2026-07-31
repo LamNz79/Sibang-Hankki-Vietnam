@@ -108,7 +108,7 @@ export function OwnerReservationsScreen() {
               { value: "vip", label: "VIP" },
               { value: "preorder", label: "Pre-order" },
             ]}
-            color="oligoTeal"
+            color="warmCoral"
             radius="xl"
             styles={{
               root: {

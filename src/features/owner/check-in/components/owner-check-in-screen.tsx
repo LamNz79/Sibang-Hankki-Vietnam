@@ -45,7 +45,7 @@ function OwnerCheckInContent() {
           fullWidth
           value={mode}
           onChange={setMode}
-          color="oligoTeal"
+          color="warmCoral"
           data={[
             { value: "qr", label: "Scan QR" },
             { value: "manual", label: "Manual lookup" },
@@ -66,7 +66,7 @@ function OwnerCheckInContent() {
             }}
           >
             <Stack align="center" gap="sm">
-              <ThemeIcon size={58} radius="md" color="oligoTeal">
+              <ThemeIcon size={58} radius="md" color="warmCoral">
                 <IconQrcode size={30} />
               </ThemeIcon>
               <Text fw={800} c={uiColors.textPrimary}>
@@ -95,7 +95,7 @@ function OwnerCheckInContent() {
           }}
         >
           <Group wrap="nowrap">
-            <Avatar color="oligoTeal" radius="xl">
+            <Avatar color="warmCoral" radius="xl">
               {reservation.initials}
             </Avatar>
             <Stack gap={3} style={{ flex: 1, minWidth: 0 }}>

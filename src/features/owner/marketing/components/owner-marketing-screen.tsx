@@ -60,7 +60,7 @@ export function OwnerMarketingScreen() {
             p="md"
             style={{
               background: uiColors.brandPrimarySoft,
-              border: "1px solid #b9dcd7",
+              border: `1px solid ${uiColors.borderStrong}`,
             }}
           >
             <Group wrap="nowrap">
@@ -68,7 +68,7 @@ export function OwnerMarketingScreen() {
                 size={44}
                 radius="xl"
                 variant="light"
-                color="oligoTeal"
+                color="warmCoral"
               >
                 <IconSpeakerphone size={21} />
               </ThemeIcon>

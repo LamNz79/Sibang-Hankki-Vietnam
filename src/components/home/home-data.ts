@@ -5,13 +5,14 @@ import {
   IconStar,
   IconTrendingUp,
 } from "@tabler/icons-react";
+import { uiColors } from "@/theme";
 
 export const categories = [
-  { label: "Michelin", slug: "michelin", icon: IconStar, color: "#5b7b72" },
-  { label: "Buffet", slug: "buffet", icon: IconFlame, color: "#5b7b72" },
-  { label: "Special deal", slug: "special-deal", icon: IconPercentage, color: "#5b7b72" },
-  { label: "Date night", slug: "date-night", icon: IconHeart, color: "#5b7b72" },
-  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: "#5b7b72" },
+  { label: "Michelin", slug: "michelin", icon: IconStar, color: uiColors.brandPrimaryMuted },
+  { label: "Buffet", slug: "buffet", icon: IconFlame, color: uiColors.brandPrimaryMuted },
+  { label: "Special deal", slug: "special-deal", icon: IconPercentage, color: uiColors.brandPrimaryMuted },
+  { label: "Date night", slug: "date-night", icon: IconHeart, color: uiColors.brandPrimaryMuted },
+  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: uiColors.brandPrimaryMuted },
 ];
 
 export const cityTiles = [

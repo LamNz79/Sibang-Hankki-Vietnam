@@ -36,7 +36,7 @@ export function BottomNav({ activePath }: { activePath: string }) {
             <Stack gap={4} align="center">
               <ThemeIcon
                 variant={active ? "filled" : "light"}
-                color={active ? "oligoTeal" : "gray"}
+                color={active ? "warmCoral" : "gray"}
                 radius="xl"
                 size={42}
                 style={

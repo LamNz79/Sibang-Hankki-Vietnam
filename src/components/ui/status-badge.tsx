@@ -31,8 +31,8 @@ const toneStyles: Record<
     color: uiColors.textSecondary,
   },
   brand: {
-    background: uiColors.brandOrangeSoft,
-    color: uiColors.brandOrange,
+    background: uiColors.accentVipSurface,
+    color: uiColors.accentVipText,
   },
 };
 
