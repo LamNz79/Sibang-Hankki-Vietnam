@@ -30,8 +30,8 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
           radius="xl"
           size="xl"
           style={{
-            background: "#f7f7f4",
-            color: "#556562",
+            background: uiColors.surfaceMuted,
+            color: uiColors.textSecondary,
           }}
         >
           <IconBell size={20} />
@@ -52,8 +52,13 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
         <Badge
           radius="xl"
           variant="light"
-          color="oligoTeal"
-          styles={{ root: { background: "#f3f7f6", color: "#436761" } }}
+          color="warmCoral"
+          styles={{
+            root: {
+              background: uiColors.brandPrimarySoft,
+              color: uiColors.brandPrimaryStrong,
+            },
+          }}
         >
           Current location
         </Badge>
@@ -69,10 +74,10 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
             border: `1px solid ${uiColors.border}`,
             background: uiColors.surface,
             height: 52,
-            color: "#22312d",
+            color: uiColors.textPrimary,
             boxShadow: "none",
           },
-          section: { color: "#7f8a85" },
+          section: { color: uiColors.textMuted },
         }}
       />
     </Stack>

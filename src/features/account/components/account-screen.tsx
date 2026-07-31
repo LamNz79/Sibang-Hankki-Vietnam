@@ -23,9 +23,9 @@ export function AccountScreen() {
         radius="xl"
         p="lg"
         style={{
-          border: "1px solid rgba(207, 183, 145, 0.24)",
-          background: "rgba(255,251,247,0.88)",
-          boxShadow: "0 12px 28px rgba(100, 71, 34, 0.06)",
+          border: `1px solid ${uiColors.border}`,
+          background: uiColors.surface,
+          boxShadow: "none",
         }}
       >
         <Group justify="space-between" align="center">
@@ -33,12 +33,12 @@ export function AccountScreen() {
             <Text fw={700} size="lg">
               Minh Lam
             </Text>
-            <Text size="sm" c="#68716c">
+            <Text size="sm" c={uiColors.textSecondary}>
               minh.lam@example.com
             </Text>
           </Stack>
 
-          <Badge radius="xl" color="oligoTeal" variant="light">
+          <Badge radius="xl" color="warmCoral" variant="light">
             Verified
           </Badge>
         </Group>
@@ -82,9 +82,9 @@ export function AccountScreen() {
           radius="xl"
           p="lg"
           style={{
-            border: "1px solid rgba(207, 183, 145, 0.24)",
-            background: "rgba(255,251,247,0.88)",
-            boxShadow: "0 12px 28px rgba(100, 71, 34, 0.06)",
+            border: `1px solid ${uiColors.border}`,
+            background: uiColors.surface,
+            boxShadow: "none",
           }}
         >
           <Group justify="space-between" align="flex-start">
@@ -92,7 +92,7 @@ export function AccountScreen() {
               <Text fw={700} size="lg">
                 {section.title}
               </Text>
-              <Text size="sm" c="#68716c">
+              <Text size="sm" c={uiColors.textSecondary}>
                 {section.description}
               </Text>
             </Stack>

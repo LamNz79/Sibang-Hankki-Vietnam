@@ -51,7 +51,7 @@ export function OwnerDashboardScreen() {
             p="lg"
             style={{
               background: uiColors.brandPrimarySoft,
-              border: `1px solid #b9dcd7`,
+              border: `1px solid ${uiColors.borderStrong}`,
             }}
           >
             <Group wrap="nowrap">
@@ -59,7 +59,7 @@ export function OwnerDashboardScreen() {
                 size={46}
                 radius="xl"
                 variant="light"
-                color="oligoTeal"
+                color="warmCoral"
               >
                 <IconCalendarEvent size={22} />
               </ThemeIcon>

@@ -27,7 +27,7 @@ export function ReservationsScreen() {
       bottomNav={<BottomNav activePath="/reservations" />}
     >
       <Stack gap={6} align="center" py="sm">
-        <ThemeIcon size={52} radius={999} color="oligoTeal" variant="light">
+        <ThemeIcon size={52} radius={999} color="warmCoral" variant="light">
           <IconCalendarCheck size={26} />
         </ThemeIcon>
         <Text fw={800} size="lg" c={uiColors.textPrimary}>Upcoming reservations</Text>
@@ -62,7 +62,7 @@ export function ReservationsScreen() {
                 />
 
                 <Stack gap={5} style={{ flex: 1 }}>
-                  <Badge color="oligoTeal" variant="light" radius="sm" w="fit-content">
+                  <Badge color="warmCoral" variant="light" radius="sm" w="fit-content">
                     Confirmed
                   </Badge>
                   <Text fw={750} c={uiColors.textPrimary}>{reservation.restaurantName}</Text>
@@ -91,7 +91,7 @@ export function ReservationsScreen() {
             <Button
               component={Link}
               href="/restaurants"
-              color="oligoTeal"
+              color="warmCoral"
               radius="md"
               size="md"
               fullWidth

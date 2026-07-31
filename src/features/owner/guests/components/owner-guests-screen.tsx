@@ -90,11 +90,11 @@ export function OwnerGuestsScreen() {
                   root: {
                     background:
                       guest.tier === "vip"
-                        ? uiColors.brandOrangeSoft
+                        ? uiColors.accentVipSurface
                         : uiColors.brandPrimarySoft,
                     color:
                       guest.tier === "vip"
-                        ? uiColors.brandOrange
+                        ? uiColors.accentVipText
                         : uiColors.brandPrimary,
                     fontWeight: 800,
                   },

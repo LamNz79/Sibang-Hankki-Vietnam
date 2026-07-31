@@ -43,7 +43,7 @@ export function SpecialCategories(specialCategoryProps: SpecialCategoryProps) {
       <Text
         size="xs"
         fw={600}
-        c="#24322e"
+        c={uiColors.textPrimary}
         ta="center"
         lh={1.25}
         style={{

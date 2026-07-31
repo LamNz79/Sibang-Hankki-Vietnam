@@ -71,8 +71,8 @@ export function OwnerReservationDetailScreen() {
               radius="xl"
               styles={{
                 root: {
-                  background: uiColors.brandOrangeSoft,
-                  color: uiColors.brandOrange,
+                  background: uiColors.accentVipSurface,
+                  color: uiColors.accentVipText,
                   fontWeight: 800,
                 },
               }}

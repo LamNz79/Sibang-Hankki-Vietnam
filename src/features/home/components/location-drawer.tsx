@@ -63,12 +63,12 @@ export function LocationDrawer({
           <Badge
             leftSection={<IconCurrentLocation size={14} />}
             radius="xl"
-            color="oligoTeal"
+            color="warmCoral"
             variant="light"
           >
             Use current location
           </Badge>
-          <Text size="sm" c="#7d7366">
+          <Text size="sm" c={uiColors.textSecondary}>
             Better restaurant suggestions by area
           </Text>
         </Group>
@@ -98,8 +98,8 @@ export function LocationDrawer({
                       borderRadius: 999,
                       background:
                         index % 2 === 0
-                          ? "linear-gradient(135deg, #e8f4f2 0%, #d9ece8 100%)"
-                          : "linear-gradient(135deg, #f7efe9 0%, #efe2d7 100%)",
+                          ? "linear-gradient(135deg, #fce9e2 0%, #f8d1c5 100%)"
+                          : "linear-gradient(135deg, #fff7f3 0%, #f1e3dd 100%)",
                       border:
                         selectedLocation === area
                           ? `2px solid ${uiColors.brandPrimary}`
@@ -107,7 +107,7 @@ export function LocationDrawer({
                       boxShadow:
                         selectedLocation === area
                           ? `0 8px 18px ${uiColors.brandPrimaryShadow}`
-                          : "0 6px 14px rgba(85, 101, 98, 0.06)",
+                          : "0 6px 14px rgba(80, 47, 38, 0.06)",
                     }}
                   />
                 </UnstyledButton>
@@ -167,7 +167,7 @@ export function LocationDrawer({
 
                       }}
                     >
-                      <Text fw={active ? 700 : 500} c={active ? uiColors.brandPrimary : "#21312c"}>
+                      <Text fw={active ? 700 : 500} c={active ? uiColors.brandPrimary : uiColors.textPrimary}>
                         {area}
                       </Text>
                     </Card>
@@ -212,7 +212,7 @@ export function LocationDrawer({
                           : `1px solid ${uiColors.borderStrong}`,
                       }}
                     >
-                      <Text fw={activeCity === city ? 700 : 500} c="#21312c">
+                      <Text fw={activeCity === city ? 700 : 500} c={uiColors.textPrimary}>
                         {city}
                       </Text>
                     </Card>
@@ -256,17 +256,17 @@ export function LocationDrawer({
                           p="sm"
                           style={{
                             width: "100%",
-                            background: active ? "#eef6f4" : uiColors.surface,
+                            background: active ? uiColors.brandPrimarySoft : uiColors.surface,
                             border: active
                               ? `1px solid ${uiColors.brandPrimary}`
                               : `1px solid ${uiColors.borderStrong}`,
                           }}
                         >
                           <Group justify="space-between" align="center">
-                            <Text fw={active ? 700 : 500} c="#21312c">
+                            <Text fw={active ? 700 : 500} c={uiColors.textPrimary}>
                               {area}
                             </Text>
-                            {active ? <IconCheck size={16} color="#bf6e3c" /> : null}
+                            {active ? <IconCheck size={16} color={uiColors.brandPrimary} /> : null}
                           </Group>
                         </Card>
                       </UnstyledButton>

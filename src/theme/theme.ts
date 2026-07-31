@@ -6,8 +6,8 @@ import {
 } from "@/theme/tokens";
 
 export const appTheme = createTheme({
-  primaryColor: "oligoTeal",
-  primaryShade: 9,
+  primaryColor: "warmCoral",
+  primaryShade: 7,
   defaultRadius: uiRadii.card,
   fontFamily: uiTypography.fontFamily,
   headings: {
