@@ -17,7 +17,7 @@ export function OwnerReservationRow({
 }) {
   return (
     <Link
-      href={`/owner/check-in?reservation=${reservation.id}`}
+      href={`/owner/reservations/${reservation.id}`}
       style={{ color: "inherit", textDecoration: "none" }}
     >
       <Group

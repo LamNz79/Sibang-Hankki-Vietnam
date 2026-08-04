@@ -13,9 +13,9 @@ import {
 } from "@mantine/core";
 import {
   IconBell,
-  IconCalendarEvent,
   IconChevronLeft,
   IconHomeStats,
+  IconQrcode,
   IconSpeakerphone,
   IconUsers,
 } from "@tabler/icons-react";
@@ -35,9 +35,9 @@ type OwnerShellProps = {
 const navigation = [
   { href: "/owner", label: "Today", icon: IconHomeStats, exact: true },
   {
-    href: "/owner/reservations",
-    label: "Reservations",
-    icon: IconCalendarEvent,
+    href: "/owner/check-in",
+    label: "Check-in",
+    icon: IconQrcode,
   },
   { href: "/owner/guests", label: "Guests", icon: IconUsers },
   { href: "/owner/marketing", label: "Marketing", icon: IconSpeakerphone },

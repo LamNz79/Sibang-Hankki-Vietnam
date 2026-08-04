@@ -1,5 +1,5 @@
-import { OwnerReservationsScreen } from "@/features/owner/reservations";
+import { redirect } from "next/navigation";
 
-export default function OwnerReservationsPage() {
-  return <OwnerReservationsScreen />;
+export default function LegacyOwnerReservationsPage() {
+  redirect("/owner");
 }

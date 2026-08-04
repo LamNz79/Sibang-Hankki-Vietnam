@@ -12,10 +12,13 @@ export type OwnerReservation = {
   time: string;
   guestName: string;
   initials: string;
+  date: string;
+  table: string;
   partySize: number;
   status: OwnerReservationStatus;
   tier?: GuestTier;
   preOrder?: boolean;
+  preOrderName?: string;
   note?: string;
   phone?: string;
   reference: string;

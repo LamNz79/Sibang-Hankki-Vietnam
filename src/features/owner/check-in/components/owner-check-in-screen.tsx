@@ -15,10 +15,10 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import {
-  IconCheck,
   IconInfoCircle,
   IconQrcode,
   IconSearch,
+  IconUserCheck,
 } from "@tabler/icons-react";
 import { GuestContextBadges } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
@@ -37,8 +37,6 @@ function OwnerCheckInContent() {
     <OwnerShell
       title="Guest check-in"
       eyebrow="QR or manual lookup"
-      backHref="/owner/reservations"
-      hideMobileNavigation
     >
       <Stack gap="md">
         <SegmentedControl
@@ -110,13 +108,13 @@ function OwnerCheckInContent() {
               </Text>
             </Stack>
             <Link
-              href={`/owner/reservations/${reservation.id}`}
+              href={`/owner/reservations/${reservation.id}/arrival`}
               style={{ textDecoration: "none" }}
             >
               <Button
                 size="sm"
                 radius="md"
-                leftSection={<IconCheck size={16} />}
+                leftSection={<IconUserCheck size={16} />}
               >
                 Check in
               </Button>
@@ -147,8 +145,6 @@ export function OwnerCheckInScreen() {
         <OwnerShell
           title="Guest check-in"
           eyebrow="Loading reservation..."
-          backHref="/owner/reservations"
-          hideMobileNavigation
         >
           <Text c={uiColors.textSecondary}>Loading check-in details...</Text>
         </OwnerShell>
