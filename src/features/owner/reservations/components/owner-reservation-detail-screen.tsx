@@ -1,48 +1,65 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import dayjs from "dayjs";
 import {
-  Avatar,
+  ActionIcon,
+  Button,
   Card,
   Group,
-  SimpleGrid,
+  Menu,
   Stack,
   Text,
-  Title,
+  ThemeIcon,
 } from "@mantine/core";
 import {
-  IconCheck,
-  IconCircleCheck,
-  IconMessage,
+  IconCalendarEvent,
+  IconChevronRight,
+  IconDots,
+  IconPhone,
   IconSofa,
+  IconToolsKitchen3,
   IconUserCheck,
+  IconX,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
-import {
-  GuestContextBadges,
-  ReservationStatusBadge,
-} from "./reservation-badges";
-import {
-  getOwnerReservation,
-} from "@/features/owner/data/mock-data";
-import type { OwnerReservationStatus } from "@/features/owner/types";
-import { ChoiceButton } from "@/components/ui";
+import { getOwnerReservation } from "@/features/owner/data/mock-data";
 import { uiColors } from "@/theme";
+import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
+import { OwnerServiceNotesCard } from "./owner-service-notes-card";
+
+function ReservationInfoRow({
+  icon: InfoIcon,
+  label,
+}: {
+  icon: typeof IconCalendarEvent;
+  label: string;
+}) {
+  return (
+    <Group gap="sm" wrap="nowrap">
+      <ThemeIcon
+        size={30}
+        radius="md"
+        variant="light"
+        color="warmCoral"
+      >
+        <InfoIcon size={16} />
+      </ThemeIcon>
+      <Text size="sm" c={uiColors.textSecondary}>
+        {label}
+      </Text>
+    </Group>
+  );
+}
 
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const reservation = getOwnerReservation(params.id);
-  const [status, setStatus] = useState<OwnerReservationStatus>(
-    reservation?.status ?? "confirmed",
-  );
 
   if (!reservation) {
     return (
-      <OwnerShell
-        title="Guest arrival"
-        backHref="/owner/reservations"
-      >
+      <OwnerShell title="Reservation details" backHref="/owner">
         <Card p="xl">
           <Text fw={700}>Reservation not found.</Text>
         </Card>
@@ -50,138 +67,113 @@ export function OwnerReservationDetailScreen() {
     );
   }
 
+  const hasArrived = ["arrived", "seated", "completed"].includes(
+    reservation.status,
+  );
+  const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
+
+  const footerAction =
+    reservation.status === "pending" ? (
+      <Button fullWidth size="md" radius="md" disabled>
+        Confirm reservation before check-in
+      </Button>
+    ) : (
+      <Button
+        component={Link}
+        href={arrivalHref}
+        fullWidth
+        size="md"
+        radius="md"
+        leftSection={<IconUserCheck size={19} />}
+      >
+        {hasArrived
+          ? `View ${reservation.guestName}'s arrival`
+          : `Check in ${reservation.guestName}`}
+      </Button>
+    );
+
   return (
     <OwnerShell
-      title="Guest arrival"
-      eyebrow="Guest context"
-      backHref="/owner/reservations"
+      title="Reservation details"
+      eyebrow="Selected guest only"
+      backHref="/owner"
+      headerAction={
+        <Menu position="bottom-end" shadow="md" width={190}>
+          <Menu.Target>
+            <ActionIcon
+              variant="light"
+              color="gray"
+              radius="xl"
+              size={40}
+              aria-label="Reservation actions"
+            >
+              <IconDots size={21} />
+            </ActionIcon>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Reservation actions</Menu.Label>
+            <Menu.Item leftSection={<IconPhone size={16} />} disabled>
+              Contact guest
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              leftSection={<IconX size={16} />}
+              disabled
+            >
+              Cancel reservation
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      }
+      footerAction={footerAction}
     >
       <Stack gap="md">
-        <Card
-          radius="lg"
-          p={{ base: "md", md: "lg" }}
-          style={{
-            background: uiColors.surface,
-            border: `1px solid ${uiColors.border}`,
-          }}
-        >
-          <Group wrap="nowrap">
-            <Avatar
-              size={64}
-              radius="xl"
-              styles={{
-                root: {
-                  background: uiColors.accentVipSurface,
-                  color: uiColors.accentVipText,
-                  fontWeight: 800,
-                },
-              }}
-            >
-              {reservation.initials}
-            </Avatar>
-            <Stack gap={5} style={{ flex: 1 }}>
-              <GuestContextBadges
-                tier={reservation.tier}
-                preOrder={reservation.preOrder}
-              />
-              <Title order={2} size="h3">
-                {reservation.guestName}
-              </Title>
-              <Text size="sm" c={uiColors.textSecondary}>
-                {reservation.time} · {reservation.partySize} guests
-              </Text>
-            </Stack>
-            <ReservationStatusBadge status={status} />
-          </Group>
-        </Card>
+        <OwnerReservationSummaryCard reservation={reservation} />
 
         <Card
           radius="lg"
           p="md"
           style={{
-            background: uiColors.statusWarningSurface,
-            border: `1px solid ${uiColors.statusWarningBorder}`,
+            background: uiColors.surface,
+            border: `1px solid ${uiColors.border}`,
           }}
         >
-          <Group gap="sm" align="flex-start" wrap="nowrap">
-            <IconMessage
-              size={18}
-              color={uiColors.statusWarningText}
-              style={{ marginTop: 2 }}
+          <Stack gap="sm">
+            <Text fw={800} size="sm" c={uiColors.textPrimary}>
+              Reservation information
+            </Text>
+            <ReservationInfoRow
+              icon={IconCalendarEvent}
+              label={dayjs(reservation.date).format("dddd, MMM D")}
             />
-            <Stack gap={4}>
-              <Text fw={750} size="sm" c={uiColors.statusWarningTextStrong}>
-                Service notes
-              </Text>
-              <Text size="sm" c={uiColors.statusWarningTextStrong}>
-                Prefers window seating · Korean sharing set pre-ordered ·
-                birthday dessert request
-              </Text>
-            </Stack>
-          </Group>
+            <ReservationInfoRow icon={IconSofa} label={reservation.table} />
+            <ReservationInfoRow
+              icon={IconToolsKitchen3}
+              label={reservation.preOrderName ?? "No pre-order"}
+            />
+          </Stack>
         </Card>
 
-        <Stack gap="sm">
-          <Text fw={800}>Visit status</Text>
-          <SimpleGrid cols={2} spacing="sm">
-            <ChoiceButton
-              selected={status === "confirmed"}
-              leftSection={<IconCheck size={17} />}
-              onClick={() => setStatus("confirmed")}
-            >
-              Confirmed
-            </ChoiceButton>
-            <ChoiceButton
-              selected={status === "arrived"}
-              leftSection={<IconUserCheck size={17} />}
-              onClick={() => setStatus("arrived")}
-            >
-              Arrived
-            </ChoiceButton>
-            <ChoiceButton
-              selected={status === "seated"}
-              leftSection={<IconSofa size={17} />}
-              onClick={() => setStatus("seated")}
-            >
-              Seated
-            </ChoiceButton>
-            <ChoiceButton
-              selected={status === "completed"}
-              leftSection={<IconCircleCheck size={17} />}
-              onClick={() => setStatus("completed")}
-            >
-              Completed
-            </ChoiceButton>
-          </SimpleGrid>
-        </Stack>
+        <OwnerServiceNotesCard note={reservation.note} />
 
-        <Stack gap="sm">
-          <Text fw={800}>Guest history</Text>
-          <SimpleGrid cols={3} spacing={0}>
-            {[
-              ["Last visit", reservation.lastVisit ?? "—"],
-              ["Visits", String(reservation.visits)],
-              ["Points", String(reservation.points)],
-            ].map(([label, value]) => (
-              <Card
-                key={label}
-                radius={0}
-                p="md"
-                style={{
-                  background: uiColors.surface,
-                  border: `1px solid ${uiColors.border}`,
-                }}
-              >
-                <Stack gap={3} align="center">
-                  <Text size="xs" c={uiColors.textSecondary}>
-                    {label}
-                  </Text>
-                  <Text fw={800}>{value}</Text>
-                </Stack>
-              </Card>
-            ))}
-          </SimpleGrid>
-        </Stack>
+        {reservation.status === "pending" ? (
+          <Card
+            radius="lg"
+            p="md"
+            style={{
+              background: uiColors.statusInfoSurface,
+              border: `1px solid ${uiColors.border}`,
+            }}
+          >
+            <Group gap="sm" wrap="nowrap">
+              <Text size="sm" c={uiColors.statusInfoText} style={{ flex: 1 }}>
+                Review and confirm this request before the guest can be checked
+                in.
+              </Text>
+              <IconChevronRight size={18} color={uiColors.statusInfoText} />
+            </Group>
+          </Card>
+        ) : null}
       </Stack>
     </OwnerShell>
   );
