@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
+import { useState } from "react";
 import {
   ActionIcon,
   Button,
@@ -13,9 +14,11 @@ import {
   Text,
   ThemeIcon,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import {
+  IconBell,
   IconCalendarEvent,
-  IconChevronRight,
+  IconCheck,
   IconDots,
   IconPhone,
   IconSofa,
@@ -27,7 +30,12 @@ import { OwnerShell } from "@/features/owner/shared";
 import { getOwnerReservation } from "@/features/owner/data/mock-data";
 import { uiColors } from "@/theme";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
+import {
+  OwnerReservationResponsePanel,
+  type OwnerRequestResponse,
+} from "./owner-reservation-response-panel";
 import { OwnerServiceNotesCard } from "./owner-service-notes-card";
+import type { OwnerReservationStatus } from "@/features/owner/types";
 
 function ReservationInfoRow({
   icon: InfoIcon,
@@ -56,6 +64,12 @@ function ReservationInfoRow({
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const reservation = getOwnerReservation(params.id);
+  const [displayStatus, setDisplayStatus] = useState<OwnerReservationStatus>(
+    reservation?.status ?? "pending",
+  );
+  const [response, setResponse] = useState<OwnerRequestResponse>({
+    kind: "pending",
+  });
 
   if (!reservation) {
     return (
@@ -68,14 +82,40 @@ export function OwnerReservationDetailScreen() {
   }
 
   const hasArrived = ["arrived", "seated", "completed"].includes(
-    reservation.status,
+    displayStatus,
   );
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
 
+  const notifyGuest = () => {
+    notifications.show({
+      color: "teal",
+      title: "Confirmation sent",
+      message: `${reservation.guestName} was notified that the table is confirmed.`,
+    });
+  };
+
+  const confirmReservation = () => {
+    setDisplayStatus("confirmed");
+    notifyGuest();
+  };
+
   const footerAction =
-    reservation.status === "pending" ? (
-      <Button fullWidth size="md" radius="md" disabled>
-        Confirm reservation before check-in
+    displayStatus === "pending" ? (
+      <Button
+        fullWidth
+        size="md"
+        radius="md"
+        leftSection={
+          response.kind === "pending" ? <IconCheck size={19} /> : undefined
+        }
+        disabled={response.kind !== "pending"}
+        onClick={confirmReservation}
+      >
+        {response.kind === "alternative-sent"
+          ? "Waiting for guest response"
+          : response.kind === "unavailable"
+            ? "Request closed"
+            : "Confirm reservation"}
       </Button>
     ) : (
       <Button
@@ -112,7 +152,12 @@ export function OwnerReservationDetailScreen() {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>Reservation actions</Menu.Label>
-            <Menu.Item leftSection={<IconPhone size={16} />} disabled>
+            <Menu.Item
+              component="a"
+              href={`tel:${reservation.phone ?? ""}`}
+              leftSection={<IconPhone size={16} />}
+              disabled={!reservation.phone}
+            >
               Contact guest
             </Menu.Item>
             <Menu.Item
@@ -128,7 +173,10 @@ export function OwnerReservationDetailScreen() {
       footerAction={footerAction}
     >
       <Stack gap="md">
-        <OwnerReservationSummaryCard reservation={reservation} />
+        <OwnerReservationSummaryCard
+          reservation={reservation}
+          status={displayStatus}
+        />
 
         <Card
           radius="lg"
@@ -156,21 +204,56 @@ export function OwnerReservationDetailScreen() {
 
         <OwnerServiceNotesCard note={reservation.note} />
 
-        {reservation.status === "pending" ? (
+        {reservation.status === "pending" && displayStatus === "pending" ? (
+          <OwnerReservationResponsePanel
+            reservation={reservation}
+            response={response}
+            onResponseChange={setResponse}
+          />
+        ) : null}
+
+        {displayStatus === "confirmed" ? (
           <Card
             radius="lg"
             p="md"
             style={{
-              background: uiColors.statusInfoSurface,
+              background: uiColors.statusSuccessSurface,
               border: `1px solid ${uiColors.border}`,
             }}
           >
             <Group gap="sm" wrap="nowrap">
-              <Text size="sm" c={uiColors.statusInfoText} style={{ flex: 1 }}>
-                Review and confirm this request before the guest can be checked
-                in.
-              </Text>
-              <IconChevronRight size={18} color={uiColors.statusInfoText} />
+              <ThemeIcon color="teal" variant="light" radius="xl">
+                <IconCheck size={17} />
+              </ThemeIcon>
+              <Stack gap={2} style={{ flex: 1 }}>
+                <Text fw={750} size="sm" c={uiColors.statusSuccessText}>
+                  Guest confirmation
+                </Text>
+                <Text size="xs" c={uiColors.textSecondary}>
+                  Send the confirmed booking in the app. Call only when the
+                  guest needs urgent or special follow-up.
+                </Text>
+              </Stack>
+            </Group>
+
+            <Group grow gap="sm" mt="md">
+              <Button
+                variant="outline"
+                color="teal"
+                leftSection={<IconBell size={17} />}
+                onClick={notifyGuest}
+              >
+                Notify guest
+              </Button>
+              <Button
+                component="a"
+                href={`tel:${reservation.phone ?? ""}`}
+                variant="default"
+                leftSection={<IconPhone size={17} />}
+                disabled={!reservation.phone}
+              >
+                Call guest
+              </Button>
             </Group>
           </Card>
         ) : null}

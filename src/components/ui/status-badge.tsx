@@ -1,7 +1,13 @@
 import { Badge, type BadgeProps } from "@mantine/core";
 import { uiColors } from "@/theme";
 
-type StatusBadgeTone = "success" | "warning" | "info" | "neutral" | "brand";
+type StatusBadgeTone =
+  | "success"
+  | "warning"
+  | "info"
+  | "error"
+  | "neutral"
+  | "brand";
 
 export type StatusBadgeProps = Omit<
   BadgeProps,
@@ -25,6 +31,10 @@ const toneStyles: Record<
   info: {
     background: uiColors.statusInfoSurface,
     color: uiColors.statusInfoText,
+  },
+  error: {
+    background: uiColors.statusErrorSurface,
+    color: uiColors.statusErrorText,
   },
   neutral: {
     background: uiColors.surfaceMuted,
