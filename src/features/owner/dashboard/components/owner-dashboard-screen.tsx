@@ -5,13 +5,14 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import {
   ActionIcon,
+  Badge,
   Box,
   Button,
   Card,
+  Drawer,
   Group,
   Modal,
   NumberInput,
-  ScrollArea,
   SimpleGrid,
   Stack,
   Text,
@@ -19,8 +20,10 @@ import {
   TextInput,
   ThemeIcon,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 import {
+  IconAdjustmentsHorizontal,
   IconAlertCircle,
   IconCalendarEvent,
   IconChevronLeft,
@@ -31,9 +34,9 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import {
+  ChoiceButton,
   MetricCard,
   PrimaryActionButton,
-  SelectionChip,
 } from "@/components/ui";
 import { ownerReservations } from "@/features/owner/data/mock-data";
 import { OwnerReservationRow } from "@/features/owner/reservations";
@@ -45,6 +48,7 @@ import type {
 import { uiColors } from "@/theme";
 
 type ReservationFilter = "all" | OwnerReservationStatus;
+type GuestFilter = "vip" | "pre-order" | "large-party";
 
 const statusFilters: Array<{
   value: ReservationFilter;
@@ -58,6 +62,33 @@ const statusFilters: Array<{
   { value: "completed", label: "Completed" },
 ];
 
+const guestFilters: Array<{
+  value: GuestFilter;
+  label: string;
+}> = [
+  { value: "vip", label: "VIP" },
+  { value: "pre-order", label: "Pre-order" },
+  { value: "large-party", label: "4+ guests" },
+];
+
+function matchesStatusFilter(
+  reservation: OwnerReservation,
+  filter: ReservationFilter,
+) {
+  return filter === "all" || reservation.status === filter;
+}
+
+function matchesGuestFilter(
+  reservation: OwnerReservation,
+  filters: GuestFilter[],
+) {
+  return filters.every((filter) => {
+    if (filter === "vip") return reservation.tier === "vip";
+    if (filter === "pre-order") return Boolean(reservation.preOrder);
+    return reservation.partySize >= 4;
+  });
+}
+
 function getStatusCount(
   reservations: OwnerReservation[],
   filter: ReservationFilter,
@@ -67,17 +98,50 @@ function getStatusCount(
     .length;
 }
 
+function getGuestCount(
+  reservations: OwnerReservation[],
+  filter: GuestFilter,
+) {
+  return reservations.filter((reservation) =>
+    matchesGuestFilter(reservation, [filter]),
+  ).length;
+}
+
 export function OwnerDashboardScreen() {
   const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
-  const [filter, setFilter] = useState<ReservationFilter>("all");
+  const [statusFilter, setStatusFilter] =
+    useState<ReservationFilter>("all");
+  const [guestFiltersActive, setGuestFiltersActive] = useState<GuestFilter[]>(
+    [],
+  );
+  const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
 
-  const filteredReservations = useMemo(() => {
-    if (filter === "all") return ownerReservations;
-    return ownerReservations.filter(
-      (reservation) => reservation.status === filter,
-    );
-  }, [filter]);
+  const reservationsMatchingGuest = useMemo(
+    () =>
+      ownerReservations.filter((reservation) =>
+        matchesGuestFilter(reservation, guestFiltersActive),
+      ),
+    [guestFiltersActive],
+  );
+
+  const reservationsMatchingStatus = useMemo(
+    () =>
+      ownerReservations.filter((reservation) =>
+        matchesStatusFilter(reservation, statusFilter),
+      ),
+    [statusFilter],
+  );
+
+  const filteredReservations = useMemo(
+    () =>
+      ownerReservations.filter(
+        (reservation) =>
+          matchesStatusFilter(reservation, statusFilter) &&
+          matchesGuestFilter(reservation, guestFiltersActive),
+      ),
+    [guestFiltersActive, statusFilter],
+  );
 
   const pendingReservations = ownerReservations.filter(
     (reservation) => reservation.status === "pending",
@@ -99,6 +163,30 @@ export function OwnerDashboardScreen() {
   const dateLabel = isToday
     ? `Today · ${selectedDate.format("dddd, MMM D")}`
     : selectedDate.format("dddd, MMM D");
+  const selectedStatusLabel =
+    statusFilters.find((option) => option.value === statusFilter)?.label ??
+    "All";
+  const hasActiveFilters =
+    statusFilter !== "all" || guestFiltersActive.length > 0;
+  const activeFilterCount =
+    (statusFilter === "all" ? 0 : 1) + guestFiltersActive.length;
+  const activeFilterSummary = [
+    statusFilter === "all" ? null : selectedStatusLabel,
+    ...guestFiltersActive.map(
+      (filter) =>
+        guestFilters.find((option) => option.value === filter)?.label,
+    ),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  const toggleGuestFilter = (filter: GuestFilter) => {
+    setGuestFiltersActive((current) =>
+      current.includes(filter)
+        ? current.filter((value) => value !== filter)
+        : [...current, filter],
+    );
+  };
 
   const metrics = [
     {
@@ -200,27 +288,59 @@ export function OwnerDashboardScreen() {
                 </Group>
               </Card>
 
-              <ScrollArea type="never" offsetScrollbars={false}>
-                <Group gap="xs" wrap="nowrap">
-                  {statusFilters.map((option) => {
-                    const count = getStatusCount(
-                      ownerReservations,
-                      option.value,
-                    );
-
-                    return (
-                      <SelectionChip
-                        key={option.value}
-                        checked={filter === option.value}
-                        compact
-                        onChange={() => setFilter(option.value)}
+              <UnstyledButton
+                onClick={() => setFiltersOpened(true)}
+                style={{ display: "block", width: "100%" }}
+              >
+                <Card
+                  radius="lg"
+                  p="sm"
+                  style={{
+                    background: uiColors.surface,
+                    border: hasActiveFilters
+                      ? `1px solid ${uiColors.brandPrimary}`
+                      : `1px solid ${uiColors.border}`,
+                    boxShadow: "none",
+                  }}
+                >
+                  <Group gap="sm" wrap="nowrap">
+                    <ThemeIcon
+                      size={38}
+                      radius="xl"
+                      variant="light"
+                      color="warmCoral"
+                    >
+                      <IconAdjustmentsHorizontal size={19} />
+                    </ThemeIcon>
+                    <Stack gap={1} style={{ flex: 1, minWidth: 0 }}>
+                      <Text fw={750} size="sm" c={uiColors.textPrimary}>
+                        Filter reservations
+                      </Text>
+                      <Text size="xs" c={uiColors.textSecondary} truncate>
+                        {activeFilterSummary || "All statuses and guests"}
+                      </Text>
+                    </Stack>
+                    {activeFilterCount > 0 ? (
+                      <Badge
+                        circle
+                        color="warmCoral"
+                        variant="filled"
+                        aria-label={`${activeFilterCount} active filters`}
                       >
-                        {option.label} {count}
-                      </SelectionChip>
-                    );
-                  })}
-                </Group>
-              </ScrollArea>
+                        {activeFilterCount}
+                      </Badge>
+                    ) : (
+                      <Text size="xs" c={uiColors.textMuted}>
+                        {filteredReservations.length} shown
+                      </Text>
+                    )}
+                    <IconChevronRight
+                      size={18}
+                      color={uiColors.textSecondary}
+                    />
+                  </Group>
+                </Card>
+              </UnstyledButton>
             </Stack>
           </Box>
 
@@ -322,7 +442,7 @@ export function OwnerDashboardScreen() {
               boxShadow: "none",
             }}
           >
-            <Group justify="space-between" pt="md" pb="xs">
+            <Group justify="space-between" pt="md" pb="xs" wrap="nowrap">
               <Title order={2} size="h4" c={uiColors.textPrimary}>
                 Reservations
               </Title>
@@ -343,16 +463,109 @@ export function OwnerDashboardScreen() {
             ) : (
               <Stack align="center" gap={4} py="xl">
                 <Text fw={700} c={uiColors.textPrimary}>
-                  No {filter} reservations
+                  No reservations match
                 </Text>
                 <Text size="sm" ta="center" c={uiColors.textSecondary}>
-                  Choose another status to view today&apos;s service list.
+                  Try another status or guest filter.
                 </Text>
               </Stack>
             )}
           </Card>
         </Stack>
       </OwnerShell>
+
+      <Drawer
+        opened={filtersOpened}
+        onClose={() => setFiltersOpened(false)}
+        position="bottom"
+        size="72%"
+        radius="24px 24px 0 0"
+        padding="md"
+        title={<Text fw={800}>Filter reservations</Text>}
+        classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
+        styles={{
+          content: {
+            width: "100%",
+            maxWidth: 560,
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: "50%",
+            transform: "translateX(-50%)",
+          },
+          header: {
+            borderBottom: `1px solid ${uiColors.border}`,
+          },
+        }}
+      >
+        <Stack gap="xl" pb="md">
+          <Stack gap="sm">
+            <Group justify="space-between">
+              <Text fw={800} c={uiColors.textPrimary}>
+                Status
+              </Text>
+              <Text size="xs" c={uiColors.textSecondary}>
+                Choose one
+              </Text>
+            </Group>
+            <SimpleGrid cols={2} spacing="sm">
+              {statusFilters.map((option) => (
+                <ChoiceButton
+                  key={option.value}
+                  selected={statusFilter === option.value}
+                  onClick={() => setStatusFilter(option.value)}
+                >
+                  {option.label} · {getStatusCount(
+                    reservationsMatchingGuest,
+                    option.value,
+                  )}
+                </ChoiceButton>
+              ))}
+            </SimpleGrid>
+          </Stack>
+
+          <Stack gap="sm">
+            <Group justify="space-between">
+              <Text fw={800} c={uiColors.textPrimary}>
+                Guest details
+              </Text>
+              <Text size="xs" c={uiColors.textSecondary}>
+                Select any
+              </Text>
+            </Group>
+            <SimpleGrid cols={2} spacing="sm">
+              {guestFilters.map((option) => (
+                <ChoiceButton
+                  key={option.value}
+                  selected={guestFiltersActive.includes(option.value)}
+                  onClick={() => toggleGuestFilter(option.value)}
+                >
+                  {option.label} · {getGuestCount(
+                    reservationsMatchingStatus,
+                    option.value,
+                  )}
+                </ChoiceButton>
+              ))}
+            </SimpleGrid>
+          </Stack>
+
+          <Group grow gap="sm">
+            <Button
+              variant="default"
+              size="md"
+              disabled={!hasActiveFilters}
+              onClick={() => {
+                setStatusFilter("all");
+                setGuestFiltersActive([]);
+              }}
+            >
+              Reset
+            </Button>
+            <Button size="md" onClick={() => setFiltersOpened(false)}>
+              Show {filteredReservations.length} reservations
+            </Button>
+          </Group>
+        </Stack>
+      </Drawer>
 
       <Modal
         opened={walkInOpened}
