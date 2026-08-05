@@ -17,6 +17,7 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import {
+  IconCalendarClock,
   IconCalendarEvent,
   IconCheck,
   IconChevronRight,
@@ -26,6 +27,7 @@ import {
   IconQrcode,
   IconToolsKitchen3,
   IconUsers,
+  IconX,
 } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { StatusBadge } from "@/components/ui";
@@ -37,6 +39,7 @@ import {
   type CustomerReservation,
 } from "@/features/reservations/data/reservation-storage";
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
+import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
 import { uiColors } from "@/theme";
 
 type DetailRowProps = {
@@ -86,18 +89,30 @@ function ReservationStatusCard({
   reservation: CustomerReservation;
 }) {
   const isPending = reservation.status === "pending";
+  const isAlternative = reservation.status === "alternative-proposed";
+  const isDeclined = reservation.status === "declined";
+  const background = isPending
+    ? uiColors.statusWarningSurface
+    : isAlternative
+      ? uiColors.brandPrimarySubtle
+      : isDeclined
+        ? uiColors.statusErrorSurface
+        : uiColors.statusSuccessSurface;
+  const borderColor = isPending
+    ? uiColors.statusWarningBorder
+    : isAlternative
+      ? uiColors.brandPrimary
+      : isDeclined
+        ? uiColors.statusErrorText
+        : uiColors.statusSuccessText;
 
   return (
     <Card
       radius="lg"
       p="md"
       style={{
-        background: isPending
-          ? uiColors.statusWarningSurface
-          : uiColors.statusSuccessSurface,
-        border: `1px solid ${
-          isPending ? uiColors.statusWarningBorder : uiColors.statusSuccessText
-        }`,
+        background,
+        border: `1px solid ${borderColor}`,
       }}
     >
       <Group gap="sm" wrap="nowrap">
@@ -105,24 +120,65 @@ function ReservationStatusCard({
           size={44}
           radius="xl"
           variant="light"
-          color={isPending ? "sand" : "teal"}
+          color={
+            isPending
+              ? "sand"
+              : isAlternative
+                ? "warmCoral"
+                : isDeclined
+                  ? "red"
+                  : "teal"
+          }
           style={{ flexShrink: 0 }}
         >
-          {isPending ? <IconClock size={22} /> : <IconCheck size={22} />}
+          {isPending ? (
+            <IconClock size={22} />
+          ) : isAlternative ? (
+            <IconCalendarClock size={22} />
+          ) : isDeclined ? (
+            <IconX size={22} />
+          ) : (
+            <IconCheck size={22} />
+          )}
         </ThemeIcon>
         <Stack gap={2}>
-          <StatusBadge tone={isPending ? "warning" : "success"} w="fit-content">
-            {isPending ? "Pending confirmation" : "Reservation confirmed"}
+          <StatusBadge
+            tone={
+              isPending
+                ? "warning"
+                : isAlternative
+                  ? "brand"
+                  : isDeclined
+                    ? "error"
+                    : "success"
+            }
+            w="fit-content"
+          >
+            {isPending
+              ? "Pending confirmation"
+              : isAlternative
+                ? "Action required"
+                : isDeclined
+                  ? "Request declined"
+                  : "Reservation confirmed"}
           </StatusBadge>
           <Text fw={800} c={uiColors.textPrimary}>
             {isPending
               ? "Waiting for the restaurant"
-              : "Your table is confirmed"}
+              : isAlternative
+                ? "The restaurant suggested a new time"
+                : isDeclined
+                  ? "This request is closed"
+                  : "Your table is confirmed"}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
             {isPending
               ? "The restaurant will confirm your request or contact you if anything needs to change."
-              : "Your reservation is ready. Show the booking code when you arrive."}
+              : isAlternative
+                ? "Review the proposed time below. Your table is not confirmed until you accept it."
+                : isDeclined
+                  ? "The restaurant has been notified that you declined the proposed time."
+                  : "Your reservation is ready. Show the booking code when you arrive."}
           </Text>
         </Stack>
       </Group>
@@ -175,6 +231,8 @@ export function ReservationDetailScreen() {
   const restaurant = getRestaurantBySlug(reservation.restaurantSlug);
   const reference = getReservationReference(reservation);
   const isPending = reservation.status === "pending";
+  const isAlternative = reservation.status === "alternative-proposed";
+  const isDeclined = reservation.status === "declined";
 
   const copyReference = async () => {
     try {
@@ -193,6 +251,10 @@ export function ReservationDetailScreen() {
       bottomNav={<BottomNav activePath="/reservations" />}
     >
       <ReservationStatusCard reservation={reservation} />
+
+      {isAlternative ? (
+        <CustomerAlternativeProposalCard reservation={reservation} />
+      ) : null}
 
       <Card
         radius="lg"
@@ -305,11 +367,12 @@ export function ReservationDetailScreen() {
       <Card
         radius="lg"
         p="md"
-        style={{
-          border: `1px solid ${uiColors.border}`,
-          background: isPending
-            ? uiColors.statusInfoSurface
-            : uiColors.surfaceAlt,
+          style={{
+            border: `1px solid ${uiColors.border}`,
+          background:
+            isPending || isAlternative
+              ? uiColors.statusInfoSurface
+              : uiColors.surfaceAlt,
         }}
       >
         <Group gap="sm" wrap="nowrap" align="flex-start">
@@ -317,46 +380,71 @@ export function ReservationDetailScreen() {
             radius="md"
             size={38}
             variant="light"
-            color={isPending ? "gray" : "warmCoral"}
+            color={
+              isPending || isAlternative || isDeclined ? "gray" : "warmCoral"
+            }
             style={{ flexShrink: 0 }}
           >
-            {isPending ? <IconClock size={19} /> : <IconQrcode size={19} />}
+            {isPending || isAlternative || isDeclined ? (
+              <IconClock size={19} />
+            ) : (
+              <IconQrcode size={19} />
+            )}
           </ThemeIcon>
           <Stack gap={2}>
             <Text fw={750} size="sm" c={uiColors.textPrimary}>
               {isPending
                 ? "Check-in code available after confirmation"
-                : "Show your reservation when you arrive"}
+                : isAlternative
+                  ? "Respond before this booking can be confirmed"
+                  : isDeclined
+                    ? "No table is being held"
+                    : "Show your reservation when you arrive"}
             </Text>
             <Text size="xs" c={uiColors.textSecondary}>
               {isPending
                 ? "The restaurant may contact you before confirming this request."
-                : "Staff can confirm your booking code or check you in with the QR code."}
+                : isAlternative
+                  ? "Accept the suggested time, choose another time, or decline the request."
+                  : isDeclined
+                    ? "Make a new request whenever you are ready."
+                    : "Staff can confirm your booking code or check you in with the QR code."}
             </Text>
           </Stack>
         </Group>
       </Card>
 
-      <SimpleGrid cols={2} spacing="sm">
+      {!isAlternative && !isDeclined ? (
+        <SimpleGrid cols={2} spacing="sm">
+          <Button
+            variant="outline"
+            color="gray"
+            radius="md"
+            disabled
+            title="Change flow will be added after the policy is confirmed"
+          >
+            {isPending ? "Change request" : "Change"}
+          </Button>
+          <Button
+            variant="outline"
+            color="red"
+            radius="md"
+            disabled
+            title="Cancellation flow will be added after the policy is confirmed"
+          >
+            {isPending ? "Cancel request" : "Cancel"}
+          </Button>
+        </SimpleGrid>
+      ) : isDeclined ? (
         <Button
-          variant="outline"
-          color="gray"
-          radius="md"
-          disabled
-          title="Change flow will be added after the policy is confirmed"
+          component={Link}
+          href={`/reservation?restaurant=${reservation.restaurantSlug}`}
+          fullWidth
+          color="warmCoral"
         >
-          {isPending ? "Change request" : "Change"}
+          Make a new reservation
         </Button>
-        <Button
-          variant="outline"
-          color="red"
-          radius="md"
-          disabled
-          title="Cancellation flow will be added after the policy is confirmed"
-        >
-          {isPending ? "Cancel request" : "Cancel"}
-        </Button>
-      </SimpleGrid>
+      ) : null}
     </MobileShell>
   );
 }

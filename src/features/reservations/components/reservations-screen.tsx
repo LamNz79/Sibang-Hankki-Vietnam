@@ -39,6 +39,15 @@ export function ReservationsScreen() {
         <Stack gap="md">
           {reservations.map((reservation) => {
             const isPending = reservation.status === "pending";
+            const isAlternative =
+              reservation.status === "alternative-proposed";
+            const isDeclined = reservation.status === "declined";
+            const displayDate = isAlternative
+              ? reservation.alternativeProposal?.date ?? reservation.date
+              : reservation.date;
+            const displayTime = isAlternative
+              ? reservation.alternativeProposal?.time ?? reservation.time
+              : reservation.time;
 
             return (
               <Card
@@ -66,15 +75,42 @@ export function ReservationsScreen() {
                   />
 
                   <Stack gap={5} style={{ flex: 1 }}>
-                    <StatusBadge tone={isPending ? "warning" : "success"} w="fit-content">
-                      {isPending ? "Pending confirmation" : "Confirmed"}
+                    <StatusBadge
+                      tone={
+                        isPending
+                          ? "warning"
+                          : isAlternative
+                            ? "brand"
+                            : isDeclined
+                              ? "error"
+                              : "success"
+                      }
+                      w="fit-content"
+                    >
+                      {isPending
+                        ? "Pending confirmation"
+                        : isAlternative
+                          ? "Action required"
+                          : isDeclined
+                            ? "Request declined"
+                            : "Confirmed"}
                     </StatusBadge>
                     <Text fw={750} c={uiColors.textPrimary}>{reservation.restaurantName}</Text>
                     <Group gap={6} wrap="nowrap">
                       <IconCalendarEvent size={15} color={uiColors.textSecondary} />
-                      <Text size="xs" c={uiColors.textSecondary}>{dayjs(reservation.date).format("ddd, MMM D")}</Text>
+                      <Text size="xs" c={uiColors.textSecondary}>{dayjs(displayDate).format("ddd, MMM D")}</Text>
                       <IconClock size={15} color={uiColors.textSecondary} />
-                      <Text size="xs" c={uiColors.textSecondary}>{reservation.time}</Text>
+                      <Text
+                        size="xs"
+                        fw={isAlternative ? 750 : 400}
+                        c={
+                          isAlternative
+                            ? uiColors.brandPrimary
+                            : uiColors.textSecondary
+                        }
+                      >
+                        {isAlternative ? `Suggested ${displayTime}` : displayTime}
+                      </Text>
                     </Group>
                     <Group gap={6} wrap="nowrap">
                       <IconUsers size={15} color={uiColors.textSecondary} />

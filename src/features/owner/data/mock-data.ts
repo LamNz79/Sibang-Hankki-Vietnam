@@ -1,8 +1,11 @@
+import dayjs from "dayjs";
 import type {
   OwnerCampaign,
   OwnerGuest,
   OwnerReservation,
 } from "@/features/owner/types";
+
+const ownerServiceDate = dayjs().format("YYYY-MM-DD");
 
 export const ownerReservations: OwnerReservation[] = [
   {
@@ -10,7 +13,7 @@ export const ownerReservations: OwnerReservation[] = [
     time: "17:30",
     guestName: "Duy Nguyen",
     initials: "DN",
-    date: "2026-08-03",
+    date: ownerServiceDate,
     table: "Table A-08",
     partySize: 2,
     status: "confirmed",
@@ -26,7 +29,7 @@ export const ownerReservations: OwnerReservation[] = [
     time: "18:00",
     guestName: "Kim Minji",
     initials: "KM",
-    date: "2026-08-03",
+    date: ownerServiceDate,
     table: "Table A-12",
     partySize: 4,
     status: "confirmed",
@@ -45,7 +48,7 @@ export const ownerReservations: OwnerReservation[] = [
     time: "18:30",
     guestName: "Park Ara",
     initials: "PA",
-    date: "2026-08-03",
+    date: ownerServiceDate,
     table: "Not assigned",
     partySize: 3,
     status: "pending",
@@ -62,7 +65,7 @@ export const ownerReservations: OwnerReservation[] = [
     time: "19:00",
     guestName: "Hanna Lee",
     initials: "HL",
-    date: "2026-08-03",
+    date: ownerServiceDate,
     table: "Table B-04",
     partySize: 2,
     status: "confirmed",

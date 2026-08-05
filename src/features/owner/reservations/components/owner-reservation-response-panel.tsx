@@ -21,6 +21,7 @@ import {
 import { useMemo, useState } from "react";
 import { StatusBadge } from "@/components/ui";
 import type { OwnerReservation } from "@/features/owner/types";
+import { proposeAlternativeReservation } from "@/features/reservations/data/reservation-storage";
 import { uiColors } from "@/theme";
 
 export type OwnerRequestResponse =
@@ -100,19 +101,50 @@ export function OwnerReservationResponsePanel({
     const requestedDate = dayjs(reservation.date);
 
     return [
-      `${requestedDate.format("ddd, MMM D")} · 19:30`,
-      `${requestedDate.format("ddd, MMM D")} · 20:00`,
-      `${requestedDate.add(1, "day").format("ddd, MMM D")} · 18:00`,
-      `${requestedDate.add(1, "day").format("ddd, MMM D")} · 18:30`,
-    ];
-  }, [reservation.date]);
+      { date: reservation.date, time: "18:00" },
+      { date: reservation.date, time: "19:30" },
+      { date: requestedDate.add(1, "day").format("YYYY-MM-DD"), time: "18:00" },
+      { date: requestedDate.add(1, "day").format("YYYY-MM-DD"), time: "18:30" },
+    ]
+      .filter(
+        (slot) =>
+          slot.date !== reservation.date || slot.time !== reservation.time,
+      )
+      .map((slot) => ({
+        ...slot,
+        id: `${slot.date}|${slot.time}`,
+        label: `${dayjs(slot.date).format("ddd, MMM D")} · ${slot.time}`,
+      }));
+  }, [reservation.date, reservation.time]);
 
   const sendAlternative = () => {
-    if (!selectedAlternative) return;
+    const selectedSlot = alternativeSlots.find(
+      (slot) => slot.id === selectedAlternative,
+    );
+    if (!selectedSlot) return;
 
     onResponseChange({
       kind: "alternative-sent",
-      slot: selectedAlternative,
+      slot: selectedSlot.label,
+    });
+    proposeAlternativeReservation({
+      id: reservation.id,
+      restaurantSlug: "royal-pavilion",
+      restaurantName: "The Royal Pavilion",
+      district: "District 1",
+      cuisineLabel: "Chinese",
+      date: reservation.date,
+      time: reservation.time,
+      guests: reservation.partySize,
+      reference: reservation.reference,
+      preOrder: reservation.preOrderName,
+      specialRequest: reservation.note,
+      proposedDate: selectedSlot.date,
+      proposedTime: selectedSlot.time,
+      message: message.trim() || undefined,
+      respondBy: dayjs(`${selectedSlot.date}T${selectedSlot.time}`)
+        .subtract(30, "minute")
+        .toISOString(),
     });
     setAlternativeOpened(false);
     notifications.show({
@@ -144,11 +176,10 @@ export function OwnerReservationResponsePanel({
             response.kind === "unavailable"
               ? uiColors.statusErrorSurface
               : uiColors.statusInfoSurface,
-          border: `1px solid ${
-            response.kind === "unavailable"
-              ? uiColors.statusErrorText
-              : uiColors.border
-          }`,
+          border: `1px solid ${response.kind === "unavailable"
+            ? uiColors.statusErrorText
+            : uiColors.border
+            }`,
         }}
       >
         <Stack gap="md">
@@ -244,10 +275,10 @@ export function OwnerReservationResponsePanel({
           <Stack gap="sm">
             {alternativeSlots.map((slot) => (
               <OptionButton
-                key={slot}
-                active={selectedAlternative === slot}
-                label={slot}
-                onClick={() => setSelectedAlternative(slot)}
+                key={slot.id}
+                active={selectedAlternative === slot.id}
+                label={slot.label}
+                onClick={() => setSelectedAlternative(slot.id)}
               />
             ))}
           </Stack>

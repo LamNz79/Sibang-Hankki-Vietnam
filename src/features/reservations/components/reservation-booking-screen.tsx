@@ -14,6 +14,7 @@ import {
 } from "@/features/restaurants/data/mock-data";
 import {
   type CustomerReservation,
+  getReservationsSnapshot,
   saveReservation,
 } from "@/features/reservations/data/reservation-storage";
 import { uiColors } from "@/theme";
@@ -33,6 +34,7 @@ function ReservationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const slug = searchParams.get("restaurant") ?? "royal-pavilion";
+  const changeReservationId = searchParams.get("change");
   const restaurant = getRestaurantBySlug(slug) ?? restaurantRecords[0];
   const defaultDate = useMemo(() => getFirstAvailableDate(restaurant.slotMatrix), [restaurant.slotMatrix]);
 
@@ -53,8 +55,14 @@ function ReservationContent() {
   const submitReservationRequest = () => {
     if (!selectedDate || !selectedTime) return;
 
+    const existingReservation = changeReservationId
+      ? getReservationsSnapshot().find(
+          (reservation) => reservation.id === changeReservationId,
+        )
+      : undefined;
+
     const reservation: CustomerReservation = {
-      id: `${Date.now()}-${restaurant.slug}`,
+      id: existingReservation?.id ?? `${Date.now()}-${restaurant.slug}`,
       restaurantSlug: restaurant.slug,
       restaurantName: restaurant.name,
       district: restaurant.district,
@@ -63,7 +71,10 @@ function ReservationContent() {
       time: selectedTime,
       guests: selectedGuests,
       status: "pending",
-      createdAt: new Date().toISOString(),
+      reference: existingReservation?.reference,
+      previousDate: existingReservation?.date,
+      previousTime: existingReservation?.time,
+      createdAt: existingReservation?.createdAt ?? new Date().toISOString(),
     };
 
     saveReservation(reservation);
@@ -86,7 +97,11 @@ function ReservationContent() {
           disabled={!selectedTime}
           onClick={submitReservationRequest}
         >
-          {selectedTime ? "Request reservation" : "Select an available time"}
+          {selectedTime
+            ? changeReservationId
+              ? "Request this time"
+              : "Request reservation"
+            : "Select an available time"}
         </Button>
       }
     >
@@ -228,7 +243,9 @@ function ReservationContent() {
 
             <Stack gap={4} align="center">
               <Text fw={800} size="xl" ta="center" c={uiColors.textPrimary}>
-                Reservation request sent
+                {changeReservationId
+                  ? "New time request sent"
+                  : "Reservation request sent"}
               </Text>
               <Text size="sm" ta="center" c={uiColors.textSecondary}>
                 The restaurant will review your request and confirm it or contact

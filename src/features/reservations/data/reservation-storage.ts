@@ -1,4 +1,16 @@
-export type CustomerReservationStatus = "pending" | "confirmed";
+export type CustomerReservationStatus =
+  | "pending"
+  | "alternative-proposed"
+  | "confirmed"
+  | "declined";
+
+export interface CustomerAlternativeProposal {
+  date: string;
+  time: string;
+  message?: string;
+  proposedAt: string;
+  respondBy?: string;
+}
 
 export interface CustomerReservation {
   id: string;
@@ -10,6 +22,10 @@ export interface CustomerReservation {
   time: string;
   guests: number;
   status: CustomerReservationStatus;
+  reference?: string;
+  alternativeProposal?: CustomerAlternativeProposal;
+  previousDate?: string;
+  previousTime?: string;
   preOrder?: string;
   specialRequest?: string;
   createdAt: string;
@@ -67,7 +83,10 @@ export function subscribeToReservations(onStoreChange: () => void) {
 }
 
 export function saveReservation(reservation: CustomerReservation) {
-  const next = [reservation, ...getReservationsSnapshot().filter((item) => item.id !== reservation.id)];
+  const next = [
+    reservation,
+    ...getReservationsSnapshot().filter((item) => item.id !== reservation.id),
+  ];
   const raw = JSON.stringify(next);
 
   window.localStorage.setItem(storageKey, raw);
@@ -76,7 +95,74 @@ export function saveReservation(reservation: CustomerReservation) {
   window.dispatchEvent(new Event(changedEvent));
 }
 
+export function proposeAlternativeReservation(
+  reservation: Omit<
+    CustomerReservation,
+    "status" | "createdAt" | "alternativeProposal"
+  > & {
+    proposedDate: string;
+    proposedTime: string;
+    message?: string;
+    respondBy?: string;
+  },
+) {
+  const existing = getReservationsSnapshot().find(
+    (item) => item.id === reservation.id,
+  );
+
+  saveReservation({
+    ...existing,
+    id: reservation.id,
+    restaurantSlug: reservation.restaurantSlug,
+    restaurantName: reservation.restaurantName,
+    district: reservation.district,
+    cuisineLabel: reservation.cuisineLabel,
+    date: reservation.date,
+    time: reservation.time,
+    guests: reservation.guests,
+    reference: reservation.reference,
+    status: "alternative-proposed",
+    alternativeProposal: {
+      date: reservation.proposedDate,
+      time: reservation.proposedTime,
+      message: reservation.message,
+      proposedAt: new Date().toISOString(),
+      respondBy: reservation.respondBy,
+    },
+    createdAt: existing?.createdAt ?? new Date().toISOString(),
+  });
+}
+
+export function acceptAlternativeProposal(id: string) {
+  const reservation = getReservationsSnapshot().find((item) => item.id === id);
+  const proposal = reservation?.alternativeProposal;
+
+  if (!reservation || !proposal) return;
+
+  saveReservation({
+    ...reservation,
+    previousDate: reservation.date,
+    previousTime: reservation.time,
+    date: proposal.date,
+    time: proposal.time,
+    status: "confirmed",
+    alternativeProposal: undefined,
+  });
+}
+
+export function declineAlternativeProposal(id: string) {
+  const reservation = getReservationsSnapshot().find((item) => item.id === id);
+  if (!reservation) return;
+
+  saveReservation({
+    ...reservation,
+    status: "declined",
+  });
+}
+
 export function getReservationReference(reservation: CustomerReservation) {
+  if (reservation.reference) return reservation.reference;
+
   const datePart = reservation.date.replaceAll("-", "").slice(2);
   const numericId = reservation.id.replace(/\D/g, "");
   const suffix = numericId.slice(-4).padStart(4, "0");
