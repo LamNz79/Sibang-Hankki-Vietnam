@@ -5,12 +5,12 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import {
   ActionIcon,
-  Badge,
   Box,
   Button,
   Card,
   Drawer,
   Group,
+  Indicator,
   Modal,
   NumberInput,
   SimpleGrid,
@@ -20,7 +20,6 @@ import {
   TextInput,
   ThemeIcon,
   Title,
-  UnstyledButton,
 } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
@@ -30,8 +29,10 @@ import {
   IconChevronRight,
   IconPlus,
   IconRosetteDiscountCheck,
+  IconSearch,
   IconToolsKitchen3,
   IconUsers,
+  IconX,
 } from "@tabler/icons-react";
 import {
   ChoiceButton,
@@ -107,6 +108,19 @@ function getGuestCount(
   ).length;
 }
 
+function normalizeSearchValue(value: string) {
+  return value.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function matchesSearch(reservation: OwnerReservation, query: string) {
+  const normalizedQuery = normalizeSearchValue(query);
+  if (!normalizedQuery) return true;
+
+  return [reservation.guestName, reservation.reference, reservation.phone]
+    .filter((value): value is string => Boolean(value))
+    .some((value) => normalizeSearchValue(value).includes(normalizedQuery));
+}
+
 export function OwnerDashboardScreen() {
   const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
   const [statusFilter, setStatusFilter] =
@@ -114,33 +128,42 @@ export function OwnerDashboardScreen() {
   const [guestFiltersActive, setGuestFiltersActive] = useState<GuestFilter[]>(
     [],
   );
+  const [searchQuery, setSearchQuery] = useState("");
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
 
-  const reservationsMatchingGuest = useMemo(
+  const reservationsMatchingSearch = useMemo(
     () =>
       ownerReservations.filter((reservation) =>
+        matchesSearch(reservation, searchQuery),
+      ),
+    [searchQuery],
+  );
+
+  const reservationsMatchingGuest = useMemo(
+    () =>
+      reservationsMatchingSearch.filter((reservation) =>
         matchesGuestFilter(reservation, guestFiltersActive),
       ),
-    [guestFiltersActive],
+    [guestFiltersActive, reservationsMatchingSearch],
   );
 
   const reservationsMatchingStatus = useMemo(
     () =>
-      ownerReservations.filter((reservation) =>
+      reservationsMatchingSearch.filter((reservation) =>
         matchesStatusFilter(reservation, statusFilter),
       ),
-    [statusFilter],
+    [reservationsMatchingSearch, statusFilter],
   );
 
   const filteredReservations = useMemo(
     () =>
-      ownerReservations.filter(
+      reservationsMatchingSearch.filter(
         (reservation) =>
           matchesStatusFilter(reservation, statusFilter) &&
           matchesGuestFilter(reservation, guestFiltersActive),
       ),
-    [guestFiltersActive, statusFilter],
+    [guestFiltersActive, reservationsMatchingSearch, statusFilter],
   );
 
   const pendingReservations = ownerReservations.filter(
@@ -163,22 +186,11 @@ export function OwnerDashboardScreen() {
   const dateLabel = isToday
     ? `Today · ${selectedDate.format("dddd, MMM D")}`
     : selectedDate.format("dddd, MMM D");
-  const selectedStatusLabel =
-    statusFilters.find((option) => option.value === statusFilter)?.label ??
-    "All";
   const hasActiveFilters =
     statusFilter !== "all" || guestFiltersActive.length > 0;
   const activeFilterCount =
     (statusFilter === "all" ? 0 : 1) + guestFiltersActive.length;
-  const activeFilterSummary = [
-    statusFilter === "all" ? null : selectedStatusLabel,
-    ...guestFiltersActive.map(
-      (filter) =>
-        guestFilters.find((option) => option.value === filter)?.label,
-    ),
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  const isRefining = Boolean(searchQuery.trim()) || hasActiveFilters;
 
   const toggleGuestFilter = (filter: GuestFilter) => {
     setGuestFiltersActive((current) =>
@@ -288,69 +300,77 @@ export function OwnerDashboardScreen() {
                 </Group>
               </Card>
 
-              <UnstyledButton
-                onClick={() => setFiltersOpened(true)}
-                style={{ display: "block", width: "100%" }}
-              >
-                <Card
+              <Group gap="sm" wrap="nowrap" align="center">
+                <TextInput
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.currentTarget.value)}
+                  placeholder="Guest name or booking code"
+                  aria-label="Search reservations by guest name, booking code, or phone"
+                  size="md"
                   radius="lg"
-                  p="sm"
-                  style={{
-                    background: uiColors.surface,
-                    border: hasActiveFilters
-                      ? `1px solid ${uiColors.brandPrimary}`
-                      : `1px solid ${uiColors.border}`,
-                    boxShadow: "none",
-                  }}
-                >
-                  <Group gap="sm" wrap="nowrap">
-                    <ThemeIcon
-                      size={38}
-                      radius="xl"
-                      variant="light"
-                      color="warmCoral"
-                    >
-                      <IconAdjustmentsHorizontal size={19} />
-                    </ThemeIcon>
-                    <Stack gap={1} style={{ flex: 1, minWidth: 0 }}>
-                      <Text fw={750} size="sm" c={uiColors.textPrimary}>
-                        Filter reservations
-                      </Text>
-                      <Text size="xs" c={uiColors.textSecondary} truncate>
-                        {activeFilterSummary || "All statuses and guests"}
-                      </Text>
-                    </Stack>
-                    {activeFilterCount > 0 ? (
-                      <Badge
-                        circle
-                        color="warmCoral"
-                        variant="filled"
-                        aria-label={`${activeFilterCount} active filters`}
+                  leftSection={<IconSearch size={18} />}
+                  rightSection={
+                    searchQuery ? (
+                      <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        radius="xl"
+                        aria-label="Clear reservation search"
+                        onClick={() => setSearchQuery("")}
                       >
-                        {activeFilterCount}
-                      </Badge>
-                    ) : (
-                      <Text size="xs" c={uiColors.textMuted}>
-                        {filteredReservations.length} shown
-                      </Text>
-                    )}
-                    <IconChevronRight
-                      size={18}
-                      color={uiColors.textSecondary}
-                    />
-                  </Group>
-                </Card>
-              </UnstyledButton>
+                        <IconX size={16} />
+                      </ActionIcon>
+                    ) : null
+                  }
+                  styles={{
+                    root: { flex: 1, minWidth: 0 },
+                    input: {
+                      height: 44,
+                      background: uiColors.surface,
+                      borderColor: uiColors.border,
+                    },
+                  }}
+                />
+
+                <Indicator
+                  inline
+                  disabled={activeFilterCount === 0}
+                  label={activeFilterCount}
+                  size={18}
+                  color="warmCoral"
+                  offset={4}
+                >
+                  <ActionIcon
+                    size={44}
+                    radius="lg"
+                    variant={hasActiveFilters ? "light" : "default"}
+                    color="warmCoral"
+                    aria-label="Filter reservations"
+                    onClick={() => setFiltersOpened(true)}
+                    style={{
+                      border: `1px solid ${
+                        hasActiveFilters
+                          ? uiColors.brandPrimary
+                          : uiColors.border
+                      }`,
+                    }}
+                  >
+                    <IconAdjustmentsHorizontal size={20} />
+                  </ActionIcon>
+                </Indicator>
+              </Group>
             </Stack>
           </Box>
 
-          <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="sm">
-            {metrics.map((metric) => (
-              <MetricCard key={metric.label} {...metric} />
-            ))}
-          </SimpleGrid>
+          {!isRefining ? (
+            <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="sm">
+              {metrics.map((metric) => (
+                <MetricCard key={metric.label} {...metric} />
+              ))}
+            </SimpleGrid>
+          ) : null}
 
-          {pendingReservations.length > 0 ? (
+          {!isRefining && pendingReservations.length > 0 ? (
             <Card
               radius="lg"
               p="md"
@@ -391,7 +411,7 @@ export function OwnerDashboardScreen() {
             </Card>
           ) : null}
 
-          {nextArrival ? (
+          {!isRefining && nextArrival ? (
             <Link
               href={`/owner/check-in?reservation=${nextArrival.id}`}
               style={{ color: "inherit", textDecoration: "none" }}
@@ -463,10 +483,12 @@ export function OwnerDashboardScreen() {
             ) : (
               <Stack align="center" gap={4} py="xl">
                 <Text fw={700} c={uiColors.textPrimary}>
-                  No reservations match
+                  {searchQuery ? "No reservations found" : "No reservations match"}
                 </Text>
                 <Text size="sm" ta="center" c={uiColors.textSecondary}>
-                  Try another status or guest filter.
+                  {searchQuery
+                    ? "Check the guest name, booking code, or phone number."
+                    : "Try another status or guest filter."}
                 </Text>
               </Stack>
             )}
