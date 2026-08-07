@@ -12,30 +12,30 @@ import {
 import { ChoiceButton } from "@/components/ui";
 import { getOwnerReservation } from "@/features/owner/data/mock-data";
 import { OwnerShell } from "@/features/owner/shared";
-import type { OwnerReservationStatus } from "@/features/owner/types";
+import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
 import { OwnerServiceNotesCard } from "./owner-service-notes-card";
 
 const arrivalStatuses: Array<{
-  value: Exclude<OwnerReservationStatus, "pending">;
+  value: VisitStatus;
   label: string;
   icon: typeof IconCheck;
 }> = [
-  { value: "confirmed", label: "Confirmed", icon: IconCheck },
-  { value: "arrived", label: "Arrived", icon: IconUserCheck },
-  { value: "seated", label: "Seated", icon: IconSofa },
-  { value: "completed", label: "Completed", icon: IconCircleCheck },
+  { value: VisitStatus.Expected, label: "Confirmed", icon: IconCheck },
+  { value: VisitStatus.Arrived, label: "Arrived", icon: IconUserCheck },
+  { value: VisitStatus.Seated, label: "Seated", icon: IconSofa },
+  { value: VisitStatus.Completed, label: "Completed", icon: IconCircleCheck },
 ];
 
 export function OwnerGuestArrivalScreen() {
   const params = useParams<{ id: string }>();
   const reservation = getOwnerReservation(params.id);
-  const initialStatus: OwnerReservationStatus =
-    reservation && ["arrived", "seated", "completed"].includes(reservation.status)
-      ? reservation.status
-      : "arrived";
-  const [status, setStatus] = useState<OwnerReservationStatus>(initialStatus);
+  const initialStatus =
+    reservation?.visitStatus === VisitStatus.Expected
+      ? VisitStatus.Arrived
+      : (reservation?.visitStatus ?? VisitStatus.Arrived);
+  const [status, setStatus] = useState<VisitStatus>(initialStatus);
 
   if (!reservation) {
     return (
@@ -56,7 +56,11 @@ export function OwnerGuestArrivalScreen() {
       <Stack gap="md">
         <OwnerReservationSummaryCard
           reservation={reservation}
-          status={status}
+          status={
+            status === VisitStatus.Expected
+              ? reservation.reservationStatus
+              : status
+          }
         />
 
         <OwnerServiceNotesCard note={reservation.note} />

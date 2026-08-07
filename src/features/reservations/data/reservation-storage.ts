@@ -1,8 +1,4 @@
-export type CustomerReservationStatus =
-  | "pending"
-  | "alternative-proposed"
-  | "confirmed"
-  | "declined";
+import { ReservationStatus } from "@/features/reservations/types";
 
 export interface CustomerAlternativeProposal {
   date: string;
@@ -21,7 +17,7 @@ export interface CustomerReservation {
   date: string;
   time: string;
   guests: number;
-  status: CustomerReservationStatus;
+  status: ReservationStatus;
   reference?: string;
   alternativeProposal?: CustomerAlternativeProposal;
   previousDate?: string;
@@ -121,7 +117,7 @@ export function proposeAlternativeReservation(
     time: reservation.time,
     guests: reservation.guests,
     reference: reservation.reference,
-    status: "alternative-proposed",
+    status: ReservationStatus.AlternativeProposed,
     alternativeProposal: {
       date: reservation.proposedDate,
       time: reservation.proposedTime,
@@ -145,7 +141,7 @@ export function acceptAlternativeProposal(id: string) {
     previousTime: reservation.time,
     date: proposal.date,
     time: proposal.time,
-    status: "confirmed",
+    status: ReservationStatus.Confirmed,
     alternativeProposal: undefined,
   });
 }
@@ -156,7 +152,7 @@ export function declineAlternativeProposal(id: string) {
 
   saveReservation({
     ...reservation,
-    status: "declined",
+    status: ReservationStatus.Declined,
   });
 }
 

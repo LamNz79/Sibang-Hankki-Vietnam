@@ -1,8 +1,9 @@
 import { Avatar, Card, Group, Stack, Text } from "@mantine/core";
-import type {
-  OwnerReservation,
-  OwnerReservationStatus,
+import {
+  getOwnerReservationDisplayStatus,
+  type OwnerReservation,
 } from "@/features/owner/types";
+import type { ReservationDisplayStatus } from "@/features/reservations/types";
 import {
   GuestContextBadges,
   ReservationStatusBadge,
@@ -11,10 +12,10 @@ import { uiColors } from "@/theme";
 
 export function OwnerReservationSummaryCard({
   reservation,
-  status = reservation.status,
+  status = getOwnerReservationDisplayStatus(reservation),
 }: {
   reservation: OwnerReservation;
-  status?: OwnerReservationStatus;
+  status?: ReservationDisplayStatus;
 }) {
   return (
     <Card

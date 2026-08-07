@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Box, Group, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import type { OwnerReservation } from "@/features/owner/types";
+import {
+  getOwnerReservationDisplayStatus,
+  type OwnerReservation,
+} from "@/features/owner/types";
 import {
   GuestContextBadges,
   ReservationStatusBadge,
@@ -15,6 +18,8 @@ export function OwnerReservationRow({
   reservation: OwnerReservation;
   compact?: boolean;
 }) {
+  const displayStatus = getOwnerReservationDisplayStatus(reservation);
+
   return (
     <Link
       href={`/owner/reservations/${reservation.id}`}
@@ -51,12 +56,12 @@ export function OwnerReservationRow({
             {reservation.note ? ` · ${reservation.note}` : ""}
           </Text>
           <Box hiddenFrom="sm">
-            <ReservationStatusBadge status={reservation.status} />
+            <ReservationStatusBadge status={displayStatus} />
           </Box>
         </Stack>
 
         <Box visibleFrom="sm">
-          <ReservationStatusBadge status={reservation.status} />
+          <ReservationStatusBadge status={displayStatus} />
         </Box>
         <IconChevronRight size={17} color={uiColors.textMuted} />
       </Group>
