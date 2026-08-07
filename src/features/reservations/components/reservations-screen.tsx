@@ -12,6 +12,7 @@ import {
   getReservationsSnapshot,
   subscribeToReservations,
 } from "@/features/reservations/data/reservation-storage";
+import { ReservationStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 export function ReservationsScreen() {
@@ -38,10 +39,11 @@ export function ReservationsScreen() {
       {reservations.length > 0 ? (
         <Stack gap="md">
           {reservations.map((reservation) => {
-            const isPending = reservation.status === "pending";
+            const isPending = reservation.status === ReservationStatus.Pending;
             const isAlternative =
-              reservation.status === "alternative-proposed";
-            const isDeclined = reservation.status === "declined";
+              reservation.status === ReservationStatus.AlternativeProposed;
+            const isDeclined =
+              reservation.status === ReservationStatus.Declined;
             const displayDate = isAlternative
               ? reservation.alternativeProposal?.date ?? reservation.date
               : reservation.date;

@@ -42,13 +42,18 @@ import {
 import { ownerReservations } from "@/features/owner/data/mock-data";
 import { OwnerReservationRow } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
-import type {
-  OwnerReservation,
-  OwnerReservationStatus,
+import {
+  getOwnerReservationDisplayStatus,
+  type OwnerReservation,
 } from "@/features/owner/types";
+import {
+  ReservationStatus,
+  VisitStatus,
+  type ReservationDisplayStatus,
+} from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
-type ReservationFilter = "all" | OwnerReservationStatus;
+type ReservationFilter = "all" | ReservationDisplayStatus;
 type GuestFilter = "vip" | "pre-order" | "large-party";
 
 const statusFilters: Array<{
@@ -56,11 +61,11 @@ const statusFilters: Array<{
   label: string;
 }> = [
   { value: "all", label: "All" },
-  { value: "pending", label: "Pending" },
-  { value: "confirmed", label: "Confirmed" },
-  { value: "arrived", label: "Arrived" },
-  { value: "seated", label: "Seated" },
-  { value: "completed", label: "Completed" },
+  { value: ReservationStatus.Pending, label: "Pending" },
+  { value: ReservationStatus.Confirmed, label: "Confirmed" },
+  { value: VisitStatus.Arrived, label: "Arrived" },
+  { value: VisitStatus.Seated, label: "Seated" },
+  { value: VisitStatus.Completed, label: "Completed" },
 ];
 
 const guestFilters: Array<{
@@ -76,7 +81,9 @@ function matchesStatusFilter(
   reservation: OwnerReservation,
   filter: ReservationFilter,
 ) {
-  return filter === "all" || reservation.status === filter;
+  return (
+    filter === "all" || getOwnerReservationDisplayStatus(reservation) === filter
+  );
 }
 
 function matchesGuestFilter(
@@ -95,8 +102,9 @@ function getStatusCount(
   filter: ReservationFilter,
 ) {
   if (filter === "all") return reservations.length;
-  return reservations.filter((reservation) => reservation.status === filter)
-    .length;
+  return reservations.filter(
+    (reservation) => getOwnerReservationDisplayStatus(reservation) === filter,
+  ).length;
 }
 
 function getGuestCount(
@@ -167,10 +175,13 @@ export function OwnerDashboardScreen() {
   );
 
   const pendingReservations = ownerReservations.filter(
-    (reservation) => reservation.status === "pending",
+    (reservation) =>
+      reservation.reservationStatus === ReservationStatus.Pending,
   );
   const nextArrival = ownerReservations.find(
-    (reservation) => reservation.status === "confirmed",
+    (reservation) =>
+      reservation.reservationStatus === ReservationStatus.Confirmed &&
+      reservation.visitStatus === VisitStatus.Expected,
   );
   const expectedGuests = ownerReservations.reduce(
     (total, reservation) => total + reservation.partySize,

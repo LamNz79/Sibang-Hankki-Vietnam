@@ -1,9 +1,8 @@
-export type OwnerReservationStatus =
-  | "confirmed"
-  | "pending"
-  | "arrived"
-  | "seated"
-  | "completed";
+import {
+  ReservationStatus,
+  VisitStatus,
+  type ReservationDisplayStatus,
+} from "@/features/reservations/types";
 
 export type GuestTier = "vip" | "regular" | "new";
 
@@ -15,7 +14,8 @@ export type OwnerReservation = {
   date: string;
   table: string;
   partySize: number;
-  status: OwnerReservationStatus;
+  reservationStatus: ReservationStatus;
+  visitStatus: VisitStatus;
   tier?: GuestTier;
   preOrder?: boolean;
   preOrderName?: string;
@@ -26,6 +26,14 @@ export type OwnerReservation = {
   points: number;
   lastVisit?: string;
 };
+
+export function getOwnerReservationDisplayStatus(
+  reservation: OwnerReservation,
+): ReservationDisplayStatus {
+  return reservation.visitStatus === VisitStatus.Expected
+    ? reservation.reservationStatus
+    : reservation.visitStatus;
+}
 
 export type OwnerGuest = {
   id: string;

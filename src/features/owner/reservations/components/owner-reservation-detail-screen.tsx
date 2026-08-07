@@ -35,7 +35,10 @@ import {
   type OwnerRequestResponse,
 } from "./owner-reservation-response-panel";
 import { OwnerServiceNotesCard } from "./owner-service-notes-card";
-import type { OwnerReservationStatus } from "@/features/owner/types";
+import {
+  ReservationStatus,
+  VisitStatus,
+} from "@/features/reservations/types";
 
 function ReservationInfoRow({
   icon: InfoIcon,
@@ -64,8 +67,8 @@ function ReservationInfoRow({
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const reservation = getOwnerReservation(params.id);
-  const [displayStatus, setDisplayStatus] = useState<OwnerReservationStatus>(
-    reservation?.status ?? "pending",
+  const [displayStatus, setDisplayStatus] = useState<ReservationStatus>(
+    reservation?.reservationStatus ?? ReservationStatus.Pending,
   );
   const [response, setResponse] = useState<OwnerRequestResponse>({
     kind: "pending",
@@ -81,9 +84,7 @@ export function OwnerReservationDetailScreen() {
     );
   }
 
-  const hasArrived = ["arrived", "seated", "completed"].includes(
-    displayStatus,
-  );
+  const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
 
   const notifyGuest = () => {
@@ -95,12 +96,12 @@ export function OwnerReservationDetailScreen() {
   };
 
   const confirmReservation = () => {
-    setDisplayStatus("confirmed");
+    setDisplayStatus(ReservationStatus.Confirmed);
     notifyGuest();
   };
 
   const footerAction =
-    displayStatus === "pending" ? (
+    displayStatus === ReservationStatus.Pending ? (
       <Button
         fullWidth
         size="md"
@@ -175,7 +176,7 @@ export function OwnerReservationDetailScreen() {
       <Stack gap="md">
         <OwnerReservationSummaryCard
           reservation={reservation}
-          status={displayStatus}
+          status={hasArrived ? reservation.visitStatus : displayStatus}
         />
 
         <Card
@@ -204,7 +205,8 @@ export function OwnerReservationDetailScreen() {
 
         <OwnerServiceNotesCard note={reservation.note} />
 
-        {reservation.status === "pending" && displayStatus === "pending" ? (
+        {reservation.reservationStatus === ReservationStatus.Pending &&
+        displayStatus === ReservationStatus.Pending ? (
           <OwnerReservationResponsePanel
             reservation={reservation}
             response={response}
@@ -212,7 +214,7 @@ export function OwnerReservationDetailScreen() {
           />
         ) : null}
 
-        {displayStatus === "confirmed" ? (
+        {displayStatus === ReservationStatus.Confirmed ? (
           <Card
             radius="lg"
             p="md"

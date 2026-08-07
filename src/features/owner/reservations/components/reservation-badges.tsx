@@ -1,25 +1,42 @@
 import { Group } from "@mantine/core";
 import { StatusBadge } from "@/components/ui";
-import type {
-  GuestTier,
-  OwnerReservationStatus,
-} from "@/features/owner/types";
+import type { GuestTier } from "@/features/owner/types";
+import {
+  ReservationStatus,
+  VisitStatus,
+  type ReservationDisplayStatus,
+} from "@/features/reservations/types";
 
-const statusLabels: Record<OwnerReservationStatus, string> = {
-  confirmed: "Confirmed",
-  pending: "Pending",
-  arrived: "Arrived",
-  seated: "Seated",
-  completed: "Completed",
+const statusLabels: Record<ReservationDisplayStatus, string> = {
+  [ReservationStatus.Pending]: "Pending",
+  [ReservationStatus.AlternativeProposed]: "Alternative proposed",
+  [ReservationStatus.Confirmed]: "Confirmed",
+  [ReservationStatus.Declined]: "Declined",
+  [VisitStatus.Expected]: "Expected",
+  [VisitStatus.Arrived]: "Arrived",
+  [VisitStatus.Seated]: "Seated",
+  [VisitStatus.Completed]: "Completed",
 };
+
+function getStatusTone(status: ReservationDisplayStatus) {
+  if (
+    status === ReservationStatus.Pending ||
+    status === ReservationStatus.AlternativeProposed
+  ) {
+    return "warning" as const;
+  }
+
+  if (status === ReservationStatus.Declined) return "error" as const;
+  return "success" as const;
+}
 
 export function ReservationStatusBadge({
   status,
 }: {
-  status: OwnerReservationStatus;
+  status: ReservationDisplayStatus;
 }) {
   return (
-    <StatusBadge tone={status === "pending" ? "warning" : "success"}>
+    <StatusBadge tone={getStatusTone(status)}>
       {statusLabels[status]}
     </StatusBadge>
   );

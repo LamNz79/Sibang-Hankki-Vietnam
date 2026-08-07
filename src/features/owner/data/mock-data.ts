@@ -4,6 +4,10 @@ import type {
   OwnerGuest,
   OwnerReservation,
 } from "@/features/owner/types";
+import {
+  ReservationStatus,
+  VisitStatus,
+} from "@/features/reservations/types";
 
 const ownerServiceDate = dayjs().format("YYYY-MM-DD");
 
@@ -16,7 +20,8 @@ export const ownerReservations: OwnerReservation[] = [
     date: ownerServiceDate,
     table: "Table A-08",
     partySize: 2,
-    status: "confirmed",
+    reservationStatus: ReservationStatus.Confirmed,
+    visitStatus: VisitStatus.Expected,
     note: "Host check-in",
     phone: "090 123 4567",
     reference: "SHK-0720-1730",
@@ -32,7 +37,8 @@ export const ownerReservations: OwnerReservation[] = [
     date: ownerServiceDate,
     table: "Table A-12",
     partySize: 4,
-    status: "confirmed",
+    reservationStatus: ReservationStatus.Confirmed,
+    visitStatus: VisitStatus.Expected,
     tier: "vip",
     preOrder: true,
     preOrderName: "Korean sharing set",
@@ -51,7 +57,8 @@ export const ownerReservations: OwnerReservation[] = [
     date: ownerServiceDate,
     table: "Not assigned",
     partySize: 3,
-    status: "pending",
+    reservationStatus: ReservationStatus.Pending,
+    visitStatus: VisitStatus.Expected,
     tier: "regular",
     note: "Peanut allergy",
     phone: "090 878 2211",
@@ -68,7 +75,8 @@ export const ownerReservations: OwnerReservation[] = [
     date: ownerServiceDate,
     table: "Table B-04",
     partySize: 2,
-    status: "confirmed",
+    reservationStatus: ReservationStatus.Confirmed,
+    visitStatus: VisitStatus.Expected,
     note: "Window request",
     phone: "090 442 1997",
     reference: "SHK-0720-1900",
