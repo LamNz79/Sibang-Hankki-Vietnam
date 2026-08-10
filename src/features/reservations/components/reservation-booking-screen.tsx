@@ -17,7 +17,10 @@ import {
   getReservationsSnapshot,
   saveReservation,
 } from "@/features/reservations/data/reservation-storage";
-import { ReservationStatus } from "@/features/reservations/types";
+import {
+  ReservationCustomerAction,
+  ReservationStatus,
+} from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 const guestOptions = [2, 4, 6] as const;
@@ -75,7 +78,13 @@ function ReservationContent() {
       reference: existingReservation?.reference,
       previousDate: existingReservation?.date,
       previousTime: existingReservation?.time,
+      preOrder: existingReservation?.preOrder,
+      specialRequest: existingReservation?.specialRequest,
+      customerAction: existingReservation
+        ? ReservationCustomerAction.RequestedAnotherTime
+        : undefined,
       createdAt: existingReservation?.createdAt ?? new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     saveReservation(reservation);

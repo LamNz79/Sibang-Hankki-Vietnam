@@ -12,4 +12,10 @@ export enum VisitStatus {
   Completed = "completed",
 }
 
+export enum ReservationCustomerAction {
+  AcceptedAlternative = "accepted-alternative",
+  DeclinedAlternative = "declined-alternative",
+  RequestedAnotherTime = "requested-another-time",
+}
+
 export type ReservationDisplayStatus = ReservationStatus | VisitStatus;

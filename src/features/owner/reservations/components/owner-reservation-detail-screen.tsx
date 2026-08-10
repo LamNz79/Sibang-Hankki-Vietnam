@@ -27,8 +27,10 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
-import { getOwnerReservation } from "@/features/owner/data/mock-data";
+import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import type { OwnerReservation } from "@/features/owner/types";
 import { uiColors } from "@/theme";
+import { OwnerCustomerResponseCard } from "./owner-customer-response-card";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
 import {
   OwnerReservationResponsePanel,
@@ -64,13 +66,26 @@ function ReservationInfoRow({
   );
 }
 
+function getPersistedResponse(
+  reservation: OwnerReservation | undefined,
+): OwnerRequestResponse {
+  const customerResponse = reservation?.customerResponse;
+
+  if (customerResponse?.kind === "awaiting-customer") {
+    return {
+      kind: "alternative-sent",
+      slot: `${dayjs(customerResponse.proposedDate).format("ddd, MMM D")} · ${customerResponse.proposedTime}`,
+    };
+  }
+
+  return { kind: "pending" };
+}
+
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
-  const reservation = getOwnerReservation(params.id);
-  const [displayStatus, setDisplayStatus] = useState<ReservationStatus>(
-    reservation?.reservationStatus ?? ReservationStatus.Pending,
-  );
-  const [response, setResponse] = useState<OwnerRequestResponse>({
+  const reservation = useOwnerReservation(params.id);
+  const [confirmedLocally, setConfirmedLocally] = useState(false);
+  const [localResponse, setLocalResponse] = useState<OwnerRequestResponse>({
     kind: "pending",
   });
 
@@ -86,6 +101,19 @@ export function OwnerReservationDetailScreen() {
 
   const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
+  const displayStatus = confirmedLocally
+    ? ReservationStatus.Confirmed
+    : reservation.reservationStatus;
+  const persistedResponse = getPersistedResponse(reservation);
+  const response =
+    persistedResponse.kind === "alternative-sent"
+      ? persistedResponse
+      : localResponse;
+  const canRespond =
+    displayStatus === ReservationStatus.Pending ||
+    displayStatus === ReservationStatus.AlternativeProposed ||
+    (displayStatus === ReservationStatus.Declined &&
+      reservation.customerResponse?.kind === "declined-alternative");
 
   const notifyGuest = () => {
     notifications.show({
@@ -96,12 +124,24 @@ export function OwnerReservationDetailScreen() {
   };
 
   const confirmReservation = () => {
-    setDisplayStatus(ReservationStatus.Confirmed);
+    setConfirmedLocally(true);
     notifyGuest();
   };
 
-  const footerAction =
-    displayStatus === ReservationStatus.Pending ? (
+  const footerAction = displayStatus === ReservationStatus.Confirmed ? (
+    <Button
+      component={Link}
+      href={arrivalHref}
+      fullWidth
+      size="md"
+      radius="md"
+      leftSection={<IconUserCheck size={19} />}
+    >
+      {hasArrived
+        ? `View ${reservation.guestName}'s arrival`
+        : `Check in ${reservation.guestName}`}
+    </Button>
+  ) : displayStatus === ReservationStatus.Declined ? null : (
       <Button
         fullWidth
         size="md"
@@ -109,7 +149,10 @@ export function OwnerReservationDetailScreen() {
         leftSection={
           response.kind === "pending" ? <IconCheck size={19} /> : undefined
         }
-        disabled={response.kind !== "pending"}
+        disabled={
+          response.kind !== "pending" ||
+          displayStatus === ReservationStatus.AlternativeProposed
+        }
         onClick={confirmReservation}
       >
         {response.kind === "alternative-sent"
@@ -117,19 +160,6 @@ export function OwnerReservationDetailScreen() {
           : response.kind === "unavailable"
             ? "Request closed"
             : "Confirm reservation"}
-      </Button>
-    ) : (
-      <Button
-        component={Link}
-        href={arrivalHref}
-        fullWidth
-        size="md"
-        radius="md"
-        leftSection={<IconUserCheck size={19} />}
-      >
-        {hasArrived
-          ? `View ${reservation.guestName}'s arrival`
-          : `Check in ${reservation.guestName}`}
       </Button>
     );
 
@@ -179,6 +209,8 @@ export function OwnerReservationDetailScreen() {
           status={hasArrived ? reservation.visitStatus : displayStatus}
         />
 
+        <OwnerCustomerResponseCard reservation={reservation} />
+
         <Card
           radius="lg"
           p="md"
@@ -205,12 +237,11 @@ export function OwnerReservationDetailScreen() {
 
         <OwnerServiceNotesCard note={reservation.note} />
 
-        {reservation.reservationStatus === ReservationStatus.Pending &&
-        displayStatus === ReservationStatus.Pending ? (
+        {canRespond ? (
           <OwnerReservationResponsePanel
             reservation={reservation}
             response={response}
-            onResponseChange={setResponse}
+            onResponseChange={setLocalResponse}
           />
         ) : null}
 

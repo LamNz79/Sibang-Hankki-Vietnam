@@ -6,6 +6,29 @@ import {
 
 export type GuestTier = "vip" | "regular" | "new";
 
+export type OwnerCustomerResponse =
+  | {
+      kind: "awaiting-customer";
+      proposedDate: string;
+      proposedTime: string;
+      message?: string;
+    }
+  | {
+      kind: "accepted-alternative";
+      previousDate?: string;
+      previousTime?: string;
+    }
+  | {
+      kind: "declined-alternative";
+      proposedDate?: string;
+      proposedTime?: string;
+    }
+  | {
+      kind: "requested-another-time";
+      previousDate?: string;
+      previousTime?: string;
+    };
+
 export type OwnerReservation = {
   id: string;
   time: string;
@@ -25,6 +48,7 @@ export type OwnerReservation = {
   visits: number;
   points: number;
   lastVisit?: string;
+  customerResponse?: OwnerCustomerResponse;
 };
 
 export function getOwnerReservationDisplayStatus(

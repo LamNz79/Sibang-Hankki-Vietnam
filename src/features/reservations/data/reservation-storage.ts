@@ -1,4 +1,7 @@
-import { ReservationStatus } from "@/features/reservations/types";
+import {
+  ReservationCustomerAction,
+  ReservationStatus,
+} from "@/features/reservations/types";
 
 export interface CustomerAlternativeProposal {
   date: string;
@@ -24,7 +27,9 @@ export interface CustomerReservation {
   previousTime?: string;
   preOrder?: string;
   specialRequest?: string;
+  customerAction?: ReservationCustomerAction;
   createdAt: string;
+  updatedAt?: string;
 }
 
 const storageKey = "sibang-customer-reservations";
@@ -118,6 +123,7 @@ export function proposeAlternativeReservation(
     guests: reservation.guests,
     reference: reservation.reference,
     status: ReservationStatus.AlternativeProposed,
+    customerAction: undefined,
     alternativeProposal: {
       date: reservation.proposedDate,
       time: reservation.proposedTime,
@@ -126,6 +132,7 @@ export function proposeAlternativeReservation(
       respondBy: reservation.respondBy,
     },
     createdAt: existing?.createdAt ?? new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   });
 }
 
@@ -142,7 +149,9 @@ export function acceptAlternativeProposal(id: string) {
     date: proposal.date,
     time: proposal.time,
     status: ReservationStatus.Confirmed,
+    customerAction: ReservationCustomerAction.AcceptedAlternative,
     alternativeProposal: undefined,
+    updatedAt: new Date().toISOString(),
   });
 }
 
@@ -153,6 +162,8 @@ export function declineAlternativeProposal(id: string) {
   saveReservation({
     ...reservation,
     status: ReservationStatus.Declined,
+    customerAction: ReservationCustomerAction.DeclinedAlternative,
+    updatedAt: new Date().toISOString(),
   });
 }
 
