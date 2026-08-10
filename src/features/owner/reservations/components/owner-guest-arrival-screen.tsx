@@ -10,7 +10,7 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { ChoiceButton } from "@/components/ui";
-import { getOwnerReservation } from "@/features/owner/data/mock-data";
+import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -30,7 +30,7 @@ const arrivalStatuses: Array<{
 
 export function OwnerGuestArrivalScreen() {
   const params = useParams<{ id: string }>();
-  const reservation = getOwnerReservation(params.id);
+  const reservation = useOwnerReservation(params.id);
   const initialStatus =
     reservation?.visitStatus === VisitStatus.Expected
       ? VisitStatus.Arrived

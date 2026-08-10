@@ -39,7 +39,7 @@ import {
   MetricCard,
   PrimaryActionButton,
 } from "@/components/ui";
-import { ownerReservations } from "@/features/owner/data/mock-data";
+import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import { OwnerReservationRow } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import {
@@ -62,7 +62,12 @@ const statusFilters: Array<{
 }> = [
   { value: "all", label: "All" },
   { value: ReservationStatus.Pending, label: "Pending" },
+  {
+    value: ReservationStatus.AlternativeProposed,
+    label: "Waiting guest",
+  },
   { value: ReservationStatus.Confirmed, label: "Confirmed" },
+  { value: ReservationStatus.Declined, label: "Declined" },
   { value: VisitStatus.Arrived, label: "Arrived" },
   { value: VisitStatus.Seated, label: "Seated" },
   { value: VisitStatus.Completed, label: "Completed" },
@@ -130,6 +135,7 @@ function matchesSearch(reservation: OwnerReservation, query: string) {
 }
 
 export function OwnerDashboardScreen() {
+  const ownerReservations = useOwnerReservations();
   const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
   const [statusFilter, setStatusFilter] =
     useState<ReservationFilter>("all");
@@ -140,12 +146,20 @@ export function OwnerDashboardScreen() {
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
 
-  const reservationsMatchingSearch = useMemo(
+  const reservationsForSelectedDate = useMemo(
     () =>
       ownerReservations.filter((reservation) =>
+        dayjs(reservation.date).isSame(selectedDate, "day"),
+      ),
+    [ownerReservations, selectedDate],
+  );
+
+  const reservationsMatchingSearch = useMemo(
+    () =>
+      reservationsForSelectedDate.filter((reservation) =>
         matchesSearch(reservation, searchQuery),
       ),
-    [searchQuery],
+    [reservationsForSelectedDate, searchQuery],
   );
 
   const reservationsMatchingGuest = useMemo(
@@ -174,23 +188,28 @@ export function OwnerDashboardScreen() {
     [guestFiltersActive, reservationsMatchingSearch, statusFilter],
   );
 
-  const pendingReservations = ownerReservations.filter(
+  const actionRequiredReservations = reservationsForSelectedDate.filter(
     (reservation) =>
-      reservation.reservationStatus === ReservationStatus.Pending,
+      reservation.reservationStatus === ReservationStatus.Pending ||
+      reservation.customerResponse?.kind === "declined-alternative",
   );
-  const nextArrival = ownerReservations.find(
+  const activeReservations = reservationsForSelectedDate.filter(
+    (reservation) =>
+      reservation.reservationStatus !== ReservationStatus.Declined,
+  );
+  const nextArrival = reservationsForSelectedDate.find(
     (reservation) =>
       reservation.reservationStatus === ReservationStatus.Confirmed &&
       reservation.visitStatus === VisitStatus.Expected,
   );
-  const expectedGuests = ownerReservations.reduce(
+  const expectedGuests = activeReservations.reduce(
     (total, reservation) => total + reservation.partySize,
     0,
   );
-  const preOrderCount = ownerReservations.filter(
+  const preOrderCount = activeReservations.filter(
     (reservation) => reservation.preOrder,
   ).length;
-  const vipCount = ownerReservations.filter(
+  const vipCount = activeReservations.filter(
     (reservation) => reservation.tier === "vip",
   ).length;
   const isToday = selectedDate.isSame(dayjs(), "day");
@@ -213,7 +232,7 @@ export function OwnerDashboardScreen() {
 
   const metrics = [
     {
-      value: String(ownerReservations.length),
+      value: String(activeReservations.length),
       label: "Bookings",
       icon: IconCalendarEvent,
     },
@@ -381,7 +400,7 @@ export function OwnerDashboardScreen() {
             </SimpleGrid>
           ) : null}
 
-          {!isRefining && pendingReservations.length > 0 ? (
+          {!isRefining && actionRequiredReservations.length > 0 ? (
             <Card
               radius="lg"
               p="md"
@@ -404,13 +423,14 @@ export function OwnerDashboardScreen() {
                     Needs attention
                   </Text>
                   <Text size="sm" c={uiColors.statusWarningTextStrong}>
-                    {pendingReservations.length} reservation request
-                    {pendingReservations.length === 1 ? " is" : "s are"} waiting
-                    for confirmation.
+                    {actionRequiredReservations.length} reservation request
+                    {actionRequiredReservations.length === 1
+                      ? " needs"
+                      : "s need"} review.
                   </Text>
                 </Stack>
                 <Link
-                  href={`/owner/reservations/${pendingReservations[0].id}`}
+                  href={`/owner/reservations/${actionRequiredReservations[0].id}`}
                   style={{
                     color: uiColors.statusWarningTextStrong,
                     textDecoration: "none",

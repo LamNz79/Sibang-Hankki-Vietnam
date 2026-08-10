@@ -22,12 +22,13 @@ import {
 } from "@tabler/icons-react";
 import { GuestContextBadges } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
-import { ownerReservations } from "@/features/owner/data/mock-data";
+import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import { uiColors } from "@/theme";
 
 function OwnerCheckInContent() {
   const [mode, setMode] = useState("qr");
   const searchParams = useSearchParams();
+  const ownerReservations = useOwnerReservations();
   const reservationId = searchParams.get("reservation");
   const reservation =
     ownerReservations.find((item) => item.id === reservationId) ??
