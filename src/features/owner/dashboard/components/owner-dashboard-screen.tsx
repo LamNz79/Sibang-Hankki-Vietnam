@@ -43,21 +43,25 @@ import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservati
 import { OwnerReservationRow } from "@/features/owner/reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import {
-  getOwnerReservationDisplayStatus,
-  type OwnerReservation,
-} from "@/features/owner/types";
+  countOwnerReservationGuestFilter,
+  countOwnerReservationStatus,
+  isOwnerReservationActionRequired,
+  isOwnerReservationActive,
+  isOwnerReservationNextArrival,
+  matchesOwnerReservationGuestFilters,
+  matchesOwnerReservationSearch,
+  matchesOwnerReservationStatus,
+  type OwnerGuestFilter,
+  type OwnerReservationFilter,
+} from "@/features/owner/selectors/owner-reservation-selectors";
 import {
   ReservationStatus,
   VisitStatus,
-  type ReservationDisplayStatus,
 } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
-type ReservationFilter = "all" | ReservationDisplayStatus;
-type GuestFilter = "vip" | "pre-order" | "large-party";
-
 const statusFilters: Array<{
-  value: ReservationFilter;
+  value: OwnerReservationFilter;
   label: string;
 }> = [
   { value: "all", label: "All" },
@@ -74,7 +78,7 @@ const statusFilters: Array<{
 ];
 
 const guestFilters: Array<{
-  value: GuestFilter;
+  value: OwnerGuestFilter;
   label: string;
 }> = [
   { value: "vip", label: "VIP" },
@@ -82,64 +86,16 @@ const guestFilters: Array<{
   { value: "large-party", label: "4+ guests" },
 ];
 
-function matchesStatusFilter(
-  reservation: OwnerReservation,
-  filter: ReservationFilter,
-) {
-  return (
-    filter === "all" || getOwnerReservationDisplayStatus(reservation) === filter
-  );
-}
-
-function matchesGuestFilter(
-  reservation: OwnerReservation,
-  filters: GuestFilter[],
-) {
-  return filters.every((filter) => {
-    if (filter === "vip") return reservation.tier === "vip";
-    if (filter === "pre-order") return Boolean(reservation.preOrder);
-    return reservation.partySize >= 4;
-  });
-}
-
-function getStatusCount(
-  reservations: OwnerReservation[],
-  filter: ReservationFilter,
-) {
-  if (filter === "all") return reservations.length;
-  return reservations.filter(
-    (reservation) => getOwnerReservationDisplayStatus(reservation) === filter,
-  ).length;
-}
-
-function getGuestCount(
-  reservations: OwnerReservation[],
-  filter: GuestFilter,
-) {
-  return reservations.filter((reservation) =>
-    matchesGuestFilter(reservation, [filter]),
-  ).length;
-}
-
-function normalizeSearchValue(value: string) {
-  return value.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-function matchesSearch(reservation: OwnerReservation, query: string) {
-  const normalizedQuery = normalizeSearchValue(query);
-  if (!normalizedQuery) return true;
-
-  return [reservation.guestName, reservation.reference, reservation.phone]
-    .filter((value): value is string => Boolean(value))
-    .some((value) => normalizeSearchValue(value).includes(normalizedQuery));
-}
-
+/**
+ * Owner daily operations dashboard with date navigation, reservation search,
+ * status/guest filters, service metrics, and walk-in entry.
+ */
 export function OwnerDashboardScreen() {
   const ownerReservations = useOwnerReservations();
   const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
   const [statusFilter, setStatusFilter] =
-    useState<ReservationFilter>("all");
-  const [guestFiltersActive, setGuestFiltersActive] = useState<GuestFilter[]>(
+    useState<OwnerReservationFilter>("all");
+  const [guestFiltersActive, setGuestFiltersActive] = useState<OwnerGuestFilter[]>(
     [],
   );
   const [searchQuery, setSearchQuery] = useState("");
@@ -157,7 +113,7 @@ export function OwnerDashboardScreen() {
   const reservationsMatchingSearch = useMemo(
     () =>
       reservationsForSelectedDate.filter((reservation) =>
-        matchesSearch(reservation, searchQuery),
+        matchesOwnerReservationSearch(reservation, searchQuery),
       ),
     [reservationsForSelectedDate, searchQuery],
   );
@@ -165,7 +121,7 @@ export function OwnerDashboardScreen() {
   const reservationsMatchingGuest = useMemo(
     () =>
       reservationsMatchingSearch.filter((reservation) =>
-        matchesGuestFilter(reservation, guestFiltersActive),
+        matchesOwnerReservationGuestFilters(reservation, guestFiltersActive),
       ),
     [guestFiltersActive, reservationsMatchingSearch],
   );
@@ -173,7 +129,7 @@ export function OwnerDashboardScreen() {
   const reservationsMatchingStatus = useMemo(
     () =>
       reservationsMatchingSearch.filter((reservation) =>
-        matchesStatusFilter(reservation, statusFilter),
+        matchesOwnerReservationStatus(reservation, statusFilter),
       ),
     [reservationsMatchingSearch, statusFilter],
   );
@@ -182,25 +138,20 @@ export function OwnerDashboardScreen() {
     () =>
       reservationsMatchingSearch.filter(
         (reservation) =>
-          matchesStatusFilter(reservation, statusFilter) &&
-          matchesGuestFilter(reservation, guestFiltersActive),
+          matchesOwnerReservationStatus(reservation, statusFilter) &&
+          matchesOwnerReservationGuestFilters(reservation, guestFiltersActive),
       ),
     [guestFiltersActive, reservationsMatchingSearch, statusFilter],
   );
 
   const actionRequiredReservations = reservationsForSelectedDate.filter(
-    (reservation) =>
-      reservation.reservationStatus === ReservationStatus.Pending ||
-      reservation.customerResponse?.kind === "declined-alternative",
+    isOwnerReservationActionRequired,
   );
   const activeReservations = reservationsForSelectedDate.filter(
-    (reservation) =>
-      reservation.reservationStatus !== ReservationStatus.Declined,
+    isOwnerReservationActive,
   );
   const nextArrival = reservationsForSelectedDate.find(
-    (reservation) =>
-      reservation.reservationStatus === ReservationStatus.Confirmed &&
-      reservation.visitStatus === VisitStatus.Expected,
+    isOwnerReservationNextArrival,
   );
   const expectedGuests = activeReservations.reduce(
     (total, reservation) => total + reservation.partySize,
@@ -222,7 +173,7 @@ export function OwnerDashboardScreen() {
     (statusFilter === "all" ? 0 : 1) + guestFiltersActive.length;
   const isRefining = Boolean(searchQuery.trim()) || hasActiveFilters;
 
-  const toggleGuestFilter = (filter: GuestFilter) => {
+  const toggleGuestFilter = (filter: OwnerGuestFilter) => {
     setGuestFiltersActive((current) =>
       current.includes(filter)
         ? current.filter((value) => value !== filter)
@@ -567,7 +518,7 @@ export function OwnerDashboardScreen() {
                   selected={statusFilter === option.value}
                   onClick={() => setStatusFilter(option.value)}
                 >
-                  {option.label} · {getStatusCount(
+                  {option.label} · {countOwnerReservationStatus(
                     reservationsMatchingGuest,
                     option.value,
                   )}
@@ -592,7 +543,7 @@ export function OwnerDashboardScreen() {
                   selected={guestFiltersActive.includes(option.value)}
                   onClick={() => toggleGuestFilter(option.value)}
                 >
-                  {option.label} · {getGuestCount(
+                  {option.label} · {countOwnerReservationGuestFilter(
                     reservationsMatchingStatus,
                     option.value,
                   )}

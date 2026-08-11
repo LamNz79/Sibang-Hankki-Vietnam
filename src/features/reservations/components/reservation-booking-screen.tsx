@@ -13,20 +13,16 @@ import {
   restaurantRecords,
 } from "@/features/restaurants/data/mock-data";
 import {
-  type CustomerReservation,
-  getReservationsSnapshot,
-  saveReservation,
+  submitReservationRequest,
 } from "@/features/reservations/data/reservation-storage";
-import {
-  ReservationCustomerAction,
-  ReservationStatus,
-} from "@/features/reservations/types";
+import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 const guestOptions = [2, 4, 6] as const;
 const bookingStartDate = dayjs().startOf("day");
 const bookingEndDate = bookingStartDate.add(60, "day");
 
+/** Finds the earliest future date containing at least one available slot. */
 function getFirstAvailableDate(slotMatrix: Record<string, Record<string, string[]>>) {
   return Object.entries(slotMatrix)
     .filter(([date]) => date >= bookingStartDate.format("YYYY-MM-DD"))
@@ -34,6 +30,7 @@ function getFirstAvailableDate(slotMatrix: Record<string, Record<string, string[
     .find(([, guests]) => Object.values(guests).some((slots) => slots.length > 0))?.[0] ?? bookingStartDate.format("YYYY-MM-DD");
 }
 
+/** Implements booking selection after Next.js search parameters are available. */
 function ReservationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -56,17 +53,10 @@ function ReservationContent() {
     return matrix?.[String(selectedGuests)] ?? [];
   }, [restaurant, selectedDateIso, selectedGuests]);
 
-  const submitReservationRequest = () => {
+  const handleSubmitReservationRequest = () => {
     if (!selectedDate || !selectedTime) return;
 
-    const existingReservation = changeReservationId
-      ? getReservationsSnapshot().find(
-          (reservation) => reservation.id === changeReservationId,
-        )
-      : undefined;
-
-    const reservation: CustomerReservation = {
-      id: existingReservation?.id ?? `${Date.now()}-${restaurant.slug}`,
+    const reservation = submitReservationRequest({
       restaurantSlug: restaurant.slug,
       restaurantName: restaurant.name,
       district: restaurant.district,
@@ -74,20 +64,9 @@ function ReservationContent() {
       date: selectedDate,
       time: selectedTime,
       guests: selectedGuests,
-      status: ReservationStatus.Pending,
-      reference: existingReservation?.reference,
-      previousDate: existingReservation?.date,
-      previousTime: existingReservation?.time,
-      preOrder: existingReservation?.preOrder,
-      specialRequest: existingReservation?.specialRequest,
-      customerAction: existingReservation
-        ? ReservationCustomerAction.RequestedAnotherTime
-        : undefined,
-      createdAt: existingReservation?.createdAt ?? new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+      changeReservationId,
+    });
 
-    saveReservation(reservation);
     setSubmittedReservation(reservation);
     setSuccessOpened(true);
   };
@@ -105,7 +84,7 @@ function ReservationContent() {
           size="lg"
           color="warmCoral"
           disabled={!selectedTime}
-          onClick={submitReservationRequest}
+          onClick={handleSubmitReservationRequest}
         >
           {selectedTime
             ? changeReservationId
@@ -299,6 +278,7 @@ function ReservationContent() {
   );
 }
 
+/** Booking route screen with a Suspense boundary for URL search parameters. */
 export function ReservationBookingScreen() {
   return (
     <Suspense fallback={<MobileShell title="Book a table" subtitle="Loading booking details..." bottomNav={null}><Text>Loading...</Text></MobileShell>}>

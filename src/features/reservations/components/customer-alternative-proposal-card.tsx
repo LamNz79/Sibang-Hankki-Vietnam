@@ -24,10 +24,11 @@ import { useState } from "react";
 import {
   acceptAlternativeProposal,
   declineAlternativeProposal,
-  type CustomerReservation,
 } from "@/features/reservations/data/reservation-storage";
+import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
+/** Compares the originally requested slot with the restaurant suggestion. */
 function TimeOption({
   label,
   date,
@@ -75,6 +76,10 @@ function TimeOption({
   );
 }
 
+/**
+ * Presents an alternative slot and lets the customer accept, reschedule, or
+ * decline it while storage commands persist the chosen response.
+ */
 export function CustomerAlternativeProposalCard({
   reservation,
 }: {

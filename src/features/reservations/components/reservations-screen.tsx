@@ -1,26 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
 import dayjs from "dayjs";
 import { Box, Button, Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconCalendarCheck, IconCalendarEvent, IconChevronRight, IconClock, IconUsers } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { StatusBadge } from "@/components/ui";
 import {
-  getReservationsServerSnapshot,
-  getReservationsSnapshot,
-  subscribeToReservations,
-} from "@/features/reservations/data/reservation-storage";
-import { ReservationStatus } from "@/features/reservations/types";
+  getReservationDisplaySlot,
+  getReservationStatusFlags,
+} from "@/features/reservations/domain/selectors";
+import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 
+/** Lists customer reservations with status-aware dates, times, and actions. */
 export function ReservationsScreen() {
-  const reservations = useSyncExternalStore(
-    subscribeToReservations,
-    getReservationsSnapshot,
-    getReservationsServerSnapshot,
-  );
+  const reservations = useCustomerReservations();
 
   return (
     <MobileShell
@@ -39,17 +34,9 @@ export function ReservationsScreen() {
       {reservations.length > 0 ? (
         <Stack gap="md">
           {reservations.map((reservation) => {
-            const isPending = reservation.status === ReservationStatus.Pending;
-            const isAlternative =
-              reservation.status === ReservationStatus.AlternativeProposed;
-            const isDeclined =
-              reservation.status === ReservationStatus.Declined;
-            const displayDate = isAlternative
-              ? reservation.alternativeProposal?.date ?? reservation.date
-              : reservation.date;
-            const displayTime = isAlternative
-              ? reservation.alternativeProposal?.time ?? reservation.time
-              : reservation.time;
+            const { isPending, isAlternative, isDeclined } =
+              getReservationStatusFlags(reservation);
+            const displaySlot = getReservationDisplaySlot(reservation);
 
             return (
               <Card
@@ -100,7 +87,7 @@ export function ReservationsScreen() {
                     <Text fw={750} c={uiColors.textPrimary}>{reservation.restaurantName}</Text>
                     <Group gap={6} wrap="nowrap">
                       <IconCalendarEvent size={15} color={uiColors.textSecondary} />
-                      <Text size="xs" c={uiColors.textSecondary}>{dayjs(displayDate).format("ddd, MMM D")}</Text>
+                      <Text size="xs" c={uiColors.textSecondary}>{dayjs(displaySlot.date).format("ddd, MMM D")}</Text>
                       <IconClock size={15} color={uiColors.textSecondary} />
                       <Text
                         size="xs"
@@ -111,7 +98,9 @@ export function ReservationsScreen() {
                             : uiColors.textSecondary
                         }
                       >
-                        {isAlternative ? `Suggested ${displayTime}` : displayTime}
+                        {displaySlot.isSuggested
+                          ? `Suggested ${displaySlot.time}`
+                          : displaySlot.time}
                       </Text>
                     </Group>
                     <Group gap={6} wrap="nowrap">
