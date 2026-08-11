@@ -1,36 +1,13 @@
 import {
-  ReservationCustomerAction,
-  ReservationStatus,
-} from "@/features/reservations/types";
-
-export interface CustomerAlternativeProposal {
-  date: string;
-  time: string;
-  message?: string;
-  proposedAt: string;
-  respondBy?: string;
-}
-
-export interface CustomerReservation {
-  id: string;
-  restaurantSlug: string;
-  restaurantName: string;
-  district: string;
-  cuisineLabel: string;
-  date: string;
-  time: string;
-  guests: number;
-  status: ReservationStatus;
-  reference?: string;
-  alternativeProposal?: CustomerAlternativeProposal;
-  previousDate?: string;
-  previousTime?: string;
-  preOrder?: string;
-  specialRequest?: string;
-  customerAction?: ReservationCustomerAction;
-  createdAt: string;
-  updatedAt?: string;
-}
+  acceptAlternative,
+  createReservationRequest,
+  declineAlternative,
+  proposeAlternative,
+} from "@/features/reservations/domain/transitions";
+import type {
+  AlternativeProposalInput,
+  CustomerReservation,
+} from "@/features/reservations/domain/types";
 
 const storageKey = "sibang-customer-reservations";
 const changedEvent = "sibang-reservations-changed";
@@ -39,6 +16,7 @@ let cachedRaw: string | null = null;
 let cachedReservations: CustomerReservation[] = [];
 const emptyServerSnapshot: CustomerReservation[] = [];
 
+/** Safely parses persisted reservation JSON, falling back to an empty list. */
 function parseReservations(raw: string | null) {
   if (!raw) return [];
 
@@ -50,6 +28,7 @@ function parseReservations(raw: string | null) {
   }
 }
 
+/** Returns the cached client snapshot, refreshing it when local storage changes. */
 export function getReservationsSnapshot() {
   if (typeof window === "undefined") return cachedReservations;
 
@@ -62,10 +41,12 @@ export function getReservationsSnapshot() {
   return cachedReservations;
 }
 
+/** Provides a stable empty snapshot during server rendering. */
 export function getReservationsServerSnapshot() {
   return emptyServerSnapshot;
 }
 
+/** Subscribes to same-tab and cross-tab reservation storage updates. */
 export function subscribeToReservations(onStoreChange: () => void) {
   if (typeof window === "undefined") return () => undefined;
 
@@ -83,6 +64,7 @@ export function subscribeToReservations(onStoreChange: () => void) {
   };
 }
 
+/** Upserts a reservation and notifies every active subscriber. */
 export function saveReservation(reservation: CustomerReservation) {
   const next = [
     reservation,
@@ -96,83 +78,87 @@ export function saveReservation(reservation: CustomerReservation) {
   window.dispatchEvent(new Event(changedEvent));
 }
 
+/** Input accepted by the local persistence command for a booking request. */
+export type SubmitReservationRequestInput = Pick<
+  CustomerReservation,
+  | "restaurantSlug"
+  | "restaurantName"
+  | "district"
+  | "cuisineLabel"
+  | "date"
+  | "time"
+  | "guests"
+> & {
+  changeReservationId?: string | null;
+};
+
+/**
+ * Creates or resubmits a reservation request, persists it, and returns the
+ * saved record. Browser-specific ID and time generation stay at this boundary.
+ */
+export function submitReservationRequest(
+  input: SubmitReservationRequestInput,
+): CustomerReservation {
+  const existing = input.changeReservationId
+    ? getReservationsSnapshot().find(
+        (reservation) => reservation.id === input.changeReservationId,
+      )
+    : undefined;
+  const now = new Date().toISOString();
+  const reservation = createReservationRequest(
+    {
+      id: existing?.id ?? `${Date.now()}-${input.restaurantSlug}`,
+      restaurantSlug: input.restaurantSlug,
+      restaurantName: input.restaurantName,
+      district: input.district,
+      cuisineLabel: input.cuisineLabel,
+      date: input.date,
+      time: input.time,
+      guests: input.guests,
+    },
+    now,
+    existing,
+  );
+
+  saveReservation(reservation);
+  return reservation;
+}
+
+/** Persists an owner-proposed alternative slot for the customer to review. */
 export function proposeAlternativeReservation(
-  reservation: Omit<
-    CustomerReservation,
-    "status" | "createdAt" | "alternativeProposal"
-  > & {
-    proposedDate: string;
-    proposedTime: string;
-    message?: string;
-    respondBy?: string;
-  },
+  reservation: AlternativeProposalInput,
 ) {
   const existing = getReservationsSnapshot().find(
     (item) => item.id === reservation.id,
   );
+  const next = proposeAlternative(
+    reservation,
+    new Date().toISOString(),
+    existing,
+  );
 
-  saveReservation({
-    ...existing,
-    id: reservation.id,
-    restaurantSlug: reservation.restaurantSlug,
-    restaurantName: reservation.restaurantName,
-    district: reservation.district,
-    cuisineLabel: reservation.cuisineLabel,
-    date: reservation.date,
-    time: reservation.time,
-    guests: reservation.guests,
-    reference: reservation.reference,
-    status: ReservationStatus.AlternativeProposed,
-    customerAction: undefined,
-    alternativeProposal: {
-      date: reservation.proposedDate,
-      time: reservation.proposedTime,
-      message: reservation.message,
-      proposedAt: new Date().toISOString(),
-      respondBy: reservation.respondBy,
-    },
-    createdAt: existing?.createdAt ?? new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  });
+  saveReservation(next);
+  return next;
 }
 
+/** Accepts and persists the active alternative proposal, when available. */
 export function acceptAlternativeProposal(id: string) {
   const reservation = getReservationsSnapshot().find((item) => item.id === id);
-  const proposal = reservation?.alternativeProposal;
+  if (!reservation) return;
 
-  if (!reservation || !proposal) return;
+  const next = acceptAlternative(reservation, new Date().toISOString());
+  if (!next) return;
 
-  saveReservation({
-    ...reservation,
-    previousDate: reservation.date,
-    previousTime: reservation.time,
-    date: proposal.date,
-    time: proposal.time,
-    status: ReservationStatus.Confirmed,
-    customerAction: ReservationCustomerAction.AcceptedAlternative,
-    alternativeProposal: undefined,
-    updatedAt: new Date().toISOString(),
-  });
+  saveReservation(next);
+  return next;
 }
 
+/** Declines and persists the active alternative proposal. */
 export function declineAlternativeProposal(id: string) {
   const reservation = getReservationsSnapshot().find((item) => item.id === id);
   if (!reservation) return;
 
-  saveReservation({
-    ...reservation,
-    status: ReservationStatus.Declined,
-    customerAction: ReservationCustomerAction.DeclinedAlternative,
-    updatedAt: new Date().toISOString(),
-  });
-}
-
-export function getReservationReference(reservation: CustomerReservation) {
-  if (reservation.reference) return reservation.reference;
-
-  const datePart = reservation.date.replaceAll("-", "").slice(2);
-  const numericId = reservation.id.replace(/\D/g, "");
-  const suffix = numericId.slice(-4).padStart(4, "0");
-
-  return `SHK-${datePart}-${suffix}`;
+  const next = declineAlternative(reservation, new Date().toISOString());
+  saveReservation(next);
+  return next;
 }

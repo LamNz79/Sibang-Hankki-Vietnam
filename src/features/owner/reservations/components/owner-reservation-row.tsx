@@ -3,14 +3,15 @@ import { Box, Group, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import {
   getOwnerReservationDisplayStatus,
-  type OwnerReservation,
-} from "@/features/owner/types";
+} from "@/features/owner/selectors/owner-reservation-selectors";
+import type { OwnerReservation } from "@/features/owner/types";
 import {
   GuestContextBadges,
   ReservationStatusBadge,
 } from "./reservation-badges";
 import { uiColors } from "@/theme";
 
+/** Displays an actionable reservation row in the owner's daily schedule. */
 export function OwnerReservationRow({
   reservation,
   compact = false,

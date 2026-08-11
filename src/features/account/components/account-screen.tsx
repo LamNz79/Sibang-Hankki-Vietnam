@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
 import {
   ActionIcon,
   Avatar,
@@ -28,13 +27,10 @@ import {
 import type { Icon } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SurfaceCard } from "@/components/ui";
-import {
-  getReservationsServerSnapshot,
-  getReservationsSnapshot,
-  subscribeToReservations,
-} from "@/features/reservations/data/reservation-storage";
+import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 
+/** Configuration accepted by a row in the customer account menu. */
 type AccountMenuItemProps = {
   href?: string;
   icon: Icon;
@@ -44,6 +40,7 @@ type AccountMenuItemProps = {
   meta?: string;
 };
 
+/** Renders a linked or disabled account action with consistent visual treatment. */
 function AccountMenuItem({
   href,
   icon: MenuIcon,
@@ -105,12 +102,9 @@ function AccountMenuItem({
   );
 }
 
+/** Customer profile overview with reservation summary and account navigation. */
 export function AccountScreen() {
-  const reservations = useSyncExternalStore(
-    subscribeToReservations,
-    getReservationsSnapshot,
-    getReservationsServerSnapshot,
-  );
+  const reservations = useCustomerReservations();
 
   return (
     <MobileShell

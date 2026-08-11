@@ -1,11 +1,12 @@
 import {
   ReservationStatus,
   VisitStatus,
-  type ReservationDisplayStatus,
 } from "@/features/reservations/types";
 
+/** Loyalty segment assigned to an owner-side guest profile. */
 export type GuestTier = "vip" | "regular" | "new";
 
+/** Customer response visible to staff during an alternative-time workflow. */
 export type OwnerCustomerResponse =
   | {
       kind: "awaiting-customer";
@@ -29,6 +30,7 @@ export type OwnerCustomerResponse =
       previousTime?: string;
     };
 
+/** Reservation shape consumed by owner operational screens. */
 export type OwnerReservation = {
   id: string;
   time: string;
@@ -51,14 +53,7 @@ export type OwnerReservation = {
   customerResponse?: OwnerCustomerResponse;
 };
 
-export function getOwnerReservationDisplayStatus(
-  reservation: OwnerReservation,
-): ReservationDisplayStatus {
-  return reservation.visitStatus === VisitStatus.Expected
-    ? reservation.reservationStatus
-    : reservation.visitStatus;
-}
-
+/** Compact guest record used by the owner guest-management prototype. */
 export type OwnerGuest = {
   id: string;
   name: string;
@@ -68,6 +63,7 @@ export type OwnerGuest = {
   note: string;
 };
 
+/** Marketing campaign summary used by the owner marketing prototype. */
 export type OwnerCampaign = {
   id: string;
   name: string;

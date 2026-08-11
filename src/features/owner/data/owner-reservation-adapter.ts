@@ -1,10 +1,11 @@
 import type { OwnerReservation } from "@/features/owner/types";
-import type { CustomerReservation } from "@/features/reservations/data/reservation-storage";
+import type { CustomerReservation } from "@/features/reservations/types";
 import {
   ReservationCustomerAction,
   ReservationStatus,
 } from "@/features/reservations/types";
 
+/** Matches records by internal id, then by booking reference as a fallback. */
 function matchesCustomerReservation(
   ownerReservation: OwnerReservation,
   customerReservation: CustomerReservation,
@@ -18,6 +19,7 @@ function matchesCustomerReservation(
   );
 }
 
+/** Derives the response state owner screens should display for customer actions. */
 function getCustomerResponse(
   customerReservation: CustomerReservation,
 ): OwnerReservation["customerResponse"] {
@@ -79,6 +81,10 @@ function getCustomerResponse(
   return undefined;
 }
 
+/**
+ * Overlays customer-side reservation changes onto owner prototype records.
+ * Unmatched owner records retain their original object identity.
+ */
 export function mergeOwnerReservationsWithCustomerState(
   ownerReservations: OwnerReservation[],
   customerReservations: CustomerReservation[],

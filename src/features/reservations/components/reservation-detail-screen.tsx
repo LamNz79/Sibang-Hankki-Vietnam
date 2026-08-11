@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import {
   ActionIcon,
@@ -33,16 +33,15 @@ import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { StatusBadge } from "@/components/ui";
 import {
   getReservationReference,
-  getReservationsServerSnapshot,
-  getReservationsSnapshot,
-  subscribeToReservations,
-  type CustomerReservation,
-} from "@/features/reservations/data/reservation-storage";
-import { ReservationStatus } from "@/features/reservations/types";
+  getReservationStatusFlags,
+} from "@/features/reservations/domain/selectors";
+import { useCustomerReservation } from "@/features/reservations/hooks/use-customer-reservations";
+import type { CustomerReservation } from "@/features/reservations/types";
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
 import { uiColors } from "@/theme";
 
+/** Content and color configuration for one reservation information row. */
 type DetailRowProps = {
   icon: typeof IconCalendarEvent;
   label: string;
@@ -51,6 +50,7 @@ type DetailRowProps = {
   iconColor: string;
 };
 
+/** Renders one labeled reservation detail with a semantic icon treatment. */
 function DetailRow({
   icon: Icon,
   label,
@@ -84,15 +84,14 @@ function DetailRow({
   );
 }
 
+/** Maps reservation state to the customer-facing status summary. */
 function ReservationStatusCard({
   reservation,
 }: {
   reservation: CustomerReservation;
 }) {
-  const isPending = reservation.status === ReservationStatus.Pending;
-  const isAlternative =
-    reservation.status === ReservationStatus.AlternativeProposed;
-  const isDeclined = reservation.status === ReservationStatus.Declined;
+  const { isPending, isAlternative, isDeclined } =
+    getReservationStatusFlags(reservation);
   const background = isPending
     ? uiColors.statusWarningSurface
     : isAlternative
@@ -188,14 +187,13 @@ function ReservationStatusCard({
   );
 }
 
+/**
+ * Customer reservation detail screen, including status, booking reference,
+ * alternative-time response, and restaurant information.
+ */
 export function ReservationDetailScreen() {
   const params = useParams<{ id: string }>();
-  const reservations = useSyncExternalStore(
-    subscribeToReservations,
-    getReservationsSnapshot,
-    getReservationsServerSnapshot,
-  );
-  const reservation = reservations.find((item) => item.id === params.id);
+  const reservation = useCustomerReservation(params.id);
   const [copied, setCopied] = useState(false);
 
   if (!reservation) {
@@ -232,10 +230,8 @@ export function ReservationDetailScreen() {
 
   const restaurant = getRestaurantBySlug(reservation.restaurantSlug);
   const reference = getReservationReference(reservation);
-  const isPending = reservation.status === ReservationStatus.Pending;
-  const isAlternative =
-    reservation.status === ReservationStatus.AlternativeProposed;
-  const isDeclined = reservation.status === ReservationStatus.Declined;
+  const { isPending, isAlternative, isDeclined } =
+    getReservationStatusFlags(reservation);
 
   const copyReference = async () => {
     try {

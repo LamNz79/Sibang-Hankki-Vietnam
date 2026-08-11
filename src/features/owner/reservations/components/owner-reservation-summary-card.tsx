@@ -1,8 +1,8 @@
 import { Avatar, Card, Group, Stack, Text } from "@mantine/core";
 import {
   getOwnerReservationDisplayStatus,
-  type OwnerReservation,
-} from "@/features/owner/types";
+} from "@/features/owner/selectors/owner-reservation-selectors";
+import type { OwnerReservation } from "@/features/owner/types";
 import type { ReservationDisplayStatus } from "@/features/reservations/types";
 import {
   GuestContextBadges,
@@ -10,6 +10,7 @@ import {
 } from "./reservation-badges";
 import { uiColors } from "@/theme";
 
+/** Displays the selected reservation's guest, slot, status, and service tags. */
 export function OwnerReservationSummaryCard({
   reservation,
   status = getOwnerReservationDisplayStatus(reservation),
