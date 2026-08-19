@@ -30,6 +30,21 @@ export type OwnerCustomerResponse =
       previousTime?: string;
     };
 
+/** Last operational response made by restaurant staff for a request. */
+export type OwnerRequestResponse =
+  | { kind: "pending" }
+  | { kind: "alternative-sent"; slot: string }
+  | { kind: "unavailable"; reason: string };
+
+/** Persisted owner-only state layered over prototype reservation data. */
+export type OwnerReservationOverride = {
+  id: string;
+  reservationStatus?: ReservationStatus;
+  visitStatus?: VisitStatus;
+  requestResponse?: OwnerRequestResponse;
+  updatedAt: string;
+};
+
 /** Reservation shape consumed by owner operational screens. */
 export type OwnerReservation = {
   id: string;
@@ -51,6 +66,7 @@ export type OwnerReservation = {
   points: number;
   lastVisit?: string;
   customerResponse?: OwnerCustomerResponse;
+  requestResponse?: OwnerRequestResponse;
 };
 
 /** Compact guest record used by the owner guest-management prototype. */

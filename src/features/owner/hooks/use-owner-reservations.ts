@@ -1,8 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { ownerReservations as baseOwnerReservations } from "@/features/owner/data/mock-data";
 import { mergeOwnerReservationsWithCustomerState } from "@/features/owner/data/owner-reservation-adapter";
+import {
+  getOwnerReservationOverridesServerSnapshot,
+  getOwnerReservationOverridesSnapshot,
+  subscribeToOwnerReservationOverrides,
+} from "@/features/owner/data/owner-reservation-storage";
+import { applyOwnerReservationOverrides } from "@/features/owner/domain/owner-reservation-operations";
 import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
 
 /**
@@ -11,14 +17,25 @@ import { useCustomerReservations } from "@/features/reservations/hooks/use-custo
  */
 export function useOwnerReservations() {
   const customerReservations = useCustomerReservations();
+  const ownerOverrides = useSyncExternalStore(
+    subscribeToOwnerReservationOverrides,
+    getOwnerReservationOverridesSnapshot,
+    getOwnerReservationOverridesServerSnapshot,
+  );
 
   return useMemo(
-    () =>
-      mergeOwnerReservationsWithCustomerState(
+    () => {
+      const reservationsWithOwnerState = applyOwnerReservationOverrides(
         baseOwnerReservations,
+        ownerOverrides,
+      );
+
+      return mergeOwnerReservationsWithCustomerState(
+        reservationsWithOwnerState,
         customerReservations,
-      ),
-    [customerReservations],
+      );
+    },
+    [customerReservations, ownerOverrides],
   );
 }
 

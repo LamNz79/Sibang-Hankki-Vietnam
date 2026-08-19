@@ -1,8 +1,11 @@
 import {
   acceptAlternative,
+  confirmReservation,
   createReservationRequest,
   declineAlternative,
   proposeAlternative,
+  rejectReservation,
+  reopenReservation,
 } from "@/features/reservations/domain/transitions";
 import type {
   AlternativeProposalInput,
@@ -159,6 +162,36 @@ export function declineAlternativeProposal(id: string) {
   if (!reservation) return;
 
   const next = declineAlternative(reservation, new Date().toISOString());
+  saveReservation(next);
+  return next;
+}
+
+/** Confirms an existing customer reservation request. */
+export function confirmReservationRequest(id: string) {
+  const reservation = getReservationsSnapshot().find((item) => item.id === id);
+  if (!reservation) return;
+
+  const next = confirmReservation(reservation, new Date().toISOString());
+  saveReservation(next);
+  return next;
+}
+
+/** Rejects an existing customer reservation request. */
+export function rejectReservationRequest(id: string) {
+  const reservation = getReservationsSnapshot().find((item) => item.id === id);
+  if (!reservation) return;
+
+  const next = rejectReservation(reservation, new Date().toISOString());
+  saveReservation(next);
+  return next;
+}
+
+/** Reopens an existing customer reservation request. */
+export function reopenReservationRequest(id: string) {
+  const reservation = getReservationsSnapshot().find((item) => item.id === id);
+  if (!reservation) return;
+
+  const next = reopenReservation(reservation, new Date().toISOString());
   saveReservation(next);
   return next;
 }

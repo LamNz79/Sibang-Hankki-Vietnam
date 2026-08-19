@@ -20,19 +20,20 @@ import {
 } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { StatusBadge } from "@/components/ui";
-import type { OwnerReservation } from "@/features/owner/types";
+import {
+  rejectOwnerReservation,
+  reopenOwnerReservation,
+} from "@/features/owner/data/owner-reservation-storage";
+import type {
+  OwnerRequestResponse,
+  OwnerReservation,
+} from "@/features/owner/types";
 import { proposeAlternativeReservation } from "@/features/reservations/data/reservation-storage";
 import { uiColors } from "@/theme";
-
-export type OwnerRequestResponse =
-  | { kind: "pending" }
-  | { kind: "alternative-sent"; slot: string }
-  | { kind: "unavailable"; reason: string };
 
 type OwnerReservationResponsePanelProps = {
   reservation: OwnerReservation;
   response: OwnerRequestResponse;
-  onResponseChange: (response: OwnerRequestResponse) => void;
 };
 
 const unavailableReasons = [
@@ -89,7 +90,6 @@ function OptionButton({
 export function OwnerReservationResponsePanel({
   reservation,
   response,
-  onResponseChange,
 }: OwnerReservationResponsePanelProps) {
   const [alternativeOpened, setAlternativeOpened] = useState(false);
   const [unavailableOpened, setUnavailableOpened] = useState(false);
@@ -123,10 +123,6 @@ export function OwnerReservationResponsePanel({
     );
     if (!selectedSlot) return;
 
-    onResponseChange({
-      kind: "alternative-sent",
-      slot: selectedSlot.label,
-    });
     proposeAlternativeReservation({
       id: reservation.id,
       restaurantSlug: "royal-pavilion",
@@ -157,7 +153,7 @@ export function OwnerReservationResponsePanel({
   const markUnavailable = () => {
     if (!selectedReason) return;
 
-    onResponseChange({ kind: "unavailable", reason: selectedReason });
+    rejectOwnerReservation(reservation.id, selectedReason);
     setUnavailableOpened(false);
     notifications.show({
       color: "red",
@@ -246,7 +242,7 @@ export function OwnerReservationResponsePanel({
             ) : (
               <Button
                 variant="default"
-                onClick={() => onResponseChange({ kind: "pending" })}
+                onClick={() => reopenOwnerReservation(reservation.id)}
               >
                 Reopen request
               </Button>

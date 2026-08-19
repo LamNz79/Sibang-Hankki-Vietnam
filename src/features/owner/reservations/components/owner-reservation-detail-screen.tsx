@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
-import { useState } from "react";
 import {
   ActionIcon,
   Button,
@@ -28,13 +27,16 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
 import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
-import type { OwnerReservation } from "@/features/owner/types";
+import { confirmOwnerReservation } from "@/features/owner/data/owner-reservation-storage";
+import type {
+  OwnerRequestResponse,
+  OwnerReservation,
+} from "@/features/owner/types";
 import { uiColors } from "@/theme";
 import { OwnerCustomerResponseCard } from "./owner-customer-response-card";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
 import {
   OwnerReservationResponsePanel,
-  type OwnerRequestResponse,
 } from "./owner-reservation-response-panel";
 import { OwnerServiceNotesCard } from "./owner-service-notes-card";
 import {
@@ -84,10 +86,6 @@ function getPersistedResponse(
 export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const reservation = useOwnerReservation(params.id);
-  const [confirmedLocally, setConfirmedLocally] = useState(false);
-  const [localResponse, setLocalResponse] = useState<OwnerRequestResponse>({
-    kind: "pending",
-  });
 
   if (!reservation) {
     return (
@@ -101,17 +99,16 @@ export function OwnerReservationDetailScreen() {
 
   const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
-  const displayStatus = confirmedLocally
-    ? ReservationStatus.Confirmed
-    : reservation.reservationStatus;
+  const displayStatus = reservation.reservationStatus;
   const persistedResponse = getPersistedResponse(reservation);
   const response =
     persistedResponse.kind === "alternative-sent"
       ? persistedResponse
-      : localResponse;
+      : (reservation.requestResponse ?? persistedResponse);
   const canRespond =
     displayStatus === ReservationStatus.Pending ||
     displayStatus === ReservationStatus.AlternativeProposed ||
+    reservation.requestResponse?.kind === "unavailable" ||
     (displayStatus === ReservationStatus.Declined &&
       reservation.customerResponse?.kind === "declined-alternative");
 
@@ -124,7 +121,7 @@ export function OwnerReservationDetailScreen() {
   };
 
   const confirmReservation = () => {
-    setConfirmedLocally(true);
+    confirmOwnerReservation(reservation.id);
     notifyGuest();
   };
 
@@ -241,7 +238,6 @@ export function OwnerReservationDetailScreen() {
           <OwnerReservationResponsePanel
             reservation={reservation}
             response={response}
-            onResponseChange={setLocalResponse}
           />
         ) : null}
 
