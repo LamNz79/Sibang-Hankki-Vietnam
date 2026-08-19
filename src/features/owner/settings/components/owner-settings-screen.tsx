@@ -16,6 +16,7 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
 import { PrimaryActionButton } from "@/components/ui";
+import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
 const settings = [
@@ -81,6 +82,17 @@ export function OwnerSettingsScreen() {
             </Stack>
             <IconChevronRight size={18} color={uiColors.textMuted} />
           </Group>
+        </Card>
+
+        <Card
+          radius="lg"
+          p="md"
+          style={{
+            background: uiColors.surface,
+            border: `1px solid ${uiColors.border}`,
+          }}
+        >
+          <LanguageSelect />
         </Card>
 
         <Card

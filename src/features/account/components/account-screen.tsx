@@ -27,6 +27,7 @@ import {
 import type { Icon } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SurfaceCard } from "@/components/ui";
+import { LanguageSelect } from "@/features/i18n";
 import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 
@@ -205,6 +206,10 @@ export function AccountScreen() {
           label="Visit history"
           meta="Write a review"
         />
+      </SurfaceCard>
+
+      <SurfaceCard p="md">
+        <LanguageSelect />
       </SurfaceCard>
 
       <Stack gap="sm">
