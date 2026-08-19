@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   acceptAlternative,
+  confirmReservation,
   createReservationRequest,
   declineAlternative,
   proposeAlternative,
+  rejectReservation,
+  reopenReservation,
 } from "@/features/reservations/domain/transitions";
 import {
   ReservationCustomerAction,
@@ -166,5 +169,55 @@ describe("reservation transitions", () => {
       ReservationCustomerAction.DeclinedAlternative,
     );
     expect(next.alternativeProposal).toEqual(reservation.alternativeProposal);
+  });
+
+  it("confirms a request and clears obsolete proposal state", () => {
+    const reservation = createFixture({
+      status: ReservationStatus.AlternativeProposed,
+      alternativeProposal: {
+        date: "2026-08-12",
+        time: "18:00",
+        proposedAt: "2026-08-09T03:00:00.000Z",
+      },
+      customerAction: ReservationCustomerAction.DeclinedAlternative,
+    });
+
+    const next = confirmReservation(reservation, now);
+
+    expect(next.status).toBe(ReservationStatus.Confirmed);
+    expect(next.updatedAt).toBe(now);
+    expect(next.customerAction).toBeUndefined();
+    expect(next.alternativeProposal).toBeUndefined();
+  });
+
+  it("records a restaurant rejection without a customer action", () => {
+    const reservation = createFixture({
+      customerAction: ReservationCustomerAction.RequestedAnotherTime,
+    });
+
+    const next = rejectReservation(reservation, now);
+
+    expect(next.status).toBe(ReservationStatus.Declined);
+    expect(next.updatedAt).toBe(now);
+    expect(next.customerAction).toBeUndefined();
+  });
+
+  it("reopens a closed request as pending", () => {
+    const reservation = createFixture({
+      status: ReservationStatus.Declined,
+      customerAction: ReservationCustomerAction.DeclinedAlternative,
+      alternativeProposal: {
+        date: "2026-08-12",
+        time: "18:00",
+        proposedAt: "2026-08-09T03:00:00.000Z",
+      },
+    });
+
+    const next = reopenReservation(reservation, now);
+
+    expect(next.status).toBe(ReservationStatus.Pending);
+    expect(next.updatedAt).toBe(now);
+    expect(next.customerAction).toBeUndefined();
+    expect(next.alternativeProposal).toBeUndefined();
   });
 });

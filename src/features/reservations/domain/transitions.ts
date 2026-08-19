@@ -107,3 +107,45 @@ export function declineAlternative(
     updatedAt: now,
   };
 }
+
+/** Confirms the requested slot and clears any obsolete proposal response. */
+export function confirmReservation(
+  reservation: CustomerReservation,
+  now: string,
+): CustomerReservation {
+  return {
+    ...reservation,
+    status: ReservationStatus.Confirmed,
+    customerAction: undefined,
+    alternativeProposal: undefined,
+    updatedAt: now,
+  };
+}
+
+/** Records that the restaurant cannot accommodate the reservation request. */
+export function rejectReservation(
+  reservation: CustomerReservation,
+  now: string,
+): CustomerReservation {
+  return {
+    ...reservation,
+    status: ReservationStatus.Declined,
+    customerAction: undefined,
+    alternativeProposal: undefined,
+    updatedAt: now,
+  };
+}
+
+/** Reopens a closed request for another owner response. */
+export function reopenReservation(
+  reservation: CustomerReservation,
+  now: string,
+): CustomerReservation {
+  return {
+    ...reservation,
+    status: ReservationStatus.Pending,
+    customerAction: undefined,
+    alternativeProposal: undefined,
+    updatedAt: now,
+  };
+}

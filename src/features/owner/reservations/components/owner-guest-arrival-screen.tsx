@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
 import {
   IconCheck,
@@ -10,6 +9,7 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { ChoiceButton } from "@/components/ui";
+import { updateOwnerVisitStatus } from "@/features/owner/data/owner-reservation-storage";
 import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import { VisitStatus } from "@/features/reservations/types";
@@ -31,11 +31,6 @@ const arrivalStatuses: Array<{
 export function OwnerGuestArrivalScreen() {
   const params = useParams<{ id: string }>();
   const reservation = useOwnerReservation(params.id);
-  const initialStatus =
-    reservation?.visitStatus === VisitStatus.Expected
-      ? VisitStatus.Arrived
-      : (reservation?.visitStatus ?? VisitStatus.Arrived);
-  const [status, setStatus] = useState<VisitStatus>(initialStatus);
 
   if (!reservation) {
     return (
@@ -57,9 +52,9 @@ export function OwnerGuestArrivalScreen() {
         <OwnerReservationSummaryCard
           reservation={reservation}
           status={
-            status === VisitStatus.Expected
+            reservation.visitStatus === VisitStatus.Expected
               ? reservation.reservationStatus
-              : status
+              : reservation.visitStatus
           }
         />
 
@@ -73,9 +68,11 @@ export function OwnerGuestArrivalScreen() {
               return (
                 <ChoiceButton
                   key={option.value}
-                  selected={status === option.value}
+                  selected={reservation.visitStatus === option.value}
                   leftSection={<StatusIcon size={17} />}
-                  onClick={() => setStatus(option.value)}
+                  onClick={() =>
+                    updateOwnerVisitStatus(reservation.id, option.value)
+                  }
                 >
                   {option.label}
                 </ChoiceButton>
