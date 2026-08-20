@@ -16,6 +16,7 @@ import {
   IconChevronLeft,
   IconHomeStats,
   IconQrcode,
+  IconSettings,
   IconSpeakerphone,
   IconUsers,
 } from "@tabler/icons-react";
@@ -41,6 +42,7 @@ const navigation = [
   },
   { href: "/owner/guests", label: "Guests", icon: IconUsers },
   { href: "/owner/marketing", label: "Marketing", icon: IconSpeakerphone },
+  { href: "/owner/settings", label: "Settings", icon: IconSettings },
 ];
 
 function isActivePath(pathname: string, href: string, exact?: boolean) {
