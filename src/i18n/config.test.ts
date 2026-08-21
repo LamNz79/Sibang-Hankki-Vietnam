@@ -6,6 +6,7 @@ describe("locale configuration", () => {
     expect(defaultLocale).toBe("vi");
     expect(isAppLocale("vi")).toBe(true);
     expect(isAppLocale("en")).toBe(true);
-    expect(isAppLocale("ko")).toBe(false);
+    expect(isAppLocale("ko")).toBe(true);
+    expect(isAppLocale("ja")).toBe(false);
   });
 });
