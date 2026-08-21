@@ -1,3 +1,6 @@
+/** Temporary prototype threshold until restaurants can configure party sizes. */
+export const LARGE_PARTY_THRESHOLD = 10;
+
 /** Lifecycle of a reservation request before the guest arrives. */
 export enum ReservationStatus {
   Pending = "pending",
