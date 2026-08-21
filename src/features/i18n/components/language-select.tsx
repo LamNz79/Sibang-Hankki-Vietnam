@@ -19,6 +19,7 @@ export function LanguageSelect() {
       data={[
         { value: "vi", label: t("vietnamese") },
         { value: "en", label: t("english") },
+        { value: "ko", label: t("korean") },
       ]}
       allowDeselect={false}
       disabled={isPending}

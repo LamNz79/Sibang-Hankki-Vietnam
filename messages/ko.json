@@ -1,0 +1,23 @@
+{
+  "Language": {
+    "label": "언어",
+    "vietnamese": "베트남어",
+    "english": "영어",
+    "korean": "한국어"
+  },
+  "Navigation": {
+    "customer": {
+      "home": "홈",
+      "nearby": "주변",
+      "reservations": "예약",
+      "my": "마이"
+    },
+    "owner": {
+      "today": "오늘",
+      "checkIn": "체크인",
+      "guests": "고객",
+      "marketing": "마케팅",
+      "settings": "설정"
+    }
+  }
+}
