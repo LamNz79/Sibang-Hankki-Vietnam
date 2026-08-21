@@ -25,14 +25,16 @@ export function useOwnerReservations() {
 
   return useMemo(
     () => {
-      const reservationsWithOwnerState = applyOwnerReservationOverrides(
+      const reservationsWithCustomerState = mergeOwnerReservationsWithCustomerState(
         baseOwnerReservations,
-        ownerOverrides,
+        customerReservations.filter(
+          (reservation) => reservation.restaurantSlug === "royal-pavilion",
+        ),
       );
 
-      return mergeOwnerReservationsWithCustomerState(
-        reservationsWithOwnerState,
-        customerReservations,
+      return applyOwnerReservationOverrides(
+        reservationsWithCustomerState,
+        ownerOverrides,
       );
     },
     [customerReservations, ownerOverrides],
