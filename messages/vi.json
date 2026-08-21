@@ -5,6 +5,36 @@
     "english": "Tiếng Anh",
     "korean": "Tiếng Hàn"
   },
+  "Auth": {
+    "backHome": "Về trang chủ",
+    "prototypeNotice": "Đây là bản mẫu. Thông tin tài khoản chưa được lưu.",
+    "fields": {
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nhập họ và tên",
+      "email": "Email",
+      "emailPlaceholder": "ban@example.com",
+      "password": "Mật khẩu",
+      "passwordPlaceholder": "Tối thiểu 8 ký tự"
+    },
+    "login": {
+      "title": "Chào mừng bạn quay lại",
+      "subtitle": "Đăng nhập để quản lý đặt bàn.",
+      "submit": "Đăng nhập",
+      "alternatePrompt": "Bạn chưa có tài khoản?",
+      "alternateAction": "Tạo tài khoản",
+      "successTitle": "Đã hoàn tất luồng đăng nhập",
+      "successMessage": "Đang chuyển tới bản mẫu trang chủ Customer."
+    },
+    "signUp": {
+      "title": "Tạo tài khoản",
+      "subtitle": "Trải nghiệm luồng đăng ký tài khoản Customer.",
+      "submit": "Tạo tài khoản",
+      "alternatePrompt": "Bạn đã có tài khoản?",
+      "alternateAction": "Đăng nhập",
+      "successTitle": "Đã hoàn tất luồng đăng ký",
+      "successMessage": "Tiếp tục với bản mẫu đăng nhập."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Trang chủ",

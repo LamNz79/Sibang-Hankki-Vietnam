@@ -5,6 +5,36 @@
     "english": "English",
     "korean": "Korean"
   },
+  "Auth": {
+    "backHome": "Back to home",
+    "prototypeNotice": "Prototype only. Account details are not saved yet.",
+    "fields": {
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Enter your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters"
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Log in to manage your reservations.",
+      "submit": "Log in",
+      "alternatePrompt": "New to Sibang Hankki?",
+      "alternateAction": "Create an account",
+      "successTitle": "Login flow complete",
+      "successMessage": "Continuing to the Customer home prototype."
+    },
+    "signUp": {
+      "title": "Create your account",
+      "subtitle": "Try the Customer account registration flow.",
+      "submit": "Create account",
+      "alternatePrompt": "Already have an account?",
+      "alternateAction": "Log in",
+      "successTitle": "Sign-up flow complete",
+      "successMessage": "Continue with the Login prototype."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",
