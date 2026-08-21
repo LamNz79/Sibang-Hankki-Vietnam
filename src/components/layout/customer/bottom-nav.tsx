@@ -10,14 +10,26 @@ import {
 import { uiColors } from "@/theme";
 
 const items = [
-  { href: "/", labelKey: "home", icon: IconHome2 },
-  { href: undefined, labelKey: "nearby", icon: IconMapSearch },
+  {
+    href: "/",
+    labelKey: "home",
+    icon: IconHome2
+  },
+  {
+    href: undefined,
+    labelKey: "nearby",
+    icon: IconMapSearch
+  },
   {
     href: "/reservations",
     labelKey: "reservations",
     icon: IconCalendarTime,
   },
-  { href: "/my", labelKey: "my", icon: IconUserCircle },
+  {
+    href: "/my",
+    labelKey: "my",
+    icon: IconUserCircle
+  },
 ] as const;
 
 export type BottomNavProps = { activePath: string };
