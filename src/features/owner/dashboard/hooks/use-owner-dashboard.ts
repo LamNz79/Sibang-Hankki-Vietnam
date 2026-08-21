@@ -12,6 +12,7 @@ import {
   matchesOwnerReservationGuestFilters,
   matchesOwnerReservationSearch,
   matchesOwnerReservationStatus,
+  sortOwnerReservationsPendingFirst,
   type OwnerGuestFilter,
   type OwnerReservationFilter,
 } from "@/features/owner/selectors/owner-reservation-selectors";
@@ -70,10 +71,12 @@ export function useOwnerDashboard() {
 
   const filteredReservations = useMemo(
     () =>
-      reservationsMatchingSearch.filter(
-        (reservation) =>
-          matchesOwnerReservationStatus(reservation, statusFilter) &&
-          matchesOwnerReservationGuestFilters(reservation, guestFilters),
+      sortOwnerReservationsPendingFirst(
+        reservationsMatchingSearch.filter(
+          (reservation) =>
+            matchesOwnerReservationStatus(reservation, statusFilter) &&
+            matchesOwnerReservationGuestFilters(reservation, guestFilters),
+        ),
       ),
     [guestFilters, reservationsMatchingSearch, statusFilter],
   );
