@@ -23,6 +23,7 @@ import {
   IconSofa,
   IconToolsKitchen3,
   IconUserCheck,
+  IconUsers,
   IconX,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
@@ -40,6 +41,7 @@ import {
 } from "./owner-reservation-response-panel";
 import { OwnerServiceNotesCard } from "./owner-service-notes-card";
 import {
+  LARGE_PARTY_THRESHOLD,
   ReservationStatus,
   VisitStatus,
 } from "@/features/reservations/types";
@@ -47,23 +49,50 @@ import {
 function ReservationInfoRow({
   icon: InfoIcon,
   label,
+  value,
+  iconBackground,
+  iconColor,
+  emphasized = false,
 }: {
   icon: typeof IconCalendarEvent;
   label: string;
+  value: string;
+  iconBackground: string;
+  iconColor: string;
+  emphasized?: boolean;
 }) {
   return (
-    <Group gap="sm" wrap="nowrap">
+    <Group
+      gap="sm"
+      wrap="nowrap"
+      px={emphasized ? "sm" : 0}
+      py={emphasized ? "xs" : 0}
+      style={{
+        borderRadius: 12,
+        background: emphasized ? iconBackground : undefined,
+        border: emphasized ? `1px solid ${uiColors.border}` : undefined,
+      }}
+    >
       <ThemeIcon
         size={30}
         radius="md"
-        variant="light"
-        color="warmCoral"
+        variant="filled"
+        style={{ background: iconBackground, color: iconColor }}
       >
         <InfoIcon size={16} />
       </ThemeIcon>
-      <Text size="sm" c={uiColors.textSecondary}>
-        {label}
-      </Text>
+      <Stack gap={0}>
+        <Text size="xs" c={uiColors.textSecondary}>
+          {label}
+        </Text>
+        <Text
+          size={emphasized ? "md" : "sm"}
+          fw={emphasized ? 800 : 600}
+          c={emphasized ? iconColor : uiColors.textPrimary}
+        >
+          {value}
+        </Text>
+      </Stack>
     </Group>
   );
 }
@@ -98,6 +127,7 @@ export function OwnerReservationDetailScreen() {
   }
 
   const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
+  const isLargeParty = reservation.partySize > LARGE_PARTY_THRESHOLD;
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
   const displayStatus = reservation.reservationStatus;
   const persistedResponse = getPersistedResponse(reservation);
@@ -222,12 +252,40 @@ export function OwnerReservationDetailScreen() {
             </Text>
             <ReservationInfoRow
               icon={IconCalendarEvent}
-              label={dayjs(reservation.date).format("dddd, MMM D")}
+              label="Date"
+              value={dayjs(reservation.date).format("dddd, MMM D")}
+              iconBackground={uiColors.detailDateSurface}
+              iconColor={uiColors.detailDateText}
             />
-            <ReservationInfoRow icon={IconSofa} label={reservation.table} />
+            <ReservationInfoRow
+              icon={IconUsers}
+              label={isLargeParty ? "Large party" : "Guests"}
+              value={`${reservation.partySize} ${reservation.partySize === 1 ? "guest" : "guests"}`}
+              iconBackground={
+                isLargeParty
+                  ? uiColors.statusWarningSurface
+                  : uiColors.detailGuestsSurface
+              }
+              iconColor={
+                isLargeParty
+                  ? uiColors.statusWarningText
+                  : uiColors.detailGuestsText
+              }
+              emphasized
+            />
+            <ReservationInfoRow
+              icon={IconSofa}
+              label="Table"
+              value={reservation.table}
+              iconBackground={uiColors.brandPrimarySoft}
+              iconColor={uiColors.brandPrimary}
+            />
             <ReservationInfoRow
               icon={IconToolsKitchen3}
-              label={reservation.preOrderName ?? "No pre-order"}
+              label="Pre-order"
+              value={reservation.preOrderName ?? "No pre-order"}
+              iconBackground={uiColors.detailPreOrderSurface}
+              iconColor={uiColors.detailPreOrderText}
             />
           </Stack>
         </Card>
