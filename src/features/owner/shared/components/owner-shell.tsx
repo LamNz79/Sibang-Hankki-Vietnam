@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
   ActionIcon,
@@ -34,16 +35,28 @@ type OwnerShellProps = {
 };
 
 const navigation = [
-  { href: "/owner", label: "Today", icon: IconHomeStats, exact: true },
+  { href: "/owner", labelKey: "today", icon: IconHomeStats, exact: true },
   {
     href: "/owner/check-in",
-    label: "Check-in",
+    labelKey: "checkIn",
     icon: IconQrcode,
   },
-  { href: "/owner/guests", label: "Guests", icon: IconUsers },
-  { href: "/owner/marketing", label: "Marketing", icon: IconSpeakerphone },
-  { href: "/owner/settings", label: "Settings", icon: IconSettings },
-];
+  {
+    href: "/owner/guests",
+    labelKey: "guests",
+    icon: IconUsers
+  },
+  {
+    href: "/owner/marketing",
+    labelKey: "marketing",
+    icon: IconSpeakerphone,
+  },
+  {
+    href: "/owner/settings",
+    labelKey: "settings",
+    icon: IconSettings
+  },
+] as const;
 
 function isActivePath(pathname: string, href: string, exact?: boolean) {
   return exact ? pathname === href : pathname.startsWith(href);
@@ -96,6 +109,7 @@ export function OwnerShell({
   hideMobileNavigation = false,
 }: OwnerShellProps) {
   const pathname = usePathname();
+  const t = useTranslations("Navigation.owner");
 
   return (
     <Box mih="100dvh" bg={uiColors.appBackground}>
@@ -223,8 +237,14 @@ export function OwnerShell({
               {navigation.map((item) => (
                 <OwnerBottomNavLink
                   key={item.href}
-                  {...item}
-                  active={isActivePath(pathname, item.href, item.exact)}
+                  href={item.href}
+                  label={t(item.labelKey)}
+                  icon={item.icon}
+                  active={isActivePath(
+                    pathname,
+                    item.href,
+                    "exact" in item ? item.exact : undefined,
+                  )}
                 />
               ))}
             </Group>
