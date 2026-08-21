@@ -11,6 +11,13 @@ type UseReservationBookingOptions = {
   changeReservationId?: string | null;
 };
 
+/** Maps an exact party size to the prototype's available capacity buckets. */
+export function getGuestCapacity(guests: number) {
+  if (guests <= 2) return "2";
+  if (guests <= 4) return "4";
+  return "6";
+}
+
 /** Finds the earliest bookable date containing at least one available slot. */
 function getFirstAvailableDate(
   slotMatrix: RestaurantRecord["slotMatrix"],
@@ -64,7 +71,7 @@ export function useReservationBooking({
     : "No date selected";
   const availableTimes = useMemo(() => {
     const matrix = restaurant.slotMatrix[selectedDateIso];
-    return matrix?.[String(selectedGuests)] ?? [];
+    return matrix?.[getGuestCapacity(selectedGuests)] ?? [];
   }, [restaurant.slotMatrix, selectedDateIso, selectedGuests]);
 
   const selectDate = (date: string | null) => {
