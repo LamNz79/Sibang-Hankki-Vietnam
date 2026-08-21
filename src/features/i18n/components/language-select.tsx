@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { setLocale } from "@/i18n/actions";
 
-export function LanguageSelect() {
+export function LanguageSelect({ compact = false }: { compact?: boolean }) {
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations("Language");
@@ -14,7 +14,10 @@ export function LanguageSelect() {
 
   return (
     <Select
-      label={t("label")}
+      label={compact ? undefined : t("label")}
+      aria-label={compact ? t("label") : undefined}
+      w={compact ? 140 : undefined}
+      size={compact ? "sm" : undefined}
       value={locale}
       data={[
         { value: "vi", label: t("vietnamese") },
