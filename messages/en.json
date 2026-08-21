@@ -3,5 +3,20 @@
     "label": "Language",
     "vietnamese": "Vietnamese",
     "english": "English"
+  },
+  "Navigation": {
+    "customer": {
+      "home": "Home",
+      "nearby": "Nearby",
+      "reservations": "Reservations",
+      "my": "My"
+    },
+    "owner": {
+      "today": "Today",
+      "checkIn": "Check-in",
+      "guests": "Guests",
+      "marketing": "Marketing",
+      "settings": "Settings"
+    }
   }
 }

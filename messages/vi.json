@@ -3,5 +3,20 @@
     "label": "Ngôn ngữ",
     "vietnamese": "Tiếng Việt",
     "english": "Tiếng Anh"
+  },
+  "Navigation": {
+    "customer": {
+      "home": "Trang chủ",
+      "nearby": "Gần bạn",
+      "reservations": "Đặt bàn",
+      "my": "Cá nhân"
+    },
+    "owner": {
+      "today": "Hôm nay",
+      "checkIn": "Nhận khách",
+      "guests": "Khách",
+      "marketing": "Tiếp thị",
+      "settings": "Cài đặt"
+    }
   }
 }

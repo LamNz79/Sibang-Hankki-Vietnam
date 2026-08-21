@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Card, Group, Stack, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
 import {
   IconCalendarTime,
@@ -9,15 +10,21 @@ import {
 import { uiColors } from "@/theme";
 
 const items = [
-  { href: "/", label: "Home", icon: IconHome2 },
-  { href: undefined, label: "Nearby", icon: IconMapSearch },
-  { href: "/reservations", label: "Reservations", icon: IconCalendarTime },
-  { href: "/my", label: "My", icon: IconUserCircle },
-];
+  { href: "/", labelKey: "home", icon: IconHome2 },
+  { href: undefined, labelKey: "nearby", icon: IconMapSearch },
+  {
+    href: "/reservations",
+    labelKey: "reservations",
+    icon: IconCalendarTime,
+  },
+  { href: "/my", labelKey: "my", icon: IconUserCircle },
+] as const;
 
 export type BottomNavProps = { activePath: string };
 
 export function BottomNav({ activePath }: BottomNavProps) {
+  const t = useTranslations("Navigation.customer");
+
   return (
     <Card
       radius="xl"
@@ -33,6 +40,7 @@ export function BottomNav({ activePath }: BottomNavProps) {
         {items.map((item) => {
           const active = item.href ? activePath === item.href : false;
           const Icon = item.icon;
+          const label = t(item.labelKey);
 
           const content = (
             <Stack gap={4} align="center">
@@ -50,14 +58,14 @@ export function BottomNav({ activePath }: BottomNavProps) {
                 <Icon size={18} />
               </ThemeIcon>
               <Text size="xs" c={active ? uiColors.brandPrimary : uiColors.textSecondary} fw={active ? 700 : 500}>
-                {item.label}
+                {label}
               </Text>
             </Stack>
           );
 
           if (!item.href) {
             return (
-              <UnstyledButton key={item.label} style={{ cursor: "default" }}>
+              <UnstyledButton key={item.labelKey} style={{ cursor: "default" }}>
                 {content}
               </UnstyledButton>
             );
