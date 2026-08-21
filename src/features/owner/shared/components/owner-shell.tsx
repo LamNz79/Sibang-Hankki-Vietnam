@@ -41,13 +41,21 @@ const navigation = [
     labelKey: "checkIn",
     icon: IconQrcode,
   },
-  { href: "/owner/guests", labelKey: "guests", icon: IconUsers },
+  {
+    href: "/owner/guests",
+    labelKey: "guests",
+    icon: IconUsers
+  },
   {
     href: "/owner/marketing",
     labelKey: "marketing",
     icon: IconSpeakerphone,
   },
-  { href: "/owner/settings", labelKey: "settings", icon: IconSettings },
+  {
+    href: "/owner/settings",
+    labelKey: "settings",
+    icon: IconSettings
+  },
 ] as const;
 
 function isActivePath(pathname: string, href: string, exact?: boolean) {
