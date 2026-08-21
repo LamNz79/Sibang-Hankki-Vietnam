@@ -94,12 +94,24 @@ describe("owner reservation adapter", () => {
     });
   });
 
-  it("keeps the owner record unchanged when no customer record matches", () => {
-    const [result] = mergeOwnerReservationsWithCustomerState(
+  it("adds a new customer request without changing owner records", () => {
+    const [result, addedReservation] = mergeOwnerReservationsWithCustomerState(
       [ownerReservation],
       [createCustomerFixture({ id: "another-id", reference: "OTHER" })],
     );
 
     expect(result).toBe(ownerReservation);
+    expect(addedReservation).toMatchObject({
+      id: "another-id",
+      guestName: "Minh Lam",
+      initials: "ML",
+      table: "Not assigned",
+      partySize: 4,
+      reservationStatus: ReservationStatus.Pending,
+      visitStatus: VisitStatus.Expected,
+      reference: "OTHER",
+      visits: 0,
+      points: 0,
+    });
   });
 });

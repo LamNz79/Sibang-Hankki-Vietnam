@@ -104,3 +104,16 @@ export function isOwnerReservationNextArrival(
     reservation.visitStatus === VisitStatus.Expected
   );
 }
+
+/** Places pending requests first, then keeps each status group chronological. */
+export function sortOwnerReservationsPendingFirst(
+  reservations: OwnerReservation[],
+) {
+  return [...reservations].sort((first, second) => {
+    const pendingDifference =
+      Number(second.reservationStatus === ReservationStatus.Pending) -
+      Number(first.reservationStatus === ReservationStatus.Pending);
+
+    return pendingDifference || first.time.localeCompare(second.time);
+  });
+}

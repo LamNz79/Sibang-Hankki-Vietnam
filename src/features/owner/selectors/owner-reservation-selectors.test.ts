@@ -7,6 +7,7 @@ import {
   isOwnerReservationNextArrival,
   matchesOwnerReservationGuestFilters,
   matchesOwnerReservationSearch,
+  sortOwnerReservationsPendingFirst,
 } from "@/features/owner/selectors/owner-reservation-selectors";
 import type { OwnerReservation } from "@/features/owner/types";
 import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
@@ -86,5 +87,31 @@ describe("owner reservation selectors", () => {
         createFixture({ reservationStatus: ReservationStatus.Declined }),
       ),
     ).toBe(false);
+  });
+
+  it("sorts pending requests first and each group by time", () => {
+    const reservations = [
+      createFixture({ id: "confirmed-late", time: "19:00" }),
+      createFixture({
+        id: "pending-late",
+        time: "18:30",
+        reservationStatus: ReservationStatus.Pending,
+      }),
+      createFixture({ id: "confirmed-early", time: "17:30" }),
+      createFixture({
+        id: "pending-early",
+        time: "18:00",
+        reservationStatus: ReservationStatus.Pending,
+      }),
+    ];
+
+    expect(
+      sortOwnerReservationsPendingFirst(reservations).map(({ id }) => id),
+    ).toEqual([
+      "pending-early",
+      "pending-late",
+      "confirmed-early",
+      "confirmed-late",
+    ]);
   });
 });
