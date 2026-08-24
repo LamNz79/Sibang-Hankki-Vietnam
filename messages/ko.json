@@ -5,6 +5,36 @@
     "english": "영어",
     "korean": "한국어"
   },
+  "Auth": {
+    "backHome": "홈으로 돌아가기",
+    "prototypeNotice": "프로토타입 화면입니다. 계정 정보는 아직 저장되지 않습니다.",
+    "fields": {
+      "fullName": "이름",
+      "fullNamePlaceholder": "이름을 입력하세요",
+      "email": "이메일",
+      "emailPlaceholder": "you@example.com",
+      "password": "비밀번호",
+      "passwordPlaceholder": "8자 이상 입력하세요"
+    },
+    "login": {
+      "title": "다시 오신 것을 환영합니다",
+      "subtitle": "예약을 관리하려면 로그인하세요.",
+      "submit": "로그인",
+      "alternatePrompt": "아직 계정이 없으신가요?",
+      "alternateAction": "회원가입",
+      "successTitle": "로그인 흐름 완료",
+      "successMessage": "고객 홈 프로토타입으로 이동합니다."
+    },
+    "signUp": {
+      "title": "계정 만들기",
+      "subtitle": "고객 계정 가입 흐름을 확인해 보세요.",
+      "submit": "계정 만들기",
+      "alternatePrompt": "이미 계정이 있으신가요?",
+      "alternateAction": "로그인",
+      "successTitle": "회원가입 흐름 완료",
+      "successMessage": "로그인 프로토타입을 계속 진행하세요."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "홈",
