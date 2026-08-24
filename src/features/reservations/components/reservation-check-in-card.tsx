@@ -5,14 +5,14 @@ import { getReservationStatusFlags } from "@/features/reservations/domain/select
 import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
-type ReservationArrivalGuidanceCardProps = {
+type ReservationCheckInCardProps = {
   reservation: CustomerReservation;
 };
 
 /** Explains whether arrival credentials are ready for the current status. */
-export function ReservationArrivalGuidanceCard({
+export function ReservationCheckInCard({
   reservation,
-}: ReservationArrivalGuidanceCardProps) {
+}: ReservationCheckInCardProps) {
   const { isPending, isAlternative, isConfirmed, isDeclined } =
     getReservationStatusFlags(reservation);
   const isAwaitingConfirmation = isPending || isAlternative || isDeclined;
