@@ -15,6 +15,7 @@ import {
 } from "@/features/reservations/domain/types";
 
 const now = "2026-08-10T03:00:00.000Z";
+const checkInToken = "opaque-check-in-token";
 
 function createFixture(
   overrides: Partial<CustomerReservation> = {},
@@ -133,7 +134,7 @@ describe("reservation transitions", () => {
       },
     });
 
-    const next = acceptAlternative(reservation, now);
+    const next = acceptAlternative(reservation, now, checkInToken);
 
     expect(next).toMatchObject({
       date: "2026-08-12",
@@ -141,6 +142,7 @@ describe("reservation transitions", () => {
       previousDate: "2026-08-12",
       previousTime: "18:30",
       status: ReservationStatus.Confirmed,
+      checkInToken,
       customerAction: ReservationCustomerAction.AcceptedAlternative,
       updatedAt: now,
     });
@@ -149,7 +151,9 @@ describe("reservation transitions", () => {
   });
 
   it("does not accept a reservation without an alternative proposal", () => {
-    expect(acceptAlternative(createFixture(), now)).toBeUndefined();
+    expect(
+      acceptAlternative(createFixture(), now, checkInToken),
+    ).toBeUndefined();
   });
 
   it("declines a proposal while retaining its context", () => {
@@ -182,9 +186,10 @@ describe("reservation transitions", () => {
       customerAction: ReservationCustomerAction.DeclinedAlternative,
     });
 
-    const next = confirmReservation(reservation, now);
+    const next = confirmReservation(reservation, now, checkInToken);
 
     expect(next.status).toBe(ReservationStatus.Confirmed);
+    expect(next.checkInToken).toBe(checkInToken);
     expect(next.updatedAt).toBe(now);
     expect(next.customerAction).toBeUndefined();
     expect(next.alternativeProposal).toBeUndefined();

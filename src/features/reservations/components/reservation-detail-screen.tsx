@@ -12,7 +12,7 @@ import { useCustomerReservation } from "@/features/reservations/hooks/use-custom
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
-import { ReservationArrivalGuidanceCard } from "./reservation-arrival-guidance-card";
+import { ReservationCheckInCard } from "./reservation-check-in-card";
 import { ReservationDetailActions } from "./reservation-detail-actions";
 import { ReservationInformationCard } from "./reservation-information-card";
 import { ReservationReferenceCard } from "./reservation-reference-card";
@@ -76,7 +76,7 @@ export function ReservationDetailScreen() {
         heroAccent={restaurant?.heroAccent}
       />
       <ReservationInformationCard reservation={reservation} />
-      <ReservationArrivalGuidanceCard reservation={reservation} />
+      <ReservationCheckInCard reservation={reservation} />
       <ReservationDetailActions reservation={reservation} />
     </MobileShell>
   );

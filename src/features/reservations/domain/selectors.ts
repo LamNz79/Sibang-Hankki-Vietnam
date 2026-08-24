@@ -11,6 +11,23 @@ export function findReservationById(
   return reservations.find((reservation) => reservation.id === id);
 }
 
+/** Returns upcoming confirmed reservations with QR tokens, nearest first. */
+export function getUpcomingConfirmedReservations(
+  reservations: CustomerReservation[],
+  currentSlot: string,
+) {
+  return reservations
+    .filter(
+      (reservation) =>
+        reservation.status === ReservationStatus.Confirmed &&
+        reservation.checkInToken &&
+        `${reservation.date}T${reservation.time}` >= currentSlot,
+    )
+    .sort((left, right) =>
+      `${left.date}T${left.time}`.localeCompare(`${right.date}T${right.time}`),
+    );
+}
+
 /** Derives convenient status flags used by customer reservation screens. */
 export function getReservationStatusFlags(reservation: CustomerReservation) {
   return {

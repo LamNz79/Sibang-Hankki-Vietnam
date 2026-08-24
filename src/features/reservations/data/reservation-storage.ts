@@ -149,7 +149,11 @@ export function acceptAlternativeProposal(id: string) {
   const reservation = getReservationsSnapshot().find((item) => item.id === id);
   if (!reservation) return;
 
-  const next = acceptAlternative(reservation, new Date().toISOString());
+  const next = acceptAlternative(
+    reservation,
+    new Date().toISOString(),
+    crypto.randomUUID(),
+  );
   if (!next) return;
 
   saveReservation(next);
@@ -171,7 +175,11 @@ export function confirmReservationRequest(id: string) {
   const reservation = getReservationsSnapshot().find((item) => item.id === id);
   if (!reservation) return;
 
-  const next = confirmReservation(reservation, new Date().toISOString());
+  const next = confirmReservation(
+    reservation,
+    new Date().toISOString(),
+    crypto.randomUUID(),
+  );
   saveReservation(next);
   return next;
 }

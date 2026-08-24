@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   findReservationById,
+  getUpcomingConfirmedReservations,
   getReservationDisplaySlot,
   getReservationReference,
   getReservationStatusFlags,
@@ -34,6 +35,33 @@ describe("reservation selectors", () => {
     expect(findReservationById([reservation], reservation.id)).toBe(
       reservation,
     );
+  });
+
+  it("returns upcoming confirmed reservations with QR tokens in slot order", () => {
+    const next = createFixture({
+      id: "next",
+      date: "2026-08-24",
+      time: "18:00",
+      status: ReservationStatus.Confirmed,
+      checkInToken: "next-token",
+    });
+    const later = createFixture({
+      id: "later",
+      date: "2026-08-25",
+      status: ReservationStatus.Confirmed,
+      checkInToken: "later-token",
+    });
+    const past = createFixture({
+      status: ReservationStatus.Confirmed,
+      checkInToken: "past-token",
+    });
+
+    expect(
+      getUpcomingConfirmedReservations(
+        [later, past, next],
+        "2026-08-24T10:00",
+      ),
+    ).toEqual([next, later]);
   });
 
   it("uses the proposed slot only while customer action is required", () => {
