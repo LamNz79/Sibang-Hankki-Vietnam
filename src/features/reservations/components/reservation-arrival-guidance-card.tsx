@@ -1,5 +1,6 @@
 import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconClock, IconQrcode } from "@tabler/icons-react";
+import { QRCodeSVG } from "qrcode.react";
 import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -12,9 +13,53 @@ type ReservationArrivalGuidanceCardProps = {
 export function ReservationArrivalGuidanceCard({
   reservation,
 }: ReservationArrivalGuidanceCardProps) {
-  const { isPending, isAlternative, isDeclined } =
+  const { isPending, isAlternative, isConfirmed, isDeclined } =
     getReservationStatusFlags(reservation);
   const isAwaitingConfirmation = isPending || isAlternative || isDeclined;
+
+  if (isConfirmed && reservation.checkInToken) {
+    return (
+      <Card
+        radius="lg"
+        p="md"
+        style={{
+          border: `1px solid ${uiColors.border}`,
+          background: uiColors.surfaceAlt,
+        }}
+      >
+        <Stack gap="md" align="center">
+          <Group gap="sm" wrap="nowrap" align="flex-start" w="100%">
+            <ThemeIcon radius="md" size={38} variant="light" color="warmCoral">
+              <IconQrcode size={19} />
+            </ThemeIcon>
+            <Stack gap={2}>
+              <Text fw={750} size="sm" c={uiColors.textPrimary}>
+                Your check-in QR code
+              </Text>
+              <Text size="xs" c={uiColors.textSecondary}>
+                Show this code to the restaurant when you arrive.
+              </Text>
+            </Stack>
+          </Group>
+          <div
+            style={{
+              padding: 12,
+              background: "white",
+              borderRadius: 12,
+              lineHeight: 0,
+            }}
+          >
+            <QRCodeSVG
+              value={reservation.checkInToken}
+              size={184}
+              level="M"
+              title="Reservation check-in QR code"
+            />
+          </div>
+        </Stack>
+      </Card>
+    );
+  }
 
   return (
     <Card

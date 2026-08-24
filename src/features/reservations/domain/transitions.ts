@@ -75,6 +75,7 @@ export function proposeAlternative(
 export function acceptAlternative(
   reservation: CustomerReservation,
   now: string,
+  checkInToken: string,
 ): CustomerReservation | undefined {
   const proposal = reservation.alternativeProposal;
   if (!proposal) return undefined;
@@ -86,6 +87,7 @@ export function acceptAlternative(
     date: proposal.date,
     time: proposal.time,
     status: ReservationStatus.Confirmed,
+    checkInToken,
     customerAction: ReservationCustomerAction.AcceptedAlternative,
     alternativeProposal: undefined,
     updatedAt: now,
@@ -112,10 +114,12 @@ export function declineAlternative(
 export function confirmReservation(
   reservation: CustomerReservation,
   now: string,
+  checkInToken: string,
 ): CustomerReservation {
   return {
     ...reservation,
     status: ReservationStatus.Confirmed,
+    checkInToken,
     customerAction: undefined,
     alternativeProposal: undefined,
     updatedAt: now,
