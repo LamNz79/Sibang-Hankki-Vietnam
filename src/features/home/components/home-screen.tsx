@@ -15,8 +15,8 @@ import {
 import { IconQrcode } from "@tabler/icons-react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SectionTitle } from "@/components/ui";
 import { HomeHeader } from "@/features/home/components/home-header";
@@ -55,12 +55,16 @@ const priceQueryValues: Record<string, string> = {
   "Over 300K": "over300",
 };
 
-export function HomeScreen() {
+function HomeContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [location, setLocation] = useState("Ho Chi Minh City");
   const [locationOpened, setLocationOpened] = useState(false);
-  const [qrOpened, setQrOpened] = useState(false);
-  const [selectedQrId, setSelectedQrId] = useState<string | null>(null);
+  const [qrPickerOpened, setQrPickerOpened] = useState(false);
+  const [pickedQrId, setPickedQrId] = useState<string | null>(null);
+  const deepLinkedQrId = searchParams.get("qr");
+  const selectedQrId = pickedQrId ?? deepLinkedQrId;
+  const qrOpened = qrPickerOpened || Boolean(deepLinkedQrId);
   const reservations = useCustomerReservations();
   const confirmedReservations = getUpcomingConfirmedReservations(
     reservations,
@@ -72,10 +76,31 @@ export function HomeScreen() {
   );
 
   const openQr = () => {
-    setSelectedQrId(
+    setPickedQrId(
       confirmedReservations.length === 1 ? nextConfirmedReservation.id : null,
     );
-    setQrOpened(true);
+    setQrPickerOpened(true);
+  };
+
+  const clearQrDeepLink = () => {
+    if (!deepLinkedQrId) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("qr");
+    const query = params.toString();
+    router.replace(query ? `/?${query}` : "/", { scroll: false });
+  };
+
+  const closeQr = () => {
+    setQrPickerOpened(false);
+    setPickedQrId(null);
+    clearQrDeepLink();
+  };
+
+  const showQrList = () => {
+    setPickedQrId(null);
+    setQrPickerOpened(true);
+    clearQrDeepLink();
   };
 
   const openRestaurantList = (key: "sort" | "cuisine" | "price", value: string) => {
@@ -150,10 +175,7 @@ export function HomeScreen() {
 
           <Modal
             opened={qrOpened}
-            onClose={() => {
-              setQrOpened(false);
-              setSelectedQrId(null);
-            }}
+            onClose={closeQr}
             title={
               selectedReservation
                 ? "Reservation QR code"
@@ -200,7 +222,7 @@ export function HomeScreen() {
                   <Button
                     variant="subtle"
                     color="gray"
-                    onClick={() => setSelectedQrId(null)}
+                    onClick={showQrList}
                   >
                     Back to reservations
                   </Button>
@@ -225,7 +247,7 @@ export function HomeScreen() {
                         size="compact-sm"
                         variant="light"
                         color="teal"
-                        onClick={() => setSelectedQrId(reservation.id)}
+                        onClick={() => setPickedQrId(reservation.id)}
                       >
                         Show QR
                       </Button>
@@ -294,5 +316,23 @@ export function HomeScreen() {
         />
       </Box>
     </MobileShell>
+  );
+}
+
+export function HomeScreen() {
+  return (
+    <Suspense
+      fallback={
+        <MobileShell
+          title="Sibang Hankki"
+          subtitle="Loading reservations..."
+          bottomNav={<BottomNav activePath="/" />}
+        >
+          <Text>Loading...</Text>
+        </MobileShell>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }
