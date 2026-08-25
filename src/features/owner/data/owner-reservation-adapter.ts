@@ -102,6 +102,7 @@ function createOwnerReservation(
     preOrderName: customerReservation.preOrder,
     note: customerReservation.specialRequest,
     reference: getReservationReference(customerReservation),
+    checkInToken: customerReservation.checkInToken,
     visits: 0,
     points: 0,
     customerResponse: getCustomerResponse(customerReservation),
@@ -135,6 +136,8 @@ export function mergeOwnerReservationsWithCustomerState(
       preOrderName:
         customerReservation.preOrder ?? ownerReservation.preOrderName,
       note: customerReservation.specialRequest ?? ownerReservation.note,
+      checkInToken:
+        customerReservation.checkInToken ?? ownerReservation.checkInToken,
       customerResponse: getCustomerResponse(customerReservation),
     };
   });

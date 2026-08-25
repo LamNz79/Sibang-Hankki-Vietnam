@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   countOwnerReservationGuestFilter,
+  findOwnerReservationByCheckInToken,
   getOwnerReservationDisplayStatus,
   isOwnerReservationActionRequired,
   isOwnerReservationActive,
@@ -61,6 +62,13 @@ describe("owner reservation selectors", () => {
     expect(matchesOwnerReservationSearch(reservation, "0720-1800")).toBe(true);
     expect(matchesOwnerReservationSearch(reservation, "090555")).toBe(true);
     expect(matchesOwnerReservationSearch(reservation, "not found")).toBe(false);
+  });
+
+  it("finds a reservation by opaque check-in token", () => {
+    const reservation = createFixture({ checkInToken: "opaque-token" });
+    expect(
+      findOwnerReservationByCheckInToken([reservation], "opaque-token"),
+    ).toBe(reservation);
   });
 
   it("identifies reservations requiring owner action", () => {
