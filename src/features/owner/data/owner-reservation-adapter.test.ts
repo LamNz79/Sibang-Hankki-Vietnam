@@ -97,7 +97,13 @@ describe("owner reservation adapter", () => {
   it("adds a new customer request without changing owner records", () => {
     const [result, addedReservation] = mergeOwnerReservationsWithCustomerState(
       [ownerReservation],
-      [createCustomerFixture({ id: "another-id", reference: "OTHER" })],
+      [
+        createCustomerFixture({
+          id: "another-id",
+          reference: "OTHER",
+          checkInToken: "opaque-token",
+        }),
+      ],
     );
 
     expect(result).toBe(ownerReservation);
@@ -110,6 +116,7 @@ describe("owner reservation adapter", () => {
       reservationStatus: ReservationStatus.Pending,
       visitStatus: VisitStatus.Expected,
       reference: "OTHER",
+      checkInToken: "opaque-token",
       visits: 0,
       points: 0,
     });

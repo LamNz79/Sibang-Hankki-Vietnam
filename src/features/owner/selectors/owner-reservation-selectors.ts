@@ -80,6 +80,16 @@ export function matchesOwnerReservationSearch(
     .some((value) => normalizeSearchValue(value).includes(normalizedQuery));
 }
 
+/** Finds the reservation represented by an opaque customer check-in token. */
+export function findOwnerReservationByCheckInToken(
+  reservations: OwnerReservation[],
+  token: string,
+) {
+  return reservations.find(
+    (reservation) => reservation.checkInToken === token,
+  );
+}
+
 /** Identifies requests that currently require a response from restaurant staff. */
 export function isOwnerReservationActionRequired(
   reservation: OwnerReservation,

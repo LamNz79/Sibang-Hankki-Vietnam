@@ -62,6 +62,7 @@ export type OwnerReservation = {
   note?: string;
   phone?: string;
   reference: string;
+  checkInToken?: string;
   visits: number;
   points: number;
   lastVisit?: string;
