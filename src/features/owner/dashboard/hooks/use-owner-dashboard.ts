@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import {
+  canOwnerReservationCheckIn,
   countOwnerReservationGuestFilter,
   countOwnerReservationStatus,
   isOwnerReservationActionRequired,
   isOwnerReservationActive,
-  isOwnerReservationNextArrival,
   matchesOwnerReservationGuestFilters,
   matchesOwnerReservationSearch,
   matchesOwnerReservationStatus,
@@ -88,7 +88,7 @@ export function useOwnerDashboard() {
     isOwnerReservationActive,
   );
   const nextArrival = reservationsForSelectedDate.find(
-    isOwnerReservationNextArrival,
+    canOwnerReservationCheckIn,
   );
   const summary: OwnerDashboardSummary = {
     bookings: activeReservations.length,

@@ -105,8 +105,8 @@ export function isOwnerReservationActive(reservation: OwnerReservation) {
   return reservation.reservationStatus !== ReservationStatus.Declined;
 }
 
-/** Identifies a confirmed reservation whose guest has not arrived yet. */
-export function isOwnerReservationNextArrival(
+/** Checks whether a confirmed reservation is ready for guest check-in. */
+export function canOwnerReservationCheckIn(
   reservation: OwnerReservation,
 ) {
   return (
