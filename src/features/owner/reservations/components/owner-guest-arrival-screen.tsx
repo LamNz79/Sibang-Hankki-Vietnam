@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
 import {
   IconCheck,
@@ -23,24 +24,24 @@ import { OwnerServiceNotesCard } from "./owner-service-notes-card";
 
 const arrivalStatuses: Array<{
   value: VisitStatus;
-  label: string;
   icon: typeof IconCheck;
 }> = [
-  { value: VisitStatus.Expected, label: "Confirmed", icon: IconCheck },
-  { value: VisitStatus.Arrived, label: "Arrived", icon: IconUserCheck },
-  { value: VisitStatus.Seated, label: "Seated", icon: IconSofa },
-  { value: VisitStatus.Completed, label: "Completed", icon: IconCircleCheck },
+  { value: VisitStatus.Expected, icon: IconCheck },
+  { value: VisitStatus.Arrived, icon: IconUserCheck },
+  { value: VisitStatus.Seated, icon: IconSofa },
+  { value: VisitStatus.Completed, icon: IconCircleCheck },
 ];
 
 export function OwnerGuestArrivalScreen() {
+  const t = useTranslations("OwnerCheckIn.arrival");
   const params = useParams<{ id: string }>();
   const reservation = useOwnerReservation(params.id);
 
   if (!reservation) {
     return (
-      <OwnerShell title="Guest arrival" backHref="/owner">
+      <OwnerShell title={t("title")} backHref="/owner">
         <Card p="xl">
-          <Text fw={700}>Reservation not found.</Text>
+          <Text fw={700}>{t("notFound")}</Text>
         </Card>
       </OwnerShell>
     );
@@ -50,8 +51,8 @@ export function OwnerGuestArrivalScreen() {
 
   return (
     <OwnerShell
-      title="Guest arrival"
-      eyebrow="Live visit management"
+      title={t("title")}
+      eyebrow={t("eyebrow")}
       backHref={`/owner/reservations/${reservation.id}`}
     >
       <Stack gap="md">
@@ -67,7 +68,7 @@ export function OwnerGuestArrivalScreen() {
         <OwnerServiceNotesCard note={reservation.note} />
 
         <Stack gap="sm">
-          <Text fw={800}>Visit status</Text>
+          <Text fw={800}>{t("visitStatus")}</Text>
           <SimpleGrid cols={2} spacing="sm">
             {arrivalStatuses.map((option) => {
               const StatusIcon = option.icon;
@@ -92,7 +93,7 @@ export function OwnerGuestArrivalScreen() {
                     updateOwnerVisitStatus(reservation.id, option.value);
                   }}
                 >
-                  {option.label}
+                  {t(`statuses.${option.value}`)}
                 </ChoiceButton>
               );
             })}
@@ -100,12 +101,12 @@ export function OwnerGuestArrivalScreen() {
         </Stack>
 
         <Stack gap="sm">
-          <Text fw={800}>Guest history</Text>
+          <Text fw={800}>{t("guestHistory")}</Text>
           <SimpleGrid cols={3} spacing={0}>
             {[
-              ["Last visit", reservation.lastVisit ?? "—"],
-              ["Visits", String(reservation.visits)],
-              ["Points", String(reservation.points)],
+              [t("lastVisit"), reservation.lastVisit ?? "—"],
+              [t("visits"), String(reservation.visits)],
+              [t("points"), String(reservation.points)],
             ].map(([label, value]) => (
               <Card
                 key={label}

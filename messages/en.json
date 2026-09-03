@@ -35,6 +35,83 @@
       "successMessage": "Continue with the Login prototype."
     }
   },
+  "ReservationQr": {
+    "home": {
+      "singleConfirmed": "Your reservation is confirmed",
+      "multipleConfirmed": "You have {count, plural, one {# confirmed reservation} other {# confirmed reservations}}",
+      "chooseReservation": "Choose a reservation to show its check-in QR.",
+      "show": "Show check-in QR",
+      "viewCodes": "View check-in QR codes",
+      "modalTitle": "Reservation QR code",
+      "listTitle": "Upcoming reservations",
+      "details": "View reservation details",
+      "back": "Back to reservations",
+      "showQr": "Show QR"
+    },
+    "guestCount": "{count, plural, one {# guest} other {# guests}}",
+    "ariaTitle": "Reservation check-in QR code",
+    "detail": {
+      "readyTitle": "Your check-in QR code",
+      "readyDescription": "Show this code to the restaurant when you arrive.",
+      "pendingTitle": "Check-in code available after confirmation",
+      "pendingDescription": "The restaurant may contact you before confirming this request.",
+      "alternativeTitle": "Respond before this booking can be confirmed",
+      "alternativeDescription": "Accept the suggested time, choose another time, or decline the request.",
+      "declinedTitle": "No table is being held",
+      "declinedDescription": "Make a new request whenever you are ready.",
+      "fallbackTitle": "Show your reservation when you arrive",
+      "fallbackDescription": "Staff can confirm your booking code or check you in with the QR code."
+    }
+  },
+  "OwnerCheckIn": {
+    "title": "Guest check-in",
+    "eyebrow": "QR or manual lookup",
+    "modes": {
+      "qr": "Scan QR",
+      "manual": "Manual lookup"
+    },
+    "scanner": {
+      "idle": "Open the rear camera and point it at the guest's QR code.",
+      "starting": "Starting camera...",
+      "scanning": "Hold the QR code inside the camera view.",
+      "found": "Reservation found. Review it before checking in the guest.",
+      "not-found": "This QR code does not match a reservation at this restaurant.",
+      "unavailable": "The camera could not be opened. Check camera permission or use manual lookup."
+    },
+    "cameraLabel": "Reservation QR scanner camera",
+    "stopCamera": "Stop camera",
+    "openCamera": "Open camera",
+    "scanAgain": "Scan again",
+    "searchPlaceholder": "Reservation no., guest name, or phone",
+    "searchLabel": "Search by reservation number, guest name, or phone",
+    "noMatch": "No matching reservation found",
+    "searchTitle": "Search for a reservation",
+    "searchHelp": "Enter a booking reference, guest name, or phone number.",
+    "guidance": "Confirm the reservation details before checking in the guest. Camera access requires a supported browser and a secure connection.",
+    "reservationMeta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}",
+    "alreadyCheckedIn": "Already checked in",
+    "checkIn": "Check in",
+    "view": "View",
+    "review": "Review",
+    "loadingEyebrow": "Loading reservation...",
+    "loading": "Loading check-in details...",
+    "arrival": {
+      "title": "Guest arrival",
+      "eyebrow": "Live visit management",
+      "notFound": "Reservation not found.",
+      "visitStatus": "Visit status",
+      "statuses": {
+        "expected": "Confirmed",
+        "arrived": "Arrived",
+        "seated": "Seated",
+        "completed": "Completed"
+      },
+      "guestHistory": "Guest history",
+      "lastVisit": "Last visit",
+      "visits": "Visits",
+      "points": "Points"
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",

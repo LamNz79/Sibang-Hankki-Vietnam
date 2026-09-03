@@ -17,6 +17,7 @@ import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SectionTitle } from "@/components/ui";
 import { HomeHeader } from "@/features/home/components/home-header";
@@ -56,6 +57,7 @@ const priceQueryValues: Record<string, string> = {
 };
 
 function HomeContent() {
+  const t = useTranslations("ReservationQr");
   const router = useRouter();
   const searchParams = useSearchParams();
   const [location, setLocation] = useState("Ho Chi Minh City");
@@ -149,13 +151,15 @@ function HomeContent() {
                 <Stack gap={1} style={{ flex: 1 }}>
                   <Text fw={800} size="sm" c={uiColors.statusSuccessText}>
                     {confirmedReservations.length === 1
-                      ? "Your reservation is confirmed"
-                      : `You have ${confirmedReservations.length} confirmed reservations`}
+                      ? t("home.singleConfirmed")
+                      : t("home.multipleConfirmed", {
+                          count: confirmedReservations.length,
+                        })}
                   </Text>
                   <Text size="xs" c={uiColors.textSecondary}>
                     {confirmedReservations.length === 1
                       ? `${nextConfirmedReservation.restaurantName} · ${dayjs(nextConfirmedReservation.date).format("MMM D")} · ${nextConfirmedReservation.time}`
-                      : "Choose a reservation to show its check-in QR."}
+                      : t("home.chooseReservation")}
                   </Text>
                 </Stack>
               </Group>
@@ -167,8 +171,8 @@ function HomeContent() {
                 onClick={openQr}
               >
                 {confirmedReservations.length === 1
-                  ? "Show check-in QR"
-                  : "View check-in QR codes"}
+                  ? t("home.show")
+                  : t("home.viewCodes")}
               </Button>
             </Stack>
           </Card>
@@ -178,8 +182,8 @@ function HomeContent() {
             onClose={closeQr}
             title={
               selectedReservation
-                ? "Reservation QR code"
-                : "Upcoming reservations"
+                ? t("home.modalTitle")
+                : t("home.listTitle")
             }
             centered
             radius="lg"
@@ -199,15 +203,17 @@ function HomeContent() {
                     value={selectedReservation.checkInToken}
                     size={200}
                     level="M"
-                    title="Reservation check-in QR code"
+                    title={t("ariaTitle")}
                   />
                 </div>
                 <Stack gap={2} align="center">
                   <Text fw={800}>{selectedReservation.restaurantName}</Text>
                   <Text size="sm" c={uiColors.textSecondary}>
                     {dayjs(selectedReservation.date).format("dddd, MMM D")} ·{" "}
-                    {selectedReservation.time} · {selectedReservation.guests}{" "}
-                    {selectedReservation.guests === 1 ? "guest" : "guests"}
+                    {selectedReservation.time} ·{" "}
+                    {t("guestCount", {
+                      count: selectedReservation.guests,
+                    })}
                   </Text>
                 </Stack>
                 <Button
@@ -216,7 +222,7 @@ function HomeContent() {
                   variant="default"
                   fullWidth
                 >
-                  View reservation details
+                  {t("home.details")}
                 </Button>
                 {confirmedReservations.length > 1 ? (
                   <Button
@@ -224,7 +230,7 @@ function HomeContent() {
                     color="gray"
                     onClick={showQrList}
                   >
-                    Back to reservations
+                    {t("home.back")}
                   </Button>
                 ) : null}
               </Stack>
@@ -239,8 +245,8 @@ function HomeContent() {
                         </Text>
                         <Text size="xs" c={uiColors.textSecondary}>
                           {dayjs(reservation.date).format("ddd, MMM D")} ·{" "}
-                          {reservation.time} · {reservation.guests}{" "}
-                          {reservation.guests === 1 ? "guest" : "guests"}
+                          {reservation.time} ·{" "}
+                          {t("guestCount", { count: reservation.guests })}
                         </Text>
                       </Stack>
                       <Button
@@ -249,7 +255,7 @@ function HomeContent() {
                         color="teal"
                         onClick={() => setPickedQrId(reservation.id)}
                       >
-                        Show QR
+                        {t("home.showQr")}
                       </Button>
                     </Group>
                   </Card>

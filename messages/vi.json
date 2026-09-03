@@ -35,6 +35,83 @@
       "successMessage": "Tiếp tục với bản mẫu đăng nhập."
     }
   },
+  "ReservationQr": {
+    "home": {
+      "singleConfirmed": "Đặt bàn của bạn đã được xác nhận",
+      "multipleConfirmed": "Bạn có {count} lượt đặt bàn đã xác nhận",
+      "chooseReservation": "Chọn một lượt đặt bàn để hiển thị mã QR check-in.",
+      "show": "Hiện mã QR check-in",
+      "viewCodes": "Xem các mã QR check-in",
+      "modalTitle": "Mã QR đặt bàn",
+      "listTitle": "Các lượt đặt bàn sắp tới",
+      "details": "Xem chi tiết đặt bàn",
+      "back": "Quay lại danh sách",
+      "showQr": "Hiện QR"
+    },
+    "guestCount": "{count} khách",
+    "ariaTitle": "Mã QR check-in đặt bàn",
+    "detail": {
+      "readyTitle": "Mã QR check-in của bạn",
+      "readyDescription": "Đưa mã này cho nhà hàng khi bạn đến.",
+      "pendingTitle": "Mã check-in sẽ có sau khi được xác nhận",
+      "pendingDescription": "Nhà hàng có thể liên hệ trước khi xác nhận yêu cầu này.",
+      "alternativeTitle": "Hãy phản hồi trước khi đặt bàn được xác nhận",
+      "alternativeDescription": "Chấp nhận giờ được đề xuất, chọn giờ khác hoặc từ chối yêu cầu.",
+      "declinedTitle": "Hiện không có bàn được giữ",
+      "declinedDescription": "Bạn có thể gửi yêu cầu mới khi sẵn sàng.",
+      "fallbackTitle": "Đưa thông tin đặt bàn khi bạn đến",
+      "fallbackDescription": "Nhân viên có thể xác nhận mã đặt bàn hoặc check-in bằng mã QR."
+    }
+  },
+  "OwnerCheckIn": {
+    "title": "Nhận khách",
+    "eyebrow": "Quét QR hoặc tìm thủ công",
+    "modes": {
+      "qr": "Quét QR",
+      "manual": "Tìm thủ công"
+    },
+    "scanner": {
+      "idle": "Mở camera sau và hướng vào mã QR của khách.",
+      "starting": "Đang mở camera...",
+      "scanning": "Giữ mã QR trong vùng camera.",
+      "found": "Đã tìm thấy đặt bàn. Hãy kiểm tra trước khi nhận khách.",
+      "not-found": "Mã QR này không khớp với đặt bàn tại nhà hàng.",
+      "unavailable": "Không thể mở camera. Hãy kiểm tra quyền camera hoặc tìm thủ công."
+    },
+    "cameraLabel": "Camera quét mã QR đặt bàn",
+    "stopCamera": "Dừng camera",
+    "openCamera": "Mở camera",
+    "scanAgain": "Quét lại",
+    "searchPlaceholder": "Mã đặt bàn, tên khách hoặc số điện thoại",
+    "searchLabel": "Tìm theo mã đặt bàn, tên khách hoặc số điện thoại",
+    "noMatch": "Không tìm thấy đặt bàn phù hợp",
+    "searchTitle": "Tìm đặt bàn",
+    "searchHelp": "Nhập mã đặt bàn, tên khách hoặc số điện thoại.",
+    "guidance": "Kiểm tra thông tin đặt bàn trước khi nhận khách. Camera cần trình duyệt được hỗ trợ và kết nối an toàn.",
+    "reservationMeta": "{time} · {count} khách · Mã {reference}",
+    "alreadyCheckedIn": "Đã check-in",
+    "checkIn": "Check-in",
+    "view": "Xem",
+    "review": "Kiểm tra",
+    "loadingEyebrow": "Đang tải đặt bàn...",
+    "loading": "Đang tải thông tin check-in...",
+    "arrival": {
+      "title": "Khách đến",
+      "eyebrow": "Quản lý lượt phục vụ",
+      "notFound": "Không tìm thấy đặt bàn.",
+      "visitStatus": "Trạng thái lượt phục vụ",
+      "statuses": {
+        "expected": "Đã xác nhận",
+        "arrived": "Đã đến",
+        "seated": "Đã xếp bàn",
+        "completed": "Hoàn tất"
+      },
+      "guestHistory": "Lịch sử khách",
+      "lastVisit": "Lần gần nhất",
+      "visits": "Số lần đến",
+      "points": "Điểm"
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Trang chủ",

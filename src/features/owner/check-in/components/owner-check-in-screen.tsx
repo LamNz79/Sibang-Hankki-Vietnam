@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import QrScanner from "qr-scanner";
+import { useTranslations } from "next-intl";
 import {
   Suspense,
   useCallback,
@@ -53,21 +54,12 @@ type ScannerStatus =
   | "not-found"
   | "unavailable";
 
-const scannerMessages: Record<ScannerStatus, string> = {
-  idle: "Open the rear camera and point it at the guest's QR code.",
-  starting: "Starting camera...",
-  scanning: "Hold the QR code inside the camera view.",
-  found: "Reservation found. Review it before checking in the guest.",
-  "not-found": "This QR code does not match a reservation at this restaurant.",
-  unavailable:
-    "The camera could not be opened. Check camera permission or use manual lookup.",
-};
-
 function ReservationLookupCard({
   reservation,
 }: {
   reservation: OwnerReservation;
 }) {
+  const t = useTranslations("OwnerCheckIn");
   const canCheckIn = canOwnerReservationCheckIn(reservation);
   const isConfirmed =
     reservation.reservationStatus === ReservationStatus.Confirmed;
@@ -93,12 +85,15 @@ function ReservationLookupCard({
           />
           <Text fw={750}>{reservation.guestName}</Text>
           <Text size="xs" c={uiColors.textSecondary}>
-            {reservation.time} · {reservation.partySize} guests · Ref. {" "}
-            {reservation.reference}
+            {t("reservationMeta", {
+              time: reservation.time,
+              count: reservation.partySize,
+              reference: reservation.reference,
+            })}
           </Text>
           {hasCheckedIn ? (
             <Text size="xs" c={uiColors.statusSuccessText} fw={700}>
-              Already checked in
+              {t("alreadyCheckedIn")}
             </Text>
           ) : null}
         </Stack>
@@ -109,7 +104,7 @@ function ReservationLookupCard({
             leftSection={<IconUserCheck size={16} />}
             onClick={() => checkInOwnerReservation(reservation)}
           >
-            Check in
+            {t("checkIn")}
           </Button>
         ) : (
           <Link
@@ -121,7 +116,7 @@ function ReservationLookupCard({
             style={{ textDecoration: "none" }}
           >
             <Button size="sm" radius="md">
-              {isConfirmed ? "View" : "Review"}
+              {isConfirmed ? t("view") : t("review")}
             </Button>
           </Link>
         )}
@@ -131,6 +126,7 @@ function ReservationLookupCard({
 }
 
 function OwnerCheckInContent() {
+  const t = useTranslations("OwnerCheckIn");
   const searchParams = useSearchParams();
   const ownerReservations = useOwnerReservations();
   const [mode, setMode] = useState("qr");
@@ -215,7 +211,7 @@ function OwnerCheckInContent() {
   };
 
   return (
-    <OwnerShell title="Guest check-in" eyebrow="QR or manual lookup">
+    <OwnerShell title={t("title")} eyebrow={t("eyebrow")}>
       <Stack gap="md">
         <SegmentedControl
           fullWidth
@@ -223,8 +219,8 @@ function OwnerCheckInContent() {
           onChange={changeMode}
           color="warmCoral"
           data={[
-            { value: "qr", label: "Scan QR" },
-            { value: "manual", label: "Manual lookup" },
+            { value: "qr", label: t("modes.qr") },
+            { value: "manual", label: t("modes.manual") },
           ]}
         />
 
@@ -244,7 +240,7 @@ function OwnerCheckInContent() {
                   ref={videoRef}
                   muted
                   playsInline
-                  aria-label="Reservation QR scanner camera"
+                  aria-label={t("cameraLabel")}
                   style={{
                     display:
                       scannerStatus === "starting" ||
@@ -284,7 +280,7 @@ function OwnerCheckInContent() {
                   c={uiColors.textSecondary}
                   aria-live="polite"
                 >
-                  {scannerMessages[scannerStatus]}
+                  {t(`scanner.${scannerStatus}`)}
                 </Text>
 
                 {scannerStatus === "scanning" ? (
@@ -295,7 +291,7 @@ function OwnerCheckInContent() {
                       setScannerStatus("idle");
                     }}
                   >
-                    Stop camera
+                    {t("stopCamera")}
                   </Button>
                 ) : (
                   <Group justify="center">
@@ -304,7 +300,9 @@ function OwnerCheckInContent() {
                       loading={scannerStatus === "starting"}
                       onClick={startCamera}
                     >
-                      {scannerStatus === "idle" ? "Open camera" : "Scan again"}
+                      {scannerStatus === "idle"
+                        ? t("openCamera")
+                        : t("scanAgain")}
                     </Button>
                     {scannerStatus === "not-found" ||
                     scannerStatus === "unavailable" ? (
@@ -312,7 +310,7 @@ function OwnerCheckInContent() {
                         variant="default"
                         onClick={() => changeMode("manual")}
                       >
-                        Manual lookup
+                        {t("modes.manual")}
                       </Button>
                     ) : null}
                   </Group>
@@ -331,8 +329,8 @@ function OwnerCheckInContent() {
               radius="md"
               value={query}
               onChange={(event) => setQuery(event.currentTarget.value)}
-              placeholder="Reservation no., guest name, or phone"
-              aria-label="Search by reservation number, guest name, or phone"
+              placeholder={t("searchPlaceholder")}
+              aria-label={t("searchLabel")}
               leftSection={<IconSearch size={18} />}
             />
 
@@ -351,11 +349,11 @@ function OwnerCheckInContent() {
                   <IconSearch size={28} color={uiColors.textSecondary} />
                   <Text fw={700} ta="center">
                     {query.trim()
-                      ? "No matching reservation found"
-                      : "Search for a reservation"}
+                      ? t("noMatch")
+                      : t("searchTitle")}
                   </Text>
                   <Text size="sm" ta="center" c={uiColors.textSecondary}>
-                    Enter a booking reference, guest name, or phone number.
+                    {t("searchHelp")}
                   </Text>
                 </Stack>
               </Card>
@@ -370,8 +368,7 @@ function OwnerCheckInContent() {
             style={{ marginTop: 2 }}
           />
           <Text size="xs" c={uiColors.textSecondary}>
-            Confirm the reservation details before checking in the guest.
-            Camera access requires a supported browser and a secure connection.
+            {t("guidance")}
           </Text>
         </Group>
       </Stack>
@@ -380,11 +377,13 @@ function OwnerCheckInContent() {
 }
 
 export function OwnerCheckInScreen() {
+  const t = useTranslations("OwnerCheckIn");
+
   return (
     <Suspense
       fallback={
-        <OwnerShell title="Guest check-in" eyebrow="Loading reservation...">
-          <Text c={uiColors.textSecondary}>Loading check-in details...</Text>
+        <OwnerShell title={t("title")} eyebrow={t("loadingEyebrow")}>
+          <Text c={uiColors.textSecondary}>{t("loading")}</Text>
         </OwnerShell>
       }
     >

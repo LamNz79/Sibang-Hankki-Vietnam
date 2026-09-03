@@ -1,5 +1,8 @@
+"use client";
+
 import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconClock, IconQrcode } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
 import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
 import type { CustomerReservation } from "@/features/reservations/types";
@@ -13,6 +16,7 @@ type ReservationCheckInCardProps = {
 export function ReservationCheckInCard({
   reservation,
 }: ReservationCheckInCardProps) {
+  const t = useTranslations("ReservationQr");
   const { isPending, isAlternative, isConfirmed, isDeclined } =
     getReservationStatusFlags(reservation);
   const isAwaitingConfirmation = isPending || isAlternative || isDeclined;
@@ -34,10 +38,10 @@ export function ReservationCheckInCard({
             </ThemeIcon>
             <Stack gap={2}>
               <Text fw={750} size="sm" c={uiColors.textPrimary}>
-                Your check-in QR code
+                {t("detail.readyTitle")}
               </Text>
               <Text size="xs" c={uiColors.textSecondary}>
-                Show this code to the restaurant when you arrive.
+                {t("detail.readyDescription")}
               </Text>
             </Stack>
           </Group>
@@ -53,7 +57,7 @@ export function ReservationCheckInCard({
               value={reservation.checkInToken}
               size={184}
               level="M"
-              title="Reservation check-in QR code"
+              title={t("ariaTitle")}
             />
           </div>
         </Stack>
@@ -90,21 +94,21 @@ export function ReservationCheckInCard({
         <Stack gap={2}>
           <Text fw={750} size="sm" c={uiColors.textPrimary}>
             {isPending
-              ? "Check-in code available after confirmation"
+              ? t("detail.pendingTitle")
               : isAlternative
-                ? "Respond before this booking can be confirmed"
+                ? t("detail.alternativeTitle")
                 : isDeclined
-                  ? "No table is being held"
-                  : "Show your reservation when you arrive"}
+                  ? t("detail.declinedTitle")
+                  : t("detail.fallbackTitle")}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
             {isPending
-              ? "The restaurant may contact you before confirming this request."
+              ? t("detail.pendingDescription")
               : isAlternative
-                ? "Accept the suggested time, choose another time, or decline the request."
+                ? t("detail.alternativeDescription")
                 : isDeclined
-                  ? "Make a new request whenever you are ready."
-                  : "Staff can confirm your booking code or check you in with the QR code."}
+                  ? t("detail.declinedDescription")
+                  : t("detail.fallbackDescription")}
           </Text>
         </Stack>
       </Group>
