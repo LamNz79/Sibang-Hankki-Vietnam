@@ -2,7 +2,11 @@ import {
   createOwnerReservationOverride,
   type OwnerReservationOverridePatch,
 } from "@/features/owner/domain/owner-reservation-operations";
-import type { OwnerReservationOverride } from "@/features/owner/types";
+import { canOwnerReservationCheckIn } from "@/features/owner/selectors/owner-reservation-selectors";
+import type {
+  OwnerReservation,
+  OwnerReservationOverride,
+} from "@/features/owner/types";
 import {
   confirmReservationRequest,
   rejectReservationRequest,
@@ -10,7 +14,7 @@ import {
 } from "@/features/reservations/data/reservation-storage";
 import {
   ReservationStatus,
-  type VisitStatus,
+  VisitStatus,
 } from "@/features/reservations/types";
 
 const storageKey = "sibang-owner-reservation-overrides";
@@ -121,6 +125,15 @@ export function reopenOwnerReservation(id: string) {
   return saveOwnerReservationOverride(id, {
     reservationStatus: ReservationStatus.Pending,
     requestResponse: { kind: "pending" },
+  });
+}
+
+/** Checks in a confirmed guest once and moves the visit to Arrived. */
+export function checkInOwnerReservation(reservation: OwnerReservation) {
+  if (!canOwnerReservationCheckIn(reservation)) return;
+
+  return saveOwnerReservationOverride(reservation.id, {
+    visitStatus: VisitStatus.Arrived,
   });
 }
 

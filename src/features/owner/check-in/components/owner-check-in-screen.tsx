@@ -29,9 +29,11 @@ import {
   IconSearch,
   IconUserCheck,
 } from "@tabler/icons-react";
+import { checkInOwnerReservation } from "@/features/owner/data/owner-reservation-storage";
 import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import { GuestContextBadges } from "@/features/owner/reservations";
 import {
+  canOwnerReservationCheckIn,
   findOwnerReservationByCheckInToken,
   matchesOwnerReservationSearch,
 } from "@/features/owner/selectors/owner-reservation-selectors";
@@ -66,11 +68,10 @@ function ReservationLookupCard({
 }: {
   reservation: OwnerReservation;
 }) {
-  const canCheckIn =
-    reservation.reservationStatus === ReservationStatus.Confirmed &&
-    reservation.visitStatus === VisitStatus.Expected;
+  const canCheckIn = canOwnerReservationCheckIn(reservation);
   const isConfirmed =
     reservation.reservationStatus === ReservationStatus.Confirmed;
+  const hasCheckedIn = reservation.visitStatus !== VisitStatus.Expected;
 
   return (
     <Card
@@ -95,23 +96,35 @@ function ReservationLookupCard({
             {reservation.time} · {reservation.partySize} guests · Ref. {" "}
             {reservation.reference}
           </Text>
+          {hasCheckedIn ? (
+            <Text size="xs" c={uiColors.statusSuccessText} fw={700}>
+              Already checked in
+            </Text>
+          ) : null}
         </Stack>
-        <Link
-          href={
-            isConfirmed
-              ? `/owner/reservations/${reservation.id}/arrival`
-              : `/owner/reservations/${reservation.id}`
-          }
-          style={{ textDecoration: "none" }}
-        >
+        {canCheckIn ? (
           <Button
             size="sm"
             radius="md"
-            leftSection={canCheckIn ? <IconUserCheck size={16} /> : undefined}
+            leftSection={<IconUserCheck size={16} />}
+            onClick={() => checkInOwnerReservation(reservation)}
           >
-            {canCheckIn ? "Check in" : isConfirmed ? "View" : "Review"}
+            Check in
           </Button>
-        </Link>
+        ) : (
+          <Link
+            href={
+              isConfirmed
+                ? `/owner/reservations/${reservation.id}/arrival`
+                : `/owner/reservations/${reservation.id}`
+            }
+            style={{ textDecoration: "none" }}
+          >
+            <Button size="sm" radius="md">
+              {isConfirmed ? "View" : "Review"}
+            </Button>
+          </Link>
+        )}
       </Group>
     </Card>
   );

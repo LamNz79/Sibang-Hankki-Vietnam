@@ -9,8 +9,12 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { ChoiceButton } from "@/components/ui";
-import { updateOwnerVisitStatus } from "@/features/owner/data/owner-reservation-storage";
+import {
+  checkInOwnerReservation,
+  updateOwnerVisitStatus,
+} from "@/features/owner/data/owner-reservation-storage";
 import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import { canOwnerReservationCheckIn } from "@/features/owner/selectors/owner-reservation-selectors";
 import { OwnerShell } from "@/features/owner/shared";
 import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -42,6 +46,8 @@ export function OwnerGuestArrivalScreen() {
     );
   }
 
+  const canCheckIn = canOwnerReservationCheckIn(reservation);
+
   return (
     <OwnerShell
       title="Guest arrival"
@@ -69,10 +75,22 @@ export function OwnerGuestArrivalScreen() {
                 <ChoiceButton
                   key={option.value}
                   selected={reservation.visitStatus === option.value}
-                  leftSection={<StatusIcon size={17} />}
-                  onClick={() =>
-                    updateOwnerVisitStatus(reservation.id, option.value)
+                  disabled={
+                    reservation.visitStatus === VisitStatus.Expected
+                      ? option.value !== VisitStatus.Expected &&
+                        (option.value !== VisitStatus.Arrived || !canCheckIn)
+                      : option.value === VisitStatus.Expected ||
+                        option.value === VisitStatus.Arrived
                   }
+                  leftSection={<StatusIcon size={17} />}
+                  onClick={() => {
+                    if (option.value === VisitStatus.Arrived) {
+                      checkInOwnerReservation(reservation);
+                      return;
+                    }
+
+                    updateOwnerVisitStatus(reservation.id, option.value);
+                  }}
                 >
                   {option.label}
                 </ChoiceButton>

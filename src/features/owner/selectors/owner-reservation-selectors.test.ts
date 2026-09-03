@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  canOwnerReservationCheckIn,
   countOwnerReservationGuestFilter,
   findOwnerReservationByCheckInToken,
   getOwnerReservationDisplayStatus,
   isOwnerReservationActionRequired,
   isOwnerReservationActive,
-  isOwnerReservationNextArrival,
   matchesOwnerReservationGuestFilters,
   matchesOwnerReservationSearch,
   sortOwnerReservationsPendingFirst,
@@ -86,10 +86,20 @@ describe("owner reservation selectors", () => {
     ).toBe(true);
   });
 
-  it("identifies active reservations and next-arrival candidates", () => {
+  it("identifies active reservations and valid check-in candidates", () => {
     const reservation = createFixture();
     expect(isOwnerReservationActive(reservation)).toBe(true);
-    expect(isOwnerReservationNextArrival(reservation)).toBe(true);
+    expect(canOwnerReservationCheckIn(reservation)).toBe(true);
+    expect(
+      canOwnerReservationCheckIn(
+        createFixture({ reservationStatus: ReservationStatus.Pending }),
+      ),
+    ).toBe(false);
+    expect(
+      canOwnerReservationCheckIn(
+        createFixture({ visitStatus: VisitStatus.Arrived }),
+      ),
+    ).toBe(false);
     expect(
       isOwnerReservationActive(
         createFixture({ reservationStatus: ReservationStatus.Declined }),
