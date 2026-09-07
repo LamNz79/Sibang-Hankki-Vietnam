@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarClock,
@@ -5,6 +7,7 @@ import {
   IconClock,
   IconX,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
 import {
@@ -21,6 +24,7 @@ type ReservationStatusSummaryProps = {
 export function ReservationStatusSummary({
   reservation,
 }: ReservationStatusSummaryProps) {
+  const t = useTranslations("CustomerReservationDetails.status");
   const { isPending, isAlternative, isDeclined } =
     getReservationStatusFlags(reservation);
   const wasDeclinedByCustomer =
@@ -90,34 +94,34 @@ export function ReservationStatusSummary({
             w="fit-content"
           >
             {isPending
-              ? "Pending confirmation"
+              ? t("pending.badge")
               : isAlternative
-                ? "Action required"
+                ? t("alternative.badge")
                 : isDeclined
-                  ? "Request declined"
-                  : "Reservation confirmed"}
+                  ? t("declined.badge")
+                  : t("confirmed.badge")}
           </StatusBadge>
           <Text fw={800} c={uiColors.textPrimary}>
             {isPending
-              ? "Waiting for the restaurant"
+              ? t("pending.title")
               : isAlternative
-                ? "The restaurant suggested a new time"
+                ? t("alternative.title")
               : isDeclined
                   ? wasDeclinedByCustomer
-                    ? "This request is closed"
-                    : "The restaurant could not confirm this request"
-                  : "Your table is confirmed"}
+                    ? t("declined.customerTitle")
+                    : t("declined.restaurantTitle")
+                  : t("confirmed.title")}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
             {isPending
-              ? "The restaurant will confirm your request or contact you if anything needs to change."
+              ? t("pending.description")
               : isAlternative
-                ? "Review the proposed time below. Your table is not confirmed until you accept it."
+                ? t("alternative.description")
               : isDeclined
                   ? wasDeclinedByCustomer
-                    ? "The restaurant has been notified that you declined the proposed time."
-                    : "No table is being held. Choose another time when you are ready."
-                  : "Your reservation is ready. Show the booking code when you arrive."}
+                    ? t("declined.customerDescription")
+                    : t("declined.restaurantDescription")
+                  : t("confirmed.description")}
           </Text>
         </Stack>
       </Group>

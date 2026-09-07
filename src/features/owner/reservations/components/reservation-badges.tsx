@@ -1,22 +1,13 @@
+"use client";
+
 import { Group } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import type { GuestTier } from "@/features/owner/types";
 import {
   ReservationStatus,
-  VisitStatus,
   type ReservationDisplayStatus,
 } from "@/features/reservations/types";
-
-const statusLabels: Record<ReservationDisplayStatus, string> = {
-  [ReservationStatus.Pending]: "Pending",
-  [ReservationStatus.AlternativeProposed]: "Alternative proposed",
-  [ReservationStatus.Confirmed]: "Confirmed",
-  [ReservationStatus.Declined]: "Declined",
-  [VisitStatus.Expected]: "Expected",
-  [VisitStatus.Arrived]: "Arrived",
-  [VisitStatus.Seated]: "Seated",
-  [VisitStatus.Completed]: "Completed",
-};
 
 function getStatusTone(status: ReservationDisplayStatus) {
   if (
@@ -35,9 +26,11 @@ export function ReservationStatusBadge({
 }: {
   status: ReservationDisplayStatus;
 }) {
+  const t = useTranslations("OwnerReservationDetails.badges");
+
   return (
     <StatusBadge tone={getStatusTone(status)}>
-      {statusLabels[status]}
+      {t(status)}
     </StatusBadge>
   );
 }
@@ -49,19 +42,21 @@ export function GuestContextBadges({
   tier?: GuestTier;
   preOrder?: boolean;
 }) {
+  const t = useTranslations("OwnerReservationDetails.badges");
+
   if (!tier && !preOrder) return null;
 
   return (
     <Group gap={6}>
       {tier ? (
         <StatusBadge tone={tier === "vip" ? "brand" : "neutral"}>
-          {tier === "vip" ? "VIP" : tier === "regular" ? "Regular" : "New"}
+          {t(tier)}
         </StatusBadge>
       ) : null}
 
       {preOrder ? (
         <StatusBadge tone="info">
-          Pre-order
+          {t("preOrder")}
         </StatusBadge>
       ) : null}
     </Group>

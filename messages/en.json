@@ -63,6 +63,86 @@
       "fallbackDescription": "Staff can confirm your booking code or check you in with the QR code."
     }
   },
+  "CustomerReservationDetails": {
+    "title": "Reservation details",
+    "notFound": {
+      "title": "Reservation not found",
+      "description": "This reservation may have been removed or is not available on this device.",
+      "back": "Back to reservations"
+    },
+    "status": {
+      "pending": { "badge": "Pending confirmation", "title": "Waiting for the restaurant", "description": "The restaurant will confirm your request or contact you if anything needs to change." },
+      "alternative": { "badge": "Action required", "title": "The restaurant suggested a new time", "description": "Review the proposed time below. Your table is not confirmed until you accept it." },
+      "declined": { "badge": "Request declined", "restaurantTitle": "The restaurant could not confirm this request", "restaurantDescription": "No table is being held. Choose another time when you are ready.", "customerTitle": "This request is closed", "customerDescription": "The restaurant has been notified that you declined the proposed time." },
+      "confirmed": { "badge": "Reservation confirmed", "title": "Your table is confirmed", "description": "Your reservation is ready. Show the booking code when you arrive." }
+    },
+    "reference": { "label": "Booking reference", "copy": "Copy booking reference" },
+    "information": {
+      "date": "Date",
+      "timeGuests": "Time · guests",
+      "guestCount": "{count, plural, one {# guest} other {# guests}}",
+      "preOrder": "Pre-order",
+      "noPreOrder": "Not added",
+      "request": "Request",
+      "noRequest": "No special requests"
+    },
+    "actions": {
+      "newReservation": "Make a new reservation",
+      "changeRequest": "Change request",
+      "change": "Change",
+      "cancelRequest": "Cancel request",
+      "cancel": "Cancel",
+      "changeHint": "Change flow will be added after the policy is confirmed",
+      "cancelHint": "Cancellation flow will be added after the policy is confirmed"
+    },
+    "proposal": {
+      "title": "New time proposal",
+      "description": "The restaurant cannot confirm your original time and suggested another available slot.",
+      "requested": "Requested",
+      "suggested": "Suggested",
+      "restaurantMessage": "Restaurant message",
+      "respondBy": "Please respond by {deadline}",
+      "accept": "Accept {time}",
+      "chooseAnother": "Choose another time",
+      "declineRequest": "Decline request",
+      "declineTitle": "Decline this proposal?",
+      "declineDescription": "The restaurant will release the proposed {time} slot. You can still make a new reservation afterward.",
+      "keep": "Keep proposal",
+      "decline": "Decline",
+      "acceptedTitle": "New time confirmed",
+      "acceptedMessage": "{restaurant} has been notified that you accepted {time}.",
+      "declinedTitle": "Request declined",
+      "declinedMessage": "{restaurant} has been notified."
+    }
+  },
+  "OwnerReservationDetails": {
+    "title": "Reservation details",
+    "eyebrow": "Selected guest only",
+    "notFound": "Reservation not found.",
+    "notification": { "title": "Confirmation sent", "message": "{guest} was notified that the table is confirmed." },
+    "footer": { "viewArrival": "View {guest}'s arrival", "checkIn": "Check in {guest}", "waiting": "Waiting for guest response", "closed": "Request closed", "confirm": "Confirm reservation" },
+    "menu": { "aria": "Reservation actions", "label": "Reservation actions", "contact": "Contact guest", "cancel": "Cancel reservation" },
+    "information": { "title": "Reservation information", "date": "Date", "largeParty": "Large party", "guests": "Guests", "guestCount": "{count, plural, one {# guest} other {# guests}}", "table": "Table", "notAssigned": "Not assigned", "preOrder": "Pre-order", "noPreOrder": "No pre-order" },
+    "confirmation": { "title": "Guest confirmation", "description": "Send the confirmed booking in the app. Call only when the guest needs urgent or special follow-up.", "notify": "Notify guest", "call": "Call guest" },
+    "summary": { "meta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}" },
+    "badges": { "pending": "Pending", "alternative-proposed": "Alternative proposed", "confirmed": "Confirmed", "declined": "Declined", "expected": "Expected", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "vip": "VIP", "regular": "Regular", "new": "New", "preOrder": "Pre-order" },
+    "notes": { "title": "Service notes", "empty": "No service notes" },
+    "customerResponse": {
+      "acceptedTitle": "Guest accepted the suggested time", "acceptedDescription": "Confirmed for {date} at {time}.",
+      "declinedTitle": "Guest declined the suggested time", "declinedSlot": "the suggested time", "declinedDescription": "The guest declined {slot}. Suggest another slot or contact them directly.",
+      "requestedTitle": "Guest requested another time", "requestedDescription": "Review the new request for {date} at {time}.",
+      "waitingTitle": "Waiting for guest response", "waitingDescription": "Suggested {date} at {time}."
+    },
+    "response": {
+      "title": "Respond to request", "alternativeSent": "Alternative sent", "unable": "Unable to accommodate", "awaiting": "Awaiting response",
+      "waiting": "Waiting for the guest to respond to {slot}.", "notified": "The guest was notified: {reason}.", "instructions": "Confirm the requested time, suggest another time, or let the guest know the restaurant is full.",
+      "updates": "Updates are sent by in-app notification. Call the guest when a same-day or special request needs a quick answer.",
+      "changeTime": "Change suggested time", "suggestTime": "Suggest another time", "call": "Call guest", "noTable": "No table", "reopen": "Reopen request",
+      "alternativeDrawer": { "title": "Suggest another time", "description": "The requested time is {slot}. Select one alternative for the guest.", "message": "Message (optional)", "placeholder": "For example: We can keep a window table at this time.", "send": "Send suggested time", "sentTitle": "Alternative time sent", "sentMessage": "{guest} will receive an in-app notification and can accept or decline." },
+      "unavailableDrawer": { "title": "Unable to accommodate", "description": "Choose a clear reason. The guest will receive it in the app instead of waiting without an answer.", "notify": "Notify guest", "notifiedTitle": "Guest notified", "notifiedMessage": "The request was declined because: {reason}." },
+      "reasons": { "fullyBooked": "Fully booked", "partySize": "Cannot accommodate this party size", "closed": "Restaurant is closed", "other": "Other" }
+    }
+  },
   "OwnerCheckIn": {
     "title": "Guest check-in",
     "eyebrow": "QR or manual lookup",

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import dayjs from "dayjs";
 import {
   ActionIcon,
   Button,
@@ -14,6 +13,7 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { useFormatter, useTranslations } from "next-intl";
 import {
   IconBell,
   IconCalendarEvent,
@@ -99,13 +99,14 @@ function ReservationInfoRow({
 
 function getPersistedResponse(
   reservation: OwnerReservation | undefined,
+  formatDate: (date: string) => string,
 ): OwnerRequestResponse {
   const customerResponse = reservation?.customerResponse;
 
   if (customerResponse?.kind === "awaiting-customer") {
     return {
       kind: "alternative-sent",
-      slot: `${dayjs(customerResponse.proposedDate).format("ddd, MMM D")} · ${customerResponse.proposedTime}`,
+      slot: `${formatDate(customerResponse.proposedDate)} · ${customerResponse.proposedTime}`,
     };
   }
 
@@ -113,14 +114,22 @@ function getPersistedResponse(
 }
 
 export function OwnerReservationDetailScreen() {
+  const format = useFormatter();
+  const t = useTranslations("OwnerReservationDetails");
   const params = useParams<{ id: string }>();
   const reservation = useOwnerReservation(params.id);
+  const formatDate = (date: string) =>
+    format.dateTime(new Date(`${date}T00:00:00`), {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
 
   if (!reservation) {
     return (
-      <OwnerShell title="Reservation details" backHref="/owner">
+      <OwnerShell title={t("title")} backHref="/owner">
         <Card p="xl">
-          <Text fw={700}>Reservation not found.</Text>
+          <Text fw={700}>{t("notFound")}</Text>
         </Card>
       </OwnerShell>
     );
@@ -130,7 +139,7 @@ export function OwnerReservationDetailScreen() {
   const isLargeParty = reservation.partySize > LARGE_PARTY_THRESHOLD;
   const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
   const displayStatus = reservation.reservationStatus;
-  const persistedResponse = getPersistedResponse(reservation);
+  const persistedResponse = getPersistedResponse(reservation, formatDate);
   const response =
     persistedResponse.kind === "alternative-sent"
       ? persistedResponse
@@ -145,8 +154,8 @@ export function OwnerReservationDetailScreen() {
   const notifyGuest = () => {
     notifications.show({
       color: "teal",
-      title: "Confirmation sent",
-      message: `${reservation.guestName} was notified that the table is confirmed.`,
+      title: t("notification.title"),
+      message: t("notification.message", { guest: reservation.guestName }),
     });
   };
 
@@ -165,8 +174,8 @@ export function OwnerReservationDetailScreen() {
       leftSection={<IconUserCheck size={19} />}
     >
       {hasArrived
-        ? `View ${reservation.guestName}'s arrival`
-        : `Check in ${reservation.guestName}`}
+        ? t("footer.viewArrival", { guest: reservation.guestName })
+        : t("footer.checkIn", { guest: reservation.guestName })}
     </Button>
   ) : displayStatus === ReservationStatus.Declined ? null : (
       <Button
@@ -183,17 +192,17 @@ export function OwnerReservationDetailScreen() {
         onClick={confirmReservation}
       >
         {response.kind === "alternative-sent"
-          ? "Waiting for guest response"
+          ? t("footer.waiting")
           : response.kind === "unavailable"
-            ? "Request closed"
-            : "Confirm reservation"}
+            ? t("footer.closed")
+            : t("footer.confirm")}
       </Button>
     );
 
   return (
     <OwnerShell
-      title="Reservation details"
-      eyebrow="Selected guest only"
+      title={t("title")}
+      eyebrow={t("eyebrow")}
       backHref="/owner"
       headerAction={
         <Menu position="bottom-end" shadow="md" width={190}>
@@ -203,27 +212,27 @@ export function OwnerReservationDetailScreen() {
               color="gray"
               radius="xl"
               size={40}
-              aria-label="Reservation actions"
+              aria-label={t("menu.aria")}
             >
               <IconDots size={21} />
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Label>Reservation actions</Menu.Label>
+            <Menu.Label>{t("menu.label")}</Menu.Label>
             <Menu.Item
               component="a"
               href={`tel:${reservation.phone ?? ""}`}
               leftSection={<IconPhone size={16} />}
               disabled={!reservation.phone}
             >
-              Contact guest
+              {t("menu.contact")}
             </Menu.Item>
             <Menu.Item
               color="red"
               leftSection={<IconX size={16} />}
               disabled
             >
-              Cancel reservation
+              {t("menu.cancel")}
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
@@ -248,19 +257,25 @@ export function OwnerReservationDetailScreen() {
         >
           <Stack gap="sm">
             <Text fw={800} size="sm" c={uiColors.textPrimary}>
-              Reservation information
+              {t("information.title")}
             </Text>
             <ReservationInfoRow
               icon={IconCalendarEvent}
-              label="Date"
-              value={dayjs(reservation.date).format("dddd, MMM D")}
+              label={t("information.date")}
+              value={formatDate(reservation.date)}
               iconBackground={uiColors.detailDateSurface}
               iconColor={uiColors.detailDateText}
             />
             <ReservationInfoRow
               icon={IconUsers}
-              label={isLargeParty ? "Large party" : "Guests"}
-              value={`${reservation.partySize} ${reservation.partySize === 1 ? "guest" : "guests"}`}
+              label={
+                isLargeParty
+                  ? t("information.largeParty")
+                  : t("information.guests")
+              }
+              value={t("information.guestCount", {
+                count: reservation.partySize,
+              })}
               iconBackground={
                 isLargeParty
                   ? uiColors.statusWarningSurface
@@ -275,15 +290,19 @@ export function OwnerReservationDetailScreen() {
             />
             <ReservationInfoRow
               icon={IconSofa}
-              label="Table"
-              value={reservation.table}
+              label={t("information.table")}
+              value={
+                reservation.table === "Not assigned"
+                  ? t("information.notAssigned")
+                  : reservation.table
+              }
               iconBackground={uiColors.brandPrimarySoft}
               iconColor={uiColors.brandPrimary}
             />
             <ReservationInfoRow
               icon={IconToolsKitchen3}
-              label="Pre-order"
-              value={reservation.preOrderName ?? "No pre-order"}
+              label={t("information.preOrder")}
+              value={reservation.preOrderName ?? t("information.noPreOrder")}
               iconBackground={uiColors.detailPreOrderSurface}
               iconColor={uiColors.detailPreOrderText}
             />
@@ -314,11 +333,10 @@ export function OwnerReservationDetailScreen() {
               </ThemeIcon>
               <Stack gap={2} style={{ flex: 1 }}>
                 <Text fw={750} size="sm" c={uiColors.statusSuccessText}>
-                  Guest confirmation
+                  {t("confirmation.title")}
                 </Text>
                 <Text size="xs" c={uiColors.textSecondary}>
-                  Send the confirmed booking in the app. Call only when the
-                  guest needs urgent or special follow-up.
+                  {t("confirmation.description")}
                 </Text>
               </Stack>
             </Group>
@@ -330,7 +348,7 @@ export function OwnerReservationDetailScreen() {
                 leftSection={<IconBell size={17} />}
                 onClick={notifyGuest}
               >
-                Notify guest
+                {t("confirmation.notify")}
               </Button>
               <Button
                 component="a"
@@ -339,7 +357,7 @@ export function OwnerReservationDetailScreen() {
                 leftSection={<IconPhone size={17} />}
                 disabled={!reservation.phone}
               >
-                Call guest
+                {t("confirmation.call")}
               </Button>
             </Group>
           </Card>

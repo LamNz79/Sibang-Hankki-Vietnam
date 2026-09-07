@@ -1,4 +1,5 @@
-import dayjs from "dayjs";
+"use client";
+
 import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarClock,
@@ -6,20 +7,33 @@ import {
   IconMessageCircle,
   IconX,
 } from "@tabler/icons-react";
+import { useFormatter, useTranslations } from "next-intl";
 import type {
   OwnerCustomerResponse,
   OwnerReservation,
 } from "@/features/owner/types";
 import { uiColors } from "@/theme";
 
-function getResponseContent(
+function useResponseContent(
   response: OwnerCustomerResponse,
   reservation: OwnerReservation,
 ) {
+  const format = useFormatter();
+  const t = useTranslations("OwnerReservationDetails.customerResponse");
+  const formatDate = (date: string) =>
+    format.dateTime(new Date(`${date}T00:00:00`), {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+
   if (response.kind === "accepted-alternative") {
     return {
-      title: "Guest accepted the suggested time",
-      description: `Confirmed for ${dayjs(reservation.date).format("ddd, MMM D")} at ${reservation.time}.`,
+      title: t("acceptedTitle"),
+      description: t("acceptedDescription", {
+        date: formatDate(reservation.date),
+        time: reservation.time,
+      }),
       color: "teal",
       background: uiColors.statusSuccessSurface,
       icon: IconCircleCheck,
@@ -29,12 +43,12 @@ function getResponseContent(
   if (response.kind === "declined-alternative") {
     const declinedSlot =
       response.proposedDate && response.proposedTime
-        ? `${dayjs(response.proposedDate).format("ddd, MMM D")} at ${response.proposedTime}`
-        : "the suggested time";
+        ? `${formatDate(response.proposedDate)} · ${response.proposedTime}`
+        : t("declinedSlot");
 
     return {
-      title: "Guest declined the suggested time",
-      description: `The guest declined ${declinedSlot}. Suggest another slot or contact them directly.`,
+      title: t("declinedTitle"),
+      description: t("declinedDescription", { slot: declinedSlot }),
       color: "red",
       background: uiColors.statusErrorSurface,
       icon: IconX,
@@ -43,8 +57,11 @@ function getResponseContent(
 
   if (response.kind === "requested-another-time") {
     return {
-      title: "Guest requested another time",
-      description: `Review the new request for ${dayjs(reservation.date).format("ddd, MMM D")} at ${reservation.time}.`,
+      title: t("requestedTitle"),
+      description: t("requestedDescription", {
+        date: formatDate(reservation.date),
+        time: reservation.time,
+      }),
       color: "warmCoral",
       background: uiColors.statusWarningSurface,
       icon: IconCalendarClock,
@@ -52,23 +69,25 @@ function getResponseContent(
   }
 
   return {
-    title: "Waiting for guest response",
-    description: `Suggested ${dayjs(response.proposedDate).format("ddd, MMM D")} at ${response.proposedTime}.`,
+    title: t("waitingTitle"),
+    description: t("waitingDescription", {
+      date: formatDate(response.proposedDate),
+      time: response.proposedTime,
+    }),
     color: "warmCoral",
     background: uiColors.statusInfoSurface,
     icon: IconMessageCircle,
   };
 }
 
-export function OwnerCustomerResponseCard({
+function OwnerCustomerResponseContent({
   reservation,
+  response,
 }: {
   reservation: OwnerReservation;
+  response: OwnerCustomerResponse;
 }) {
-  const response = reservation.customerResponse;
-  if (!response) return null;
-
-  const content = getResponseContent(response, reservation);
+  const content = useResponseContent(response, reservation);
   const ResponseIcon = content.icon;
 
   return (
@@ -101,4 +120,17 @@ export function OwnerCustomerResponseCard({
       </Group>
     </Card>
   );
+}
+
+export function OwnerCustomerResponseCard({
+  reservation,
+}: {
+  reservation: OwnerReservation;
+}) {
+  return reservation.customerResponse ? (
+    <OwnerCustomerResponseContent
+      reservation={reservation}
+      response={reservation.customerResponse}
+    />
+  ) : null;
 }

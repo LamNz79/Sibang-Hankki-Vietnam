@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Button, SimpleGrid } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
 import type { CustomerReservation } from "@/features/reservations/types";
 
@@ -11,6 +14,7 @@ type ReservationDetailActionsProps = {
 export function ReservationDetailActions({
   reservation,
 }: ReservationDetailActionsProps) {
+  const t = useTranslations("CustomerReservationDetails.actions");
   const { isPending, isAlternative, isDeclined } =
     getReservationStatusFlags(reservation);
 
@@ -24,7 +28,7 @@ export function ReservationDetailActions({
         fullWidth
         color="warmCoral"
       >
-        Make a new reservation
+        {t("newReservation")}
       </Button>
     );
   }
@@ -36,18 +40,18 @@ export function ReservationDetailActions({
         color="gray"
         radius="md"
         disabled
-        title="Change flow will be added after the policy is confirmed"
+        title={t("changeHint")}
       >
-        {isPending ? "Change request" : "Change"}
+        {isPending ? t("changeRequest") : t("change")}
       </Button>
       <Button
         variant="outline"
         color="red"
         radius="md"
         disabled
-        title="Cancellation flow will be added after the policy is confirmed"
+        title={t("cancelHint")}
       >
-        {isPending ? "Cancel request" : "Cancel"}
+        {isPending ? t("cancelRequest") : t("cancel")}
       </Button>
     </SimpleGrid>
   );

@@ -1,4 +1,5 @@
-import dayjs from "dayjs";
+"use client";
+
 import { Card, Divider, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarEvent,
@@ -6,6 +7,7 @@ import {
   IconToolsKitchen3,
   IconUsers,
 } from "@tabler/icons-react";
+import { useFormatter, useTranslations } from "next-intl";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
@@ -59,6 +61,9 @@ function DetailRow({
 export function ReservationInformationCard({
   reservation,
 }: ReservationInformationCardProps) {
+  const format = useFormatter();
+  const t = useTranslations("CustomerReservationDetails.information");
+
   return (
     <Card
       radius="lg"
@@ -71,32 +76,37 @@ export function ReservationInformationCard({
     >
       <DetailRow
         icon={IconCalendarEvent}
-        label="Date"
-        value={dayjs(reservation.date).format("dddd, MMM D, YYYY")}
+        label={t("date")}
+        value={format.dateTime(new Date(`${reservation.date}T00:00:00`), {
+          weekday: "long",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })}
         iconBackground={uiColors.detailDateSurface}
         iconColor={uiColors.detailDateText}
       />
       <Divider color={uiColors.border} />
       <DetailRow
         icon={IconUsers}
-        label="Time · guests"
-        value={`${reservation.time} · ${reservation.guests} guests`}
+        label={t("timeGuests")}
+        value={`${reservation.time} · ${t("guestCount", { count: reservation.guests })}`}
         iconBackground={uiColors.detailGuestsSurface}
         iconColor={uiColors.detailGuestsText}
       />
       <Divider color={uiColors.border} />
       <DetailRow
         icon={IconToolsKitchen3}
-        label="Pre-order"
-        value={reservation.preOrder ?? "Not added"}
+        label={t("preOrder")}
+        value={reservation.preOrder ?? t("noPreOrder")}
         iconBackground={uiColors.detailPreOrderSurface}
         iconColor={uiColors.detailPreOrderText}
       />
       <Divider color={uiColors.border} />
       <DetailRow
         icon={IconMessage}
-        label="Request"
-        value={reservation.specialRequest ?? "No special requests"}
+        label={t("request")}
+        value={reservation.specialRequest ?? t("noRequest")}
         iconBackground={uiColors.detailRequestSurface}
         iconColor={uiColors.detailRequestText}
       />

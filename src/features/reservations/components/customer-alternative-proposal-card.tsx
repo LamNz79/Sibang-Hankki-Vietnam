@@ -21,6 +21,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { useFormatter, useTranslations } from "next-intl";
 import {
   acceptAlternativeProposal,
   declineAlternativeProposal,
@@ -31,12 +32,12 @@ import { uiColors } from "@/theme";
 /** Compares the originally requested slot with the restaurant suggestion. */
 function TimeOption({
   label,
-  date,
+  dateLabel,
   time,
   suggested = false,
 }: {
   label: string;
-  date: string;
+  dateLabel: string;
   time: string;
   suggested?: boolean;
 }) {
@@ -61,7 +62,7 @@ function TimeOption({
           {label}
         </Text>
         <Text size="sm" c={uiColors.textSecondary}>
-          {dayjs(date).format("ddd, MMM D")}
+          {dateLabel}
         </Text>
         <Text
           fw={800}
@@ -85,6 +86,8 @@ export function CustomerAlternativeProposalCard({
 }: {
   reservation: CustomerReservation;
 }) {
+  const format = useFormatter();
+  const t = useTranslations("CustomerReservationDetails.proposal");
   const [declineOpened, setDeclineOpened] = useState(false);
   const proposal = reservation.alternativeProposal;
 
@@ -94,8 +97,11 @@ export function CustomerAlternativeProposalCard({
     acceptAlternativeProposal(reservation.id);
     notifications.show({
       color: "teal",
-      title: "New time confirmed",
-      message: `${reservation.restaurantName} has been notified that you accepted ${proposal.time}.`,
+      title: t("acceptedTitle"),
+      message: t("acceptedMessage", {
+        restaurant: reservation.restaurantName,
+        time: proposal.time,
+      }),
     });
   };
 
@@ -104,15 +110,29 @@ export function CustomerAlternativeProposalCard({
     setDeclineOpened(false);
     notifications.show({
       color: "warmCoral",
-      title: "Request declined",
-      message: `${reservation.restaurantName} has been notified.`,
+      title: t("declinedTitle"),
+      message: t("declinedMessage", {
+        restaurant: reservation.restaurantName,
+      }),
     });
   };
 
   const respondBy = proposal.respondBy ? dayjs(proposal.respondBy) : null;
   const respondByLabel = respondBy?.isAfter(dayjs())
-    ? respondBy.format("HH:mm · ddd, MMM D")
+    ? format.dateTime(respondBy.toDate(), {
+        hour: "2-digit",
+        minute: "2-digit",
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      })
     : null;
+  const formatShortDate = (date: string) =>
+    format.dateTime(new Date(`${date}T00:00:00`), {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
 
   return (
     <>
@@ -138,11 +158,10 @@ export function CustomerAlternativeProposalCard({
             </ThemeIcon>
             <Stack gap={2} style={{ flex: 1 }}>
               <Text fw={800} c={uiColors.textPrimary}>
-                New time proposal
+                {t("title")}
               </Text>
               <Text size="sm" c={uiColors.textSecondary}>
-                The restaurant cannot confirm your original time and suggested
-                another available slot.
+                {t("description")}
               </Text>
             </Stack>
           </Group>
@@ -155,13 +174,13 @@ export function CustomerAlternativeProposalCard({
           >
             <SimpleGrid cols={2} spacing="xl" style={{ flex: 1 }}>
               <TimeOption
-                label="Requested"
-                date={reservation.date}
+                label={t("requested")}
+                dateLabel={formatShortDate(reservation.date)}
                 time={reservation.time}
               />
               <TimeOption
-                label="Suggested"
-                date={proposal.date}
+                label={t("suggested")}
+                dateLabel={formatShortDate(proposal.date)}
                 time={proposal.time}
                 suggested
               />
@@ -191,7 +210,7 @@ export function CustomerAlternativeProposalCard({
               }}
             >
               <Text size="xs" c={uiColors.textSecondary}>
-                Restaurant message
+                {t("restaurantMessage")}
               </Text>
               <Text size="sm" fw={650} c={uiColors.textPrimary}>
                 {proposal.message}
@@ -203,7 +222,7 @@ export function CustomerAlternativeProposalCard({
             <Group gap={6} wrap="nowrap">
               <IconClock size={16} color={uiColors.statusWarningText} />
               <Text size="xs" fw={650} c={uiColors.statusWarningText}>
-                Please respond by {respondByLabel}
+                {t("respondBy", { deadline: respondByLabel })}
               </Text>
             </Group>
           ) : null}
@@ -215,7 +234,7 @@ export function CustomerAlternativeProposalCard({
             leftSection={<IconCheck size={18} />}
             onClick={acceptProposal}
           >
-            Accept {proposal.time}
+            {t("accept", { time: proposal.time })}
           </Button>
 
           <SimpleGrid cols={2} spacing="sm">
@@ -224,7 +243,7 @@ export function CustomerAlternativeProposalCard({
               href={`/reservation?restaurant=${reservation.restaurantSlug}&change=${reservation.id}`}
               variant="default"
             >
-              Choose another time
+              {t("chooseAnother")}
             </Button>
             <Button
               variant="subtle"
@@ -232,7 +251,7 @@ export function CustomerAlternativeProposalCard({
               leftSection={<IconX size={16} />}
               onClick={() => setDeclineOpened(true)}
             >
-              Decline request
+              {t("declineRequest")}
             </Button>
           </SimpleGrid>
         </Stack>
@@ -243,7 +262,7 @@ export function CustomerAlternativeProposalCard({
         onClose={() => setDeclineOpened(false)}
         centered
         radius="xl"
-        title={<Text fw={800}>Decline this proposal?</Text>}
+        title={<Text fw={800}>{t("declineTitle")}</Text>}
         styles={{
           inner: { padding: 16 },
           content: { width: "100%", maxWidth: 528 },
@@ -251,15 +270,14 @@ export function CustomerAlternativeProposalCard({
       >
         <Stack gap="lg">
           <Text size="sm" c={uiColors.textSecondary}>
-            The restaurant will release the proposed {proposal.time} slot. You
-            can still make a new reservation afterward.
+            {t("declineDescription", { time: proposal.time })}
           </Text>
           <Group grow>
             <Button variant="default" onClick={() => setDeclineOpened(false)}>
-              Keep proposal
+              {t("keep")}
             </Button>
             <Button color="red" onClick={declineProposal}>
-              Decline
+              {t("decline")}
             </Button>
           </Group>
         </Stack>
