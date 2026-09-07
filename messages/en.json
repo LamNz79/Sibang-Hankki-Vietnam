@@ -192,6 +192,62 @@
       "points": "Points"
     }
   },
+  "Admin": {
+    "shell": {
+      "toggleNavigation": "Toggle admin navigation",
+      "searchPlaceholder": "Search customers, stores, or reservation ID",
+      "searchLabel": "Search the admin console",
+      "notifications": "Notifications",
+      "adminName": "Admin Manager",
+      "adminRole": "Super Admin",
+      "adminOnly": "ADMIN ONLY",
+      "auditNotice": "All changes are recorded in the audit log.",
+      "navigation": {
+        "dashboard": "Dashboard",
+        "reservations": "Reservations",
+        "customers": "Customers",
+        "stores": "Stores",
+        "revenue": "Revenue Analytics",
+        "campaigns": "Ads & Banners",
+        "settings": "Access & Settings"
+      }
+    },
+    "dashboard": {
+      "title": "Operations Dashboard",
+      "description": "Monitor key platform metrics and pending operational tasks.",
+      "report": "Report",
+      "refresh": "Refresh",
+      "metrics": {
+        "bookings": { "label": "Today's bookings", "detail": "+8.4% vs. yesterday" },
+        "checkedIn": { "label": "Checked in", "detail": "73.2% check-in rate" },
+        "gmv": { "label": "GMV", "detail": "+12.1% vs. last week" },
+        "pending": { "label": "Pending actions", "detail": "7 store approvals · 18 reports" }
+      },
+      "trend": {
+        "title": "Weekly reservation trend",
+        "period": "Last 7 days",
+        "days": { "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat", "sun": "Sun" }
+      },
+      "alerts": {
+        "title": "Recent operations alerts",
+        "viewAll": "View all",
+        "items": {
+          "storeApproval": { "title": "New store approval request", "detail": "Demo Bistro A + 2 more", "time": "10 min ago" },
+          "noShowAppeal": { "title": "No-show appeal", "detail": "Reservation RES-DEMO-002", "time": "34 min ago" },
+          "bannerEnding": { "title": "Main banner ending soon", "detail": "Weekend Dining", "time": "2 hours ago" },
+          "settlementReview": { "title": "Settlement review required", "detail": "August week 4 settlement", "time": "Today" }
+        }
+      }
+    },
+    "sections": {
+      "reservations": { "title": "Reservations", "description": "Manage reservations, check-ins, cancellations, and no-show cases.", "placeholder": "Reservation operations will be added in the next step." },
+      "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
+      "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },
+      "revenue": { "title": "Revenue Analytics", "description": "Monitor revenue, commissions, and settlements.", "placeholder": "Revenue analytics will be added after financial data is available." },
+      "campaigns": { "title": "Ads & Banners", "description": "Manage placements, schedules, and campaign performance.", "placeholder": "Campaign management will be added in a later step." },
+      "settings": { "title": "Access & Settings", "description": "Configure admin access and operating policies.", "placeholder": "Access controls and audit logs will be added with backend authentication." }
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",

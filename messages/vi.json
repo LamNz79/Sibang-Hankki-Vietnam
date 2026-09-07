@@ -146,6 +146,62 @@
       "points": "Điểm"
     }
   },
+  "Admin": {
+    "shell": {
+      "toggleNavigation": "Mở hoặc đóng menu quản trị",
+      "searchPlaceholder": "Tìm khách hàng, cửa hàng hoặc mã đặt bàn",
+      "searchLabel": "Tìm kiếm trong trang quản trị",
+      "notifications": "Thông báo",
+      "adminName": "Quản trị viên",
+      "adminRole": "Super Admin",
+      "adminOnly": "CHỈ DÀNH CHO ADMIN",
+      "auditNotice": "Mọi thay đổi đều được ghi vào nhật ký kiểm toán.",
+      "navigation": {
+        "dashboard": "Tổng quan",
+        "reservations": "Đặt bàn",
+        "customers": "Khách hàng",
+        "stores": "Cửa hàng",
+        "revenue": "Phân tích doanh thu",
+        "campaigns": "Quảng cáo & Banner",
+        "settings": "Quyền & Cài đặt"
+      }
+    },
+    "dashboard": {
+      "title": "Tổng quan vận hành",
+      "description": "Theo dõi các chỉ số chính và công việc vận hành đang chờ xử lý.",
+      "report": "Báo cáo",
+      "refresh": "Làm mới",
+      "metrics": {
+        "bookings": { "label": "Đặt bàn hôm nay", "detail": "+8,4% so với hôm qua" },
+        "checkedIn": { "label": "Đã check-in", "detail": "Tỷ lệ check-in 73,2%" },
+        "gmv": { "label": "GMV", "detail": "+12,1% so với tuần trước" },
+        "pending": { "label": "Chờ xử lý", "detail": "7 cửa hàng · 18 báo cáo" }
+      },
+      "trend": {
+        "title": "Xu hướng đặt bàn trong tuần",
+        "period": "7 ngày gần nhất",
+        "days": { "mon": "T2", "tue": "T3", "wed": "T4", "thu": "T5", "fri": "T6", "sat": "T7", "sun": "CN" }
+      },
+      "alerts": {
+        "title": "Thông báo vận hành gần đây",
+        "viewAll": "Xem tất cả",
+        "items": {
+          "storeApproval": { "title": "Yêu cầu duyệt cửa hàng mới", "detail": "Demo Bistro A và 2 cửa hàng khác", "time": "10 phút trước" },
+          "noShowAppeal": { "title": "Khiếu nại no-show", "detail": "Đặt bàn RES-DEMO-002", "time": "34 phút trước" },
+          "bannerEnding": { "title": "Banner chính sắp kết thúc", "detail": "Weekend Dining", "time": "2 giờ trước" },
+          "settlementReview": { "title": "Cần kiểm tra quyết toán", "detail": "Quyết toán tuần 4 tháng 8", "time": "Hôm nay" }
+        }
+      }
+    },
+    "sections": {
+      "reservations": { "title": "Đặt bàn", "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show.", "placeholder": "Phần vận hành đặt bàn sẽ được bổ sung ở bước tiếp theo." },
+      "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
+      "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
+      "revenue": { "title": "Phân tích doanh thu", "description": "Theo dõi doanh thu, hoa hồng và quyết toán.", "placeholder": "Phân tích doanh thu sẽ được bổ sung khi có dữ liệu tài chính." },
+      "campaigns": { "title": "Quảng cáo & Banner", "description": "Quản lý vị trí, lịch hiển thị và hiệu quả chiến dịch.", "placeholder": "Phần quản lý chiến dịch sẽ được bổ sung ở bước sau." },
+      "settings": { "title": "Quyền & Cài đặt", "description": "Cấu hình quyền quản trị và chính sách vận hành.", "placeholder": "Phân quyền và nhật ký kiểm toán sẽ được bổ sung cùng xác thực backend." }
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Trang chủ",

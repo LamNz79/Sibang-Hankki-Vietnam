@@ -146,6 +146,62 @@
       "points": "포인트"
     }
   },
+  "Admin": {
+    "shell": {
+      "toggleNavigation": "관리자 메뉴 열기 또는 닫기",
+      "searchPlaceholder": "고객, 매장 또는 예약번호 검색",
+      "searchLabel": "관리자 콘솔 검색",
+      "notifications": "알림",
+      "adminName": "관리자",
+      "adminRole": "최고 관리자",
+      "adminOnly": "관리자 전용",
+      "auditNotice": "모든 변경 사항은 감사 로그에 기록됩니다.",
+      "navigation": {
+        "dashboard": "대시보드",
+        "reservations": "예약 운영",
+        "customers": "고객 관리",
+        "stores": "가게 관리",
+        "revenue": "매출 분석",
+        "campaigns": "광고·배너",
+        "settings": "권한·설정"
+      }
+    },
+    "dashboard": {
+      "title": "운영 대시보드",
+      "description": "플랫폼 주요 지표와 대기 중인 운영 업무를 확인합니다.",
+      "report": "보고서",
+      "refresh": "새로고침",
+      "metrics": {
+        "bookings": { "label": "오늘 예약", "detail": "어제 대비 +8.4%" },
+        "checkedIn": { "label": "체크인", "detail": "체크인율 73.2%" },
+        "gmv": { "label": "거래액", "detail": "지난주 대비 +12.1%" },
+        "pending": { "label": "처리 대기", "detail": "가게 승인 7건 · 신고 18건" }
+      },
+      "trend": {
+        "title": "주간 예약 추이",
+        "period": "최근 7일",
+        "days": { "mon": "월", "tue": "화", "wed": "수", "thu": "목", "fri": "금", "sat": "토", "sun": "일" }
+      },
+      "alerts": {
+        "title": "최근 운영 알림",
+        "viewAll": "전체 보기",
+        "items": {
+          "storeApproval": { "title": "신규 가게 승인 요청", "detail": "Demo Bistro A 외 2곳", "time": "10분 전" },
+          "noShowAppeal": { "title": "노쇼 이의 신청", "detail": "예약 RES-DEMO-002", "time": "34분 전" },
+          "bannerEnding": { "title": "메인 배너 종료 예정", "detail": "Weekend Dining", "time": "2시간 전" },
+          "settlementReview": { "title": "정산 검토 필요", "detail": "8월 4주차 정산", "time": "오늘" }
+        }
+      }
+    },
+    "sections": {
+      "reservations": { "title": "예약 운영", "description": "예약, 체크인, 취소 및 노쇼 사례를 관리합니다.", "placeholder": "예약 운영 화면은 다음 단계에서 추가합니다." },
+      "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
+      "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
+      "revenue": { "title": "매출 분석", "description": "매출, 수수료 및 정산 현황을 확인합니다.", "placeholder": "재무 데이터가 준비되면 매출 분석을 추가합니다." },
+      "campaigns": { "title": "광고·배너", "description": "노출 위치, 일정 및 캠페인 성과를 관리합니다.", "placeholder": "캠페인 관리 화면은 이후 단계에서 추가합니다." },
+      "settings": { "title": "권한·설정", "description": "관리자 권한과 운영 정책을 설정합니다.", "placeholder": "권한과 감사 로그는 백엔드 인증과 함께 추가합니다." }
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "홈",
