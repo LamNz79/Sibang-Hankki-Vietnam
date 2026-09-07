@@ -63,7 +63,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   return (
     <AppShell
-      header={{ height: 68 }}
+      layout="alt"
+      header={{ height: 56 }}
       navbar={{
         width: 232,
         breakpoint: "md",
@@ -91,15 +92,17 @@ export function AdminShell({ children }: { children: ReactNode }) {
               aria-label={t("searchLabel")}
               w="100%"
               maw={440}
+              radius="sm"
               visibleFrom="sm"
             />
           </Group>
 
           <Group gap="sm" wrap="nowrap">
-            <LanguageSelect compact />
+            <LanguageSelect compact radius="sm" />
             <ActionIcon
               variant="default"
               size={36}
+              radius="sm"
               aria-label={t("notifications")}
             >
               <IconBell size={18} />
@@ -159,7 +162,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   px="sm"
                   py={10}
                   style={{
-                    borderRadius: 8,
+                    borderRadius: 4,
                     color: active ? "white" : "#d8d1d3",
                     background: active ? "#b85664" : "transparent",
                   }}

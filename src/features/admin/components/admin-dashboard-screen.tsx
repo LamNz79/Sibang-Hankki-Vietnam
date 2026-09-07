@@ -56,7 +56,7 @@ export function AdminDashboardScreen() {
 
         <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }} spacing="md">
           {metrics.map(({ key, value, icon: Icon, tone }) => (
-            <Card key={key} withBorder radius="md" p="lg">
+            <Card key={key} withBorder radius="sm" p="lg">
               <Group justify="space-between" align="flex-start">
                 <Stack gap="md">
                   <Text size="sm" c={uiColors.textSecondary}>
@@ -75,7 +75,7 @@ export function AdminDashboardScreen() {
                     {t(`metrics.${key}.detail`)}
                   </Text>
                 </Stack>
-                <ThemeIcon color="warmCoral" variant="light" size={38} radius="md">
+                <ThemeIcon color="warmCoral" variant="light" size={38} radius="sm">
                   <Icon size={19} />
                 </ThemeIcon>
               </Group>
@@ -85,7 +85,7 @@ export function AdminDashboardScreen() {
 
         <Grid gap="md">
           <Grid.Col span={{ base: 12, lg: 8 }}>
-            <Card withBorder radius="md" p={0} h="100%">
+            <Card withBorder radius="sm" p={0} h="100%">
               <Group justify="space-between" px="md" py="sm" style={{ borderBottom: `1px solid ${uiColors.border}` }}>
                 <Text fw={800}>{t("trend.title")}</Text>
                 <Text size="xs" c={uiColors.textSecondary}>{t("trend.period")}</Text>
@@ -99,7 +99,7 @@ export function AdminDashboardScreen() {
                         maxWidth: 88,
                         height: `${height}%`,
                         minHeight: 24,
-                        borderRadius: "5px 5px 0 0",
+                        borderRadius: "3px 3px 0 0",
                         background: index % 2 === 0 ? "#b85664" : "#d1919b",
                       }}
                     />
@@ -111,7 +111,7 @@ export function AdminDashboardScreen() {
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, lg: 4 }}>
-            <Card withBorder radius="md" p={0} h="100%">
+            <Card withBorder radius="sm" p={0} h="100%">
               <Group justify="space-between" px="md" py="sm" style={{ borderBottom: `1px solid ${uiColors.border}` }}>
                 <Text fw={800}>{t("alerts.title")}</Text>
                 <Button variant="subtle" size="compact-xs" color="warmCoral">{t("alerts.viewAll")}</Button>
@@ -119,7 +119,7 @@ export function AdminDashboardScreen() {
               <Stack gap={0} p="md">
                 {alerts.map((alert) => (
                   <Group key={alert} wrap="nowrap" py="sm" align="flex-start">
-                    <ThemeIcon variant="light" color="warmCoral" radius="md" size={34}>
+                    <ThemeIcon variant="light" color="warmCoral" radius="sm" size={34}>
                       <IconAlertCircle size={17} />
                     </ThemeIcon>
                     <Stack gap={1} style={{ flex: 1 }}>

@@ -239,8 +239,41 @@
         }
       }
     },
+    "reservations": {
+      "title": "Reservations",
+      "description": "Manage reservations, check-ins, cancellations, and no-show cases in one place.",
+      "export": "Reservation data",
+      "metrics": {
+        "confirmed": { "label": "Confirmed", "detail": "Today" },
+        "checkedIn": { "label": "Checked in", "detail": "73.2%" },
+        "cancelled": { "label": "Cancelled", "detail": "6.8% cancellation rate" },
+        "noShow": { "label": "No-show review", "detail": "4 appeals" }
+      },
+      "filters": {
+        "searchPlaceholder": "Search reservation ID, customer, or store",
+        "searchLabel": "Search reservations",
+        "periodLabel": "Reservation period",
+        "statusLabel": "Reservation status",
+        "period": { "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
+        "status": { "all": "All reservation statuses" }
+      },
+      "table": {
+        "id": "Reservation ID",
+        "customer": "Customer",
+        "store": "Store",
+        "dateParty": "Date / Party",
+        "checkIn": "Checked in",
+        "status": "Status",
+        "slot": "{time} · {count, plural, one {# guest} other {# guests}}"
+      },
+      "channels": { "app": "App booking", "web": "Web booking" },
+      "checkIn": { "qrComplete": "QR complete", "pending": "Pending", "none": "-" },
+      "statuses": { "checkedIn": "Checked in", "noShowReview": "No-show review", "confirmed": "Confirmed", "cancelled": "Cancelled" },
+      "details": "Details",
+      "resolve": "Resolve",
+      "empty": "No reservations match these filters."
+    },
     "sections": {
-      "reservations": { "title": "Reservations", "description": "Manage reservations, check-ins, cancellations, and no-show cases.", "placeholder": "Reservation operations will be added in the next step." },
       "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
       "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },
       "revenue": { "title": "Revenue Analytics", "description": "Monitor revenue, commissions, and settlements.", "placeholder": "Revenue analytics will be added after financial data is available." },

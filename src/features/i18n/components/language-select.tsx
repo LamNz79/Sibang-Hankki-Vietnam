@@ -1,12 +1,18 @@
 "use client";
 
-import { Select } from "@mantine/core";
+import { Select, type SelectProps } from "@mantine/core";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { setLocale } from "@/i18n/actions";
 
-export function LanguageSelect({ compact = false }: { compact?: boolean }) {
+export function LanguageSelect({
+  compact = false,
+  radius,
+}: {
+  compact?: boolean;
+  radius?: SelectProps["radius"];
+}) {
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations("Language");
@@ -18,6 +24,7 @@ export function LanguageSelect({ compact = false }: { compact?: boolean }) {
       aria-label={compact ? t("label") : undefined}
       w={compact ? 140 : undefined}
       size={compact ? "sm" : undefined}
+      radius={radius}
       value={locale}
       data={[
         { value: "vi", label: t("vietnamese") },

@@ -193,8 +193,41 @@
         }
       }
     },
+    "reservations": {
+      "title": "Đặt bàn",
+      "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show tại một nơi.",
+      "export": "Dữ liệu đặt bàn",
+      "metrics": {
+        "confirmed": { "label": "Đã xác nhận", "detail": "Hôm nay" },
+        "checkedIn": { "label": "Đã check-in", "detail": "73,2%" },
+        "cancelled": { "label": "Đã hủy", "detail": "Tỷ lệ hủy 6,8%" },
+        "noShow": { "label": "Kiểm tra no-show", "detail": "4 khiếu nại" }
+      },
+      "filters": {
+        "searchPlaceholder": "Tìm mã đặt bàn, khách hàng hoặc cửa hàng",
+        "searchLabel": "Tìm kiếm đặt bàn",
+        "periodLabel": "Khoảng thời gian đặt bàn",
+        "statusLabel": "Trạng thái đặt bàn",
+        "period": { "today": "Hôm nay", "last7Days": "7 ngày gần nhất", "thisMonth": "Tháng này" },
+        "status": { "all": "Tất cả trạng thái" }
+      },
+      "table": {
+        "id": "Mã đặt bàn",
+        "customer": "Khách hàng",
+        "store": "Cửa hàng",
+        "dateParty": "Thời gian / Số khách",
+        "checkIn": "Check-in",
+        "status": "Trạng thái",
+        "slot": "{time} · {count} khách"
+      },
+      "channels": { "app": "Đặt qua ứng dụng", "web": "Đặt qua web" },
+      "checkIn": { "qrComplete": "Đã quét QR", "pending": "Đang chờ", "none": "-" },
+      "statuses": { "checkedIn": "Đã check-in", "noShowReview": "Kiểm tra no-show", "confirmed": "Đã xác nhận", "cancelled": "Đã hủy" },
+      "details": "Chi tiết",
+      "resolve": "Xử lý",
+      "empty": "Không có đặt bàn phù hợp với bộ lọc."
+    },
     "sections": {
-      "reservations": { "title": "Đặt bàn", "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show.", "placeholder": "Phần vận hành đặt bàn sẽ được bổ sung ở bước tiếp theo." },
       "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
       "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
       "revenue": { "title": "Phân tích doanh thu", "description": "Theo dõi doanh thu, hoa hồng và quyết toán.", "placeholder": "Phân tích doanh thu sẽ được bổ sung khi có dữ liệu tài chính." },

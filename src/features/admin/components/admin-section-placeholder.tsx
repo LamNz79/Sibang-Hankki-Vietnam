@@ -6,7 +6,6 @@ import { AdminShell } from "@/features/admin/components/admin-shell";
 import { uiColors } from "@/theme";
 
 export type AdminSection =
-  | "reservations"
   | "customers"
   | "stores"
   | "revenue"
@@ -23,7 +22,7 @@ export function AdminSectionPlaceholder({ section }: { section: AdminSection }) 
           <Title order={1}>{t("title")}</Title>
           <Text c={uiColors.textSecondary}>{t("description")}</Text>
         </Stack>
-        <Card withBorder radius="md" p="xl">
+        <Card withBorder radius="sm" p="xl">
           <Text ta="center" c={uiColors.textSecondary}>
             {t("placeholder")}
           </Text>
