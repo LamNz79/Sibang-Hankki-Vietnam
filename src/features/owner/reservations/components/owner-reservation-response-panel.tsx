@@ -18,7 +18,8 @@ import {
   IconPhone,
   IconSend,
 } from "@tabler/icons-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
   rejectOwnerReservation,
@@ -37,11 +38,11 @@ type OwnerReservationResponsePanelProps = {
 };
 
 const unavailableReasons = [
-  "Fully booked",
-  "Cannot accommodate this party size",
-  "Restaurant is closed",
-  "Other",
-];
+  { value: "Fully booked", key: "fullyBooked" },
+  { value: "Cannot accommodate this party size", key: "partySize" },
+  { value: "Restaurant is closed", key: "closed" },
+  { value: "Other", key: "other" },
+] as const;
 
 const mobileDrawerStyles = {
   content: {
@@ -91,16 +92,26 @@ export function OwnerReservationResponsePanel({
   reservation,
   response,
 }: OwnerReservationResponsePanelProps) {
+  const format = useFormatter();
+  const t = useTranslations("OwnerReservationDetails.response");
   const [alternativeOpened, setAlternativeOpened] = useState(false);
   const [unavailableOpened, setUnavailableOpened] = useState(false);
   const [selectedAlternative, setSelectedAlternative] = useState("");
   const [selectedReason, setSelectedReason] = useState("");
   const [message, setMessage] = useState("");
+  const formatDate = (date: string) =>
+    format.dateTime(new Date(`${date}T00:00:00`), {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+  const getReasonLabel = (reason: string) => {
+    const option = unavailableReasons.find((item) => item.value === reason);
+    return option ? t(`reasons.${option.key}`) : reason;
+  };
 
-  const alternativeSlots = useMemo(() => {
-    const requestedDate = dayjs(reservation.date);
-
-    return [
+  const requestedDate = dayjs(reservation.date);
+  const alternativeSlots = [
       { date: reservation.date, time: "18:00" },
       { date: reservation.date, time: "19:30" },
       { date: requestedDate.add(1, "day").format("YYYY-MM-DD"), time: "18:00" },
@@ -113,9 +124,8 @@ export function OwnerReservationResponsePanel({
       .map((slot) => ({
         ...slot,
         id: `${slot.date}|${slot.time}`,
-        label: `${dayjs(slot.date).format("ddd, MMM D")} · ${slot.time}`,
+        label: `${formatDate(slot.date)} · ${slot.time}`,
       }));
-  }, [reservation.date, reservation.time]);
 
   const sendAlternative = () => {
     const selectedSlot = alternativeSlots.find(
@@ -145,8 +155,10 @@ export function OwnerReservationResponsePanel({
     setAlternativeOpened(false);
     notifications.show({
       color: "warmCoral",
-      title: "Alternative time sent",
-      message: `${reservation.guestName} will receive an in-app notification and can accept or decline.`,
+      title: t("alternativeDrawer.sentTitle"),
+      message: t("alternativeDrawer.sentMessage", {
+        guest: reservation.guestName,
+      }),
     });
   };
 
@@ -157,8 +169,10 @@ export function OwnerReservationResponsePanel({
     setUnavailableOpened(false);
     notifications.show({
       color: "red",
-      title: "Guest notified",
-      message: `The request was declined because: ${selectedReason}.`,
+      title: t("unavailableDrawer.notifiedTitle"),
+      message: t("unavailableDrawer.notifiedMessage", {
+        reason: getReasonLabel(selectedReason),
+      }),
     });
   };
 
@@ -182,27 +196,28 @@ export function OwnerReservationResponsePanel({
           <Stack gap={4}>
             <Group justify="space-between" align="center" wrap="nowrap">
               <Text fw={800} c={uiColors.textPrimary}>
-                Respond to request
+                {t("title")}
               </Text>
               {response.kind === "alternative-sent" ? (
-                <StatusBadge tone="info">Alternative sent</StatusBadge>
+                <StatusBadge tone="info">{t("alternativeSent")}</StatusBadge>
               ) : response.kind === "unavailable" ? (
-                <StatusBadge tone="error">Unable to accommodate</StatusBadge>
+                <StatusBadge tone="error">{t("unable")}</StatusBadge>
               ) : (
-                <StatusBadge tone="warning">Awaiting response</StatusBadge>
+                <StatusBadge tone="warning">{t("awaiting")}</StatusBadge>
               )}
             </Group>
 
             <Text size="sm" c={uiColors.textSecondary}>
               {response.kind === "alternative-sent"
-                ? `Waiting for the guest to respond to ${response.slot}.`
+                ? t("waiting", { slot: response.slot })
                 : response.kind === "unavailable"
-                  ? `The guest was notified: ${response.reason}.`
-                  : "Confirm the requested time, suggest another time, or let the guest know the restaurant is full."}
+                  ? t("notified", {
+                      reason: getReasonLabel(response.reason),
+                    })
+                  : t("instructions")}
             </Text>
             <Text size="xs" c={uiColors.textMuted}>
-              Updates are sent by in-app notification. Call the guest when a
-              same-day or special request needs a quick answer.
+              {t("updates")}
             </Text>
           </Stack>
 
@@ -215,8 +230,8 @@ export function OwnerReservationResponsePanel({
               onClick={() => setAlternativeOpened(true)}
             >
               {response.kind === "alternative-sent"
-                ? "Change suggested time"
-                : "Suggest another time"}
+                ? t("changeTime")
+                : t("suggestTime")}
             </Button>
           ) : null}
 
@@ -228,7 +243,7 @@ export function OwnerReservationResponsePanel({
               leftSection={<IconPhone size={17} />}
               disabled={!reservation.phone}
             >
-              Call guest
+              {t("call")}
             </Button>
             {response.kind !== "unavailable" ? (
               <Button
@@ -237,14 +252,14 @@ export function OwnerReservationResponsePanel({
                 leftSection={<IconCircleX size={17} />}
                 onClick={() => setUnavailableOpened(true)}
               >
-                No table
+                {t("noTable")}
               </Button>
             ) : (
               <Button
                 variant="default"
                 onClick={() => reopenOwnerReservation(reservation.id)}
               >
-                Reopen request
+                {t("reopen")}
               </Button>
             )}
           </Group>
@@ -258,14 +273,15 @@ export function OwnerReservationResponsePanel({
         size="72%"
         radius="24px 24px 0 0"
         padding="md"
-        title={<Text fw={800}>Suggest another time</Text>}
+        title={<Text fw={800}>{t("alternativeDrawer.title")}</Text>}
         styles={mobileDrawerStyles}
         classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
       >
         <Stack gap="lg" pb="md">
           <Text size="sm" c={uiColors.textSecondary}>
-            The requested time is {dayjs(reservation.date).format("ddd, MMM D")} · {reservation.time}.
-            Select one alternative for the guest.
+            {t("alternativeDrawer.description", {
+              slot: `${formatDate(reservation.date)} · ${reservation.time}`,
+            })}
           </Text>
 
           <Stack gap="sm">
@@ -280,8 +296,8 @@ export function OwnerReservationResponsePanel({
           </Stack>
 
           <Textarea
-            label="Message (optional)"
-            placeholder="For example: We can keep a window table at this time."
+            label={t("alternativeDrawer.message")}
+            placeholder={t("alternativeDrawer.placeholder")}
             value={message}
             onChange={(event) => setMessage(event.currentTarget.value)}
             autosize
@@ -295,7 +311,7 @@ export function OwnerReservationResponsePanel({
             disabled={!selectedAlternative}
             onClick={sendAlternative}
           >
-            Send suggested time
+            {t("alternativeDrawer.send")}
           </Button>
         </Stack>
       </Drawer>
@@ -307,23 +323,22 @@ export function OwnerReservationResponsePanel({
         size="62%"
         radius="24px 24px 0 0"
         padding="md"
-        title={<Text fw={800}>Unable to accommodate</Text>}
+        title={<Text fw={800}>{t("unavailableDrawer.title")}</Text>}
         styles={mobileDrawerStyles}
         classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
       >
         <Stack gap="lg" pb="md">
           <Text size="sm" c={uiColors.textSecondary}>
-            Choose a clear reason. The guest will receive it in the app instead
-            of waiting without an answer.
+            {t("unavailableDrawer.description")}
           </Text>
 
           <Stack gap="sm">
             {unavailableReasons.map((reason) => (
               <OptionButton
-                key={reason}
-                active={selectedReason === reason}
-                label={reason}
-                onClick={() => setSelectedReason(reason)}
+                key={reason.value}
+                active={selectedReason === reason.value}
+                label={t(`reasons.${reason.key}`)}
+                onClick={() => setSelectedReason(reason.value)}
               />
             ))}
           </Stack>
@@ -335,7 +350,7 @@ export function OwnerReservationResponsePanel({
             disabled={!selectedReason}
             onClick={markUnavailable}
           >
-            Notify guest
+            {t("unavailableDrawer.notify")}
           </Button>
         </Stack>
       </Drawer>

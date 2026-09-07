@@ -1,8 +1,13 @@
+"use client";
+
 import { Card, Group, Stack, Text } from "@mantine/core";
 import { IconMessage } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 export function OwnerServiceNotesCard({ note }: { note?: string }) {
+  const t = useTranslations("OwnerReservationDetails.notes");
+
   return (
     <Card
       radius="lg"
@@ -20,10 +25,10 @@ export function OwnerServiceNotesCard({ note }: { note?: string }) {
         />
         <Stack gap={4}>
           <Text fw={750} size="sm" c={uiColors.statusWarningTextStrong}>
-            Service notes
+            {t("title")}
           </Text>
           <Text size="sm" c={uiColors.statusWarningTextStrong}>
-            {note || "No service notes"}
+            {note || t("empty")}
           </Text>
         </Stack>
       </Group>

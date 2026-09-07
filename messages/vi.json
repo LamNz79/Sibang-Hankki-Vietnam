@@ -63,6 +63,40 @@
       "fallbackDescription": "Nhân viên có thể xác nhận mã đặt bàn hoặc check-in bằng mã QR."
     }
   },
+  "CustomerReservationDetails": {
+    "title": "Chi tiết đặt bàn",
+    "notFound": { "title": "Không tìm thấy đặt bàn", "description": "Đặt bàn này có thể đã bị xóa hoặc không có trên thiết bị này.", "back": "Quay lại danh sách" },
+    "status": {
+      "pending": { "badge": "Chờ xác nhận", "title": "Đang chờ nhà hàng", "description": "Nhà hàng sẽ xác nhận yêu cầu hoặc liên hệ nếu cần thay đổi." },
+      "alternative": { "badge": "Cần phản hồi", "title": "Nhà hàng đề xuất giờ mới", "description": "Hãy xem giờ được đề xuất bên dưới. Bàn chỉ được xác nhận sau khi bạn chấp nhận." },
+      "declined": { "badge": "Yêu cầu bị từ chối", "restaurantTitle": "Nhà hàng không thể xác nhận yêu cầu này", "restaurantDescription": "Hiện không có bàn được giữ. Hãy chọn giờ khác khi bạn sẵn sàng.", "customerTitle": "Yêu cầu này đã đóng", "customerDescription": "Nhà hàng đã được thông báo rằng bạn từ chối giờ đề xuất." },
+      "confirmed": { "badge": "Đã xác nhận đặt bàn", "title": "Bàn của bạn đã được xác nhận", "description": "Đặt bàn đã sẵn sàng. Hãy đưa mã đặt bàn khi bạn đến." }
+    },
+    "reference": { "label": "Mã đặt bàn", "copy": "Sao chép mã đặt bàn" },
+    "information": { "date": "Ngày", "timeGuests": "Giờ · số khách", "guestCount": "{count} khách", "preOrder": "Đặt món trước", "noPreOrder": "Chưa thêm", "request": "Yêu cầu", "noRequest": "Không có yêu cầu đặc biệt" },
+    "actions": { "newReservation": "Đặt bàn mới", "changeRequest": "Đổi yêu cầu", "change": "Thay đổi", "cancelRequest": "Hủy yêu cầu", "cancel": "Hủy", "changeHint": "Luồng thay đổi sẽ được thêm sau khi chính sách được xác nhận", "cancelHint": "Luồng hủy sẽ được thêm sau khi chính sách được xác nhận" },
+    "proposal": {
+      "title": "Đề xuất giờ mới", "description": "Nhà hàng không thể xác nhận giờ ban đầu và đã đề xuất một khung giờ còn trống.", "requested": "Đã yêu cầu", "suggested": "Đề xuất", "restaurantMessage": "Lời nhắn từ nhà hàng", "respondBy": "Vui lòng phản hồi trước {deadline}", "accept": "Chấp nhận {time}", "chooseAnother": "Chọn giờ khác", "declineRequest": "Từ chối yêu cầu", "declineTitle": "Từ chối đề xuất này?", "declineDescription": "Nhà hàng sẽ hủy giữ khung giờ {time}. Sau đó bạn vẫn có thể đặt bàn mới.", "keep": "Giữ đề xuất", "decline": "Từ chối", "acceptedTitle": "Đã xác nhận giờ mới", "acceptedMessage": "Đã thông báo cho {restaurant} rằng bạn chấp nhận {time}.", "declinedTitle": "Đã từ chối yêu cầu", "declinedMessage": "Đã thông báo cho {restaurant}."
+    }
+  },
+  "OwnerReservationDetails": {
+    "title": "Chi tiết đặt bàn", "eyebrow": "Thông tin khách đã chọn", "notFound": "Không tìm thấy đặt bàn.",
+    "notification": { "title": "Đã gửi xác nhận", "message": "Đã thông báo cho {guest} rằng bàn đã được xác nhận." },
+    "footer": { "viewArrival": "Xem trạng thái đến của {guest}", "checkIn": "Check-in {guest}", "waiting": "Đang chờ khách phản hồi", "closed": "Yêu cầu đã đóng", "confirm": "Xác nhận đặt bàn" },
+    "menu": { "aria": "Thao tác đặt bàn", "label": "Thao tác đặt bàn", "contact": "Liên hệ khách", "cancel": "Hủy đặt bàn" },
+    "information": { "title": "Thông tin đặt bàn", "date": "Ngày", "largeParty": "Nhóm đông", "guests": "Số khách", "guestCount": "{count} khách", "table": "Bàn", "notAssigned": "Chưa xếp bàn", "preOrder": "Đặt món trước", "noPreOrder": "Chưa đặt món trước" },
+    "confirmation": { "title": "Xác nhận với khách", "description": "Gửi xác nhận đặt bàn trong ứng dụng. Chỉ gọi khi khách cần được hỗ trợ gấp hoặc đặc biệt.", "notify": "Thông báo khách", "call": "Gọi khách" },
+    "summary": { "meta": "{time} · {count} khách · Mã {reference}" },
+    "badges": { "pending": "Đang chờ", "alternative-proposed": "Đã đề xuất giờ khác", "confirmed": "Đã xác nhận", "declined": "Đã từ chối", "expected": "Chờ khách", "arrived": "Đã đến", "seated": "Đã xếp bàn", "completed": "Hoàn tất", "vip": "VIP", "regular": "Thường xuyên", "new": "Mới", "preOrder": "Đặt món trước" },
+    "notes": { "title": "Ghi chú phục vụ", "empty": "Không có ghi chú phục vụ" },
+    "customerResponse": { "acceptedTitle": "Khách đã chấp nhận giờ đề xuất", "acceptedDescription": "Đã xác nhận vào {date} lúc {time}.", "declinedTitle": "Khách đã từ chối giờ đề xuất", "declinedSlot": "giờ được đề xuất", "declinedDescription": "Khách đã từ chối {slot}. Hãy đề xuất giờ khác hoặc liên hệ trực tiếp.", "requestedTitle": "Khách yêu cầu giờ khác", "requestedDescription": "Hãy xem yêu cầu mới vào {date} lúc {time}.", "waitingTitle": "Đang chờ khách phản hồi", "waitingDescription": "Đã đề xuất {date} lúc {time}." },
+    "response": {
+      "title": "Phản hồi yêu cầu", "alternativeSent": "Đã gửi giờ khác", "unable": "Không thể phục vụ", "awaiting": "Chờ phản hồi", "waiting": "Đang chờ khách phản hồi cho {slot}.", "notified": "Đã thông báo cho khách: {reason}.", "instructions": "Xác nhận giờ yêu cầu, đề xuất giờ khác hoặc báo cho khách biết nhà hàng đã hết bàn.", "updates": "Thông tin được gửi qua thông báo trong ứng dụng. Hãy gọi khi yêu cầu trong ngày hoặc yêu cầu đặc biệt cần phản hồi nhanh.", "changeTime": "Đổi giờ đề xuất", "suggestTime": "Đề xuất giờ khác", "call": "Gọi khách", "noTable": "Không còn bàn", "reopen": "Mở lại yêu cầu",
+      "alternativeDrawer": { "title": "Đề xuất giờ khác", "description": "Giờ khách yêu cầu là {slot}. Hãy chọn một giờ khác cho khách.", "message": "Lời nhắn (không bắt buộc)", "placeholder": "Ví dụ: Chúng tôi có thể giữ bàn gần cửa sổ vào giờ này.", "send": "Gửi giờ đề xuất", "sentTitle": "Đã gửi giờ đề xuất", "sentMessage": "{guest} sẽ nhận thông báo trong ứng dụng và có thể chấp nhận hoặc từ chối." },
+      "unavailableDrawer": { "title": "Không thể phục vụ", "description": "Chọn lý do rõ ràng để khách nhận được trong ứng dụng thay vì phải chờ.", "notify": "Thông báo khách", "notifiedTitle": "Đã thông báo khách", "notifiedMessage": "Yêu cầu bị từ chối vì: {reason}." },
+      "reasons": { "fullyBooked": "Đã hết bàn", "partySize": "Không thể phục vụ số khách này", "closed": "Nhà hàng đã đóng cửa", "other": "Lý do khác" }
+    }
+  },
   "OwnerCheckIn": {
     "title": "Nhận khách",
     "eyebrow": "Quét QR hoặc tìm thủ công",

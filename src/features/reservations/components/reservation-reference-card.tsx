@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ActionIcon, Card, Group, Stack, Text } from "@mantine/core";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 type ReservationReferenceCardProps = {
@@ -13,6 +14,7 @@ type ReservationReferenceCardProps = {
 export function ReservationReferenceCard({
   reference,
 }: ReservationReferenceCardProps) {
+  const t = useTranslations("CustomerReservationDetails.reference");
   const [copied, setCopied] = useState(false);
 
   const copyReference = async () => {
@@ -37,7 +39,7 @@ export function ReservationReferenceCard({
       <Group justify="space-between" wrap="nowrap">
         <Stack gap={2}>
           <Text size="xs" c={uiColors.textSecondary}>
-            Booking reference
+            {t("label")}
           </Text>
           <Text fw={800} c={uiColors.textPrimary}>
             {reference}
@@ -48,7 +50,7 @@ export function ReservationReferenceCard({
           color={copied ? "teal" : "warmCoral"}
           radius="md"
           size="lg"
-          aria-label="Copy booking reference"
+          aria-label={t("copy")}
           onClick={copyReference}
         >
           {copied ? <IconCheck size={18} /> : <IconCopy size={18} />}

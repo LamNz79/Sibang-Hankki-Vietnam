@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button, Card, Stack, Text } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import {
   getReservationReference,
@@ -21,13 +22,14 @@ import { ReservationStatusSummary } from "./reservation-status-summary";
 
 /** Customer reservation detail screen that orchestrates feature-level sections. */
 export function ReservationDetailScreen() {
+  const t = useTranslations("CustomerReservationDetails");
   const params = useParams<{ id: string }>();
   const reservation = useCustomerReservation(params.id);
 
   if (!reservation) {
     return (
       <MobileShell
-        title="Reservation details"
+        title={t("title")}
         backHref="/reservations"
         bottomNav={<BottomNav activePath="/reservations" />}
       >
@@ -41,14 +43,13 @@ export function ReservationDetailScreen() {
         >
           <Stack align="center" gap="sm">
             <Text fw={800} c={uiColors.textPrimary}>
-              Reservation not found
+              {t("notFound.title")}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
-              This reservation may have been removed or is not available on
-              this device.
+              {t("notFound.description")}
             </Text>
             <Button component={Link} href="/reservations" color="warmCoral">
-              Back to reservations
+              {t("notFound.back")}
             </Button>
           </Stack>
         </Card>
@@ -62,7 +63,7 @@ export function ReservationDetailScreen() {
 
   return (
     <MobileShell
-      title="Reservation details"
+      title={t("title")}
       backHref="/reservations"
       bottomNav={<BottomNav activePath="/reservations" />}
     >

@@ -1,4 +1,5 @@
 import { Avatar, Card, Group, Stack, Text } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import {
   getOwnerReservationDisplayStatus,
 } from "@/features/owner/selectors/owner-reservation-selectors";
@@ -18,6 +19,8 @@ export function OwnerReservationSummaryCard({
   reservation: OwnerReservation;
   status?: ReservationDisplayStatus;
 }) {
+  const t = useTranslations("OwnerReservationDetails.summary");
+
   return (
     <Card
       radius="lg"
@@ -61,8 +64,11 @@ export function OwnerReservationSummaryCard({
             {reservation.guestName}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
-            {reservation.time} · {reservation.partySize} guests · Ref. {" "}
-            {reservation.reference}
+            {t("meta", {
+              time: reservation.time,
+              count: reservation.partySize,
+              reference: reservation.reference,
+            })}
           </Text>
         </Stack>
       </Group>
