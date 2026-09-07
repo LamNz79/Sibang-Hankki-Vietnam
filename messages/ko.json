@@ -193,8 +193,41 @@
         }
       }
     },
+    "reservations": {
+      "title": "예약 운영",
+      "description": "예약, 체크인, 취소 및 노쇼 사례를 한곳에서 관리합니다.",
+      "export": "예약 데이터",
+      "metrics": {
+        "confirmed": { "label": "예약 확정", "detail": "오늘" },
+        "checkedIn": { "label": "체크인", "detail": "73.2%" },
+        "cancelled": { "label": "취소", "detail": "취소율 6.8%" },
+        "noShow": { "label": "노쇼 검토", "detail": "이의 신청 4건" }
+      },
+      "filters": {
+        "searchPlaceholder": "예약번호, 고객 또는 가게 검색",
+        "searchLabel": "예약 검색",
+        "periodLabel": "예약 기간",
+        "statusLabel": "예약 상태",
+        "period": { "today": "오늘", "last7Days": "최근 7일", "thisMonth": "이번 달" },
+        "status": { "all": "전체 예약 상태" }
+      },
+      "table": {
+        "id": "예약번호",
+        "customer": "고객",
+        "store": "가게",
+        "dateParty": "시간 / 인원",
+        "checkIn": "체크인",
+        "status": "상태",
+        "slot": "{time} · {count}명"
+      },
+      "channels": { "app": "앱 예약", "web": "웹 예약" },
+      "checkIn": { "qrComplete": "QR 완료", "pending": "대기 중", "none": "-" },
+      "statuses": { "checkedIn": "체크인", "noShowReview": "노쇼 검토", "confirmed": "예약 확정", "cancelled": "취소" },
+      "details": "상세",
+      "resolve": "처리",
+      "empty": "필터 조건에 맞는 예약이 없습니다."
+    },
     "sections": {
-      "reservations": { "title": "예약 운영", "description": "예약, 체크인, 취소 및 노쇼 사례를 관리합니다.", "placeholder": "예약 운영 화면은 다음 단계에서 추가합니다." },
       "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
       "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
       "revenue": { "title": "매출 분석", "description": "매출, 수수료 및 정산 현황을 확인합니다.", "placeholder": "재무 데이터가 준비되면 매출 분석을 추가합니다." },
