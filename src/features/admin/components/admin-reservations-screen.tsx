@@ -15,6 +15,7 @@ import {
   ThemeIcon,
   Title,
 } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import {
   IconCalendarCheck,
   IconCalendarX,
@@ -48,11 +49,12 @@ const statusTones: Record<AdminReservationStatus, "success" | "warning" | "info"
 export function AdminReservationsScreen() {
   const t = useTranslations("Admin.reservations");
   const [query, setQuery] = useState("");
+  const [debouncedQuery] = useDebouncedValue(query, 500);
   const [period, setPeriod] = useState<"today" | "last7Days" | "thisMonth">("today");
   const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
   const reservations = useMemo(
-    () => filterAdminReservations(adminReservationRecords, query, status, period),
-    [period, query, status],
+    () => filterAdminReservations(adminReservationRecords, debouncedQuery, status, period),
+    [debouncedQuery, period, status],
   );
 
   return (
