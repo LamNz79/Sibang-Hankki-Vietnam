@@ -333,12 +333,30 @@
       "modal": { "title": "캠페인 생성", "name": "캠페인 이름", "description": "설명", "placement": "노출 위치", "startDate": "시작일", "endDate": "종료일", "cancel": "취소", "create": "생성" },
       "empty": "필터 조건에 맞는 캠페인이 없습니다."
     },
-    "sections": {
-      "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
-      "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
-      "revenue": { "title": "매출 분석", "description": "매출, 수수료 및 정산 현황을 확인합니다.", "placeholder": "재무 데이터가 준비되면 매출 분석을 추가합니다." },
-      "campaigns": { "title": "광고·배너", "description": "노출 위치, 일정 및 캠페인 성과를 관리합니다.", "placeholder": "캠페인 관리 화면은 이후 단계에서 추가합니다." },
-      "settings": { "title": "권한·설정", "description": "관리자 권한과 운영 정책을 설정합니다.", "placeholder": "권한과 감사 로그는 백엔드 인증과 함께 추가합니다." }
+    "settings": {
+      "title": "권한·설정",
+      "description": "관리자 역할, 보안 정책, 알림 및 운영 규칙을 설정합니다.",
+      "inviteAdmin": "관리자 초대",
+      "operations": {
+        "title": "운영 설정",
+        "scope": "플랫폼 전체",
+        "items": {
+          "storeRegistration": { "title": "가게 등록 알림", "description": "새 심사 요청이 도착하면 담당자에게 알립니다." },
+          "noShowRestriction": { "title": "자동 노쇼 이용 제한", "description": "30일 이내 노쇼 3회 발생 시 예약을 제한합니다." },
+          "bannerEndAlert": { "title": "배너 종료 알림", "description": "종료 48시간 전에 캠페인 담당자에게 알립니다." }
+        }
+      },
+      "roles": {
+        "title": "관리자 역할",
+        "manage": "역할 관리",
+        "items": {
+          "superAdmin": { "title": "최고 관리자", "description": "전체 기능 · 사용자 {users}명", "badge": "전체 권한" },
+          "operations": { "title": "운영", "description": "고객, 가게, 예약 · 사용자 {users}명", "badge": "운영" },
+          "marketing": { "title": "마케팅", "description": "광고, 배너, 보고서 · 사용자 {users}명", "badge": "마케팅" },
+          "finance": { "title": "재무", "description": "매출, 정산 · 사용자 {users}명", "badge": "재무" }
+        }
+      },
+      "modal": { "title": "관리자 초대", "email": "이메일 주소", "role": "관리자 역할", "requireMfa": "MFA 필수", "cancel": "취소", "invite": "초대 보내기" }
     }
   },
   "Navigation": {
