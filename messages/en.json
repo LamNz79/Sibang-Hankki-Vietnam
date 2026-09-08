@@ -357,6 +357,28 @@
         "items": { "commission": "Booking commission", "advertising": "Advertising", "promotions": "Promotions", "other": "Other" }
       }
     },
+    "campaigns": {
+      "title": "Ads & Banner Management",
+      "description": "Manage placements, schedules, targeting, and campaign performance.",
+      "createCampaign": "Create campaign",
+      "filters": {
+        "placementLabel": "Campaign placement",
+        "statusLabel": "Campaign status",
+        "periodLabel": "Campaign period",
+        "placement": { "all": "All placements" },
+        "status": { "all": "All statuses" },
+        "period": { "all": "All periods", "last30Days": "Last 30 days", "next30Days": "Next 30 days" }
+      },
+      "placements": { "homeMain": "Home main", "searchTop": "Search top", "regionalHome": "Regional home", "storeDetail": "Store detail" },
+      "statuses": { "live": "Live", "scheduled": "Scheduled", "ended": "Ended" },
+      "items": {
+        "weekendDining": { "headline": "Weekend Dining", "subtitle": "Discover popular restaurants for the weekend", "name": "Weekend Dining main banner", "schedule": "Sep 1–14", "metric1": "Impressions", "metric2": "Clicks", "metric3": "CTR" },
+        "hanoiNewOpen": { "headline": "Hanoi New Open", "subtitle": "Discover newly opened restaurants", "name": "Hanoi new store promotion", "schedule": "Sep 10–30", "metric1": "Est. impressions", "metric2": "Target", "metric3": "Stores" },
+        "chefsChoice": { "headline": "Chef's Choice", "subtitle": "Editor's fine dining picks", "name": "Chef's Choice curation", "schedule": "Aug 15–31", "metric1": "Impressions", "metric2": "Clicks", "metric3": "CTR" }
+      },
+      "modal": { "title": "Create campaign", "name": "Campaign name", "description": "Description", "placement": "Placement", "startDate": "Start date", "endDate": "End date", "cancel": "Cancel", "create": "Create" },
+      "empty": "No campaigns match these filters."
+    },
     "sections": {
       "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
       "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },

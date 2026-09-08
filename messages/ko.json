@@ -311,6 +311,28 @@
         "items": { "commission": "예약 수수료", "advertising": "광고", "promotions": "프로모션", "other": "기타" }
       }
     },
+    "campaigns": {
+      "title": "광고·배너 관리",
+      "description": "노출 위치, 일정, 타깃 및 캠페인 성과를 관리합니다.",
+      "createCampaign": "캠페인 생성",
+      "filters": {
+        "placementLabel": "캠페인 노출 위치",
+        "statusLabel": "캠페인 상태",
+        "periodLabel": "캠페인 기간",
+        "placement": { "all": "전체 위치" },
+        "status": { "all": "전체 상태" },
+        "period": { "all": "전체 기간", "last30Days": "최근 30일", "next30Days": "향후 30일" }
+      },
+      "placements": { "homeMain": "홈 메인", "searchTop": "검색 결과 상단", "regionalHome": "지역 홈", "storeDetail": "가게 상세" },
+      "statuses": { "live": "진행 중", "scheduled": "예약", "ended": "종료" },
+      "items": {
+        "weekendDining": { "headline": "주말 맛집", "subtitle": "주말 인기 레스토랑을 만나보세요", "name": "주말 맛집 메인 배너", "schedule": "9월 1–14일", "metric1": "노출", "metric2": "클릭", "metric3": "CTR" },
+        "hanoiNewOpen": { "headline": "하노이 신규 오픈", "subtitle": "새로 문을 연 레스토랑을 만나보세요", "name": "하노이 신규 가게 프로모션", "schedule": "9월 10–30일", "metric1": "예상 노출", "metric2": "타깃", "metric3": "가게" },
+        "chefsChoice": { "headline": "셰프의 선택", "subtitle": "에디터가 고른 파인다이닝", "name": "셰프의 선택 큐레이션", "schedule": "8월 15–31일", "metric1": "노출", "metric2": "클릭", "metric3": "CTR" }
+      },
+      "modal": { "title": "캠페인 생성", "name": "캠페인 이름", "description": "설명", "placement": "노출 위치", "startDate": "시작일", "endDate": "종료일", "cancel": "취소", "create": "생성" },
+      "empty": "필터 조건에 맞는 캠페인이 없습니다."
+    },
     "sections": {
       "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
       "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
