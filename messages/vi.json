@@ -255,6 +255,40 @@
       "empty": "Không có khách hàng phù hợp với bộ lọc.",
       "resultCount": "{count} khách hàng"
     },
+    "stores": {
+      "title": "Cửa hàng",
+      "description": "Quản lý xét duyệt đăng ký, hồ sơ, trạng thái hoạt động và hợp đồng.",
+      "addStore": "Thêm cửa hàng",
+      "metrics": {
+        "active": { "label": "Đang hoạt động", "detail": "+42 trong tháng này" },
+        "pending": { "label": "Chờ phê duyệt", "detail": "2 yêu cầu quá 48 giờ" },
+        "suspended": { "label": "Tạm ngừng", "detail": "3 trường hợp do admin" },
+        "rating": { "label": "Đánh giá trung bình", "detail": "36.208 lượt đánh giá" }
+      },
+      "filters": {
+        "searchPlaceholder": "Tìm cửa hàng, mã cửa hàng hoặc quản lý",
+        "searchLabel": "Tìm kiếm cửa hàng",
+        "statusLabel": "Trạng thái đăng ký",
+        "regionLabel": "Khu vực cửa hàng",
+        "status": { "all": "Tất cả trạng thái đăng ký" },
+        "region": { "all": "Tất cả khu vực" }
+      },
+      "table": {
+        "store": "Cửa hàng",
+        "regionCategory": "Khu vực / Loại hình",
+        "manager": "Quản lý",
+        "todayBookings": "Đặt bàn hôm nay",
+        "commission": "Hoa hồng",
+        "status": "Trạng thái"
+      },
+      "statuses": { "draft": "Bản nháp", "pending": "Chờ phê duyệt", "changesRequested": "Yêu cầu bổ sung", "active": "Hoạt động", "suspended": "Tạm ngừng" },
+      "regions": { "hoChiMinh": "TP. Hồ Chí Minh", "hanoi": "Hà Nội", "daNang": "Đà Nẵng" },
+      "categories": { "vietnamese": "Món Việt", "korean": "Món Hàn", "fusion": "Fusion" },
+      "underReview": "Đang xem xét",
+      "details": "Chi tiết",
+      "review": "Xem xét",
+      "empty": "Không có cửa hàng phù hợp với bộ lọc."
+    },
     "sections": {
       "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
       "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },

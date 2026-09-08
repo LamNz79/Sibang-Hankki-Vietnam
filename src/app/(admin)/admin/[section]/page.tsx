@@ -5,7 +5,6 @@ import {
 } from "@/features/admin";
 
 const adminSections: AdminSection[] = [
-  "stores",
   "revenue",
   "campaigns",
   "settings",
