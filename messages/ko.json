@@ -289,6 +289,28 @@
       "review": "검토",
       "empty": "필터 조건에 맞는 가게가 없습니다."
     },
+    "revenue": {
+      "title": "매출 분석",
+      "description": "플랫폼 거래액, 수수료 매출 및 정산 상태를 분석합니다.",
+      "thisMonth": "이번 달",
+      "download": "다운로드",
+      "metrics": {
+        "gmv": { "label": "총 거래액", "detail": "지난달 대비 +10.8%" },
+        "commission": { "label": "수수료 매출", "detail": "평균 수수료율 4.7%" },
+        "advertising": { "label": "광고 매출", "detail": "지난달 대비 +18.2%" },
+        "settlement": { "label": "정산 대기", "detail": "검토 필요 6건" }
+      },
+      "trend": {
+        "title": "거래액 및 플랫폼 매출",
+        "period": "최근 6개월",
+        "months": { "mar": "3월", "apr": "4월", "may": "5월", "jun": "6월", "jul": "7월", "aug": "8월" }
+      },
+      "mix": {
+        "title": "매출 구성",
+        "period": "8월",
+        "items": { "commission": "예약 수수료", "advertising": "광고", "promotions": "프로모션", "other": "기타" }
+      }
+    },
     "sections": {
       "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
       "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },

@@ -335,6 +335,28 @@
       "review": "Review",
       "empty": "No stores match these filters."
     },
+    "revenue": {
+      "title": "Revenue Analytics",
+      "description": "Analyze platform GMV, commission revenue, and settlement status.",
+      "thisMonth": "This month",
+      "download": "Download",
+      "metrics": {
+        "gmv": { "label": "Total GMV", "detail": "+10.8% vs. last month" },
+        "commission": { "label": "Commission revenue", "detail": "4.7% average commission" },
+        "advertising": { "label": "Advertising revenue", "detail": "+18.2% vs. last month" },
+        "settlement": { "label": "Pending settlement", "detail": "6 items require review" }
+      },
+      "trend": {
+        "title": "GMV and platform revenue",
+        "period": "Last 6 months",
+        "months": { "mar": "Mar", "apr": "Apr", "may": "May", "jun": "Jun", "jul": "Jul", "aug": "Aug" }
+      },
+      "mix": {
+        "title": "Revenue mix",
+        "period": "Aug",
+        "items": { "commission": "Booking commission", "advertising": "Advertising", "promotions": "Promotions", "other": "Other" }
+      }
+    },
     "sections": {
       "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
       "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },
