@@ -273,6 +273,34 @@
       "resolve": "Resolve",
       "empty": "No reservations match these filters."
     },
+    "customers": {
+      "title": "Customers",
+      "description": "Manage member profiles, activity, and account status.",
+      "export": "Export",
+      "filters": {
+        "searchPlaceholder": "Search name, phone, email, or customer ID",
+        "searchLabel": "Search customers",
+        "statusLabel": "Customer status",
+        "tierLabel": "Customer tier",
+        "status": { "all": "All statuses" },
+        "tier": { "all": "All tiers" }
+      },
+      "table": {
+        "customer": "Customer",
+        "countryLanguage": "Country / Language",
+        "reservationsVisits": "Reservations / Visits",
+        "noShows": "No-shows",
+        "joined": "Joined",
+        "status": "Status"
+      },
+      "statuses": { "active": "Active", "review": "Review", "restricted": "Restricted", "closed": "Closed" },
+      "tiers": { "regular": "Regular", "vip": "VIP" },
+      "countries": { "vietnam": "Vietnam", "korea": "Korea" },
+      "languages": { "vi": "Vietnamese", "en": "English", "ko": "Korean" },
+      "details": "Details",
+      "empty": "No customers match these filters.",
+      "resultCount": "{count, plural, one {# customer} other {# customers}}"
+    },
     "sections": {
       "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
       "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },

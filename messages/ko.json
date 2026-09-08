@@ -227,6 +227,34 @@
       "resolve": "처리",
       "empty": "필터 조건에 맞는 예약이 없습니다."
     },
+    "customers": {
+      "title": "고객 관리",
+      "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.",
+      "export": "내보내기",
+      "filters": {
+        "searchPlaceholder": "이름, 전화번호, 이메일 또는 고객 ID 검색",
+        "searchLabel": "고객 검색",
+        "statusLabel": "고객 상태",
+        "tierLabel": "고객 등급",
+        "status": { "all": "전체 상태" },
+        "tier": { "all": "전체 등급" }
+      },
+      "table": {
+        "customer": "고객",
+        "countryLanguage": "국가 / 언어",
+        "reservationsVisits": "예약 / 방문",
+        "noShows": "노쇼",
+        "joined": "가입일",
+        "status": "상태"
+      },
+      "statuses": { "active": "정상", "review": "검토", "restricted": "이용 제한", "closed": "탈퇴" },
+      "tiers": { "regular": "일반", "vip": "VIP" },
+      "countries": { "vietnam": "베트남", "korea": "한국" },
+      "languages": { "vi": "베트남어", "en": "영어", "ko": "한국어" },
+      "details": "상세",
+      "empty": "필터 조건에 맞는 고객이 없습니다.",
+      "resultCount": "고객 {count}명"
+    },
     "sections": {
       "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
       "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
