@@ -289,6 +289,28 @@
       "review": "Xem xét",
       "empty": "Không có cửa hàng phù hợp với bộ lọc."
     },
+    "revenue": {
+      "title": "Phân tích doanh thu",
+      "description": "Phân tích GMV, doanh thu hoa hồng và trạng thái quyết toán của nền tảng.",
+      "thisMonth": "Tháng này",
+      "download": "Tải xuống",
+      "metrics": {
+        "gmv": { "label": "Tổng GMV", "detail": "+10,8% so với tháng trước" },
+        "commission": { "label": "Doanh thu hoa hồng", "detail": "Hoa hồng trung bình 4,7%" },
+        "advertising": { "label": "Doanh thu quảng cáo", "detail": "+18,2% so với tháng trước" },
+        "settlement": { "label": "Chờ quyết toán", "detail": "6 mục cần xem xét" }
+      },
+      "trend": {
+        "title": "GMV và doanh thu nền tảng",
+        "period": "6 tháng gần nhất",
+        "months": { "mar": "T3", "apr": "T4", "may": "T5", "jun": "T6", "jul": "T7", "aug": "T8" }
+      },
+      "mix": {
+        "title": "Cơ cấu doanh thu",
+        "period": "Tháng 8",
+        "items": { "commission": "Hoa hồng đặt bàn", "advertising": "Quảng cáo", "promotions": "Khuyến mãi", "other": "Khác" }
+      }
+    },
     "sections": {
       "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
       "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
