@@ -379,12 +379,30 @@
       "modal": { "title": "Create campaign", "name": "Campaign name", "description": "Description", "placement": "Placement", "startDate": "Start date", "endDate": "End date", "cancel": "Cancel", "create": "Create" },
       "empty": "No campaigns match these filters."
     },
-    "sections": {
-      "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
-      "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },
-      "revenue": { "title": "Revenue Analytics", "description": "Monitor revenue, commissions, and settlements.", "placeholder": "Revenue analytics will be added after financial data is available." },
-      "campaigns": { "title": "Ads & Banners", "description": "Manage placements, schedules, and campaign performance.", "placeholder": "Campaign management will be added in a later step." },
-      "settings": { "title": "Access & Settings", "description": "Configure admin access and operating policies.", "placeholder": "Access controls and audit logs will be added with backend authentication." }
+    "settings": {
+      "title": "Access & Settings",
+      "description": "Configure admin roles, security policies, alerts, and operating rules.",
+      "inviteAdmin": "Invite admin",
+      "operations": {
+        "title": "Operations settings",
+        "scope": "Platform-wide",
+        "items": {
+          "storeRegistration": { "title": "Store registration alerts", "description": "Notify the assignee when a new review request arrives." },
+          "noShowRestriction": { "title": "Automatic no-show restriction", "description": "Restrict bookings after 3 no-shows within 30 days." },
+          "bannerEndAlert": { "title": "Banner end alert", "description": "Notify the campaign owner 48 hours before the end." }
+        }
+      },
+      "roles": {
+        "title": "Admin roles",
+        "manage": "Manage roles",
+        "items": {
+          "superAdmin": { "title": "Super Admin", "description": "All features · {users} users", "badge": "Full access" },
+          "operations": { "title": "Operations", "description": "Customers, stores, reservations · {users} users", "badge": "Operations" },
+          "marketing": { "title": "Marketing", "description": "Ads, banners, reports · {users} users", "badge": "Marketing" },
+          "finance": { "title": "Finance", "description": "Revenue, settlements · {users} users", "badge": "Finance" }
+        }
+      },
+      "modal": { "title": "Invite admin", "email": "Email address", "role": "Admin role", "requireMfa": "Require MFA", "cancel": "Cancel", "invite": "Send invitation" }
     }
   },
   "Navigation": {

@@ -333,12 +333,30 @@
       "modal": { "title": "Tạo chiến dịch", "name": "Tên chiến dịch", "description": "Mô tả", "placement": "Vị trí hiển thị", "startDate": "Ngày bắt đầu", "endDate": "Ngày kết thúc", "cancel": "Hủy", "create": "Tạo" },
       "empty": "Không có chiến dịch phù hợp với bộ lọc."
     },
-    "sections": {
-      "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
-      "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
-      "revenue": { "title": "Phân tích doanh thu", "description": "Theo dõi doanh thu, hoa hồng và quyết toán.", "placeholder": "Phân tích doanh thu sẽ được bổ sung khi có dữ liệu tài chính." },
-      "campaigns": { "title": "Quảng cáo & Banner", "description": "Quản lý vị trí, lịch hiển thị và hiệu quả chiến dịch.", "placeholder": "Phần quản lý chiến dịch sẽ được bổ sung ở bước sau." },
-      "settings": { "title": "Quyền & Cài đặt", "description": "Cấu hình quyền quản trị và chính sách vận hành.", "placeholder": "Phân quyền và nhật ký kiểm toán sẽ được bổ sung cùng xác thực backend." }
+    "settings": {
+      "title": "Quyền & Cài đặt",
+      "description": "Cấu hình vai trò quản trị, chính sách bảo mật, cảnh báo và quy tắc vận hành.",
+      "inviteAdmin": "Mời quản trị viên",
+      "operations": {
+        "title": "Cài đặt vận hành",
+        "scope": "Toàn nền tảng",
+        "items": {
+          "storeRegistration": { "title": "Cảnh báo đăng ký cửa hàng", "description": "Thông báo cho người phụ trách khi có yêu cầu xét duyệt mới." },
+          "noShowRestriction": { "title": "Tự động hạn chế no-show", "description": "Hạn chế đặt bàn sau 3 lần no-show trong 30 ngày." },
+          "bannerEndAlert": { "title": "Cảnh báo banner kết thúc", "description": "Thông báo cho chủ chiến dịch trước khi kết thúc 48 giờ." }
+        }
+      },
+      "roles": {
+        "title": "Vai trò quản trị",
+        "manage": "Quản lý vai trò",
+        "items": {
+          "superAdmin": { "title": "Super Admin", "description": "Tất cả tính năng · {users} người dùng", "badge": "Toàn quyền" },
+          "operations": { "title": "Vận hành", "description": "Khách hàng, cửa hàng, đặt bàn · {users} người dùng", "badge": "Vận hành" },
+          "marketing": { "title": "Marketing", "description": "Quảng cáo, banner, báo cáo · {users} người dùng", "badge": "Marketing" },
+          "finance": { "title": "Tài chính", "description": "Doanh thu, quyết toán · {users} người dùng", "badge": "Tài chính" }
+        }
+      },
+      "modal": { "title": "Mời quản trị viên", "email": "Địa chỉ email", "role": "Vai trò quản trị", "requireMfa": "Bắt buộc MFA", "cancel": "Hủy", "invite": "Gửi lời mời" }
     }
   },
   "Navigation": {
