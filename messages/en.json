@@ -301,6 +301,40 @@
       "empty": "No customers match these filters.",
       "resultCount": "{count, plural, one {# customer} other {# customers}}"
     },
+    "stores": {
+      "title": "Stores",
+      "description": "Manage onboarding reviews, store profiles, operating status, and contracts.",
+      "addStore": "Add store",
+      "metrics": {
+        "active": { "label": "Active stores", "detail": "+42 this month" },
+        "pending": { "label": "Pending approval", "detail": "2 pending over 48 hours" },
+        "suspended": { "label": "Suspended", "detail": "3 admin suspensions" },
+        "rating": { "label": "Average rating", "detail": "36,208 reviews" }
+      },
+      "filters": {
+        "searchPlaceholder": "Search store, store ID, or manager",
+        "searchLabel": "Search stores",
+        "statusLabel": "Onboarding status",
+        "regionLabel": "Store region",
+        "status": { "all": "All onboarding statuses" },
+        "region": { "all": "All regions" }
+      },
+      "table": {
+        "store": "Store",
+        "regionCategory": "Region / Category",
+        "manager": "Manager",
+        "todayBookings": "Today's bookings",
+        "commission": "Commission",
+        "status": "Status"
+      },
+      "statuses": { "draft": "Draft", "pending": "Pending approval", "changesRequested": "Changes requested", "active": "Active", "suspended": "Suspended" },
+      "regions": { "hoChiMinh": "Ho Chi Minh", "hanoi": "Hanoi", "daNang": "Da Nang" },
+      "categories": { "vietnamese": "Vietnamese", "korean": "Korean", "fusion": "Fusion" },
+      "underReview": "Under review",
+      "details": "Details",
+      "review": "Review",
+      "empty": "No stores match these filters."
+    },
     "sections": {
       "customers": { "title": "Customers", "description": "Manage member profiles, activity, and account status.", "placeholder": "Customer management will be added in a later step." },
       "stores": { "title": "Stores", "description": "Manage onboarding, store profiles, and operating status.", "placeholder": "Store management will be added in a later step." },

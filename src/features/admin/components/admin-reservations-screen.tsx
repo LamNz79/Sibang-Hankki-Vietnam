@@ -9,7 +9,6 @@ import {
   Select,
   SimpleGrid,
   Stack,
-  Table,
   Text,
   TextInput,
   ThemeIcon,
@@ -23,11 +22,13 @@ import {
   IconSearch,
   IconUserQuestion,
 } from "@tabler/icons-react";
+import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
   adminReservationRecords,
   filterAdminReservations,
+  type AdminReservationRecord,
   type AdminReservationStatus,
 } from "@/features/admin/data/admin-reservations";
 import { uiColors } from "@/theme";
@@ -56,6 +57,63 @@ export function AdminReservationsScreen() {
     () => filterAdminReservations(adminReservationRecords, debouncedQuery, status, period),
     [debouncedQuery, period, status],
   );
+  const reservationColumns: DataTableColumn<AdminReservationRecord>[] = [
+    {
+      accessor: "id",
+      title: t("table.id"),
+      width: 170,
+      render: (reservation) => (
+        <Stack gap={1}>
+          <Text fw={750} size="sm">{reservation.id}</Text>
+          <Text size="xs" c={uiColors.textSecondary}>
+            {t(`channels.${reservation.channel}`)}
+          </Text>
+        </Stack>
+      ),
+    },
+    { accessor: "customer", title: t("table.customer"), width: 160 },
+    { accessor: "store", title: t("table.store"), width: 170 },
+    {
+      accessor: "time",
+      title: t("table.dateParty"),
+      width: 160,
+      textAlign: "center",
+      render: (reservation) =>
+        t("table.slot", {
+          time: reservation.time,
+          count: reservation.partySize,
+        }),
+    },
+    {
+      accessor: "checkIn",
+      title: t("table.checkIn"),
+      width: 130,
+      textAlign: "center",
+      render: (reservation) => t(`checkIn.${reservation.checkIn}`),
+    },
+    {
+      accessor: "status",
+      title: t("table.status"),
+      width: 150,
+      textAlign: "center",
+      render: (reservation) => (
+        <StatusBadge tone={statusTones[reservation.status]}>
+          {t(`statuses.${reservation.status}`)}
+        </StatusBadge>
+      ),
+    },
+    {
+      accessor: "actions",
+      title: "",
+      width: 90,
+      textAlign: "center",
+      render: (reservation) => (
+        <Button variant="subtle" color="warmCoral" size="compact-sm">
+          {reservation.status === "noShowReview" ? t("resolve") : t("details")}
+        </Button>
+      ),
+    },
+  ];
 
   return (
     <AdminShell>
@@ -136,57 +194,19 @@ export function AdminReservationsScreen() {
           />
         </Group>
 
-        <Card withBorder radius="sm" p={0}>
-          <Table.ScrollContainer minWidth={900}>
-            <Table verticalSpacing="md" horizontalSpacing="md" highlightOnHover>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>{t("table.id")}</Table.Th>
-                  <Table.Th>{t("table.customer")}</Table.Th>
-                  <Table.Th>{t("table.store")}</Table.Th>
-                  <Table.Th>{t("table.dateParty")}</Table.Th>
-                  <Table.Th>{t("table.checkIn")}</Table.Th>
-                  <Table.Th>{t("table.status")}</Table.Th>
-                  <Table.Th />
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {reservations.map((reservation) => (
-                  <Table.Tr key={reservation.id}>
-                    <Table.Td>
-                      <Text fw={750} size="sm">{reservation.id}</Text>
-                      <Text size="xs" c={uiColors.textSecondary}>{t(`channels.${reservation.channel}`)}</Text>
-                    </Table.Td>
-                    <Table.Td>{reservation.customer}</Table.Td>
-                    <Table.Td>{reservation.store}</Table.Td>
-                    <Table.Td>{t("table.slot", { time: reservation.time, count: reservation.partySize })}</Table.Td>
-                    <Table.Td>{t(`checkIn.${reservation.checkIn}`)}</Table.Td>
-                    <Table.Td>
-                      <StatusBadge tone={statusTones[reservation.status]}>
-                        {t(`statuses.${reservation.status}`)}
-                      </StatusBadge>
-                    </Table.Td>
-                    <Table.Td>
-                      <Button
-                        variant="subtle"
-                        color="warmCoral"
-                        size="compact-sm"
-                      >
-                        {reservation.status === "noShowReview"
-                          ? t("resolve")
-                          : t("details")}
-                      </Button>
-                    </Table.Td>
-                  </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </Table.ScrollContainer>
-
-          {reservations.length === 0 ? (
-            <Text ta="center" c={uiColors.textSecondary} py="xl">{t("empty")}</Text>
-          ) : null}
-        </Card>
+        <DataTable
+          withTableBorder
+          borderRadius="sm"
+          striped
+          highlightOnHover
+          minHeight={160}
+          verticalAlign="center"
+          horizontalSpacing="md"
+          records={reservations}
+          idAccessor="id"
+          noRecordsText={t("empty")}
+          columns={reservationColumns}
+        />
       </Stack>
     </AdminShell>
   );

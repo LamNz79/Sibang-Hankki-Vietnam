@@ -255,6 +255,40 @@
       "empty": "필터 조건에 맞는 고객이 없습니다.",
       "resultCount": "고객 {count}명"
     },
+    "stores": {
+      "title": "가게 관리",
+      "description": "입점 심사, 가게 프로필, 운영 상태 및 계약을 관리합니다.",
+      "addStore": "가게 추가",
+      "metrics": {
+        "active": { "label": "운영 중", "detail": "이번 달 +42곳" },
+        "pending": { "label": "승인 대기", "detail": "48시간 초과 2건" },
+        "suspended": { "label": "일시 중지", "detail": "관리자 중지 3건" },
+        "rating": { "label": "평균 평점", "detail": "리뷰 36,208건" }
+      },
+      "filters": {
+        "searchPlaceholder": "가게, 가게 ID 또는 관리자 검색",
+        "searchLabel": "가게 검색",
+        "statusLabel": "입점 상태",
+        "regionLabel": "가게 지역",
+        "status": { "all": "전체 입점 상태" },
+        "region": { "all": "전체 지역" }
+      },
+      "table": {
+        "store": "가게",
+        "regionCategory": "지역 / 카테고리",
+        "manager": "관리자",
+        "todayBookings": "오늘 예약",
+        "commission": "수수료",
+        "status": "상태"
+      },
+      "statuses": { "draft": "작성 중", "pending": "승인 대기", "changesRequested": "보완 요청", "active": "운영 중", "suspended": "일시 중지" },
+      "regions": { "hoChiMinh": "호찌민", "hanoi": "하노이", "daNang": "다낭" },
+      "categories": { "vietnamese": "베트남 음식", "korean": "한식", "fusion": "퓨전" },
+      "underReview": "검토 중",
+      "details": "상세",
+      "review": "검토",
+      "empty": "필터 조건에 맞는 가게가 없습니다."
+    },
     "sections": {
       "customers": { "title": "고객 관리", "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.", "placeholder": "고객 관리 화면은 이후 단계에서 추가합니다." },
       "stores": { "title": "가게 관리", "description": "입점, 가게 프로필 및 운영 상태를 관리합니다.", "placeholder": "가게 관리 화면은 이후 단계에서 추가합니다." },
