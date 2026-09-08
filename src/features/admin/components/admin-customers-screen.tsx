@@ -12,13 +12,14 @@ import {
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
-import { DataTable } from "mantine-datatable";
+import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
   adminCustomerRecords,
   filterAdminCustomers,
+  type AdminCustomerRecord,
   type AdminCustomerStatus,
   type AdminCustomerTier,
 } from "@/features/admin/data/admin-customers";
@@ -44,6 +45,78 @@ export function AdminCustomersScreen() {
     () => filterAdminCustomers(adminCustomerRecords, debouncedQuery, status, tier),
     [debouncedQuery, status, tier],
   );
+  const customerColumns: DataTableColumn<AdminCustomerRecord>[] = [
+    {
+      accessor: "name",
+      title: t("table.customer"),
+      width: 260,
+      render: (customer) => (
+        <Group gap="xs" wrap="nowrap">
+          <Stack gap={1}>
+            <Text fw={750} size="sm">{customer.name}</Text>
+            <Text size="xs" c={uiColors.textSecondary}>{customer.contact}</Text>
+          </Stack>
+          {customer.tier === "vip" ? (
+            <StatusBadge tone="brand">{t("tiers.vip")}</StatusBadge>
+          ) : null}
+        </Group>
+      ),
+    },
+    {
+      accessor: "country",
+      title: t("table.countryLanguage"),
+      width: 170,
+      render: (customer) => (
+        <Stack gap={1}>
+          <Text size="sm">{t(`countries.${customer.country}`)}</Text>
+          <Text size="xs" c={uiColors.textSecondary}>
+            {t(`languages.${customer.language}`)}
+          </Text>
+        </Stack>
+      ),
+    },
+    {
+      accessor: "reservations",
+      title: t("table.reservationsVisits"),
+      width: 160,
+      textAlign: "center",
+      render: (customer) => `${customer.reservations} / ${customer.visits}`,
+    },
+    {
+      accessor: "noShows",
+      title: t("table.noShows"),
+      width: 100,
+      textAlign: "center",
+    },
+    {
+      accessor: "joined",
+      title: t("table.joined"),
+      width: 130,
+      textAlign: "center",
+    },
+    {
+      accessor: "status",
+      title: t("table.status"),
+      width: 130,
+      textAlign: "center",
+      render: (customer) => (
+        <StatusBadge tone={statusTones[customer.status]}>
+          {t(`statuses.${customer.status}`)}
+        </StatusBadge>
+      ),
+    },
+    {
+      accessor: "actions",
+      title: "",
+      width: 90,
+      textAlign: "center",
+      render: () => (
+        <Button variant="subtle" color="warmCoral" size="compact-sm">
+          {t("details")}
+        </Button>
+      ),
+    },
+  ];
 
   return (
     <AdminShell>
@@ -110,78 +183,7 @@ export function AdminCustomersScreen() {
           records={customers}
           idAccessor="id"
           noRecordsText={t("empty")}
-          columns={[
-            {
-              accessor: "name",
-              title: t("table.customer"),
-              width: 260,
-              render: (customer) => (
-                <Group gap="xs" wrap="nowrap">
-                  <Stack gap={1}>
-                    <Text fw={750} size="sm">{customer.name}</Text>
-                    <Text size="xs" c={uiColors.textSecondary}>{customer.contact}</Text>
-                  </Stack>
-                  {customer.tier === "vip" ? (
-                    <StatusBadge tone="brand">{t("tiers.vip")}</StatusBadge>
-                  ) : null}
-                </Group>
-              ),
-            },
-            {
-              accessor: "country",
-              title: t("table.countryLanguage"),
-              width: 170,
-              render: (customer) => (
-                <Stack gap={1}>
-                  <Text size="sm">{t(`countries.${customer.country}`)}</Text>
-                  <Text size="xs" c={uiColors.textSecondary}>
-                    {t(`languages.${customer.language}`)}
-                  </Text>
-                </Stack>
-              ),
-            },
-            {
-              accessor: "reservations",
-              title: t("table.reservationsVisits"),
-              width: 160,
-              textAlign: "center",
-              render: (customer) => `${customer.reservations} / ${customer.visits}`,
-            },
-            {
-              accessor: "noShows",
-              title: t("table.noShows"),
-              width: 100,
-              textAlign: "center",
-            },
-            {
-              accessor: "joined",
-              title: t("table.joined"),
-              width: 130,
-              textAlign: "center",
-            },
-            {
-              accessor: "status",
-              title: t("table.status"),
-              width: 130,
-              textAlign: "center",
-              render: (customer) => (
-                <StatusBadge tone={statusTones[customer.status]}>
-                  {t(`statuses.${customer.status}`)}
-                </StatusBadge>
-              ),
-            },
-            {
-              accessor: "actions",
-              title: "",
-              width: 90,
-              textAlign: "center",
-              render: () => (
-                <Button variant="subtle" color="warmCoral" size="compact-sm">
-                  {t("details")}
-                </Button>
-              ),
-            },
-          ]}
+          columns={customerColumns}
         />
 
         {customers.length > 0 ? (
