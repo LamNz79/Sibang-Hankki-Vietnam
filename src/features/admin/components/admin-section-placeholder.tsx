@@ -6,7 +6,6 @@ import { AdminShell } from "@/features/admin/components/admin-shell";
 import { uiColors } from "@/theme";
 
 export type AdminSection =
-  | "campaigns"
   | "settings";
 
 export function AdminSectionPlaceholder({ section }: { section: AdminSection }) {

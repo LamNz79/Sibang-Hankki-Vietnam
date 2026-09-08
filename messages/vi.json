@@ -311,6 +311,28 @@
         "items": { "commission": "Hoa hồng đặt bàn", "advertising": "Quảng cáo", "promotions": "Khuyến mãi", "other": "Khác" }
       }
     },
+    "campaigns": {
+      "title": "Quản lý quảng cáo & Banner",
+      "description": "Quản lý vị trí, lịch hiển thị, đối tượng và hiệu quả chiến dịch.",
+      "createCampaign": "Tạo chiến dịch",
+      "filters": {
+        "placementLabel": "Vị trí chiến dịch",
+        "statusLabel": "Trạng thái chiến dịch",
+        "periodLabel": "Thời gian chiến dịch",
+        "placement": { "all": "Tất cả vị trí" },
+        "status": { "all": "Tất cả trạng thái" },
+        "period": { "all": "Tất cả thời gian", "last30Days": "30 ngày qua", "next30Days": "30 ngày tới" }
+      },
+      "placements": { "homeMain": "Trang chủ chính", "searchTop": "Đầu kết quả tìm kiếm", "regionalHome": "Trang chủ khu vực", "storeDetail": "Chi tiết cửa hàng" },
+      "statuses": { "live": "Đang chạy", "scheduled": "Đã lên lịch", "ended": "Đã kết thúc" },
+      "items": {
+        "weekendDining": { "headline": "Ẩm thực cuối tuần", "subtitle": "Khám phá các nhà hàng nổi bật cuối tuần", "name": "Banner chính Ẩm thực cuối tuần", "schedule": "1–14 tháng 9", "metric1": "Lượt hiển thị", "metric2": "Lượt nhấp", "metric3": "CTR" },
+        "hanoiNewOpen": { "headline": "Hà Nội mới khai trương", "subtitle": "Khám phá các nhà hàng mới mở", "name": "Quảng bá cửa hàng mới Hà Nội", "schedule": "10–30 tháng 9", "metric1": "Hiển thị dự kiến", "metric2": "Mục tiêu", "metric3": "Cửa hàng" },
+        "chefsChoice": { "headline": "Lựa chọn của đầu bếp", "subtitle": "Các nhà hàng cao cấp do biên tập viên chọn", "name": "Tuyển chọn của đầu bếp", "schedule": "15–31 tháng 8", "metric1": "Lượt hiển thị", "metric2": "Lượt nhấp", "metric3": "CTR" }
+      },
+      "modal": { "title": "Tạo chiến dịch", "name": "Tên chiến dịch", "description": "Mô tả", "placement": "Vị trí hiển thị", "startDate": "Ngày bắt đầu", "endDate": "Ngày kết thúc", "cancel": "Hủy", "create": "Tạo" },
+      "empty": "Không có chiến dịch phù hợp với bộ lọc."
+    },
     "sections": {
       "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
       "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
