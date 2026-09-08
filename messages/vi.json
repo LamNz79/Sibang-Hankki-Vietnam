@@ -227,6 +227,34 @@
       "resolve": "Xử lý",
       "empty": "Không có đặt bàn phù hợp với bộ lọc."
     },
+    "customers": {
+      "title": "Khách hàng",
+      "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.",
+      "export": "Xuất dữ liệu",
+      "filters": {
+        "searchPlaceholder": "Tìm tên, số điện thoại, email hoặc mã khách hàng",
+        "searchLabel": "Tìm kiếm khách hàng",
+        "statusLabel": "Trạng thái khách hàng",
+        "tierLabel": "Hạng khách hàng",
+        "status": { "all": "Tất cả trạng thái" },
+        "tier": { "all": "Tất cả hạng" }
+      },
+      "table": {
+        "customer": "Khách hàng",
+        "countryLanguage": "Quốc gia / Ngôn ngữ",
+        "reservationsVisits": "Đặt bàn / Đã đến",
+        "noShows": "No-show",
+        "joined": "Ngày tham gia",
+        "status": "Trạng thái"
+      },
+      "statuses": { "active": "Hoạt động", "review": "Cần xem xét", "restricted": "Bị hạn chế", "closed": "Đã đóng" },
+      "tiers": { "regular": "Thường", "vip": "VIP" },
+      "countries": { "vietnam": "Việt Nam", "korea": "Hàn Quốc" },
+      "languages": { "vi": "Tiếng Việt", "en": "Tiếng Anh", "ko": "Tiếng Hàn" },
+      "details": "Chi tiết",
+      "empty": "Không có khách hàng phù hợp với bộ lọc.",
+      "resultCount": "{count} khách hàng"
+    },
     "sections": {
       "customers": { "title": "Khách hàng", "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.", "placeholder": "Phần quản lý khách hàng sẽ được bổ sung ở bước sau." },
       "stores": { "title": "Cửa hàng", "description": "Quản lý đăng ký, hồ sơ và trạng thái hoạt động của cửa hàng.", "placeholder": "Phần quản lý cửa hàng sẽ được bổ sung ở bước sau." },
