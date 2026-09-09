@@ -384,6 +384,12 @@
       "guests": "고객",
       "marketing": "마케팅",
       "settings": "설정"
+    },
+    "workspaceSwitcher": {
+      "title": "워크스페이스 전환",
+      "customer": "고객",
+      "owner": "사장님",
+      "admin": "관리자"
     }
   }
 }

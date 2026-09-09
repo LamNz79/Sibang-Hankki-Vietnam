@@ -5,3 +5,4 @@ export * from "@/components/ui/section-title";
 export * from "@/components/ui/selection-chip";
 export * from "@/components/ui/status-badge";
 export * from "@/components/ui/surface-card";
+export * from "@/components/ui/workspace-switcher";
