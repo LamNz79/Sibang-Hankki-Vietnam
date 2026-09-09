@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   Button,
@@ -108,7 +109,13 @@ export function AdminReservationsScreen() {
       width: 90,
       textAlign: "center",
       render: (reservation) => (
-        <Button variant="subtle" color="warmCoral" size="compact-sm">
+        <Button
+          component={Link}
+          href={`/admin/reservations/${reservation.id}`}
+          variant="subtle"
+          color="warmCoral"
+          size="compact-sm"
+        >
           {reservation.status === "noShowReview" ? t("resolve") : t("details")}
         </Button>
       ),

@@ -14,6 +14,11 @@ export type AdminReservationRecord = {
   checkIn: "qrComplete" | "pending" | "none";
   status: AdminReservationStatus;
   daysAgo: number;
+  date: string;
+  language: "en" | "vi" | "ko";
+  phone: string;
+  email: string;
+  request: string;
 };
 
 export const adminReservationRecords: AdminReservationRecord[] = [
@@ -27,6 +32,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "qrComplete",
     status: "checkedIn",
     daysAgo: 0,
+    date: "2026-09-09",
+    language: "vi",
+    phone: "+84 90 123 4567",
+    email: "customer.a@example.test",
+    request: "Window seat",
   },
   {
     id: "RES-DEMO-002",
@@ -38,6 +48,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "none",
     status: "noShowReview",
     daysAgo: 0,
+    date: "2026-09-09",
+    language: "vi",
+    phone: "+84 91 234 5678",
+    email: "customer.b@example.test",
+    request: "No special request",
   },
   {
     id: "RES-DEMO-003",
@@ -49,6 +64,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "pending",
     status: "confirmed",
     daysAgo: 0,
+    date: "2026-09-09",
+    language: "ko",
+    phone: "+82 10 3456 7890",
+    email: "customer.c@example.test",
+    request: "Birthday dinner",
   },
   {
     id: "RES-DEMO-004",
@@ -60,6 +80,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "none",
     status: "cancelled",
     daysAgo: 0,
+    date: "2026-09-09",
+    language: "en",
+    phone: "+84 93 456 7890",
+    email: "customer.d@example.test",
+    request: "Quiet table",
   },
   {
     id: "RES-DEMO-005",
@@ -71,6 +96,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "qrComplete",
     status: "checkedIn",
     daysAgo: 3,
+    date: "2026-09-06",
+    language: "en",
+    phone: "+84 94 567 8901",
+    email: "customer.e@example.test",
+    request: "No special request",
   },
   {
     id: "RES-DEMO-006",
@@ -82,6 +112,11 @@ export const adminReservationRecords: AdminReservationRecord[] = [
     checkIn: "none",
     status: "cancelled",
     daysAgo: 12,
+    date: "2026-08-28",
+    language: "ko",
+    phone: "+82 10 6789 0123",
+    email: "customer.f@example.test",
+    request: "Nut allergy",
   },
 ];
 
@@ -107,4 +142,8 @@ export function filterAdminReservations(
       reservation.daysAgo <= maximumAge
     );
   });
+}
+
+export function getAdminReservationById(id: string) {
+  return adminReservationRecords.find((reservation) => reservation.id === id);
 }

@@ -227,6 +227,18 @@
       "resolve": "처리",
       "empty": "필터 조건에 맞는 예약이 없습니다."
     },
+    "reservationDetail": {
+      "title": "예약 상세",
+      "back": "예약 목록으로",
+      "changeStatus": "상태 변경",
+      "reservation": { "title": "예약 정보", "date": "날짜", "time": "시간", "partySize": "인원", "guests": "{count}명", "channel": "예약 채널", "request": "요청사항" },
+      "customer": { "title": "고객 및 가게", "name": "고객", "phone": "전화번호", "email": "이메일", "language": "언어", "store": "가게" },
+      "languages": { "en": "영어", "vi": "베트남어", "ko": "한국어" },
+      "checkIn": { "title": "체크인", "status": "상태", "method": "방법", "qr": "QR 코드" },
+      "history": { "title": "변경 이력", "created": "예약 생성", "currentStatus": "현재 상태" },
+      "notAvailable": "없음",
+      "modal": { "title": "예약 상태 변경", "status": "새 상태", "reason": "사유", "reasonRequired": "취소 또는 노쇼 검토 상태 변경 시 사유를 입력해야 합니다.", "prototypeNotice": "프로토타입에서는 페이지를 나가면 변경사항이 저장되지 않습니다.", "cancel": "취소", "save": "저장" }
+    },
     "customers": {
       "title": "고객 관리",
       "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.",
