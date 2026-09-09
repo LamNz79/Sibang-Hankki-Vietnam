@@ -5,7 +5,6 @@ import {
   ActionIcon,
   Avatar,
   Box,
-  Button,
   Group,
   Stack,
   Text,
@@ -22,11 +21,10 @@ import {
   IconHistory,
   IconMap2,
   IconSettings,
-  IconSwitchHorizontal,
 } from "@tabler/icons-react";
 import type { Icon } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
-import { SurfaceCard } from "@/components/ui";
+import { SurfaceCard, WorkspaceSwitcher } from "@/components/ui";
 import { LanguageSelect } from "@/features/i18n";
 import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
@@ -249,26 +247,7 @@ export function AccountScreen() {
       </Stack>
 
       <SurfaceCard tone="brand" p="md">
-        <Stack gap="md">
-          <Stack gap={3}>
-            <Text fw={800} c={uiColors.textPrimary}>
-              Restaurant partner workspace
-            </Text>
-            <Text size="sm" c={uiColors.textSecondary}>
-              Manage reservations, guests, marketing, and store settings.
-            </Text>
-          </Stack>
-          <Button
-            component={Link}
-            href="/owner"
-            fullWidth
-            radius="md"
-            color="warmCoral"
-            leftSection={<IconSwitchHorizontal size={18} />}
-          >
-            Switch to Owner workspace
-          </Button>
-        </Stack>
+        <WorkspaceSwitcher />
       </SurfaceCard>
     </MobileShell>
   );

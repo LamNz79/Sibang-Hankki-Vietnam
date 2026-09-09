@@ -15,7 +15,7 @@ import {
   IconArmchair,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
-import { PrimaryActionButton } from "@/components/ui";
+import { PrimaryActionButton, WorkspaceSwitcher } from "@/components/ui";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
@@ -93,6 +93,17 @@ export function OwnerSettingsScreen() {
           }}
         >
           <LanguageSelect />
+        </Card>
+
+        <Card
+          radius="lg"
+          p="md"
+          style={{
+            background: uiColors.surface,
+            border: `1px solid ${uiColors.border}`,
+          }}
+        >
+          <WorkspaceSwitcher />
         </Card>
 
         <Card
