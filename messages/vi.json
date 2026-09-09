@@ -227,6 +227,18 @@
       "resolve": "Xử lý",
       "empty": "Không có đặt bàn phù hợp với bộ lọc."
     },
+    "reservationDetail": {
+      "title": "Chi tiết đặt bàn",
+      "back": "Quay lại danh sách",
+      "changeStatus": "Đổi trạng thái",
+      "reservation": { "title": "Thông tin đặt bàn", "date": "Ngày", "time": "Giờ", "partySize": "Số khách", "guests": "{count} khách", "channel": "Kênh đặt bàn", "request": "Yêu cầu" },
+      "customer": { "title": "Khách hàng & cửa hàng", "name": "Khách hàng", "phone": "Điện thoại", "email": "Email", "language": "Ngôn ngữ", "store": "Cửa hàng" },
+      "languages": { "en": "Tiếng Anh", "vi": "Tiếng Việt", "ko": "Tiếng Hàn" },
+      "checkIn": { "title": "Check-in", "status": "Trạng thái", "method": "Phương thức", "qr": "Mã QR" },
+      "history": { "title": "Lịch sử thay đổi", "created": "Đã tạo đặt bàn", "currentStatus": "Trạng thái hiện tại" },
+      "notAvailable": "Chưa có",
+      "modal": { "title": "Đổi trạng thái đặt bàn", "status": "Trạng thái mới", "reason": "Lý do", "reasonRequired": "Bắt buộc nhập lý do khi hủy hoặc chuyển sang kiểm tra no-show.", "prototypeNotice": "Bản prototype không lưu thay đổi sau khi rời trang.", "cancel": "Hủy", "save": "Lưu" }
+    },
     "customers": {
       "title": "Khách hàng",
       "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.",

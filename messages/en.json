@@ -273,6 +273,18 @@
       "resolve": "Resolve",
       "empty": "No reservations match these filters."
     },
+    "reservationDetail": {
+      "title": "Reservation details",
+      "back": "Back to reservations",
+      "changeStatus": "Change status",
+      "reservation": { "title": "Reservation information", "date": "Date", "time": "Time", "partySize": "Party size", "guests": "{count, plural, one {# guest} other {# guests}}", "channel": "Booking channel", "request": "Request" },
+      "customer": { "title": "Customer & store", "name": "Customer", "phone": "Phone", "email": "Email", "language": "Language", "store": "Store" },
+      "languages": { "en": "English", "vi": "Vietnamese", "ko": "Korean" },
+      "checkIn": { "title": "Check-in", "status": "Status", "method": "Method", "qr": "QR code" },
+      "history": { "title": "Change history", "created": "Reservation created", "currentStatus": "Current status" },
+      "notAvailable": "Not available",
+      "modal": { "title": "Change reservation status", "status": "New status", "reason": "Reason", "reasonRequired": "A reason is required for cancellation and no-show review.", "prototypeNotice": "This prototype does not save changes after leaving the page.", "cancel": "Cancel", "save": "Save" }
+    },
     "customers": {
       "title": "Customers",
       "description": "Manage member profiles, activity, and account status.",
