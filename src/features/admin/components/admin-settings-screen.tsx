@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTranslations } from "next-intl";
-import { StatusBadge } from "@/components/ui";
+import { StatusBadge, WorkspaceSwitcher } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import { uiColors } from "@/theme";
 
@@ -51,6 +51,10 @@ export function AdminSettingsScreen() {
             {t("inviteAdmin")}
           </Button>
         </Group>
+
+        <Card withBorder radius="sm" p="md">
+          <WorkspaceSwitcher />
+        </Card>
 
         <Grid gap="md">
           <Grid.Col span={{ base: 12, lg: 6 }}>

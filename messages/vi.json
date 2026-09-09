@@ -384,6 +384,12 @@
       "guests": "Khách",
       "marketing": "Tiếp thị",
       "settings": "Cài đặt"
+    },
+    "workspaceSwitcher": {
+      "title": "Chuyển khu vực",
+      "customer": "Khách hàng",
+      "owner": "Chủ quán",
+      "admin": "Quản trị"
     }
   }
 }

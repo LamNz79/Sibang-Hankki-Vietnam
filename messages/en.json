@@ -430,6 +430,12 @@
       "guests": "Guests",
       "marketing": "Marketing",
       "settings": "Settings"
+    },
+    "workspaceSwitcher": {
+      "title": "Switch workspace",
+      "customer": "Customer",
+      "owner": "Owner",
+      "admin": "Admin"
     }
   }
 }
