@@ -1,19 +1,14 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Box, Button, Card, Group, Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import { IconCalendarTime, IconClock, IconMapPin, IconStarFilled } from "@tabler/icons-react";
 import { MobileShell } from "@/components/layout/customer";
 import {
   getRestaurantAvailabilitySummary,
-  getRestaurantBySlug,
+  type RestaurantRecord,
 } from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 
-export function RestaurantDetailsScreen({ slug }: { slug: string }) {
-  const restaurant = getRestaurantBySlug(slug);
-
-  if (!restaurant) notFound();
-
+export function RestaurantDetailsScreen({ restaurant }: { restaurant: RestaurantRecord }) {
   const availability = getRestaurantAvailabilitySummary(restaurant);
 
   return (
