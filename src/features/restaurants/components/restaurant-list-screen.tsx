@@ -26,11 +26,10 @@ import {
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { categories } from "@/features/home/data/home-data";
 import {
-  getRestaurantAvailabilitySummary,
-  restaurantRecords,
   type BenefitKey,
   type CuisineKey,
 } from "@/features/restaurants/data/mock-data";
+import type { RestaurantSummary } from "@/features/restaurants/data/api";
 import { uiColors } from "@/theme";
 
 type SortKey = "recommended" | "rating" | "earliest";
@@ -58,7 +57,7 @@ function isOption<T extends string>(options: readonly T[], value: string | null)
 }
 function filterChipStyles(active: boolean) { return active ? { label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 42, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : { label: { borderRadius: 10, background: uiColors.surface, border: `1px solid ${uiColors.border}`, minHeight: 42, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } }; }
 
-function RestaurantsContent() {
+function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] }) {
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category") ?? undefined;
   const citySlug = searchParams.get("city") ?? undefined;
@@ -88,7 +87,7 @@ function RestaurantsContent() {
   const [query, setQuery] = useState("");
 
   const filteredRestaurants = useMemo(() => {
-    let list = restaurantRecords.filter((restaurant) => {
+    let list = restaurants.filter((restaurant) => {
       const haystack = `${restaurant.name} ${restaurant.area} ${restaurant.cuisineLabel}`.toLowerCase();
       const matchesQuery = query.trim().length === 0 || haystack.includes(query.trim().toLowerCase());
       const matchesCity = !citySlug || restaurant.citySlug === citySlug;
@@ -105,7 +104,7 @@ function RestaurantsContent() {
     });
 
     return list;
-  }, [citySlug, cuisineFilter, priceFilter, query, selectedBenefits, sortBy]);
+  }, [citySlug, cuisineFilter, priceFilter, query, restaurants, selectedBenefits, sortBy]);
 
   const resetFilters = () => {
     setPriceFilter("all");
@@ -149,8 +148,6 @@ function RestaurantsContent() {
         </Group>
 
         {filteredRestaurants.map((restaurant) => {
-          const availability = getRestaurantAvailabilitySummary(restaurant);
-
           return (
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
               <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
@@ -168,8 +165,8 @@ function RestaurantsContent() {
                     <Group gap={6} align="flex-start" wrap="nowrap">
                       <IconClock size={14} color={uiColors.brandPrimary} style={{ marginTop: 2, flexShrink: 0 }} />
                       <Stack gap={0}>
-                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{availability.label}</Text>
-                        <Text size="xs" c={uiColors.textSecondary}>{availability.hint}</Text>
+                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{restaurant.availableText}</Text>
+                        <Text size="xs" c={uiColors.textSecondary}>Choose your exact date, time, and party size in the booking step.</Text>
                       </Stack>
                     </Group>
                   </Stack>
@@ -195,10 +192,10 @@ function RestaurantsContent() {
   );
 }
 
-export function RestaurantListScreen() {
+export function RestaurantListScreen({ restaurants }: { restaurants: RestaurantSummary[] }) {
   return (
     <Suspense fallback={<MobileShell title="Restaurant List" subtitle="Loading restaurants..."><Text>Loading...</Text></MobileShell>}>
-      <RestaurantsContent />
+      <RestaurantsContent restaurants={restaurants} />
     </Suspense>
   );
 }
