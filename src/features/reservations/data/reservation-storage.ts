@@ -19,6 +19,15 @@ let cachedRaw: string | null = null;
 let cachedReservations: CustomerReservation[] = [];
 const emptyServerSnapshot: CustomerReservation[] = [];
 
+/** Creates an opaque check-in token, including on HTTP prototype environments. */
+export function createCheckInToken() {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+}
+
 /** Safely parses persisted reservation JSON, falling back to an empty list. */
 function parseReservations(raw: string | null) {
   if (!raw) return [];
@@ -152,7 +161,7 @@ export function acceptAlternativeProposal(id: string) {
   const next = acceptAlternative(
     reservation,
     new Date().toISOString(),
-    crypto.randomUUID(),
+    createCheckInToken(),
   );
   if (!next) return;
 
@@ -178,7 +187,7 @@ export function confirmReservationRequest(id: string) {
   const next = confirmReservation(
     reservation,
     new Date().toISOString(),
-    crypto.randomUUID(),
+    createCheckInToken(),
   );
   saveReservation(next);
   return next;
