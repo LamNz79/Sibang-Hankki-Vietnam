@@ -8,7 +8,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { IconMinus, IconPhone, IconPlus } from "@tabler/icons-react";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { LARGE_PARTY_THRESHOLD } from "@/features/reservations/types";
 
 const guestOptions = [2, 4, 6] as const;
@@ -88,19 +88,9 @@ export function BookingGuestSelector({
         <Alert color="yellow" radius="md" title="Large party request">
           <Stack gap="sm">
             <Text size="sm">
-              For larger parties, please contact the restaurant. You can still
-              send this reservation request and the restaurant may call you
-              back.
+              For groups larger than 10 guests, contact the restaurant directly
+              to confirm a suitable time. Online booking is unavailable.
             </Text>
-            <Button
-              component="a"
-              href="tel:"
-              variant="light"
-              color="yellow"
-              leftSection={<IconPhone size={17} />}
-            >
-              Call restaurant
-            </Button>
           </Stack>
         </Alert>
       ) : null}

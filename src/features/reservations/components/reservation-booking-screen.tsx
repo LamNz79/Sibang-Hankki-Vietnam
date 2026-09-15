@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Text } from "@mantine/core";
+import { Alert, Button, Text } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
 import { BookingGuestSelector } from "@/features/reservations/components/booking-guest-selector";
@@ -39,7 +39,7 @@ function ReservationBookingContent() {
           radius="md"
           size="lg"
           color="warmCoral"
-          disabled={!booking.selectedTime}
+          disabled={!booking.canSubmit}
           onClick={booking.submit}
         >
           {booking.selectedTime
@@ -65,11 +65,21 @@ function ReservationBookingContent() {
         onChange={booking.selectGuests}
       />
 
-      <BookingTimeSelector
+      {booking.availabilityLoading ? <Text role="status">Checking available times...</Text> :
+      booking.availabilityError ? (
+        <Alert color="red" title="Unable to check availability" role="alert">
+          <Text size="sm">{booking.availabilityError}</Text>
+          <Button variant="light" color="red" onClick={booking.retryAvailability}>Try again</Button>
+        </Alert>
+      ) : booking.requiresRestaurantConfirmation ? (
+        <Alert color="yellow" title="Restaurant confirmation required">
+          Contact the restaurant to arrange a time for your group. No online times are offered for this party size.
+        </Alert>
+      ) : <BookingTimeSelector
         times={booking.availableTimes}
         value={booking.selectedTime}
         onChange={booking.selectTime}
-      />
+      />}
 
       <ReservationRequestSuccessModal
         opened={booking.successOpened}

@@ -61,11 +61,11 @@ export function BookingTimeSelector({
         >
           <Stack gap={4}>
             <Text fw={700} c={uiColors.textPrimary}>
-              No slots for this date yet
+              No online times available
             </Text>
             <Text size="sm" c={uiColors.textSecondary}>
-              Try another date or guest count. We only show available times once
-              the restaurant opens slots.
+              Try another date or guest count. The prototype currently has
+              capacity data for up to 6 guests only.
             </Text>
           </Stack>
         </Card>
