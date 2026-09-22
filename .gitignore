@@ -23,6 +23,10 @@
 # misc
 .DS_Store
 *.pem
+/Lam_*.xlsx
+/.vscode/settings.json
+/doc/AWS_STAGING_README.md
+/doc/PROJECT_TRANSFER_UBUNTU.md
 
 # debug
 npm-debug.log*
