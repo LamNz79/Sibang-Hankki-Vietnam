@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.pnpm-store/
 /.pnp
 .pnp.*
 .yarn/*
@@ -27,6 +28,7 @@
 /.vscode/settings.json
 /doc/AWS_STAGING_README.md
 /doc/PROJECT_TRANSFER_UBUNTU.md
+/doc/database/postgresql-ubuntu-setup.md
 
 # debug
 npm-debug.log*
