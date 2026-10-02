@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Alert, Button, Text } from "@mantine/core";
+import { Alert, Button, Stack, Text, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
 import { BookingGuestSelector } from "@/features/reservations/components/booking-guest-selector";
@@ -41,6 +41,7 @@ function ReservationBookingContent() {
           color="warmCoral"
           disabled={!booking.canSubmit}
           onClick={booking.submit}
+          loading={booking.submissionPending}
         >
           {booking.selectedTime
             ? changeReservationId
@@ -64,6 +65,48 @@ function ReservationBookingContent() {
         value={booking.selectedGuests}
         onChange={booking.selectGuests}
       />
+
+      <Stack gap="sm">
+        <Text fw={700}>Contact information</Text>
+        <TextInput
+          label="Full name"
+          value={booking.customerName}
+          onChange={(event) => booking.setCustomerName(event.currentTarget.value)}
+          autoComplete="name"
+          maxLength={120}
+          required
+        />
+        <TextInput
+          label="Phone number"
+          type="tel"
+          value={booking.customerPhone}
+          onChange={(event) => booking.setCustomerPhone(event.currentTarget.value)}
+          autoComplete="tel"
+          maxLength={30}
+          required
+        />
+        <TextInput
+          label="Email (optional)"
+          type="email"
+          value={booking.customerEmail}
+          onChange={(event) => booking.setCustomerEmail(event.currentTarget.value)}
+          autoComplete="email"
+          maxLength={320}
+          error={booking.customerEmailError}
+        />
+      </Stack>
+
+      {booking.changeReservationUnsupported ? (
+        <Alert color="yellow" title="Changing reservations is not available yet">
+          Please create a new reservation or return to your existing booking.
+        </Alert>
+      ) : null}
+
+      {booking.submissionError ? (
+        <Alert color="red" title="Unable to send reservation" role="alert">
+          {booking.submissionError}
+        </Alert>
+      ) : null}
 
       {booking.availabilityLoading ? <Text role="status">Checking available times...</Text> :
       booking.availabilityError ? (
