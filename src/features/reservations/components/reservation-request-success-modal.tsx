@@ -15,6 +15,7 @@ import {
 } from "@tabler/icons-react";
 import { StatusBadge } from "@/components/ui";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { ReservationStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 type ReservationRequestSuccessModalProps = {
@@ -35,6 +36,8 @@ export function ReservationRequestSuccessModal({
   onViewDetails,
   onExploreRestaurants,
 }: ReservationRequestSuccessModalProps) {
+  const confirmed = reservation?.status === ReservationStatus.Confirmed;
+
   return (
     <Modal
       opened={opened}
@@ -60,11 +63,14 @@ export function ReservationRequestSuccessModal({
             <Text fw={800} size="xl" ta="center" c={uiColors.textPrimary}>
               {isChangeRequest
                 ? "New time request sent"
-                : "Reservation request sent"}
+                : confirmed
+                  ? "Reservation confirmed"
+                  : "Reservation request sent"}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
-              The restaurant will review your request and confirm it or contact
-              you if anything needs to change.
+              {confirmed
+                ? "Your table has been confirmed."
+                : "The restaurant will review your request and contact you if anything needs to change."}
             </Text>
           </Stack>
 
@@ -82,7 +88,9 @@ export function ReservationRequestSuccessModal({
                 <Text fw={700} c={uiColors.textPrimary}>
                   {reservation.restaurantName}
                 </Text>
-                <StatusBadge tone="warning">Pending confirmation</StatusBadge>
+                <StatusBadge tone={confirmed ? "success" : "warning"}>
+                  {confirmed ? "Confirmed" : "Pending confirmation"}
+                </StatusBadge>
               </Group>
               <Group gap="xs" wrap="nowrap">
                 <IconCalendarEvent size={17} color={uiColors.brandPrimary} />
