@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { apiEndpoints } from "@/lib/api/endpoints";
 
 export async function POST(request: Request) {
   const idempotencyKey = request.headers.get("Idempotency-Key");
@@ -6,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const response = await fetch(
       new URL(
-        "/api/reservations",
+        apiEndpoints.reservations,
         process.env.API_BASE_URL ?? "http://localhost:8080",
       ),
       {

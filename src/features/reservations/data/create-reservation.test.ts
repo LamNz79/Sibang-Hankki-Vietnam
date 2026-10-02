@@ -1,10 +1,14 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createReservation } from "./create-reservation";
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+});
 
 describe("create reservation API", () => {
   it("sends the backend contract and idempotency key", async () => {
+    vi.stubEnv("API_BASE_URL", "");
     const response = {
       id: "reservation-id",
       reference: "SHK-123",
@@ -34,6 +38,7 @@ describe("create reservation API", () => {
     expect(fetchMock).toHaveBeenCalledWith("/api/reservations", {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
         "Idempotency-Key": "request-1",
       },

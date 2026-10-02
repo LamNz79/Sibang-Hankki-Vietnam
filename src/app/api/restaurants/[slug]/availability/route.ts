@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { apiEndpoints } from "@/lib/api/endpoints";
 
 export async function GET(
   request: Request,
@@ -7,7 +8,7 @@ export async function GET(
   const { slug } = await params;
   const search = new URL(request.url).searchParams;
   const upstream = new URL(
-    `/api/restaurants/${encodeURIComponent(slug)}/availability`,
+    apiEndpoints.availability(slug),
     process.env.API_BASE_URL ?? "http://localhost:8080",
   );
   for (const key of ["date", "partySize"]) {

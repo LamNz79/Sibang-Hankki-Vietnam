@@ -1,3 +1,6 @@
+import { ApiError, apiFetch } from "@/lib/api/client";
+import { apiEndpoints } from "@/lib/api/endpoints";
+
 export type CreateReservationInput = {
   idempotencyKey: string;
   restaurantSlug: string;
@@ -27,22 +30,20 @@ export async function createReservation(
   input: CreateReservationInput,
 ): Promise<CreateReservationResponse> {
   const { idempotencyKey, ...body } = input;
-  const response = await fetch("/api/reservations", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Idempotency-Key": idempotencyKey,
-    },
-    body: JSON.stringify(body),
-  });
 
-  if (!response.ok) {
-    const message =
-      response.status === 409
-        ? "This time is no longer available. Please choose another time."
-        : "Unable to create the reservation. Please try again.";
-    throw new Error(message);
+  try {
+    return await apiFetch<CreateReservationResponse>(
+      apiEndpoints.reservations,
+      {
+        method: "POST",
+        headers: { "Idempotency-Key": idempotencyKey },
+        body: JSON.stringify(body),
+      },
+    );
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 409) {
+      throw new Error("This time is no longer available. Please choose another time.");
+    }
+    throw new Error("Unable to create the reservation. Please try again.");
   }
-
-  return response.json();
 }

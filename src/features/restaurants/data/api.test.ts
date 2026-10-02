@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { ApiError } from "@/lib/api/client";
 import { getRestaurant, getRestaurants } from "@/features/restaurants/data/api";
 
 describe("restaurant API development fallback", () => {
@@ -10,7 +11,7 @@ describe("restaurant API development fallback", () => {
 
   it("uses prototype data when the API is unavailable in development", async () => {
     vi.stubEnv("NODE_ENV", "development");
-    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("offline")));
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     const restaurants = await getRestaurants();
@@ -18,5 +19,12 @@ describe("restaurant API development fallback", () => {
 
     expect(restaurants[0]).not.toHaveProperty("slotMatrix");
     expect(restaurant?.name).toBe("Anan Saigon");
+  });
+
+  it("does not hide an API response error", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(null, { status: 503 })));
+
+    await expect(getRestaurants()).rejects.toBeInstanceOf(ApiError);
   });
 });
