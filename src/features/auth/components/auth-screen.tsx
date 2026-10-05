@@ -18,6 +18,8 @@ import {
 import { notifications } from "@mantine/notifications";
 import { IconArrowLeft, IconToolsKitchen3 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { login } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors, uiShadows } from "@/theme";
 
@@ -29,9 +31,34 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
   const t = useTranslations("Auth");
   const isSignUp = mode === "signUp";
   const alternateHref = isSignUp ? "/login" : "/sign-up";
+  const [submitting, setSubmitting] = useState(false);
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!isSignUp) {
+      const form = new FormData(event.currentTarget);
+      setSubmitting(true);
+      try {
+        const user = await login(
+          String(form.get("userid") ?? ""),
+          String(form.get("password") ?? ""),
+        );
+        router.push(
+          user.role === "OWNER" || user.role === "STAFF" ? "/owner" : "/",
+        );
+      } catch {
+        notifications.show({
+          color: "red",
+          title: t("login.errorTitle"),
+          message: t("login.errorMessage"),
+        });
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
+
     notifications.show({
       color: "teal",
       title: t(`${mode}.successTitle`),
@@ -81,7 +108,7 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
             </Stack>
 
             <Alert color="blue" radius="md">
-              {t("prototypeNotice")}
+              {isSignUp ? t("prototypeNotice") : t("login.sessionNotice")}
             </Alert>
 
             <Box component="form" onSubmit={submit}>
@@ -95,14 +122,24 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
                     required
                   />
                 ) : null}
-                <TextInput
-                  name="email"
-                  type="email"
-                  label={t("fields.email")}
-                  placeholder={t("fields.emailPlaceholder")}
-                  autoComplete="email"
-                  required
-                />
+                {isSignUp ? (
+                  <TextInput
+                    name="email"
+                    type="email"
+                    label={t("fields.email")}
+                    placeholder={t("fields.emailPlaceholder")}
+                    autoComplete="email"
+                    required
+                  />
+                ) : (
+                  <TextInput
+                    name="userid"
+                    label={t("fields.userid")}
+                    placeholder={t("fields.useridPlaceholder")}
+                    autoComplete="username"
+                    required
+                  />
+                )}
                 <PasswordInput
                   name="password"
                   label={t("fields.password")}
@@ -111,7 +148,14 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
                   minLength={8}
                   required
                 />
-                <Button type="submit" fullWidth size="md" radius="md" color="warmCoral">
+                <Button
+                  type="submit"
+                  fullWidth
+                  size="md"
+                  radius="md"
+                  color="warmCoral"
+                  loading={submitting}
+                >
                   {t(`${mode}.submit`)}
                 </Button>
               </Stack>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Stack } from "@mantine/core";
+import { Alert, Button, Loader, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { PrimaryActionButton } from "@/components/ui";
 import { OwnerDashboardOverview } from "@/features/owner/dashboard/components/owner-dashboard-overview";
@@ -26,7 +26,7 @@ export function OwnerDashboardScreen() {
         footerAction={
           <PrimaryActionButton
             leftSection={<IconPlus size={20} />}
-            onClick={() => setWalkInOpened(true)}
+            disabled
           >
             Add walk-in
           </PrimaryActionButton>
@@ -46,7 +46,24 @@ export function OwnerDashboardScreen() {
             onOpenFilters={() => setFiltersOpened(true)}
           />
 
-          {!dashboard.isRefining ? (
+          {dashboard.reservationsLoading ? <Loader mx="auto" /> : null}
+          {dashboard.reservationsError ? (
+            <Alert color="red" title="Unable to load reservations">
+              <Button
+                mt="sm"
+                size="xs"
+                variant="outline"
+                color="red"
+                onClick={dashboard.retryReservations}
+              >
+                Try again
+              </Button>
+            </Alert>
+          ) : null}
+
+          {!dashboard.reservationsLoading &&
+          !dashboard.reservationsError &&
+          !dashboard.isRefining ? (
             <OwnerDashboardOverview
               summary={dashboard.summary}
               actionRequiredReservations={
@@ -56,10 +73,12 @@ export function OwnerDashboardScreen() {
             />
           ) : null}
 
-          <OwnerReservationList
-            reservations={dashboard.filteredReservations}
-            searchQuery={dashboard.searchQuery}
-          />
+          {!dashboard.reservationsLoading && !dashboard.reservationsError ? (
+            <OwnerReservationList
+              reservations={dashboard.filteredReservations}
+              searchQuery={dashboard.searchQuery}
+            />
+          ) : null}
         </Stack>
       </OwnerShell>
 

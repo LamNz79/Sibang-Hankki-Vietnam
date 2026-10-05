@@ -35,6 +35,7 @@ import { uiColors } from "@/theme";
 type OwnerReservationResponsePanelProps = {
   reservation: OwnerReservation;
   response: OwnerRequestResponse;
+  readOnly?: boolean;
 };
 
 const unavailableReasons = [
@@ -91,6 +92,7 @@ function OptionButton({
 export function OwnerReservationResponsePanel({
   reservation,
   response,
+  readOnly = false,
 }: OwnerReservationResponsePanelProps) {
   const format = useFormatter();
   const t = useTranslations("OwnerReservationDetails.response");
@@ -227,6 +229,7 @@ export function OwnerReservationResponsePanel({
               color="warmCoral"
               fullWidth
               leftSection={<IconCalendarClock size={18} />}
+              disabled={readOnly}
               onClick={() => setAlternativeOpened(true)}
             >
               {response.kind === "alternative-sent"
@@ -250,6 +253,7 @@ export function OwnerReservationResponsePanel({
                 variant="subtle"
                 color="red"
                 leftSection={<IconCircleX size={17} />}
+                disabled={readOnly}
                 onClick={() => setUnavailableOpened(true)}
               >
                 {t("noTable")}
@@ -257,6 +261,7 @@ export function OwnerReservationResponsePanel({
             ) : (
               <Button
                 variant="default"
+                disabled={readOnly}
                 onClick={() => reopenOwnerReservation(reservation.id)}
               >
                 {t("reopen")}

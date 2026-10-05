@@ -102,7 +102,11 @@ export function isOwnerReservationActionRequired(
 
 /** Excludes reservation requests that have already been declined. */
 export function isOwnerReservationActive(reservation: OwnerReservation) {
-  return reservation.reservationStatus !== ReservationStatus.Declined;
+  return ![
+    ReservationStatus.Declined,
+    ReservationStatus.Expired,
+    ReservationStatus.Cancelled,
+  ].includes(reservation.reservationStatus);
 }
 
 /** Checks whether a confirmed reservation is ready for guest check-in. */

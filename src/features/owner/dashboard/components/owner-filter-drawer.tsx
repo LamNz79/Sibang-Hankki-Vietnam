@@ -19,9 +19,12 @@ const statusFilters: Array<{
   },
   { value: ReservationStatus.Confirmed, label: "Confirmed" },
   { value: ReservationStatus.Declined, label: "Declined" },
+  { value: ReservationStatus.Expired, label: "Expired" },
+  { value: ReservationStatus.Cancelled, label: "Cancelled" },
   { value: VisitStatus.Arrived, label: "Arrived" },
   { value: VisitStatus.Seated, label: "Seated" },
   { value: VisitStatus.Completed, label: "Completed" },
+  { value: VisitStatus.NoShow, label: "No-show" },
 ];
 
 const guestFilterOptions: Array<{

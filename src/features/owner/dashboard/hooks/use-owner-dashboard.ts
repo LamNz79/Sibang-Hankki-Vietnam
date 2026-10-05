@@ -30,7 +30,8 @@ export type OwnerDashboardSummary = {
  * presentation component. No visual or modal state is managed here.
  */
 export function useOwnerDashboard() {
-  const ownerReservations = useOwnerReservations();
+  const ownerReservationQuery = useOwnerReservations();
+  const ownerReservations = ownerReservationQuery.reservations;
   const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
   const [statusFilter, setStatusFilter] =
     useState<OwnerReservationFilter>("all");
@@ -126,6 +127,9 @@ export function useOwnerDashboard() {
   };
 
   return {
+    reservationsLoading: ownerReservationQuery.isPending,
+    reservationsError: ownerReservationQuery.isError,
+    retryReservations: () => void ownerReservationQuery.refetch(),
     dateLabel,
     isToday,
     selectPreviousDay: () =>

@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/ui";
 import type { GuestTier } from "@/features/owner/types";
 import {
   ReservationStatus,
+  VisitStatus,
   type ReservationDisplayStatus,
 } from "@/features/reservations/types";
 
@@ -17,7 +18,14 @@ function getStatusTone(status: ReservationDisplayStatus) {
     return "warning" as const;
   }
 
-  if (status === ReservationStatus.Declined) return "error" as const;
+  if (
+    status === ReservationStatus.Declined ||
+    status === ReservationStatus.Expired ||
+    status === ReservationStatus.Cancelled ||
+    status === VisitStatus.NoShow
+  ) {
+    return "error" as const;
+  }
   return "success" as const;
 }
 
