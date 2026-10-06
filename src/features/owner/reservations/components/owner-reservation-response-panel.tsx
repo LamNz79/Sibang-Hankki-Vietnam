@@ -2,6 +2,7 @@
 
 import dayjs from "dayjs";
 import {
+  Alert,
   Button,
   Card,
   Drawer,
@@ -22,7 +23,6 @@ import { useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
-  rejectOwnerReservation,
   reopenOwnerReservation,
 } from "@/features/owner/data/owner-reservation-storage";
 import type {
@@ -36,6 +36,9 @@ type OwnerReservationResponsePanelProps = {
   reservation: OwnerReservation;
   response: OwnerRequestResponse;
   readOnly?: boolean;
+  onDecline?: (reason: string) => Promise<OwnerReservation>;
+  declinePending?: boolean;
+  declineError?: boolean;
 };
 
 const unavailableReasons = [
@@ -93,6 +96,9 @@ export function OwnerReservationResponsePanel({
   reservation,
   response,
   readOnly = false,
+  onDecline,
+  declinePending = false,
+  declineError = false,
 }: OwnerReservationResponsePanelProps) {
   const format = useFormatter();
   const t = useTranslations("OwnerReservationDetails.response");
@@ -164,18 +170,15 @@ export function OwnerReservationResponsePanel({
     });
   };
 
-  const markUnavailable = () => {
-    if (!selectedReason) return;
+  const markUnavailable = async () => {
+    if (!selectedReason || !onDecline) return;
 
-    rejectOwnerReservation(reservation.id, selectedReason);
-    setUnavailableOpened(false);
-    notifications.show({
-      color: "red",
-      title: t("unavailableDrawer.notifiedTitle"),
-      message: t("unavailableDrawer.notifiedMessage", {
-        reason: getReasonLabel(selectedReason),
-      }),
-    });
+    try {
+      await onDecline(selectedReason);
+      setUnavailableOpened(false);
+    } catch {
+      // The parent displays the mutation error while this drawer stays open for retry.
+    }
   };
 
   return (
@@ -253,7 +256,8 @@ export function OwnerReservationResponsePanel({
                 variant="subtle"
                 color="red"
                 leftSection={<IconCircleX size={17} />}
-                disabled={readOnly}
+                disabled={!onDecline || declinePending}
+                loading={declinePending}
                 onClick={() => setUnavailableOpened(true)}
               >
                 {t("noTable")}
@@ -348,12 +352,19 @@ export function OwnerReservationResponsePanel({
             ))}
           </Stack>
 
+          {declineError ? (
+            <Alert color="red" title="Unable to decline reservation" role="alert">
+              Refresh the reservation and try again.
+            </Alert>
+          ) : null}
+
           <Button
             fullWidth
             size="md"
             color="red"
-            disabled={!selectedReason}
-            onClick={markUnavailable}
+            disabled={!selectedReason || !onDecline}
+            loading={declinePending}
+            onClick={() => void markUnavailable()}
           >
             {t("unavailableDrawer.notify")}
           </Button>

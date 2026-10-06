@@ -10,4 +10,8 @@ export const apiEndpoints = {
   authMe: "/api/auth/me",
   ownerReservations: "/api/owner/reservations",
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
+  confirmOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/confirm`,
+  declineOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/decline`,
 } as const;

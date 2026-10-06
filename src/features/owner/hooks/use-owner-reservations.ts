@@ -2,8 +2,10 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  confirmOwnerReservation,
+  declineOwnerReservation,
   getOwnerReservation,
   getOwnerReservations,
 } from "@/features/owner/data/owner-reservations";
@@ -37,4 +39,25 @@ export function useOwnerReservation(id: string) {
   });
   useLoginRedirect(query.error);
   return { ...query, reservation: query.data };
+}
+
+export function useOwnerReservationActions(id: string) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (action: { kind: "confirm" } | { kind: "decline"; reason: string }) =>
+      action.kind === "confirm"
+        ? confirmOwnerReservation(id)
+        : declineOwnerReservation(id, action.reason),
+    onSuccess: async (reservation) => {
+      queryClient.setQueryData(["owner-reservations", id], reservation);
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
+    },
+  });
+  useLoginRedirect(mutation.error);
+
+  return {
+    ...mutation,
+    confirm: () => mutation.mutate({ kind: "confirm" }),
+    decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
+  };
 }

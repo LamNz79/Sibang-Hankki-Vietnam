@@ -141,10 +141,10 @@
     "response": {
       "title": "Respond to request", "alternativeSent": "Alternative sent", "unable": "Unable to accommodate", "awaiting": "Awaiting response",
       "waiting": "Waiting for the guest to respond to {slot}.", "notified": "The guest was notified: {reason}.", "instructions": "Confirm the requested time, suggest another time, or let the guest know the restaurant is full.",
-      "updates": "Updates are sent by in-app notification. Call the guest when a same-day or special request needs a quick answer.",
+      "updates": "Call the guest when a same-day or special request needs a quick answer.",
       "changeTime": "Change suggested time", "suggestTime": "Suggest another time", "call": "Call guest", "noTable": "No table", "reopen": "Reopen request",
       "alternativeDrawer": { "title": "Suggest another time", "description": "The requested time is {slot}. Select one alternative for the guest.", "message": "Message (optional)", "placeholder": "For example: We can keep a window table at this time.", "send": "Send suggested time", "sentTitle": "Alternative time sent", "sentMessage": "{guest} will receive an in-app notification and can accept or decline." },
-      "unavailableDrawer": { "title": "Unable to accommodate", "description": "Choose a clear reason. The guest will receive it in the app instead of waiting without an answer.", "notify": "Notify guest", "notifiedTitle": "Guest notified", "notifiedMessage": "The request was declined because: {reason}." },
+      "unavailableDrawer": { "title": "Unable to accommodate", "description": "Choose a clear reason. It will be stored with the reservation decision.", "notify": "Decline request", "notifiedTitle": "Request declined", "notifiedMessage": "The request was declined because: {reason}." },
       "reasons": { "fullyBooked": "Fully booked", "partySize": "Cannot accommodate this party size", "closed": "Restaurant is closed", "other": "Other" }
     }
   },

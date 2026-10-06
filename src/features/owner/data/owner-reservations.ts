@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { getCsrfToken } from "@/features/auth/data/session";
 import type { OwnerReservation } from "@/features/owner/types";
 import {
   ReservationStatus,
@@ -94,4 +95,25 @@ export async function getOwnerReservation(id: string, signal?: AbortSignal) {
     { cache: "no-store", signal },
   );
   return toOwnerReservation(record);
+}
+
+async function postOwnerReservation(
+  path: string,
+  body?: Record<string, string>,
+) {
+  const csrf = await getCsrfToken();
+  const record = await apiFetch<OwnerReservationRecord>(path, {
+    method: "POST",
+    headers: { [csrf.headerName]: csrf.token },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return toOwnerReservation(record);
+}
+
+export function confirmOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.confirmOwnerReservation(id));
+}
+
+export function declineOwnerReservation(id: string, reason: string) {
+  return postOwnerReservation(apiEndpoints.declineOwnerReservation(id), { reason });
 }
