@@ -114,15 +114,20 @@ function ReservationBookingContent() {
           <Text size="sm">{booking.availabilityError}</Text>
           <Button variant="light" color="red" onClick={booking.retryAvailability}>Try again</Button>
         </Alert>
-      ) : booking.requiresRestaurantConfirmation ? (
-        <Alert color="yellow" title="Restaurant confirmation required">
-          Contact the restaurant to arrange a time for your group. No online times are offered for this party size.
-        </Alert>
-      ) : <BookingTimeSelector
-        times={booking.availableTimes}
-        value={booking.selectedTime}
-        onChange={booking.selectTime}
-      />}
+      ) : (
+        <Stack gap="sm">
+          {booking.requiresRestaurantConfirmation && booking.availableTimes.length > 0 ? (
+            <Alert color="yellow" title="Restaurant confirmation required">
+              Choose an available time and send your request. The reservation will remain pending until the restaurant confirms it.
+            </Alert>
+          ) : null}
+          <BookingTimeSelector
+            times={booking.availableTimes}
+            value={booking.selectedTime}
+            onChange={booking.selectTime}
+          />
+        </Stack>
+      )}
 
       <ReservationRequestSuccessModal
         opened={booking.successOpened}
