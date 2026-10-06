@@ -9,7 +9,6 @@ import {
   getOwnerReservation,
   getOwnerReservations,
 } from "@/features/owner/data/owner-reservations";
-import type { OwnerReservation } from "@/features/owner/types";
 import { ApiError } from "@/lib/api/client";
 
 function useLoginRedirect(error: Error | null) {
@@ -49,11 +48,9 @@ export function useOwnerReservationActions(id: string) {
       action.kind === "confirm"
         ? confirmOwnerReservation(id)
         : declineOwnerReservation(id, action.reason),
-    onSuccess: (reservation) => {
+    onSuccess: async (reservation) => {
       queryClient.setQueryData(["owner-reservations", id], reservation);
-      queryClient.setQueryData<OwnerReservation[]>(["owner-reservations"], (current) =>
-        current?.map((item) => (item.id === id ? reservation : item)),
-      );
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
     },
   });
   useLoginRedirect(mutation.error);
