@@ -152,9 +152,18 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
               <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
                 <Group gap={0} wrap="nowrap" align="stretch">
-                  <Box w={96} miw={96} style={{ background: `repeating-linear-gradient(135deg, ${restaurant.heroAccent} 0 8px, #ffffff 8px 16px)`, display: "flex", alignItems: "center", justifyContent: "center", color: uiColors.textSecondary, fontWeight: 700, fontSize: 12 }}>
-                    IMAGE
-                  </Box>
+                  <Box
+                    w={96}
+                    miw={96}
+                    role="img"
+                    aria-label={restaurant.imageAlt}
+                    style={{
+                      backgroundColor: restaurant.heroAccent,
+                      backgroundImage: `url("${restaurant.imageUrl}")`,
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  />
                   <Stack gap={6} p="md" style={{ flex: 1 }}>
                     <Title order={3} size="h4" fw={700} c={uiColors.textPrimary}>{restaurant.name}</Title>
                     <Text size="sm" c={uiColors.textSecondary}>{restaurant.cuisineLabel}</Text>

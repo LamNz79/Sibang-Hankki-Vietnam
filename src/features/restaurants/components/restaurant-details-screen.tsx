@@ -27,19 +27,16 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
     >
       <Box
         h={280}
+        role="img"
+        aria-label={restaurant.imageAlt}
         style={{
           borderRadius: 24,
-          background: `repeating-linear-gradient(135deg, ${restaurant.heroAccent} 0 12px, #ffffff 12px 24px)`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: uiColors.textSecondary,
-          fontWeight: 800,
-          fontSize: 28,
+          backgroundColor: restaurant.heroAccent,
+          backgroundImage: `url("${restaurant.imageUrl}")`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
         }}
-      >
-        PHOTO GALLERY
-      </Box>
+      />
 
       <Stack gap="sm">
         <Text size="sm" fw={700} c={uiColors.textSecondary}>{restaurant.cuisineLabel} · {restaurant.district}</Text>
