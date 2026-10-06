@@ -9,6 +9,8 @@
     "backHome": "홈으로 돌아가기",
     "prototypeNotice": "프로토타입 화면입니다. 계정 정보는 아직 저장되지 않습니다.",
     "fields": {
+      "userid": "사용자 ID",
+      "useridPlaceholder": "사용자 ID 입력",
       "fullName": "이름",
       "fullNamePlaceholder": "이름을 입력하세요",
       "email": "이메일",
@@ -17,6 +19,9 @@
       "passwordPlaceholder": "8자 이상 입력하세요"
     },
     "login": {
+      "sessionNotice": "매장 소유자와 직원은 사용자 ID로 로그인합니다.",
+      "errorTitle": "로그인 실패",
+      "errorMessage": "사용자 ID와 비밀번호를 확인한 후 다시 시도하세요.",
       "title": "다시 오신 것을 환영합니다",
       "subtitle": "예약을 관리하려면 로그인하세요.",
       "submit": "로그인",
@@ -87,7 +92,7 @@
     "information": { "title": "예약 정보", "date": "날짜", "largeParty": "단체 예약", "guests": "인원", "guestCount": "{count}명", "table": "테이블", "notAssigned": "미배정", "preOrder": "사전 주문", "noPreOrder": "사전 주문 없음" },
     "confirmation": { "title": "고객 예약 확정", "description": "앱으로 예약 확정을 보내세요. 긴급하거나 특별한 확인이 필요할 때만 전화하세요.", "notify": "고객에게 알림", "call": "고객에게 전화" },
     "summary": { "meta": "{time} · {count}명 · 예약번호 {reference}" },
-    "badges": { "pending": "대기 중", "alternative-proposed": "다른 시간 제안", "confirmed": "확정", "declined": "거절", "expected": "방문 예정", "arrived": "도착", "seated": "착석", "completed": "완료", "vip": "VIP", "regular": "일반", "new": "신규", "preOrder": "사전 주문" },
+    "badges": { "pending": "대기 중", "alternative-proposed": "다른 시간 제안", "confirmed": "확정", "declined": "거절", "expired": "만료", "cancelled": "취소", "expected": "방문 예정", "arrived": "도착", "seated": "착석", "completed": "완료", "no-show": "노쇼", "vip": "VIP", "regular": "일반", "new": "신규", "preOrder": "사전 주문" },
     "notes": { "title": "서비스 메모", "empty": "서비스 메모 없음" },
     "customerResponse": { "acceptedTitle": "고객이 제안 시간을 수락했습니다", "acceptedDescription": "{date} {time}로 확정되었습니다.", "declinedTitle": "고객이 제안 시간을 거절했습니다", "declinedSlot": "제안 시간", "declinedDescription": "고객이 {slot}을 거절했습니다. 다른 시간을 제안하거나 직접 연락하세요.", "requestedTitle": "고객이 다른 시간을 요청했습니다", "requestedDescription": "{date} {time}의 새 요청을 확인하세요.", "waitingTitle": "고객 응답 대기 중", "waitingDescription": "{date} {time}를 제안했습니다." },
     "response": {

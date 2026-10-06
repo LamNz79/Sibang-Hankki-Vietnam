@@ -30,7 +30,6 @@ import {
   IconSearch,
   IconUserCheck,
 } from "@tabler/icons-react";
-import { checkInOwnerReservation } from "@/features/owner/data/owner-reservation-storage";
 import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import { GuestContextBadges } from "@/features/owner/reservations";
 import {
@@ -102,7 +101,7 @@ function ReservationLookupCard({
             size="sm"
             radius="md"
             leftSection={<IconUserCheck size={16} />}
-            onClick={() => checkInOwnerReservation(reservation)}
+            disabled
           >
             {t("checkIn")}
           </Button>
@@ -128,8 +127,8 @@ function ReservationLookupCard({
 function OwnerCheckInContent() {
   const t = useTranslations("OwnerCheckIn");
   const searchParams = useSearchParams();
-  const ownerReservations = useOwnerReservations();
-  const [mode, setMode] = useState("qr");
+  const { reservations: ownerReservations } = useOwnerReservations();
+  const [mode, setMode] = useState("manual");
   const [query, setQuery] = useState("");
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>("idle");
   const [qrReservationId, setQrReservationId] = useState<string | null>(null);
@@ -219,7 +218,7 @@ function OwnerCheckInContent() {
           onChange={changeMode}
           color="warmCoral"
           data={[
-            { value: "qr", label: t("modes.qr") },
+            { value: "qr", label: t("modes.qr"), disabled: true },
             { value: "manual", label: t("modes.manual") },
           ]}
         />

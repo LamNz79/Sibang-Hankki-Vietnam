@@ -9,6 +9,8 @@
     "backHome": "Back to home",
     "prototypeNotice": "Prototype only. Account details are not saved yet.",
     "fields": {
+      "userid": "User ID",
+      "useridPlaceholder": "Enter your user ID",
       "fullName": "Full name",
       "fullNamePlaceholder": "Enter your name",
       "email": "Email",
@@ -17,6 +19,9 @@
       "passwordPlaceholder": "At least 8 characters"
     },
     "login": {
+      "sessionNotice": "Owner and staff accounts sign in with their user ID.",
+      "errorTitle": "Login failed",
+      "errorMessage": "Check your user ID and password, then try again.",
       "title": "Welcome back",
       "subtitle": "Log in to manage your reservations.",
       "submit": "Log in",
@@ -125,7 +130,7 @@
     "information": { "title": "Reservation information", "date": "Date", "largeParty": "Large party", "guests": "Guests", "guestCount": "{count, plural, one {# guest} other {# guests}}", "table": "Table", "notAssigned": "Not assigned", "preOrder": "Pre-order", "noPreOrder": "No pre-order" },
     "confirmation": { "title": "Guest confirmation", "description": "Send the confirmed booking in the app. Call only when the guest needs urgent or special follow-up.", "notify": "Notify guest", "call": "Call guest" },
     "summary": { "meta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}" },
-    "badges": { "pending": "Pending", "alternative-proposed": "Alternative proposed", "confirmed": "Confirmed", "declined": "Declined", "expected": "Expected", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "vip": "VIP", "regular": "Regular", "new": "New", "preOrder": "Pre-order" },
+    "badges": { "pending": "Pending", "alternative-proposed": "Alternative proposed", "confirmed": "Confirmed", "declined": "Declined", "expired": "Expired", "cancelled": "Cancelled", "expected": "Expected", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "no-show": "No-show", "vip": "VIP", "regular": "Regular", "new": "New", "preOrder": "Pre-order" },
     "notes": { "title": "Service notes", "empty": "No service notes" },
     "customerResponse": {
       "acceptedTitle": "Guest accepted the suggested time", "acceptedDescription": "Confirmed for {date} at {time}.",

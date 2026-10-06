@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   ActionIcon,
@@ -12,7 +11,6 @@ import {
   Text,
   ThemeIcon,
 } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 import { useFormatter, useTranslations } from "next-intl";
 import {
   IconBell,
@@ -28,7 +26,6 @@ import {
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
 import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
-import { confirmOwnerReservation } from "@/features/owner/data/owner-reservation-storage";
 import type {
   OwnerRequestResponse,
   OwnerReservation,
@@ -117,13 +114,23 @@ export function OwnerReservationDetailScreen() {
   const format = useFormatter();
   const t = useTranslations("OwnerReservationDetails");
   const params = useParams<{ id: string }>();
-  const reservation = useOwnerReservation(params.id);
+  const { reservation, isPending } = useOwnerReservation(params.id);
   const formatDate = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00`), {
       weekday: "long",
       month: "short",
       day: "numeric",
     });
+
+  if (isPending) {
+    return (
+      <OwnerShell title={t("title")} backHref="/owner">
+        <Card p="xl">
+          <Text fw={700}>Loading reservation...</Text>
+        </Card>
+      </OwnerShell>
+    );
+  }
 
   if (!reservation) {
     return (
@@ -137,7 +144,6 @@ export function OwnerReservationDetailScreen() {
 
   const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
   const isLargeParty = reservation.partySize > LARGE_PARTY_THRESHOLD;
-  const arrivalHref = `/owner/reservations/${reservation.id}/arrival`;
   const displayStatus = reservation.reservationStatus;
   const persistedResponse = getPersistedResponse(reservation, formatDate);
   const response =
@@ -151,33 +157,20 @@ export function OwnerReservationDetailScreen() {
     (displayStatus === ReservationStatus.Declined &&
       reservation.customerResponse?.kind === "declined-alternative");
 
-  const notifyGuest = () => {
-    notifications.show({
-      color: "teal",
-      title: t("notification.title"),
-      message: t("notification.message", { guest: reservation.guestName }),
-    });
-  };
-
-  const confirmReservation = () => {
-    confirmOwnerReservation(reservation.id);
-    notifyGuest();
-  };
-
   const footerAction = displayStatus === ReservationStatus.Confirmed ? (
     <Button
-      component={Link}
-      href={arrivalHref}
       fullWidth
       size="md"
       radius="md"
       leftSection={<IconUserCheck size={19} />}
+      disabled
     >
       {hasArrived
         ? t("footer.viewArrival", { guest: reservation.guestName })
         : t("footer.checkIn", { guest: reservation.guestName })}
     </Button>
-  ) : displayStatus === ReservationStatus.Declined ? null : (
+  ) : displayStatus === ReservationStatus.Pending ||
+    displayStatus === ReservationStatus.AlternativeProposed ? (
       <Button
         fullWidth
         size="md"
@@ -185,11 +178,7 @@ export function OwnerReservationDetailScreen() {
         leftSection={
           response.kind === "pending" ? <IconCheck size={19} /> : undefined
         }
-        disabled={
-          response.kind !== "pending" ||
-          displayStatus === ReservationStatus.AlternativeProposed
-        }
-        onClick={confirmReservation}
+        disabled
       >
         {response.kind === "alternative-sent"
           ? t("footer.waiting")
@@ -197,7 +186,7 @@ export function OwnerReservationDetailScreen() {
             ? t("footer.closed")
             : t("footer.confirm")}
       </Button>
-    );
+    ) : null;
 
   return (
     <OwnerShell
@@ -315,6 +304,7 @@ export function OwnerReservationDetailScreen() {
           <OwnerReservationResponsePanel
             reservation={reservation}
             response={response}
+            readOnly
           />
         ) : null}
 
@@ -346,7 +336,7 @@ export function OwnerReservationDetailScreen() {
                 variant="outline"
                 color="teal"
                 leftSection={<IconBell size={17} />}
-                onClick={notifyGuest}
+                disabled
               >
                 {t("confirmation.notify")}
               </Button>

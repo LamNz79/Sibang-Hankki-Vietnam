@@ -7,6 +7,8 @@ export enum ReservationStatus {
   AlternativeProposed = "alternative-proposed",
   Confirmed = "confirmed",
   Declined = "declined",
+  Expired = "expired",
+  Cancelled = "cancelled",
 }
 
 /** Operational visit lifecycle managed by restaurant staff. */
@@ -15,6 +17,7 @@ export enum VisitStatus {
   Arrived = "arrived",
   Seated = "seated",
   Completed = "completed",
+  NoShow = "no-show",
 }
 
 /** Last explicit response made by the customer during a time-change flow. */

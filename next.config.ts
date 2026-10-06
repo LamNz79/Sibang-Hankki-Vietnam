@@ -4,7 +4,13 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    const backend = process.env.API_BASE_URL ?? "http://localhost:8080";
+    return ["auth", "owner"].map((scope) => ({
+      source: `/api/${scope}/:path*`,
+      destination: `${backend}/api/${scope}/:path*`,
+    }));
+  },
 };
 
 export default withNextIntl(nextConfig);

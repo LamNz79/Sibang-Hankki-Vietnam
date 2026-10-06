@@ -10,12 +10,7 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { ChoiceButton } from "@/components/ui";
-import {
-  checkInOwnerReservation,
-  updateOwnerVisitStatus,
-} from "@/features/owner/data/owner-reservation-storage";
 import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
-import { canOwnerReservationCheckIn } from "@/features/owner/selectors/owner-reservation-selectors";
 import { OwnerShell } from "@/features/owner/shared";
 import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -35,7 +30,17 @@ const arrivalStatuses: Array<{
 export function OwnerGuestArrivalScreen() {
   const t = useTranslations("OwnerCheckIn.arrival");
   const params = useParams<{ id: string }>();
-  const reservation = useOwnerReservation(params.id);
+  const { reservation, isPending } = useOwnerReservation(params.id);
+
+  if (isPending) {
+    return (
+      <OwnerShell title={t("title")} backHref="/owner">
+        <Card p="xl">
+          <Text fw={700}>Loading reservation...</Text>
+        </Card>
+      </OwnerShell>
+    );
+  }
 
   if (!reservation) {
     return (
@@ -46,8 +51,6 @@ export function OwnerGuestArrivalScreen() {
       </OwnerShell>
     );
   }
-
-  const canCheckIn = canOwnerReservationCheckIn(reservation);
 
   return (
     <OwnerShell
@@ -76,22 +79,8 @@ export function OwnerGuestArrivalScreen() {
                 <ChoiceButton
                   key={option.value}
                   selected={reservation.visitStatus === option.value}
-                  disabled={
-                    reservation.visitStatus === VisitStatus.Expected
-                      ? option.value !== VisitStatus.Expected &&
-                        (option.value !== VisitStatus.Arrived || !canCheckIn)
-                      : option.value === VisitStatus.Expected ||
-                        option.value === VisitStatus.Arrived
-                  }
+                  disabled
                   leftSection={<StatusIcon size={17} />}
-                  onClick={() => {
-                    if (option.value === VisitStatus.Arrived) {
-                      checkInOwnerReservation(reservation);
-                      return;
-                    }
-
-                    updateOwnerVisitStatus(reservation.id, option.value);
-                  }}
                 >
                   {t(`statuses.${option.value}`)}
                 </ChoiceButton>
