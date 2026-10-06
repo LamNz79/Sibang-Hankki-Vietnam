@@ -8,6 +8,7 @@ import {
   Card,
   Group,
   Loader,
+  Modal,
   NumberInput,
   Select,
   SimpleGrid,
@@ -23,6 +24,7 @@ import {
   IconCalendarEvent,
   IconClock,
   IconInfoCircle,
+  IconHelpCircle,
   IconPlus,
   IconRefresh,
   IconTrash,
@@ -69,10 +71,12 @@ const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
 function SectionCard({
   title,
   icon: Icon,
+  headerAction,
   children,
 }: {
   title: string;
   icon: typeof IconBuildingStore;
+  headerAction?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -85,11 +89,14 @@ function SectionCard({
       }}
     >
       <Stack gap="md">
-        <Group gap="sm">
-          <ThemeIcon size={36} radius="md" variant="light" color="warmCoral">
-            <Icon size={18} />
-          </ThemeIcon>
-          <Text fw={800}>{title}</Text>
+        <Group justify="space-between">
+          <Group gap="sm">
+            <ThemeIcon size={36} radius="md" variant="light" color="warmCoral">
+              <Icon size={18} />
+            </ThemeIcon>
+            <Text fw={800}>{title}</Text>
+          </Group>
+          {headerAction}
         </Group>
         {children}
       </Stack>
@@ -102,6 +109,7 @@ export function OwnerSettingsScreen() {
   const businessHours = useBusinessHours();
   const [draft, setDraft] = useState<OwnerSettingsUpdate | null>(null);
   const [hoursDraft, setHoursDraft] = useState<BusinessHour[] | null>(null);
+  const [helpOpened, setHelpOpened] = useState(false);
   const form = draft ?? (query.data ? editableSettings(query.data) : null);
   const hours = hoursDraft ?? businessHours.query.data ?? [];
 
@@ -267,7 +275,20 @@ export function OwnerSettingsScreen() {
             </Button>
           </SectionCard>
 
-          <SectionCard title="Business hours" icon={IconClock}>
+          <SectionCard
+            title="Business hours"
+            icon={IconClock}
+            headerAction={(
+              <ActionIcon
+                variant="subtle"
+                color="gray"
+                aria-label="Explain how booking slots work"
+                onClick={() => setHelpOpened(true)}
+              >
+                <IconHelpCircle size={20} />
+              </ActionIcon>
+            )}
+          >
             {businessHours.query.isLoading ? (
               <Group justify="center"><Loader size="sm" /></Group>
             ) : businessHours.query.isError ? (
@@ -337,6 +358,36 @@ export function OwnerSettingsScreen() {
               </Stack>
             )}
           </SectionCard>
+
+          <Modal
+            opened={helpOpened}
+            onClose={() => setHelpOpened(false)}
+            title={<Text fw={800}>How booking slots work</Text>}
+            centered
+            radius="lg"
+          >
+            <Stack gap="md">
+              <Text size="sm">
+                A booking slot is a time when a guest may start a reservation. Slots are generated for every open day inside your booking window.
+              </Text>
+              <Stack gap="xs">
+                <Text fw={700}>What each setting means</Text>
+                <Text size="sm"><b>Business hours:</b> the days and periods when guests may book. Add two periods when you serve lunch and dinner separately.</Text>
+                <Text size="sm"><b>Booking window:</b> how many days ahead guests can reserve. A 30-day window includes every matching weekday during those 30 days.</Text>
+                <Text size="sm"><b>Slot interval:</b> the distance between reservation start times. A 60-minute interval creates starts at 07:30, 08:30, 09:30, and so on.</Text>
+                <Text size="sm"><b>Dining duration:</b> how long a table is expected to be occupied. A slot is created only when the full dining duration ends before closing.</Text>
+                <Text size="sm"><b>Guest capacity:</b> the total number of guests the restaurant can accept at one start time. It is not the maximum size of one group.</Text>
+              </Stack>
+              <Alert color="blue" title="Example">
+                Monday 07:30–11:00, 60-minute interval and 90-minute dining duration creates three starts: 07:30, 08:30 and 09:30. If the 30-day window contains four Mondays, the system creates 4 × 3 = 12 slots.
+              </Alert>
+              <Stack gap="xs">
+                <Text fw={700}>When to regenerate</Text>
+                <Text size="sm">Saving business hours regenerates slots automatically. Use <b>Regenerate future slots</b> after changing capacity, interval, dining duration or booking window.</Text>
+                <Text size="sm">Existing reservations are preserved. Regeneration only replaces future slot data that is safe to rebuild.</Text>
+              </Stack>
+            </Stack>
+          </Modal>
 
           <Card
             radius="lg"
