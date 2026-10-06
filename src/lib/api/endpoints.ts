@@ -16,6 +16,11 @@ export const apiEndpoints = {
   ownerSettings: "/api/owner/settings",
   ownerBusinessHours: "/api/owner/settings/business-hours",
   regenerateOwnerSlots: "/api/owner/settings/regenerate-slots",
+  ownerMenu: "/api/owner/menu",
+  ownerMenuCategories: "/api/owner/menu/categories",
+  ownerMenuCategory: (id: string) => `/api/owner/menu/categories/${seg(id)}`,
+  ownerMenuItems: "/api/owner/menu/items",
+  ownerMenuItem: (id: string) => `/api/owner/menu/items/${seg(id)}`,
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,

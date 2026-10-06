@@ -23,6 +23,7 @@ import {
   IconCalendarEvent,
   IconChartBar,
   IconLayoutDashboard,
+  IconToolsKitchen2,
   IconSearch,
   IconSettings,
   IconUsers,
@@ -40,6 +41,7 @@ const adminNavigation = [
     count: 18,
   },
   { href: "/admin/customers", labelKey: "customers", icon: IconUsers },
+  { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2 },
   {
     href: "/admin/stores",
     labelKey: "stores",
@@ -138,7 +140,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 Sibang Hankki
               </Text>
               <Text c="#cfc6c8" size="10px">
-                ADMIN CONSOLE
+                RESTAURANT ADMIN
               </Text>
             </Stack>
           </Group>
