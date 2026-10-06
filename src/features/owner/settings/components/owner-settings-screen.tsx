@@ -2,7 +2,9 @@
 
 import { useState, type ReactNode } from "react";
 import {
+  ActionIcon,
   Alert,
+  Button,
   Card,
   Group,
   Loader,
@@ -19,7 +21,11 @@ import { notifications } from "@mantine/notifications";
 import {
   IconBuildingStore,
   IconCalendarEvent,
+  IconClock,
   IconInfoCircle,
+  IconPlus,
+  IconRefresh,
+  IconTrash,
 } from "@tabler/icons-react";
 import { LanguageSelect } from "@/features/i18n";
 import { OwnerShell } from "@/features/owner/shared";
@@ -29,11 +35,14 @@ import {
   type OwnerSettingsUpdate,
 } from "@/features/owner/settings/data/owner-settings";
 import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
+import { useBusinessHours } from "@/features/owner/settings/hooks/use-business-hours";
+import type { BusinessHour } from "@/features/owner/settings/data/business-hours";
 import { PrimaryActionButton, WorkspaceSwitcher } from "@/components/ui";
 import { uiColors } from "@/theme";
 
 const numberValue = (value: string | number) =>
   typeof value === "number" ? value : 0;
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
   name: settings.name,
@@ -90,8 +99,11 @@ function SectionCard({
 
 export function OwnerSettingsScreen() {
   const { query, mutation } = useOwnerSettings();
+  const businessHours = useBusinessHours();
   const [draft, setDraft] = useState<OwnerSettingsUpdate | null>(null);
+  const [hoursDraft, setHoursDraft] = useState<BusinessHour[] | null>(null);
   const form = draft ?? (query.data ? editableSettings(query.data) : null);
+  const hours = hoursDraft ?? businessHours.query.data ?? [];
 
   const set = <K extends keyof OwnerSettingsUpdate>(
     key: K,
@@ -113,6 +125,36 @@ export function OwnerSettingsScreen() {
         message: "Could not save settings. Check the values and try again.",
       });
     }
+  };
+
+  const saveHours = async () => {
+    try {
+      const result = await businessHours.updateMutation.mutateAsync(hours);
+      setHoursDraft(null);
+      notifications.show({
+        color: "teal",
+        message: `Hours saved. ${result.generatedSlots} future slots generated.`,
+      });
+    } catch {
+      notifications.show({ color: "red", message: "Could not save business hours." });
+    }
+  };
+
+  const regenerate = async () => {
+    try {
+      const result = await businessHours.regenerateMutation.mutateAsync();
+      notifications.show({
+        color: "teal",
+        message: `${result.generatedSlots} future slots generated.`,
+      });
+    } catch {
+      notifications.show({ color: "red", message: "Could not regenerate booking slots." });
+    }
+  };
+
+  const updateHour = (index: number, key: "opensAt" | "closesAt", value: string) => {
+    setHoursDraft(hours.map((hour, hourIndex) =>
+      hourIndex === index ? { ...hour, [key]: value } : hour));
   };
 
   return (
@@ -214,6 +256,86 @@ export function OwnerSettingsScreen() {
             <Alert icon={<IconInfoCircle size={18} />} color="blue">
               Capacity and schedule timing changes apply when future booking slots are regenerated.
             </Alert>
+            <Button
+              variant="light"
+              color="warmCoral"
+              leftSection={<IconRefresh size={16} />}
+              loading={businessHours.regenerateMutation.isPending}
+              onClick={regenerate}
+            >
+              Regenerate future slots
+            </Button>
+          </SectionCard>
+
+          <SectionCard title="Business hours" icon={IconClock}>
+            {businessHours.query.isLoading ? (
+              <Group justify="center"><Loader size="sm" /></Group>
+            ) : businessHours.query.isError ? (
+              <Alert color="red">Could not load business hours.</Alert>
+            ) : (
+              <Stack gap="lg">
+                {days.map((day, dayIndex) => {
+                  const dayNumber = dayIndex + 1;
+                  const periods = hours
+                    .map((hour, index) => ({ hour, index }))
+                    .filter(({ hour }) => hour.dayOfWeek === dayNumber);
+                  return (
+                    <Stack key={day} gap="xs">
+                      <Group justify="space-between">
+                        <Text fw={700} size="sm">{day}</Text>
+                        <Button
+                          size="compact-xs"
+                          variant="subtle"
+                          leftSection={<IconPlus size={14} />}
+                          onClick={() => setHoursDraft([...hours, {
+                            dayOfWeek: dayNumber,
+                            opensAt: "11:30",
+                            closesAt: "22:00",
+                          }])}
+                        >
+                          Add period
+                        </Button>
+                      </Group>
+                      {periods.length === 0 ? (
+                        <Text size="xs" c={uiColors.textMuted}>Closed</Text>
+                      ) : periods.map(({ hour, index }) => (
+                        <Group key={`${dayNumber}-${index}`} grow align="flex-end">
+                          <TextInput
+                            type="time"
+                            label="Opens"
+                            value={hour.opensAt.slice(0, 5)}
+                            onChange={(event) => updateHour(index, "opensAt", event.currentTarget.value)}
+                          />
+                          <TextInput
+                            type="time"
+                            label="Closes"
+                            value={hour.closesAt.slice(0, 5)}
+                            onChange={(event) => updateHour(index, "closesAt", event.currentTarget.value)}
+                          />
+                          <ActionIcon
+                            variant="light"
+                            color="red"
+                            size={36}
+                            aria-label={`Remove ${day} period`}
+                            onClick={() => setHoursDraft(hours.filter((_, hourIndex) => hourIndex !== index))}
+                          >
+                            <IconTrash size={16} />
+                          </ActionIcon>
+                        </Group>
+                      ))}
+                    </Stack>
+                  );
+                })}
+                <Button
+                  variant="light"
+                  color="warmCoral"
+                  loading={businessHours.updateMutation.isPending}
+                  onClick={saveHours}
+                >
+                  Save business hours
+                </Button>
+              </Stack>
+            )}
           </SectionCard>
 
           <Card

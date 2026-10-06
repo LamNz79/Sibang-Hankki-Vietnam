@@ -14,6 +14,8 @@ export const apiEndpoints = {
   authMe: "/api/auth/me",
   ownerReservations: "/api/owner/reservations",
   ownerSettings: "/api/owner/settings",
+  ownerBusinessHours: "/api/owner/settings/business-hours",
+  regenerateOwnerSlots: "/api/owner/settings/regenerate-slots",
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,
