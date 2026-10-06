@@ -2,10 +2,13 @@
 
 import { useState, type ReactNode } from "react";
 import {
+  ActionIcon,
   Alert,
+  Button,
   Card,
   Group,
   Loader,
+  Modal,
   NumberInput,
   Select,
   SimpleGrid,
@@ -19,7 +22,12 @@ import { notifications } from "@mantine/notifications";
 import {
   IconBuildingStore,
   IconCalendarEvent,
+  IconClock,
   IconInfoCircle,
+  IconHelpCircle,
+  IconPlus,
+  IconRefresh,
+  IconTrash,
 } from "@tabler/icons-react";
 import { LanguageSelect } from "@/features/i18n";
 import { OwnerShell } from "@/features/owner/shared";
@@ -29,11 +37,14 @@ import {
   type OwnerSettingsUpdate,
 } from "@/features/owner/settings/data/owner-settings";
 import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
+import { useBusinessHours } from "@/features/owner/settings/hooks/use-business-hours";
+import type { BusinessHour } from "@/features/owner/settings/data/business-hours";
 import { PrimaryActionButton, WorkspaceSwitcher } from "@/components/ui";
 import { uiColors } from "@/theme";
 
 const numberValue = (value: string | number) =>
   typeof value === "number" ? value : 0;
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
   name: settings.name,
@@ -60,10 +71,12 @@ const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
 function SectionCard({
   title,
   icon: Icon,
+  headerAction,
   children,
 }: {
   title: string;
   icon: typeof IconBuildingStore;
+  headerAction?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -76,11 +89,14 @@ function SectionCard({
       }}
     >
       <Stack gap="md">
-        <Group gap="sm">
-          <ThemeIcon size={36} radius="md" variant="light" color="warmCoral">
-            <Icon size={18} />
-          </ThemeIcon>
-          <Text fw={800}>{title}</Text>
+        <Group justify="space-between">
+          <Group gap="sm">
+            <ThemeIcon size={36} radius="md" variant="light" color="warmCoral">
+              <Icon size={18} />
+            </ThemeIcon>
+            <Text fw={800}>{title}</Text>
+          </Group>
+          {headerAction}
         </Group>
         {children}
       </Stack>
@@ -90,8 +106,12 @@ function SectionCard({
 
 export function OwnerSettingsScreen() {
   const { query, mutation } = useOwnerSettings();
+  const businessHours = useBusinessHours();
   const [draft, setDraft] = useState<OwnerSettingsUpdate | null>(null);
+  const [hoursDraft, setHoursDraft] = useState<BusinessHour[] | null>(null);
+  const [helpOpened, setHelpOpened] = useState(false);
   const form = draft ?? (query.data ? editableSettings(query.data) : null);
+  const hours = hoursDraft ?? businessHours.query.data ?? [];
 
   const set = <K extends keyof OwnerSettingsUpdate>(
     key: K,
@@ -113,6 +133,36 @@ export function OwnerSettingsScreen() {
         message: "Could not save settings. Check the values and try again.",
       });
     }
+  };
+
+  const saveHours = async () => {
+    try {
+      const result = await businessHours.updateMutation.mutateAsync(hours);
+      setHoursDraft(null);
+      notifications.show({
+        color: "teal",
+        message: `Hours saved. ${result.generatedSlots} future slots generated.`,
+      });
+    } catch {
+      notifications.show({ color: "red", message: "Could not save business hours." });
+    }
+  };
+
+  const regenerate = async () => {
+    try {
+      const result = await businessHours.regenerateMutation.mutateAsync();
+      notifications.show({
+        color: "teal",
+        message: `${result.generatedSlots} future slots generated.`,
+      });
+    } catch {
+      notifications.show({ color: "red", message: "Could not regenerate booking slots." });
+    }
+  };
+
+  const updateHour = (index: number, key: "opensAt" | "closesAt", value: string) => {
+    setHoursDraft(hours.map((hour, hourIndex) =>
+      hourIndex === index ? { ...hour, [key]: value } : hour));
   };
 
   return (
@@ -214,7 +264,130 @@ export function OwnerSettingsScreen() {
             <Alert icon={<IconInfoCircle size={18} />} color="blue">
               Capacity and schedule timing changes apply when future booking slots are regenerated.
             </Alert>
+            <Button
+              variant="light"
+              color="warmCoral"
+              leftSection={<IconRefresh size={16} />}
+              loading={businessHours.regenerateMutation.isPending}
+              onClick={regenerate}
+            >
+              Regenerate future slots
+            </Button>
           </SectionCard>
+
+          <SectionCard
+            title="Business hours"
+            icon={IconClock}
+            headerAction={(
+              <ActionIcon
+                variant="subtle"
+                color="gray"
+                aria-label="Explain how booking slots work"
+                onClick={() => setHelpOpened(true)}
+              >
+                <IconHelpCircle size={20} />
+              </ActionIcon>
+            )}
+          >
+            {businessHours.query.isLoading ? (
+              <Group justify="center"><Loader size="sm" /></Group>
+            ) : businessHours.query.isError ? (
+              <Alert color="red">Could not load business hours.</Alert>
+            ) : (
+              <Stack gap="lg">
+                {days.map((day, dayIndex) => {
+                  const dayNumber = dayIndex + 1;
+                  const periods = hours
+                    .map((hour, index) => ({ hour, index }))
+                    .filter(({ hour }) => hour.dayOfWeek === dayNumber);
+                  return (
+                    <Stack key={day} gap="xs">
+                      <Group justify="space-between">
+                        <Text fw={700} size="sm">{day}</Text>
+                        <Button
+                          size="compact-xs"
+                          variant="subtle"
+                          leftSection={<IconPlus size={14} />}
+                          onClick={() => setHoursDraft([...hours, {
+                            dayOfWeek: dayNumber,
+                            opensAt: "11:30",
+                            closesAt: "22:00",
+                          }])}
+                        >
+                          Add period
+                        </Button>
+                      </Group>
+                      {periods.length === 0 ? (
+                        <Text size="xs" c={uiColors.textMuted}>Closed</Text>
+                      ) : periods.map(({ hour, index }) => (
+                        <Group key={`${dayNumber}-${index}`} grow align="flex-end">
+                          <TextInput
+                            type="time"
+                            label="Opens"
+                            value={hour.opensAt.slice(0, 5)}
+                            onChange={(event) => updateHour(index, "opensAt", event.currentTarget.value)}
+                          />
+                          <TextInput
+                            type="time"
+                            label="Closes"
+                            value={hour.closesAt.slice(0, 5)}
+                            onChange={(event) => updateHour(index, "closesAt", event.currentTarget.value)}
+                          />
+                          <ActionIcon
+                            variant="light"
+                            color="red"
+                            size={36}
+                            aria-label={`Remove ${day} period`}
+                            onClick={() => setHoursDraft(hours.filter((_, hourIndex) => hourIndex !== index))}
+                          >
+                            <IconTrash size={16} />
+                          </ActionIcon>
+                        </Group>
+                      ))}
+                    </Stack>
+                  );
+                })}
+                <Button
+                  variant="light"
+                  color="warmCoral"
+                  loading={businessHours.updateMutation.isPending}
+                  onClick={saveHours}
+                >
+                  Save business hours
+                </Button>
+              </Stack>
+            )}
+          </SectionCard>
+
+          <Modal
+            opened={helpOpened}
+            onClose={() => setHelpOpened(false)}
+            title={<Text fw={800}>How booking slots work</Text>}
+            centered
+            radius="lg"
+          >
+            <Stack gap="md">
+              <Text size="sm">
+                A booking slot is a time when a guest may start a reservation. Slots are generated for every open day inside your booking window.
+              </Text>
+              <Stack gap="xs">
+                <Text fw={700}>What each setting means</Text>
+                <Text size="sm"><b>Business hours:</b> the days and periods when guests may book. Add two periods when you serve lunch and dinner separately.</Text>
+                <Text size="sm"><b>Booking window:</b> how many days ahead guests can reserve. A 30-day window includes every matching weekday during those 30 days.</Text>
+                <Text size="sm"><b>Slot interval:</b> the distance between reservation start times. A 60-minute interval creates starts at 07:30, 08:30, 09:30, and so on.</Text>
+                <Text size="sm"><b>Dining duration:</b> how long a table is expected to be occupied. A slot is created only when the full dining duration ends before closing.</Text>
+                <Text size="sm"><b>Guest capacity:</b> the total number of guests the restaurant can accept at one start time. It is not the maximum size of one group.</Text>
+              </Stack>
+              <Alert color="blue" title="Example">
+                Monday 07:30–11:00, 60-minute interval and 90-minute dining duration creates three starts: 07:30, 08:30 and 09:30. If the 30-day window contains four Mondays, the system creates 4 × 3 = 12 slots.
+              </Alert>
+              <Stack gap="xs">
+                <Text fw={700}>When to regenerate</Text>
+                <Text size="sm">Saving business hours regenerates slots automatically. Use <b>Regenerate future slots</b> after changing capacity, interval, dining duration or booking window.</Text>
+                <Text size="sm">Existing reservations are preserved. Regeneration only replaces future slot data that is safe to rebuild.</Text>
+              </Stack>
+            </Stack>
+          </Modal>
 
           <Card
             radius="lg"
