@@ -13,6 +13,7 @@ export const apiEndpoints = {
   authLogin: "/api/auth/login",
   authMe: "/api/auth/me",
   ownerReservations: "/api/owner/reservations",
+  ownerSettings: "/api/owner/settings",
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,
