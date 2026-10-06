@@ -17,9 +17,10 @@ export function ReservationCheckInCard({
   reservation,
 }: ReservationCheckInCardProps) {
   const t = useTranslations("ReservationQr");
-  const { isPending, isAlternative, isConfirmed, isDeclined } =
+  const { isPending, isAlternative, isConfirmed, isDeclined, isCancelled } =
     getReservationStatusFlags(reservation);
-  const isAwaitingConfirmation = isPending || isAlternative || isDeclined;
+  const isAwaitingConfirmation =
+    isPending || isAlternative || isDeclined || isCancelled;
 
   if (isConfirmed && reservation.checkInToken) {
     return (
@@ -97,7 +98,7 @@ export function ReservationCheckInCard({
               ? t("detail.pendingTitle")
               : isAlternative
                 ? t("detail.alternativeTitle")
-                : isDeclined
+                : isDeclined || isCancelled
                   ? t("detail.declinedTitle")
                   : t("detail.fallbackTitle")}
           </Text>
@@ -106,7 +107,7 @@ export function ReservationCheckInCard({
               ? t("detail.pendingDescription")
               : isAlternative
                 ? t("detail.alternativeDescription")
-                : isDeclined
+                : isDeclined || isCancelled
                   ? t("detail.declinedDescription")
                   : t("detail.fallbackDescription")}
           </Text>

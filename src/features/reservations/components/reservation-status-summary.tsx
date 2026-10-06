@@ -25,8 +25,9 @@ export function ReservationStatusSummary({
   reservation,
 }: ReservationStatusSummaryProps) {
   const t = useTranslations("CustomerReservationDetails.status");
-  const { isPending, isAlternative, isDeclined } =
+  const { isPending, isAlternative, isDeclined, isCancelled } =
     getReservationStatusFlags(reservation);
+  const isClosed = isDeclined || isCancelled;
   const wasDeclinedByCustomer =
     reservation.customerAction ===
     ReservationCustomerAction.DeclinedAlternative;
@@ -34,14 +35,14 @@ export function ReservationStatusSummary({
     ? uiColors.statusWarningSurface
     : isAlternative
       ? uiColors.brandPrimarySubtle
-      : isDeclined
+      : isClosed
         ? uiColors.statusErrorSurface
         : uiColors.statusSuccessSurface;
   const borderColor = isPending
     ? uiColors.statusWarningBorder
     : isAlternative
       ? uiColors.brandPrimary
-      : isDeclined
+      : isClosed
         ? uiColors.statusErrorText
         : uiColors.statusSuccessText;
 
@@ -64,7 +65,7 @@ export function ReservationStatusSummary({
               ? "sand"
               : isAlternative
                 ? "warmCoral"
-                : isDeclined
+                : isClosed
                   ? "red"
                   : "teal"
           }
@@ -74,7 +75,7 @@ export function ReservationStatusSummary({
             <IconClock size={22} />
           ) : isAlternative ? (
             <IconCalendarClock size={22} />
-          ) : isDeclined ? (
+          ) : isClosed ? (
             <IconX size={22} />
           ) : (
             <IconCheck size={22} />
@@ -87,7 +88,7 @@ export function ReservationStatusSummary({
                 ? "warning"
                 : isAlternative
                   ? "brand"
-                  : isDeclined
+                  : isClosed
                     ? "error"
                     : "success"
             }
@@ -97,8 +98,10 @@ export function ReservationStatusSummary({
               ? t("pending.badge")
               : isAlternative
                 ? t("alternative.badge")
-                : isDeclined
-                  ? t("declined.badge")
+                : isClosed
+                  ? isCancelled
+                    ? t("cancelled.badge")
+                    : t("declined.badge")
                   : t("confirmed.badge")}
           </StatusBadge>
           <Text fw={800} c={uiColors.textPrimary}>
@@ -106,8 +109,10 @@ export function ReservationStatusSummary({
               ? t("pending.title")
               : isAlternative
                 ? t("alternative.title")
-              : isDeclined
-                  ? wasDeclinedByCustomer
+              : isClosed
+                  ? isCancelled
+                    ? t("cancelled.title")
+                    : wasDeclinedByCustomer
                     ? t("declined.customerTitle")
                     : t("declined.restaurantTitle")
                   : t("confirmed.title")}
@@ -117,8 +122,10 @@ export function ReservationStatusSummary({
               ? t("pending.description")
               : isAlternative
                 ? t("alternative.description")
-              : isDeclined
-                  ? wasDeclinedByCustomer
+              : isClosed
+                  ? isCancelled
+                    ? t("cancelled.description")
+                    : wasDeclinedByCustomer
                     ? t("declined.customerDescription")
                     : t("declined.restaurantDescription")
                   : t("confirmed.description")}

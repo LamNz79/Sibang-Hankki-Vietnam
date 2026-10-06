@@ -51,6 +51,7 @@ export interface CustomerReservation {
   guests: number;
   status: ReservationStatus;
   reference?: string;
+  managementToken?: string;
   checkInToken?: string;
   alternativeProposal?: CustomerAlternativeProposal;
   previousDate?: string;

@@ -36,6 +36,7 @@ export function getReservationStatusFlags(reservation: CustomerReservation) {
       reservation.status === ReservationStatus.AlternativeProposed,
     isConfirmed: reservation.status === ReservationStatus.Confirmed,
     isDeclined: reservation.status === ReservationStatus.Declined,
+    isCancelled: reservation.status === ReservationStatus.Cancelled,
   };
 }
 
