@@ -159,17 +159,46 @@
       "searchLabel": "Tìm kiếm trong trang quản trị",
       "notifications": "Thông báo",
       "adminName": "Quản trị viên",
-      "adminRole": "Super Admin",
-      "adminOnly": "CHỈ DÀNH CHO ADMIN",
+      "adminRole": "Quản trị nhà hàng",
+      "adminOnly": "ĐỘI NGŨ NHÀ HÀNG",
       "auditNotice": "Mọi thay đổi đều được ghi vào nhật ký kiểm toán.",
       "navigation": {
         "dashboard": "Tổng quan",
         "reservations": "Đặt bàn",
         "customers": "Khách hàng",
+        "menu": "Thực đơn",
         "stores": "Cửa hàng",
         "revenue": "Phân tích doanh thu",
         "campaigns": "Quảng cáo & Banner",
         "settings": "Quyền & Cài đặt"
+      }
+    },
+    "menu": {
+      "title": "Quản lý thực đơn",
+      "description": "Quản lý danh mục và món ăn hiển thị cho nhà hàng này.",
+      "addCategory": "Thêm danh mục",
+      "editCategory": "Sửa danh mục",
+      "deleteCategory": "Xóa danh mục",
+      "addItem": "Thêm món",
+      "editItem": "Sửa món",
+      "deleteItem": "Xóa món",
+      "save": "Lưu",
+      "available": "Đang bán",
+      "unavailable": "Ngừng bán",
+      "itemCount": "{count} món",
+      "empty": "Hãy tạo danh mục để bắt đầu xây dựng thực đơn.",
+      "emptyCategory": "Danh mục này chưa có món.",
+      "error": "Không thể cập nhật thực đơn. Hãy kiểm tra thông tin và thử lại.",
+      "fields": {
+        "categoryName": "Tên danh mục",
+        "displayOrder": "Thứ tự hiển thị",
+        "category": "Danh mục",
+        "itemName": "Tên món",
+        "description": "Mô tả",
+        "price": "Giá",
+        "currency": "Tiền tệ",
+        "imageUrl": "Đường dẫn ảnh",
+        "available": "Đang nhận đặt món"
       }
     },
     "dashboard": {
