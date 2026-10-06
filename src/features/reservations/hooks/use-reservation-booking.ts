@@ -65,6 +65,7 @@ export function useReservationBooking({
       const reservation: CustomerReservation = {
         id: response.id,
         reference: response.reference,
+        managementToken: response.managementToken,
         restaurantSlug: response.restaurantSlug,
         restaurantName: restaurant.name,
         district: restaurant.district,

@@ -88,4 +88,12 @@ describe("reservation selectors", () => {
     ).toBe("CUSTOM-REF");
     expect(getReservationReference(createFixture())).toBe("SHK-260812-0042");
   });
+
+  it("identifies a customer-cancelled reservation", () => {
+    expect(
+      getReservationStatusFlags(
+        createFixture({ status: ReservationStatus.Cancelled }),
+      ).isCancelled,
+    ).toBe(true);
+  });
 });

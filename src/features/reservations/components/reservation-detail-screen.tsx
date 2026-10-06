@@ -9,7 +9,10 @@ import {
   getReservationReference,
   getReservationStatusFlags,
 } from "@/features/reservations/domain/selectors";
-import { useCustomerReservation } from "@/features/reservations/hooks/use-customer-reservations";
+import {
+  useCancelCustomerReservation,
+  useCustomerReservation,
+} from "@/features/reservations/hooks/use-customer-reservations";
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
@@ -25,6 +28,7 @@ export function ReservationDetailScreen() {
   const t = useTranslations("CustomerReservationDetails");
   const params = useParams<{ id: string }>();
   const reservation = useCustomerReservation(params.id);
+  const cancellation = useCancelCustomerReservation(reservation);
 
   if (!reservation) {
     return (
@@ -78,7 +82,12 @@ export function ReservationDetailScreen() {
       />
       <ReservationInformationCard reservation={reservation} />
       <ReservationCheckInCard reservation={reservation} />
-      <ReservationDetailActions reservation={reservation} />
+      <ReservationDetailActions
+        reservation={reservation}
+        onCancel={() => cancellation.mutate()}
+        cancelPending={cancellation.isPending}
+        cancelError={cancellation.isError}
+      />
     </MobileShell>
   );
 }

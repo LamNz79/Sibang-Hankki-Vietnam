@@ -34,7 +34,7 @@ export function ReservationsScreen() {
       {reservations.length > 0 ? (
         <Stack gap="md">
           {reservations.map((reservation) => {
-            const { isPending, isAlternative, isDeclined } =
+            const { isPending, isAlternative, isDeclined, isCancelled } =
               getReservationStatusFlags(reservation);
             const displaySlot = getReservationDisplaySlot(reservation);
 
@@ -70,7 +70,7 @@ export function ReservationsScreen() {
                           ? "warning"
                           : isAlternative
                             ? "brand"
-                            : isDeclined
+                            : isDeclined || isCancelled
                               ? "error"
                               : "success"
                       }
@@ -80,8 +80,10 @@ export function ReservationsScreen() {
                         ? "Pending confirmation"
                         : isAlternative
                           ? "Action required"
-                          : isDeclined
-                            ? "Request declined"
+                          : isDeclined || isCancelled
+                            ? isCancelled
+                              ? "Reservation cancelled"
+                              : "Request declined"
                             : "Confirmed"}
                     </StatusBadge>
                     <Text fw={750} c={uiColors.textPrimary}>{reservation.restaurantName}</Text>

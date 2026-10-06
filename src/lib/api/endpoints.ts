@@ -5,6 +5,10 @@ export const apiEndpoints = {
   availability: (slug: string) =>
     `/api/restaurants/${seg(slug)}/availability`,
   reservations: "/api/reservations",
+  customerReservation: (id: string) =>
+    `/api/customer/reservations/${seg(id)}`,
+  cancelCustomerReservation: (id: string) =>
+    `/api/customer/reservations/${seg(id)}/cancel`,
   authCsrf: "/api/auth/csrf",
   authLogin: "/api/auth/login",
   authMe: "/api/auth/me",

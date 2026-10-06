@@ -18,6 +18,7 @@ describe("create reservation API", () => {
       partySize: 2,
       status: "CONFIRMED" as const,
       requiresRestaurantConfirmation: false,
+      managementToken: "management-token",
       createdAt: "2026-10-02T00:00:00Z",
     };
     const fetchMock = vi.fn().mockResolvedValue(Response.json(response));

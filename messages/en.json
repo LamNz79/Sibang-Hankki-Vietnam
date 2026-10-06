@@ -79,7 +79,8 @@
       "pending": { "badge": "Pending confirmation", "title": "Waiting for the restaurant", "description": "The restaurant will confirm your request or contact you if anything needs to change." },
       "alternative": { "badge": "Action required", "title": "The restaurant suggested a new time", "description": "Review the proposed time below. Your table is not confirmed until you accept it." },
       "declined": { "badge": "Request declined", "restaurantTitle": "The restaurant could not confirm this request", "restaurantDescription": "No table is being held. Choose another time when you are ready.", "customerTitle": "This request is closed", "customerDescription": "The restaurant has been notified that you declined the proposed time." },
-      "confirmed": { "badge": "Reservation confirmed", "title": "Your table is confirmed", "description": "Your reservation is ready. Show the booking code when you arrive." }
+      "confirmed": { "badge": "Reservation confirmed", "title": "Your table is confirmed", "description": "Your reservation is ready. Show the booking code when you arrive." },
+      "cancelled": { "badge": "Reservation cancelled", "title": "This reservation was cancelled", "description": "The table is no longer being held. You can make a new reservation at any time." }
     },
     "reference": { "label": "Booking reference", "copy": "Copy booking reference" },
     "information": {
@@ -98,7 +99,12 @@
       "cancelRequest": "Cancel request",
       "cancel": "Cancel",
       "changeHint": "Change flow will be added after the policy is confirmed",
-      "cancelHint": "Cancellation flow will be added after the policy is confirmed"
+      "cancelHint": "This reservation cannot be cancelled online",
+      "cancelTitle": "Cancel this reservation?",
+      "cancelDescription": "The restaurant will release your table. This action cannot be undone.",
+      "cancelError": "Unable to cancel. The cancellation cutoff may have passed.",
+      "keep": "Keep reservation",
+      "confirmCancel": "Cancel reservation"
     },
     "proposal": {
       "title": "New time proposal",
