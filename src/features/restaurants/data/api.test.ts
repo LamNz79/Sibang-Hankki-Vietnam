@@ -18,6 +18,7 @@ describe("restaurant API development fallback", () => {
     const restaurant = await getRestaurant("anan-saigon");
 
     expect(restaurants[0]).not.toHaveProperty("slotMatrix");
+    expect(restaurants[0].imageUrl).toContain("images.unsplash.com");
     expect(restaurant?.name).toBe("Anan Saigon");
   });
 

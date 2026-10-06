@@ -20,6 +20,8 @@ export type RestaurantRecord = {
   ratingCount: number;
   priceRangeLabel: string;
   heroAccent: string;
+  imageUrl: string;
+  imageAlt: string;
   openHours: string;
   address: string;
   availableText: string;
@@ -105,6 +107,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 139,
     priceRangeLabel: "150K - 350K",
     heroAccent: "#f6ede4",
+    imageUrl: "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Modern Vietnamese dishes served at Anan Saigon",
     openHours: "11:30 - 22:00",
     address: "District 1",
     availableText: "Available today from 18:30",
@@ -128,6 +132,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 166,
     priceRangeLabel: "350K - 500K",
     heroAccent: "#edf5f4",
+    imageUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Elegant dining room at The Royal Pavilion",
     openHours: "11:30 - 22:00",
     address: "District 1",
     availableText: "Available today from 18:30",
@@ -151,6 +157,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 121,
     priceRangeLabel: "350K - 500K",
     heroAccent: "#eef4f7",
+    imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "French-inspired dining room at The Refinery",
     openHours: "11:30 - 22:00",
     address: "District 1",
     availableText: "Available today from 18:30",
@@ -174,6 +182,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 98,
     priceRangeLabel: "150K - 300K",
     heroAccent: "#edf2f8",
+    imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Japanese teppan dining at Mori Teppan",
     openHours: "17:30 - 22:30",
     address: "Binh Thanh",
     availableText: "Available today from 20:00",
@@ -197,6 +207,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 87,
     priceRangeLabel: "150K - 300K",
     heroAccent: "#f2ede6",
+    imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Warm Vietnamese dining room at Hanoi Hearth",
     openHours: "11:00 - 22:00",
     address: "Hoan Kiem, Hanoi",
     availableText: "Available today from 18:00",
@@ -220,6 +232,8 @@ export const restaurantRecords: RestaurantRecord[] = [
     ratingCount: 74,
     priceRangeLabel: "150K - 350K",
     heroAccent: "#e8f3f5",
+    imageUrl: "https://images.unsplash.com/photo-1516211697506-8360dbcfe9a4?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Riverside dining atmosphere at Han River Dining",
     openHours: "16:30 - 22:30",
     address: "Son Tra, Da Nang",
     availableText: "Available today from 18:30",
