@@ -2,11 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  confirmOwnerReservation,
+  declineOwnerReservation,
   getOwnerReservation,
   getOwnerReservations,
 } from "@/features/owner/data/owner-reservations";
+import type { OwnerReservation } from "@/features/owner/types";
 import { ApiError } from "@/lib/api/client";
 
 function useLoginRedirect(error: Error | null) {
@@ -37,4 +40,27 @@ export function useOwnerReservation(id: string) {
   });
   useLoginRedirect(query.error);
   return { ...query, reservation: query.data };
+}
+
+export function useOwnerReservationActions(id: string) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (action: { kind: "confirm" } | { kind: "decline"; reason: string }) =>
+      action.kind === "confirm"
+        ? confirmOwnerReservation(id)
+        : declineOwnerReservation(id, action.reason),
+    onSuccess: (reservation) => {
+      queryClient.setQueryData(["owner-reservations", id], reservation);
+      queryClient.setQueryData<OwnerReservation[]>(["owner-reservations"], (current) =>
+        current?.map((item) => (item.id === id ? reservation : item)),
+      );
+    },
+  });
+  useLoginRedirect(mutation.error);
+
+  return {
+    ...mutation,
+    confirm: () => mutation.mutate({ kind: "confirm" }),
+    decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
+  };
 }

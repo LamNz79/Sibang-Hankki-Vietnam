@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import {
   ActionIcon,
+  Alert,
   Button,
   Card,
   Group,
@@ -25,7 +26,10 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { OwnerShell } from "@/features/owner/shared";
-import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import {
+  useOwnerReservation,
+  useOwnerReservationActions,
+} from "@/features/owner/hooks/use-owner-reservations";
 import type {
   OwnerRequestResponse,
   OwnerReservation,
@@ -115,6 +119,7 @@ export function OwnerReservationDetailScreen() {
   const t = useTranslations("OwnerReservationDetails");
   const params = useParams<{ id: string }>();
   const { reservation, isPending } = useOwnerReservation(params.id);
+  const actions = useOwnerReservationActions(params.id);
   const formatDate = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00`), {
       weekday: "long",
@@ -178,7 +183,9 @@ export function OwnerReservationDetailScreen() {
         leftSection={
           response.kind === "pending" ? <IconCheck size={19} /> : undefined
         }
-        disabled
+        disabled={displayStatus !== ReservationStatus.Pending}
+        loading={actions.isPending}
+        onClick={actions.confirm}
       >
         {response.kind === "alternative-sent"
           ? t("footer.waiting")
@@ -229,6 +236,12 @@ export function OwnerReservationDetailScreen() {
       footerAction={footerAction}
     >
       <Stack gap="md">
+        {actions.isError ? (
+          <Alert color="red" title="Unable to update reservation" role="alert">
+            Refresh the reservation and try again.
+          </Alert>
+        ) : null}
+
         <OwnerReservationSummaryCard
           reservation={reservation}
           status={hasArrived ? reservation.visitStatus : displayStatus}
@@ -305,6 +318,13 @@ export function OwnerReservationDetailScreen() {
             reservation={reservation}
             response={response}
             readOnly
+            onDecline={
+              displayStatus === ReservationStatus.Pending
+                ? actions.decline
+                : undefined
+            }
+            declinePending={actions.isPending}
+            declineError={actions.isError}
           />
         ) : null}
 
