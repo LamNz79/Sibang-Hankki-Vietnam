@@ -49,6 +49,12 @@ const cityLabels: Record<string, string> = {
   hanoi: "Hanoi",
   "da-nang": "Da Nang",
 };
+const restaurantLogos: Record<string, string> = {
+  "anan-saigon": "/images/restaurant-logos/anan-saigon.jpg",
+  refinery: "/images/restaurant-logos/refinery.jpg",
+  "mori-teppan": "/images/restaurant-logos/mori-teppan.jpg",
+  "hanoi-hearth": "/images/restaurant-logos/hanoi-hearth.jpg",
+};
 
 const actionChipStyles = { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.borderStrong}`, minHeight: 40, paddingInline: 14, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } };
 function nextOption<T>(list: readonly T[], current: T): T { const i = list.indexOf(current); return list[(i + 1) % list.length]; }
@@ -148,6 +154,7 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
         </Group>
 
         {filteredRestaurants.map((restaurant) => {
+          const logoUrl = restaurantLogos[restaurant.slug];
           return (
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
               <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
@@ -156,14 +163,22 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
                     w={96}
                     miw={96}
                     role="img"
-                    aria-label={restaurant.imageAlt}
+                    aria-label={`${restaurant.name} logo`}
                     style={{
                       backgroundColor: restaurant.heroAccent,
-                      backgroundImage: `url("${restaurant.imageUrl}")`,
+                      backgroundImage: logoUrl ? `url("${logoUrl}")` : undefined,
                       backgroundPosition: "center",
-                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      display: "grid",
+                      placeItems: "center",
+                      color: uiColors.textSecondary,
+                      fontSize: 28,
+                      fontWeight: 800,
                     }}
-                  />
+                  >
+                    {logoUrl ? null : restaurant.name.charAt(0)}
+                  </Box>
                   <Stack gap={6} p="md" style={{ flex: 1 }}>
                     <Title order={3} size="h4" fw={700} c={uiColors.textPrimary}>{restaurant.name}</Title>
                     <Text size="sm" c={uiColors.textSecondary}>{restaurant.cuisineLabel}</Text>
