@@ -7,7 +7,6 @@
   },
   "Auth": {
     "backHome": "Back to home",
-    "prototypeNotice": "Prototype only. Account details are not saved yet.",
     "fields": {
       "userid": "User ID",
       "useridPlaceholder": "Enter your user ID",
@@ -32,12 +31,16 @@
     },
     "signUp": {
       "title": "Create your account",
-      "subtitle": "Try the Customer account registration flow.",
+      "subtitle": "Register to manage your reservations.",
+      "notice": "This creates a customer account. Restaurant accounts are managed separately.",
       "submit": "Create account",
       "alternatePrompt": "Already have an account?",
       "alternateAction": "Log in",
-      "successTitle": "Sign-up flow complete",
-      "successMessage": "Continue with the Login prototype."
+      "successTitle": "Account created",
+      "successMessage": "Log in with your new account.",
+      "errorTitle": "Could not create account",
+      "errorMessage": "Check your details and try again.",
+      "duplicateMessage": "That user ID is already taken. Choose another one."
     }
   },
   "ReservationQr": {

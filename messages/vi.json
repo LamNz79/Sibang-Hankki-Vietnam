@@ -7,7 +7,6 @@
   },
   "Auth": {
     "backHome": "Về trang chủ",
-    "prototypeNotice": "Đây là bản mẫu. Thông tin tài khoản chưa được lưu.",
     "fields": {
       "userid": "Tên đăng nhập",
       "useridPlaceholder": "Nhập tên đăng nhập",
@@ -32,12 +31,16 @@
     },
     "signUp": {
       "title": "Tạo tài khoản",
-      "subtitle": "Trải nghiệm luồng đăng ký tài khoản Customer.",
+      "subtitle": "Đăng ký để quản lý các lượt đặt bàn của bạn.",
+      "notice": "Đây là tài khoản khách hàng. Tài khoản nhà hàng được quản lý riêng.",
       "submit": "Tạo tài khoản",
       "alternatePrompt": "Bạn đã có tài khoản?",
       "alternateAction": "Đăng nhập",
-      "successTitle": "Đã hoàn tất luồng đăng ký",
-      "successMessage": "Tiếp tục với bản mẫu đăng nhập."
+      "successTitle": "Đã tạo tài khoản",
+      "successMessage": "Hãy đăng nhập bằng tài khoản mới.",
+      "errorTitle": "Không thể tạo tài khoản",
+      "errorMessage": "Kiểm tra lại thông tin và thử lại.",
+      "duplicateMessage": "Tên đăng nhập này đã được sử dụng. Hãy chọn tên khác."
     }
   },
   "ReservationQr": {

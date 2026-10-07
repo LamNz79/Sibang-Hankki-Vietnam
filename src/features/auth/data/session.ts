@@ -14,6 +14,18 @@ export type SessionUser = {
   restaurantId: string | null;
 };
 
+export type CustomerRegistration = {
+  userid: string;
+  email: string;
+  name: string;
+  password: string;
+};
+
+export type RegisteredCustomer = Omit<CustomerRegistration, "password"> & {
+  id: string;
+  role: "CUSTOMER";
+};
+
 export function getCsrfToken() {
   return apiFetch<CsrfToken>(apiEndpoints.authCsrf, { cache: "no-store" });
 }
@@ -31,4 +43,14 @@ export async function login(userid: string, password: string) {
   });
 
   return apiFetch<SessionUser>(apiEndpoints.authMe, { cache: "no-store" });
+}
+
+export async function registerCustomer(registration: CustomerRegistration) {
+  const csrf = await getCsrfToken();
+
+  return apiFetch<RegisteredCustomer>(apiEndpoints.authRegister, {
+    method: "POST",
+    headers: { [csrf.headerName]: csrf.token },
+    body: JSON.stringify(registration),
+  });
 }

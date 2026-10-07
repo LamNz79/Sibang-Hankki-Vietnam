@@ -11,6 +11,7 @@ export const apiEndpoints = {
     `/api/customer/reservations/${seg(id)}/cancel`,
   authCsrf: "/api/auth/csrf",
   authLogin: "/api/auth/login",
+  authRegister: "/api/auth/register",
   authMe: "/api/auth/me",
   ownerReservations: "/api/owner/reservations",
   ownerSettings: "/api/owner/settings",
