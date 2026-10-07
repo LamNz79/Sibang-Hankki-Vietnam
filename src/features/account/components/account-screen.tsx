@@ -1,17 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ActionIcon,
+  Alert,
   Avatar,
   Box,
+  Button,
   Group,
+  Loader,
+  Modal,
   Stack,
   Text,
+  TextInput,
   ThemeIcon,
   Tooltip,
   UnstyledButton,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   IconCalendarEvent,
   IconChevronRight,
@@ -19,14 +28,24 @@ import {
   IconCoin,
   IconHeart,
   IconHistory,
+  IconLogout,
   IconMap2,
   IconSettings,
 } from "@tabler/icons-react";
 import type { Icon } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SurfaceCard, WorkspaceSwitcher } from "@/components/ui";
+import {
+  getCustomerProfile,
+  updateCustomerProfile,
+  type CustomerProfileUpdate,
+} from "@/features/account/data/customer-profile";
+import { logout } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
+import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
 
 /** Configuration accepted by a row in the customer account menu. */
@@ -103,20 +122,69 @@ function AccountMenuItem({
 
 /** Customer profile overview with reservation summary and account navigation. */
 export function AccountScreen() {
+  const t = useTranslations("Account");
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const reservations = useCustomerReservations();
+  const [editorOpened, editor] = useDisclosure(false);
+  const [draft, setDraft] = useState<CustomerProfileUpdate>({
+    name: "",
+    email: "",
+    phone: null,
+  });
+  const profileQuery = useQuery({
+    queryKey: ["customer-profile"],
+    queryFn: ({ signal }) => getCustomerProfile(signal),
+    retry: false,
+  });
+  const saveProfile = useMutation({
+    mutationFn: updateCustomerProfile,
+    onSuccess: (profile) => {
+      queryClient.setQueryData(["customer-profile"], profile);
+      editor.close();
+      notifications.show({ color: "teal", message: t("saved") });
+    },
+    onError: () => notifications.show({ color: "red", message: t("saveError") }),
+  });
+  const signOut = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.removeQueries();
+      router.push("/login");
+      router.refresh();
+    },
+    onError: () => notifications.show({ color: "red", message: t("logoutError") }),
+  });
+  const profile = profileQuery.data;
+  const requiresLogin =
+    profileQuery.error instanceof ApiError &&
+    (profileQuery.error.status === 401 || profileQuery.error.status === 403);
+  const openEditor = () => {
+    if (!profile) return;
+    setDraft({ name: profile.name, email: profile.email, phone: profile.phone });
+    editor.open();
+  };
+  const initials = profile?.name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <MobileShell
-      title="My"
-      subtitle="Profile and benefits"
+      title={t("title")}
+      subtitle={t("subtitle")}
       headerAction={
-        <Tooltip label="Account settings coming soon" position="bottom-end">
+        <Tooltip label={t("editProfile")} position="bottom-end">
           <ActionIcon
             variant="light"
             color="gray"
             radius="xl"
             size={38}
-            aria-label="Account settings coming soon"
+            aria-label={t("editProfile")}
+            disabled={!profile}
+            onClick={openEditor}
           >
             <IconSettings size={19} />
           </ActionIcon>
@@ -124,27 +192,73 @@ export function AccountScreen() {
       }
       bottomNav={<BottomNav activePath="/my" />}
     >
+      <Modal opened={editorOpened} onClose={editor.close} title={t("editProfile")} centered>
+        <Stack>
+          <TextInput
+            label={t("name")}
+            value={draft.name}
+            onChange={(event) => setDraft({ ...draft, name: event.currentTarget.value })}
+            maxLength={120}
+            required
+          />
+          <TextInput
+            type="email"
+            label={t("email")}
+            value={draft.email}
+            onChange={(event) => setDraft({ ...draft, email: event.currentTarget.value })}
+            maxLength={320}
+            required
+          />
+          <TextInput
+            type="tel"
+            label={t("phone")}
+            value={draft.phone ?? ""}
+            onChange={(event) => setDraft({ ...draft, phone: event.currentTarget.value || null })}
+            maxLength={30}
+          />
+          <Group justify="flex-end">
+            <Button variant="default" onClick={editor.close}>{t("cancel")}</Button>
+            <Button
+              color="warmCoral"
+              loading={saveProfile.isPending}
+              disabled={!draft.name.trim() || !draft.email.trim()}
+              onClick={() => saveProfile.mutate(draft)}
+            >
+              {t("save")}
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
+
       <SurfaceCard p="md">
-        <Group gap="md" wrap="nowrap">
-          <Avatar
-            size={54}
-            radius="xl"
-            color="warmCoral"
-            variant="light"
-            styles={{ placeholder: { fontWeight: 800 } }}
-          >
-            ML
-          </Avatar>
-          <Stack gap={2} style={{ flex: 1, minWidth: 0 }}>
-            <Text fw={800} c={uiColors.textPrimary}>
-              Minh Lam
-            </Text>
-            <Text size="xs" c={uiColors.textSecondary}>
-              Sibang Hankki member
-            </Text>
-          </Stack>
-          <IconChevronRight size={18} color={uiColors.textMuted} />
-        </Group>
+        {profileQuery.isLoading ? (
+          <Group justify="center"><Loader size="sm" /></Group>
+        ) : profile ? (
+          <UnstyledButton w="100%" onClick={openEditor} aria-label={t("editProfile")}>
+            <Group gap="md" wrap="nowrap">
+              <Avatar
+                size={54}
+                radius="xl"
+                color="warmCoral"
+                variant="light"
+                styles={{ placeholder: { fontWeight: 800 } }}
+              >
+                {initials}
+              </Avatar>
+              <Stack gap={2} style={{ flex: 1, minWidth: 0 }}>
+                <Text fw={800} c={uiColors.textPrimary}>{profile.name}</Text>
+                <Text size="xs" c={uiColors.textSecondary}>@{profile.userid}</Text>
+              </Stack>
+              <IconChevronRight size={18} color={uiColors.textMuted} />
+            </Group>
+          </UnstyledButton>
+        ) : (
+          <Alert color={requiresLogin ? "blue" : "red"} title={t(requiresLogin ? "loginRequired" : "loadError")}>
+            <Button component={Link} href="/login" variant="light" mt="sm">
+              {t("login")}
+            </Button>
+          </Alert>
+        )}
       </SurfaceCard>
 
       <SurfaceCard tone="brand" p="md">
@@ -209,6 +323,18 @@ export function AccountScreen() {
       <SurfaceCard p="md">
         <LanguageSelect />
       </SurfaceCard>
+
+      {profile ? (
+        <Button
+          variant="light"
+          color="red"
+          leftSection={<IconLogout size={18} />}
+          loading={signOut.isPending}
+          onClick={() => signOut.mutate()}
+        >
+          {t("logout")}
+        </Button>
+      ) : null}
 
       <Stack gap="sm">
         <Text fw={800} size="lg" c={uiColors.textPrimary}>

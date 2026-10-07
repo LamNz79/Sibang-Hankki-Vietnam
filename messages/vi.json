@@ -43,6 +43,23 @@
       "duplicateMessage": "Tên đăng nhập này đã được sử dụng. Hãy chọn tên khác."
     }
   },
+  "Account": {
+    "title": "Tài khoản của tôi",
+    "subtitle": "Hồ sơ và quyền lợi",
+    "editProfile": "Chỉnh sửa hồ sơ",
+    "name": "Họ và tên",
+    "email": "Email",
+    "phone": "Số điện thoại (không bắt buộc)",
+    "cancel": "Hủy",
+    "save": "Lưu thay đổi",
+    "saved": "Đã cập nhật hồ sơ.",
+    "saveError": "Không thể cập nhật hồ sơ.",
+    "loginRequired": "Đăng nhập để xem hồ sơ của bạn.",
+    "loadError": "Không thể tải hồ sơ của bạn.",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "logoutError": "Không thể đăng xuất. Hãy thử lại."
+  },
   "ReservationQr": {
     "home": {
       "singleConfirmed": "Đặt bàn của bạn đã được xác nhận",

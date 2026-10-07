@@ -54,3 +54,12 @@ export async function registerCustomer(registration: CustomerRegistration) {
     body: JSON.stringify(registration),
   });
 }
+
+export async function logout() {
+  const csrf = await getCsrfToken();
+
+  return apiFetch<void>(apiEndpoints.authLogout, {
+    method: "POST",
+    headers: { [csrf.headerName]: csrf.token },
+  });
+}

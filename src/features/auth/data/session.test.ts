@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { login, registerCustomer } from "./session";
+import { login, logout, registerCustomer } from "./session";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -82,6 +82,33 @@ describe("session login", () => {
           userid: "owner",
           password: "secret-password",
         }),
+      },
+    ]);
+  });
+});
+
+describe("session logout", () => {
+  it("gets CSRF before ending the session", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await logout();
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/auth/logout",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "X-CSRF-TOKEN": "csrf-token",
+        },
       },
     ]);
   });
