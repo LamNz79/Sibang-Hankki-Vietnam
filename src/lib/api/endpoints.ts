@@ -21,6 +21,8 @@ export const apiEndpoints = {
   ownerMenuCategory: (id: string) => `/api/owner/menu/categories/${seg(id)}`,
   ownerMenuItems: "/api/owner/menu/items",
   ownerMenuItem: (id: string) => `/api/owner/menu/items/${seg(id)}`,
+  ownerMedia: "/api/owner/media",
+  ownerMediaItem: (id: string) => `/api/owner/media/${seg(id)}`,
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,

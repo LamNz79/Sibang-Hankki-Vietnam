@@ -167,6 +167,7 @@
         "reservations": "Đặt bàn",
         "customers": "Khách hàng",
         "menu": "Thực đơn",
+        "media": "Hình ảnh",
         "stores": "Cửa hàng",
         "revenue": "Phân tích doanh thu",
         "campaigns": "Quảng cáo & Banner",
@@ -199,6 +200,26 @@
         "currency": "Tiền tệ",
         "imageUrl": "Đường dẫn ảnh",
         "available": "Đang nhận đặt món"
+      }
+    },
+    "media": {
+      "title": "Hình ảnh nhà hàng",
+      "description": "Quản lý hình ảnh hiển thị tại danh sách và trang chi tiết nhà hàng.",
+      "add": "Thêm ảnh",
+      "edit": "Sửa ảnh",
+      "delete": "Xóa ảnh",
+      "save": "Lưu",
+      "primary": "Ảnh đại diện",
+      "primaryHint": "Ảnh có thứ tự hiển thị nhỏ nhất được dùng làm ảnh đại diện của nhà hàng.",
+      "sortOrder": "Thứ tự {order}",
+      "noAltText": "Chưa có mô tả ảnh",
+      "empty": "Hãy thêm ảnh đại diện cho nhà hàng này.",
+      "error": "Không thể cập nhật hình ảnh. Hãy kiểm tra thông tin và thử lại.",
+      "deleteConfirm": "Xóa ảnh này?",
+      "fields": {
+        "imageUrl": "Đường dẫn ảnh",
+        "altText": "Mô tả thay thế",
+        "sortOrder": "Thứ tự hiển thị"
       }
     },
     "dashboard": {

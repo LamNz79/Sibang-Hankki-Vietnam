@@ -23,6 +23,7 @@ import {
   IconCalendarEvent,
   IconChartBar,
   IconLayoutDashboard,
+  IconPhoto,
   IconToolsKitchen2,
   IconSearch,
   IconSettings,
@@ -42,6 +43,7 @@ const adminNavigation = [
   },
   { href: "/admin/customers", labelKey: "customers", icon: IconUsers },
   { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2 },
+  { href: "/admin/media", labelKey: "media", icon: IconPhoto },
   {
     href: "/admin/stores",
     labelKey: "stores",
