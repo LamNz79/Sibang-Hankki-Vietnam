@@ -3,7 +3,9 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
-import { apiFetch } from "@/lib/api/client";
+import { getCsrfToken } from "@/features/auth/data/session";
+import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
+import { ApiError, apiFetch } from "@/lib/api/client";
 import { apiEndpoints } from "@/lib/api/endpoints";
 
 dayjs.extend(utc);
@@ -19,6 +21,8 @@ type CustomerReservationRecord = {
   preOrderNote?: string | null;
   createdAt: string;
   updatedAt: string;
+  restaurantSlug?: string;
+  restaurantName?: string;
 };
 
 const reservationStatuses = {
@@ -51,6 +55,59 @@ export function mergeCustomerReservation(
   };
 }
 
+export function mapAccountReservation(
+  record: CustomerReservationRecord,
+): CustomerReservation {
+  const restaurant = getRestaurantBySlug(record.restaurantSlug ?? "");
+  return mergeCustomerReservation(
+    {
+      id: record.id,
+      reference: record.reference,
+      restaurantSlug: record.restaurantSlug ?? "",
+      restaurantName: record.restaurantName ?? restaurant?.name ?? "Restaurant",
+      district: restaurant?.district ?? "",
+      cuisineLabel: restaurant?.cuisineLabel ?? "",
+      date: "",
+      time: "",
+      guests: record.partySize,
+      status: reservationStatuses[record.status],
+      accountLinked: true,
+      createdAt: record.createdAt,
+    },
+    record,
+  );
+}
+
+export async function getAccountReservations(signal?: AbortSignal) {
+  try {
+    const records = await apiFetch<CustomerReservationRecord[]>(
+      apiEndpoints.customerAccountReservations,
+      { cache: "no-store", signal },
+    );
+    return records.map(mapAccountReservation);
+  } catch (error) {
+    if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+export function selectVisibleReservations(
+  stored: CustomerReservation[],
+  account: CustomerReservation[] | null | undefined,
+) {
+  if (account === null) {
+    return stored.filter((reservation) => reservation.managementToken);
+  }
+  if (!account) return [];
+
+  return account.map((reservation) => {
+    const local = stored.find(({ id }) => id === reservation.id);
+    return local ? { ...local, ...reservation } : reservation;
+  });
+}
+
 export async function getCustomerReservation(
   stored: CustomerReservation,
   signal?: AbortSignal,
@@ -69,6 +126,18 @@ export async function getCustomerReservation(
 }
 
 export async function cancelCustomerReservation(stored: CustomerReservation) {
+  if (stored.accountLinked) {
+    const csrf = await getCsrfToken();
+    const record = await apiFetch<CustomerReservationRecord>(
+      apiEndpoints.cancelCustomerAccountReservation(stored.id),
+      {
+        method: "POST",
+        headers: { [csrf.headerName]: csrf.token },
+      },
+    );
+    return mergeCustomerReservation(stored, record);
+  }
+
   if (!stored.managementToken) {
     throw new Error("Reservation management token is unavailable");
   }

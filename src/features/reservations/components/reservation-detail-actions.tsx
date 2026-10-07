@@ -26,7 +26,8 @@ export function ReservationDetailActions({
   const { isPending, isAlternative, isConfirmed, isDeclined, isCancelled } =
     getReservationStatusFlags(reservation);
   const canCancel = Boolean(
-    reservation.managementToken && (isPending || isConfirmed),
+    (reservation.managementToken || reservation.accountLinked) &&
+      (isPending || isConfirmed),
   );
 
   if (isAlternative) return null;

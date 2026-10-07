@@ -3,6 +3,7 @@ import { apiEndpoints } from "@/lib/api/endpoints";
 
 export async function POST(request: Request) {
   const idempotencyKey = request.headers.get("Idempotency-Key");
+  const cookie = request.headers.get("cookie");
 
   try {
     const response = await fetch(
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
         headers: {
           "Content-Type": "application/json",
           ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
+          ...(cookie ? { cookie } : {}),
         },
         body: await request.text(),
         cache: "no-store",
