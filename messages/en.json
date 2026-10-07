@@ -477,5 +477,23 @@
       "owner": "Owner",
       "admin": "Admin"
     }
+  },
+  "OwnerSettings": {
+    "bookingSlotsModal": {
+      "triggerAria": "Explain how booking slots work",
+      "title": "How booking slots work",
+      "intro": "A booking slot is a time when a guest may start a reservation. Slots are generated for every open day inside your booking window.",
+      "settingsMeaningTitle": "What each setting means",
+      "businessHours": "<b>Business hours:</b> the days and periods when guests may book. Add two periods when you serve lunch and dinner separately.",
+      "bookingWindow": "<b>Booking window:</b> how many days ahead guests can reserve. A 30-day window includes every matching weekday during those 30 days.",
+      "slotInterval": "<b>Slot interval:</b> the distance between reservation start times. A 60-minute interval creates starts at 07:30, 08:30, 09:30, and so on.",
+      "diningDuration": "<b>Dining duration:</b> how long a table is expected to be occupied. A slot is created only when the full dining duration ends before closing.",
+      "guestCapacity": "<b>Guest capacity:</b> the total number of guests the restaurant can accept at one start time. It is not the maximum size of one group.",
+      "exampleTitle": "Example",
+      "exampleDescription": "Monday 07:30–11:00, 60-minute interval and 90-minute dining duration creates three starts: 07:30, 08:30 and 09:30. If the 30-day window contains four Mondays, the system creates 4 × 3 = 12 slots.",
+      "whenToRegenerateTitle": "When to regenerate",
+      "regenerateNotice": "Saving business hours regenerates slots automatically. Use <b>Regenerate future slots</b> after changing capacity, interval, dining duration or booking window.",
+      "existingReservationsNotice": "Existing reservations are preserved. Regeneration only replaces future slot data that is safe to rebuild."
+    }
   }
 }

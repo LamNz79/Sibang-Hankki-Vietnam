@@ -426,5 +426,23 @@
       "owner": "Chủ quán",
       "admin": "Quản trị"
     }
+  },
+  "OwnerSettings": {
+    "bookingSlotsModal": {
+      "triggerAria": "Giải thích cách hoạt động của khung giờ đặt bàn",
+      "title": "Cách hoạt động của khung giờ đặt bàn",
+      "intro": "Khung giờ đặt bàn là thời điểm khách có thể bắt đầu đặt chỗ. Các khung giờ được tạo cho mỗi ngày mở cửa trong thời hạn đặt trước của bạn.",
+      "settingsMeaningTitle": "Ý nghĩa của từng cài đặt",
+      "businessHours": "<b>Giờ hoạt động:</b> các ngày và khoảng thời gian khách có thể đặt chỗ. Thêm hai khoảng thời gian nếu bạn phục vụ bữa trưa và bữa tối riêng biệt.",
+      "bookingWindow": "<b>Thời hạn đặt trước:</b> số ngày trước mà khách có thể đặt chỗ. Thời hạn 30 ngày bao gồm tất cả các ngày trong tuần tương ứng trong 30 ngày đó.",
+      "slotInterval": "<b>Khoảng cách khung giờ:</b> khoảng cách giữa các giờ bắt đầu đặt bàn. Khoảng cách 60 phút sẽ tạo các mốc bắt đầu lúc 07:30, 08:30, 09:30, v.v.",
+      "diningDuration": "<b>Thời gian dùng bữa:</b> thời gian dự kiến một bàn được sử dụng. Một khung giờ chỉ được tạo khi toàn bộ thời gian dùng bữa kết thúc trước giờ đóng cửa.",
+      "guestCapacity": "<b>Sức chứa khách:</b> tổng số lượng khách nhà hàng có thể tiếp nhận tại một mốc giờ bắt đầu. Đây không phải là quy mô tối đa của một nhóm.",
+      "exampleTitle": "Ví dụ",
+      "exampleDescription": "Thứ Hai 07:30–11:00, khoảng cách 60 phút và thời gian dùng bữa 90 phút sẽ tạo ra ba mốc bắt đầu: 07:30, 08:30 và 09:30. Nếu thời hạn 30 ngày có bốn ngày Thứ Hai, hệ thống sẽ tạo 4 × 3 = 12 khung giờ.",
+      "whenToRegenerateTitle": "Khi nào cần tạo lại",
+      "regenerateNotice": "Lưu giờ hoạt động sẽ tự động tạo lại các khung giờ. Hãy dùng <b>Tạo lại khung giờ tương lai</b> sau khi thay đổi sức chứa, khoảng cách, thời gian dùng bữa hoặc thời hạn đặt trước.",
+      "existingReservationsNotice": "Các lượt đặt bàn hiện có được giữ nguyên. Quá trình tạo lại chỉ thay thế dữ liệu khung giờ tương lai an toàn để tạo lại."
+    }
   }
 }
