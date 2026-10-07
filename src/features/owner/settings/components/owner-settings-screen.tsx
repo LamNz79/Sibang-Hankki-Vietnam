@@ -30,6 +30,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { LanguageSelect } from "@/features/i18n";
+import { useTranslations } from "next-intl";
 import { OwnerShell } from "@/features/owner/shared";
 import {
   type ConfirmationMode,
@@ -45,6 +46,9 @@ import { uiColors } from "@/theme";
 const numberValue = (value: string | number) =>
   typeof value === "number" ? value : 0;
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const renderBold = {
+  b: (chunks: ReactNode) => <b>{chunks}</b>,
+};
 
 const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
   name: settings.name,
@@ -107,6 +111,7 @@ function SectionCard({
 export function OwnerSettingsScreen() {
   const { query, mutation } = useOwnerSettings();
   const businessHours = useBusinessHours();
+  const t = useTranslations("OwnerSettings.bookingSlotsModal");
   const [draft, setDraft] = useState<OwnerSettingsUpdate | null>(null);
   const [hoursDraft, setHoursDraft] = useState<BusinessHour[] | null>(null);
   const [helpOpened, setHelpOpened] = useState(false);
@@ -282,7 +287,7 @@ export function OwnerSettingsScreen() {
               <ActionIcon
                 variant="subtle"
                 color="gray"
-                aria-label="Explain how booking slots work"
+                aria-label={t("triggerAria")}
                 onClick={() => setHelpOpened(true)}
               >
                 <IconHelpCircle size={20} />
@@ -362,29 +367,29 @@ export function OwnerSettingsScreen() {
           <Modal
             opened={helpOpened}
             onClose={() => setHelpOpened(false)}
-            title={<Text fw={800}>How booking slots work</Text>}
+            title={<Text fw={800}>{t("title")}</Text>}
             centered
             radius="lg"
           >
             <Stack gap="md">
               <Text size="sm">
-                A booking slot is a time when a guest may start a reservation. Slots are generated for every open day inside your booking window.
+                {t("intro")}
               </Text>
               <Stack gap="xs">
-                <Text fw={700}>What each setting means</Text>
-                <Text size="sm"><b>Business hours:</b> the days and periods when guests may book. Add two periods when you serve lunch and dinner separately.</Text>
-                <Text size="sm"><b>Booking window:</b> how many days ahead guests can reserve. A 30-day window includes every matching weekday during those 30 days.</Text>
-                <Text size="sm"><b>Slot interval:</b> the distance between reservation start times. A 60-minute interval creates starts at 07:30, 08:30, 09:30, and so on.</Text>
-                <Text size="sm"><b>Dining duration:</b> how long a table is expected to be occupied. A slot is created only when the full dining duration ends before closing.</Text>
-                <Text size="sm"><b>Guest capacity:</b> the total number of guests the restaurant can accept at one start time. It is not the maximum size of one group.</Text>
+                <Text fw={700}>{t("settingsMeaningTitle")}</Text>
+                <Text size="sm">{t.rich("businessHours", renderBold)}</Text>
+                <Text size="sm">{t.rich("bookingWindow", renderBold)}</Text>
+                <Text size="sm">{t.rich("slotInterval", renderBold)}</Text>
+                <Text size="sm">{t.rich("diningDuration", renderBold)}</Text>
+                <Text size="sm">{t.rich("guestCapacity", renderBold)}</Text>
               </Stack>
-              <Alert color="blue" title="Example">
-                Monday 07:30–11:00, 60-minute interval and 90-minute dining duration creates three starts: 07:30, 08:30 and 09:30. If the 30-day window contains four Mondays, the system creates 4 × 3 = 12 slots.
+              <Alert color="blue" title={t("exampleTitle")}>
+                {t("exampleDescription")}
               </Alert>
               <Stack gap="xs">
-                <Text fw={700}>When to regenerate</Text>
-                <Text size="sm">Saving business hours regenerates slots automatically. Use <b>Regenerate future slots</b> after changing capacity, interval, dining duration or booking window.</Text>
-                <Text size="sm">Existing reservations are preserved. Regeneration only replaces future slot data that is safe to rebuild.</Text>
+                <Text fw={700}>{t("whenToRegenerateTitle")}</Text>
+                <Text size="sm">{t.rich("regenerateNotice", renderBold)}</Text>
+                <Text size="sm">{t("existingReservationsNotice")}</Text>
               </Stack>
             </Stack>
           </Modal>
