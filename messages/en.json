@@ -479,6 +479,62 @@
     }
   },
   "OwnerSettings": {
+    "page": {
+      "title": "Store settings",
+      "eyebrow": "Service configuration",
+      "saveChanges": "Save changes",
+      "unavailable": {
+        "title": "Settings unavailable",
+        "description": "Could not load this restaurant's settings. Refresh the page or sign in again."
+      },
+      "notifications": {
+        "settingsSaved": "Restaurant settings saved.",
+        "settingsSaveError": "Could not save settings. Check the values and try again.",
+        "hoursSaved": "Hours saved. {count} future slots generated.",
+        "hoursSaveError": "Could not save business hours.",
+        "slotsGenerated": "{count} future slots generated.",
+        "regenerateError": "Could not regenerate booking slots."
+      },
+      "profile": {
+        "title": "Restaurant profile",
+        "name": "Restaurant name",
+        "description": "Description",
+        "cuisine": "Cuisine",
+        "priceRange": "Price range",
+        "area": "Area",
+        "district": "District",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email"
+      },
+      "policy": {
+        "title": "Booking policy",
+        "confirmationMode": "Confirmation mode",
+        "modes": { "auto": "Automatic", "manual": "Manual", "hybrid": "Hybrid by party size" },
+        "manualFromPartySize": "Manual confirmation from party size",
+        "guestCapacity": "Guest capacity",
+        "bookingWindow": "Booking window (days)",
+        "slotInterval": "Slot interval (minutes)",
+        "diningDuration": "Dining duration (minutes)",
+        "minimumPartySize": "Minimum party size",
+        "maximumOnlineParty": "Maximum online party",
+        "largePartyThreshold": "Large party threshold",
+        "cancellationCutoff": "Cancellation cutoff (minutes)",
+        "regenerateNotice": "Capacity and schedule timing changes apply when future booking slots are regenerated.",
+        "regenerate": "Regenerate future slots"
+      },
+      "hours": {
+        "title": "Business hours",
+        "loadError": "Could not load business hours.",
+        "addPeriod": "Add period",
+        "closed": "Closed",
+        "opens": "Opens",
+        "closes": "Closes",
+        "removePeriod": "Remove {day} period",
+        "save": "Save business hours",
+        "days": { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thursday": "Thursday", "friday": "Friday", "saturday": "Saturday", "sunday": "Sunday" }
+      }
+    },
     "bookingSlotsModal": {
       "triggerAria": "Explain how booking slots work",
       "title": "How booking slots work",
