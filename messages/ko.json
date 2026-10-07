@@ -7,7 +7,6 @@
   },
   "Auth": {
     "backHome": "홈으로 돌아가기",
-    "prototypeNotice": "프로토타입 화면입니다. 계정 정보는 아직 저장되지 않습니다.",
     "fields": {
       "userid": "사용자 ID",
       "useridPlaceholder": "사용자 ID 입력",
@@ -32,12 +31,16 @@
     },
     "signUp": {
       "title": "계정 만들기",
-      "subtitle": "고객 계정 가입 흐름을 확인해 보세요.",
+      "subtitle": "예약을 관리할 고객 계정을 만드세요.",
+      "notice": "고객용 계정이 생성됩니다. 레스토랑 계정은 별도로 관리됩니다.",
       "submit": "계정 만들기",
       "alternatePrompt": "이미 계정이 있으신가요?",
       "alternateAction": "로그인",
-      "successTitle": "회원가입 흐름 완료",
-      "successMessage": "로그인 프로토타입을 계속 진행하세요."
+      "successTitle": "계정이 생성되었습니다",
+      "successMessage": "새 계정으로 로그인하세요.",
+      "errorTitle": "계정을 만들 수 없습니다",
+      "errorMessage": "입력 내용을 확인하고 다시 시도하세요.",
+      "duplicateMessage": "이미 사용 중인 사용자 ID입니다. 다른 ID를 선택하세요."
     }
   },
   "ReservationQr": {

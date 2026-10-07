@@ -19,8 +19,9 @@ import { notifications } from "@mantine/notifications";
 import { IconArrowLeft, IconToolsKitchen3 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { login } from "@/features/auth/data/session";
+import { login, registerCustomer } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
+import { ApiError } from "@/lib/api/client";
 import { uiColors, uiShadows } from "@/theme";
 
 type AuthMode = "login" | "signUp";
@@ -59,12 +60,34 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
       return;
     }
 
-    notifications.show({
-      color: "teal",
-      title: t(`${mode}.successTitle`),
-      message: t(`${mode}.successMessage`),
-    });
-    router.push(isSignUp ? "/login" : "/");
+    const form = new FormData(event.currentTarget);
+    setSubmitting(true);
+    try {
+      await registerCustomer({
+        userid: String(form.get("userid") ?? ""),
+        email: String(form.get("email") ?? ""),
+        name: String(form.get("fullName") ?? ""),
+        password: String(form.get("password") ?? ""),
+      });
+      notifications.show({
+        color: "teal",
+        title: t("signUp.successTitle"),
+        message: t("signUp.successMessage"),
+      });
+      router.push("/login");
+    } catch (error) {
+      notifications.show({
+        color: "red",
+        title: t("signUp.errorTitle"),
+        message: t(
+          error instanceof ApiError && error.status === 409
+            ? "signUp.duplicateMessage"
+            : "signUp.errorMessage",
+        ),
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -108,11 +131,20 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
             </Stack>
 
             <Alert color="blue" radius="md">
-              {isSignUp ? t("prototypeNotice") : t("login.sessionNotice")}
+              {isSignUp ? t("signUp.notice") : t("login.sessionNotice")}
             </Alert>
 
             <Box component="form" onSubmit={submit}>
               <Stack gap="md">
+                <TextInput
+                  name="userid"
+                  label={t("fields.userid")}
+                  placeholder={t("fields.useridPlaceholder")}
+                  autoComplete="username"
+                  minLength={isSignUp ? 3 : undefined}
+                  maxLength={30}
+                  required
+                />
                 {isSignUp ? (
                   <TextInput
                     name="fullName"
@@ -131,21 +163,14 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
                     autoComplete="email"
                     required
                   />
-                ) : (
-                  <TextInput
-                    name="userid"
-                    label={t("fields.userid")}
-                    placeholder={t("fields.useridPlaceholder")}
-                    autoComplete="username"
-                    required
-                  />
-                )}
+                ) : null}
                 <PasswordInput
                   name="password"
                   label={t("fields.password")}
                   placeholder={t("fields.passwordPlaceholder")}
                   autoComplete={isSignUp ? "new-password" : "current-password"}
                   minLength={8}
+                  maxLength={72}
                   required
                 />
                 <Button
