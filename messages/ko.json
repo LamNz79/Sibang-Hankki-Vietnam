@@ -167,6 +167,7 @@
         "reservations": "예약 운영",
         "customers": "고객 관리",
         "menu": "메뉴",
+        "media": "사진",
         "stores": "가게 관리",
         "revenue": "매출 분석",
         "campaigns": "광고·배너",
@@ -199,6 +200,26 @@
         "currency": "통화",
         "imageUrl": "이미지 URL",
         "available": "주문 가능"
+      }
+    },
+    "media": {
+      "title": "레스토랑 사진",
+      "description": "레스토랑 목록과 상세 페이지에 표시되는 사진을 관리합니다.",
+      "add": "사진 추가",
+      "edit": "사진 수정",
+      "delete": "사진 삭제",
+      "save": "저장",
+      "primary": "대표 사진",
+      "primaryHint": "표시 순서가 가장 낮은 사진이 레스토랑 대표 사진으로 사용됩니다.",
+      "sortOrder": "순서 {order}",
+      "noAltText": "대체 텍스트 없음",
+      "empty": "이 레스토랑을 대표할 사진을 추가하세요.",
+      "error": "사진을 업데이트할 수 없습니다. 정보를 확인하고 다시 시도하세요.",
+      "deleteConfirm": "이 사진을 삭제하시겠습니까?",
+      "fields": {
+        "imageUrl": "이미지 URL",
+        "altText": "대체 텍스트",
+        "sortOrder": "표시 순서"
       }
     },
     "dashboard": {

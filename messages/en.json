@@ -218,6 +218,7 @@
         "reservations": "Reservations",
         "customers": "Customers",
         "menu": "Menu",
+        "media": "Photos",
         "stores": "Stores",
         "revenue": "Revenue Analytics",
         "campaigns": "Ads & Banners",
@@ -250,6 +251,26 @@
         "currency": "Currency",
         "imageUrl": "Image URL",
         "available": "Available for ordering"
+      }
+    },
+    "media": {
+      "title": "Restaurant photos",
+      "description": "Manage the photos shown on the restaurant list and detail page.",
+      "add": "Add photo",
+      "edit": "Edit photo",
+      "delete": "Delete photo",
+      "save": "Save",
+      "primary": "Primary photo",
+      "primaryHint": "The photo with the lowest display order is used as the restaurant's primary photo.",
+      "sortOrder": "Order {order}",
+      "noAltText": "No alternative text",
+      "empty": "Add a photo to represent this restaurant.",
+      "error": "The photos could not be updated. Check the information and try again.",
+      "deleteConfirm": "Delete this photo?",
+      "fields": {
+        "imageUrl": "Image URL",
+        "altText": "Alternative text",
+        "sortOrder": "Display order"
       }
     },
     "dashboard": {
