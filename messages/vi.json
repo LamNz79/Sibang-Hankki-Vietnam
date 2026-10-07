@@ -428,6 +428,62 @@
     }
   },
   "OwnerSettings": {
+    "page": {
+      "title": "Cài đặt nhà hàng",
+      "eyebrow": "Cấu hình dịch vụ",
+      "saveChanges": "Lưu thay đổi",
+      "unavailable": {
+        "title": "Không thể tải cài đặt",
+        "description": "Không thể tải cài đặt của nhà hàng này. Hãy tải lại trang hoặc đăng nhập lại."
+      },
+      "notifications": {
+        "settingsSaved": "Đã lưu cài đặt nhà hàng.",
+        "settingsSaveError": "Không thể lưu cài đặt. Hãy kiểm tra thông tin và thử lại.",
+        "hoursSaved": "Đã lưu giờ hoạt động và tạo {count} khung giờ tương lai.",
+        "hoursSaveError": "Không thể lưu giờ hoạt động.",
+        "slotsGenerated": "Đã tạo {count} khung giờ tương lai.",
+        "regenerateError": "Không thể tạo lại khung giờ đặt bàn."
+      },
+      "profile": {
+        "title": "Thông tin nhà hàng",
+        "name": "Tên nhà hàng",
+        "description": "Mô tả",
+        "cuisine": "Loại ẩm thực",
+        "priceRange": "Khoảng giá",
+        "area": "Khu vực",
+        "district": "Quận/Huyện",
+        "address": "Địa chỉ",
+        "phone": "Số điện thoại",
+        "email": "Email"
+      },
+      "policy": {
+        "title": "Chính sách đặt bàn",
+        "confirmationMode": "Chế độ xác nhận",
+        "modes": { "auto": "Tự động", "manual": "Thủ công", "hybrid": "Kết hợp theo số khách" },
+        "manualFromPartySize": "Xác nhận thủ công từ số khách",
+        "guestCapacity": "Sức chứa khách",
+        "bookingWindow": "Thời hạn đặt trước (ngày)",
+        "slotInterval": "Khoảng cách khung giờ (phút)",
+        "diningDuration": "Thời gian dùng bữa (phút)",
+        "minimumPartySize": "Số khách tối thiểu",
+        "maximumOnlineParty": "Số khách tối đa khi đặt trực tuyến",
+        "largePartyThreshold": "Ngưỡng nhóm đông",
+        "cancellationCutoff": "Hạn chót hủy bàn (phút)",
+        "regenerateNotice": "Thay đổi sức chứa và thời gian chỉ áp dụng sau khi tạo lại các khung giờ tương lai.",
+        "regenerate": "Tạo lại khung giờ tương lai"
+      },
+      "hours": {
+        "title": "Giờ hoạt động",
+        "loadError": "Không thể tải giờ hoạt động.",
+        "addPeriod": "Thêm khoảng giờ",
+        "closed": "Đóng cửa",
+        "opens": "Mở cửa",
+        "closes": "Đóng cửa",
+        "removePeriod": "Xóa khoảng giờ {day}",
+        "save": "Lưu giờ hoạt động",
+        "days": { "monday": "Thứ Hai", "tuesday": "Thứ Ba", "wednesday": "Thứ Tư", "thursday": "Thứ Năm", "friday": "Thứ Sáu", "saturday": "Thứ Bảy", "sunday": "Chủ Nhật" }
+      }
+    },
     "bookingSlotsModal": {
       "triggerAria": "Giải thích cách hoạt động của khung giờ đặt bàn",
       "title": "Cách hoạt động của khung giờ đặt bàn",

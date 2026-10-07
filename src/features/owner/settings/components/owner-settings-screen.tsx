@@ -45,7 +45,7 @@ import { uiColors } from "@/theme";
 
 const numberValue = (value: string | number) =>
   typeof value === "number" ? value : 0;
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
 const renderBold = {
   b: (chunks: ReactNode) => <b>{chunks}</b>,
 };
@@ -112,6 +112,7 @@ export function OwnerSettingsScreen() {
   const { query, mutation } = useOwnerSettings();
   const businessHours = useBusinessHours();
   const t = useTranslations("OwnerSettings.bookingSlotsModal");
+  const pageT = useTranslations("OwnerSettings.page");
   const [draft, setDraft] = useState<OwnerSettingsUpdate | null>(null);
   const [hoursDraft, setHoursDraft] = useState<BusinessHour[] | null>(null);
   const [helpOpened, setHelpOpened] = useState(false);
@@ -131,11 +132,11 @@ export function OwnerSettingsScreen() {
     try {
       await mutation.mutateAsync(form);
       setDraft(null);
-      notifications.show({ color: "teal", message: "Restaurant settings saved." });
+      notifications.show({ color: "teal", message: pageT("notifications.settingsSaved") });
     } catch {
       notifications.show({
         color: "red",
-        message: "Could not save settings. Check the values and try again.",
+        message: pageT("notifications.settingsSaveError"),
       });
     }
   };
@@ -146,10 +147,10 @@ export function OwnerSettingsScreen() {
       setHoursDraft(null);
       notifications.show({
         color: "teal",
-        message: `Hours saved. ${result.generatedSlots} future slots generated.`,
+        message: pageT("notifications.hoursSaved", { count: result.generatedSlots }),
       });
     } catch {
-      notifications.show({ color: "red", message: "Could not save business hours." });
+      notifications.show({ color: "red", message: pageT("notifications.hoursSaveError") });
     }
   };
 
@@ -158,10 +159,10 @@ export function OwnerSettingsScreen() {
       const result = await businessHours.regenerateMutation.mutateAsync();
       notifications.show({
         color: "teal",
-        message: `${result.generatedSlots} future slots generated.`,
+        message: pageT("notifications.slotsGenerated", { count: result.generatedSlots }),
       });
     } catch {
-      notifications.show({ color: "red", message: "Could not regenerate booking slots." });
+      notifications.show({ color: "red", message: pageT("notifications.regenerateError") });
     }
   };
 
@@ -172,8 +173,8 @@ export function OwnerSettingsScreen() {
 
   return (
     <OwnerShell
-      title="Store settings"
-      eyebrow={query.data?.slug ?? "Service configuration"}
+      title={pageT("title")}
+      eyebrow={query.data?.slug ?? pageT("eyebrow")}
       backHref="/owner"
       hideMobileNavigation
       footerAction={
@@ -182,52 +183,52 @@ export function OwnerSettingsScreen() {
           loading={mutation.isPending}
           disabled={!form || query.isLoading}
         >
-          Save changes
+          {pageT("saveChanges")}
         </PrimaryActionButton>
       }
     >
       {query.isLoading ? (
         <Group justify="center" py="xl"><Loader /></Group>
       ) : query.isError || !form ? (
-        <Alert color="red" title="Settings unavailable">
-          Could not load this restaurant&apos;s settings. Refresh the page or sign in again.
+        <Alert color="red" title={pageT("unavailable.title")}>
+          {pageT("unavailable.description")}
         </Alert>
       ) : (
         <Stack gap="md">
-          <SectionCard title="Restaurant profile" icon={IconBuildingStore}>
+          <SectionCard title={pageT("profile.title")} icon={IconBuildingStore}>
             <TextInput
-              label="Restaurant name"
+              label={pageT("profile.name")}
               required
               value={form.name}
               onChange={(event) => set("name", event.currentTarget.value)}
             />
             <Textarea
-              label="Description"
+              label={pageT("profile.description")}
               minRows={3}
               value={form.description ?? ""}
               onChange={(event) => set("description", event.currentTarget.value || null)}
             />
             <SimpleGrid cols={2}>
-              <TextInput label="Cuisine" value={form.cuisineLabel ?? ""} onChange={(event) => set("cuisineLabel", event.currentTarget.value || null)} />
-              <TextInput label="Price range" placeholder="$$$" value={form.priceRange ?? ""} onChange={(event) => set("priceRange", event.currentTarget.value || null)} />
-              <TextInput label="Area" value={form.area ?? ""} onChange={(event) => set("area", event.currentTarget.value || null)} />
-              <TextInput label="District" value={form.district ?? ""} onChange={(event) => set("district", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.cuisine")} value={form.cuisineLabel ?? ""} onChange={(event) => set("cuisineLabel", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.priceRange")} placeholder="$$$" value={form.priceRange ?? ""} onChange={(event) => set("priceRange", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.area")} value={form.area ?? ""} onChange={(event) => set("area", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.district")} value={form.district ?? ""} onChange={(event) => set("district", event.currentTarget.value || null)} />
             </SimpleGrid>
-            <Textarea label="Address" minRows={2} value={form.address ?? ""} onChange={(event) => set("address", event.currentTarget.value || null)} />
+            <Textarea label={pageT("profile.address")} minRows={2} value={form.address ?? ""} onChange={(event) => set("address", event.currentTarget.value || null)} />
             <SimpleGrid cols={2}>
-              <TextInput label="Phone" value={form.phone ?? ""} onChange={(event) => set("phone", event.currentTarget.value || null)} />
-              <TextInput label="Email" type="email" value={form.email ?? ""} onChange={(event) => set("email", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.phone")} value={form.phone ?? ""} onChange={(event) => set("phone", event.currentTarget.value || null)} />
+              <TextInput label={pageT("profile.email")} type="email" value={form.email ?? ""} onChange={(event) => set("email", event.currentTarget.value || null)} />
             </SimpleGrid>
           </SectionCard>
 
-          <SectionCard title="Booking policy" icon={IconCalendarEvent}>
+          <SectionCard title={pageT("policy.title")} icon={IconCalendarEvent}>
             <Select
-              label="Confirmation mode"
+              label={pageT("policy.confirmationMode")}
               value={form.confirmationMode}
               data={[
-                { value: "AUTO", label: "Automatic" },
-                { value: "MANUAL", label: "Manual" },
-                { value: "HYBRID", label: "Hybrid by party size" },
+                { value: "AUTO", label: pageT("policy.modes.auto") },
+                { value: "MANUAL", label: pageT("policy.modes.manual") },
+                { value: "HYBRID", label: pageT("policy.modes.hybrid") },
               ]}
               onChange={(value) => {
                 const mode = (value ?? "AUTO") as ConfirmationMode;
@@ -242,22 +243,22 @@ export function OwnerSettingsScreen() {
             />
             {form.confirmationMode === "HYBRID" ? (
               <NumberInput
-                label="Manual confirmation from party size"
+                label={pageT("policy.manualFromPartySize")}
                 min={1}
                 value={form.manualConfirmationMinPartySize ?? 1}
                 onChange={(value) => set("manualConfirmationMinPartySize", numberValue(value))}
               />
             ) : null}
             <SimpleGrid cols={2}>
-              <NumberInput label="Guest capacity" min={1} value={form.guestCapacity} onChange={(value) => set("guestCapacity", numberValue(value))} />
-              <NumberInput label="Booking window (days)" min={1} value={form.bookingWindowDays} onChange={(value) => set("bookingWindowDays", numberValue(value))} />
-              <NumberInput label="Slot interval (minutes)" min={1} value={form.bookingIntervalMinutes} onChange={(value) => set("bookingIntervalMinutes", numberValue(value))} />
-              <NumberInput label="Dining duration (minutes)" min={1} value={form.diningDurationMinutes} onChange={(value) => set("diningDurationMinutes", numberValue(value))} />
-              <NumberInput label="Minimum party size" min={1} value={form.minimumPartySize} onChange={(value) => set("minimumPartySize", numberValue(value))} />
-              <NumberInput label="Maximum online party" min={1} value={form.maximumOnlinePartySize} onChange={(value) => set("maximumOnlinePartySize", numberValue(value))} />
-              <NumberInput label="Large party threshold" min={1} value={form.largePartyThreshold} onChange={(value) => set("largePartyThreshold", numberValue(value))} />
+              <NumberInput label={pageT("policy.guestCapacity")} min={1} value={form.guestCapacity} onChange={(value) => set("guestCapacity", numberValue(value))} />
+              <NumberInput label={pageT("policy.bookingWindow")} min={1} value={form.bookingWindowDays} onChange={(value) => set("bookingWindowDays", numberValue(value))} />
+              <NumberInput label={pageT("policy.slotInterval")} min={1} value={form.bookingIntervalMinutes} onChange={(value) => set("bookingIntervalMinutes", numberValue(value))} />
+              <NumberInput label={pageT("policy.diningDuration")} min={1} value={form.diningDurationMinutes} onChange={(value) => set("diningDurationMinutes", numberValue(value))} />
+              <NumberInput label={pageT("policy.minimumPartySize")} min={1} value={form.minimumPartySize} onChange={(value) => set("minimumPartySize", numberValue(value))} />
+              <NumberInput label={pageT("policy.maximumOnlineParty")} min={1} value={form.maximumOnlinePartySize} onChange={(value) => set("maximumOnlinePartySize", numberValue(value))} />
+              <NumberInput label={pageT("policy.largePartyThreshold")} min={1} value={form.largePartyThreshold} onChange={(value) => set("largePartyThreshold", numberValue(value))} />
               <NumberInput
-                label="Cancellation cutoff (minutes)"
+                label={pageT("policy.cancellationCutoff")}
                 min={0}
                 value={form.customerCancellationCutoffMinutes ?? ""}
                 onChange={(value) => set(
@@ -267,7 +268,7 @@ export function OwnerSettingsScreen() {
               />
             </SimpleGrid>
             <Alert icon={<IconInfoCircle size={18} />} color="blue">
-              Capacity and schedule timing changes apply when future booking slots are regenerated.
+              {pageT("policy.regenerateNotice")}
             </Alert>
             <Button
               variant="light"
@@ -276,12 +277,12 @@ export function OwnerSettingsScreen() {
               loading={businessHours.regenerateMutation.isPending}
               onClick={regenerate}
             >
-              Regenerate future slots
+              {pageT("policy.regenerate")}
             </Button>
           </SectionCard>
 
           <SectionCard
-            title="Business hours"
+            title={pageT("hours.title")}
             icon={IconClock}
             headerAction={(
               <ActionIcon
@@ -297,7 +298,7 @@ export function OwnerSettingsScreen() {
             {businessHours.query.isLoading ? (
               <Group justify="center"><Loader size="sm" /></Group>
             ) : businessHours.query.isError ? (
-              <Alert color="red">Could not load business hours.</Alert>
+              <Alert color="red">{pageT("hours.loadError")}</Alert>
             ) : (
               <Stack gap="lg">
                 {days.map((day, dayIndex) => {
@@ -308,7 +309,7 @@ export function OwnerSettingsScreen() {
                   return (
                     <Stack key={day} gap="xs">
                       <Group justify="space-between">
-                        <Text fw={700} size="sm">{day}</Text>
+                        <Text fw={700} size="sm">{pageT(`hours.days.${day}`)}</Text>
                         <Button
                           size="compact-xs"
                           variant="subtle"
@@ -319,22 +320,22 @@ export function OwnerSettingsScreen() {
                             closesAt: "22:00",
                           }])}
                         >
-                          Add period
+                          {pageT("hours.addPeriod")}
                         </Button>
                       </Group>
                       {periods.length === 0 ? (
-                        <Text size="xs" c={uiColors.textMuted}>Closed</Text>
+                        <Text size="xs" c={uiColors.textMuted}>{pageT("hours.closed")}</Text>
                       ) : periods.map(({ hour, index }) => (
                         <Group key={`${dayNumber}-${index}`} grow align="flex-end">
                           <TextInput
                             type="time"
-                            label="Opens"
+                            label={pageT("hours.opens")}
                             value={hour.opensAt.slice(0, 5)}
                             onChange={(event) => updateHour(index, "opensAt", event.currentTarget.value)}
                           />
                           <TextInput
                             type="time"
-                            label="Closes"
+                            label={pageT("hours.closes")}
                             value={hour.closesAt.slice(0, 5)}
                             onChange={(event) => updateHour(index, "closesAt", event.currentTarget.value)}
                           />
@@ -342,7 +343,7 @@ export function OwnerSettingsScreen() {
                             variant="light"
                             color="red"
                             size={36}
-                            aria-label={`Remove ${day} period`}
+                            aria-label={pageT("hours.removePeriod", { day: pageT(`hours.days.${day}`) })}
                             onClick={() => setHoursDraft(hours.filter((_, hourIndex) => hourIndex !== index))}
                           >
                             <IconTrash size={16} />
@@ -358,7 +359,7 @@ export function OwnerSettingsScreen() {
                   loading={businessHours.updateMutation.isPending}
                   onClick={saveHours}
                 >
-                  Save business hours
+                  {pageT("hours.save")}
                 </Button>
               </Stack>
             )}
