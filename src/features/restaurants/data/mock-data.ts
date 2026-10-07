@@ -30,6 +30,7 @@ export type RestaurantRecord = {
   benefits: BenefitKey[];
   tags: string[];
   galleryCount: number;
+  galleryImages?: { imageUrl: string; imageAlt: string }[];
   summary: string;
   slotMatrix: Record<string, Record<string, string[]>>;
 };

@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { Box, Button, Card, Group, Stack, Text, ThemeIcon, Title } from "@mantine/core";
-import { IconCalendarTime, IconClock, IconMapPin, IconStarFilled } from "@tabler/icons-react";
+import { Box, Button, Card, Group, Image, Modal, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconCalendarTime, IconClock, IconMapPin, IconPhoto, IconStarFilled } from "@tabler/icons-react";
 import { MobileShell } from "@/components/layout/customer";
 import {
   getRestaurantAvailabilitySummary,
@@ -10,6 +13,10 @@ import { uiColors } from "@/theme";
 
 export function RestaurantDetailsScreen({ restaurant }: { restaurant: RestaurantRecord }) {
   const availability = getRestaurantAvailabilitySummary(restaurant);
+  const [galleryOpened, gallery] = useDisclosure(false);
+  const galleryImages = restaurant.galleryImages?.length
+    ? restaurant.galleryImages
+    : [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }];
 
   return (
     <MobileShell
@@ -27,16 +34,48 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
     >
       <Box
         h={280}
-        role="img"
+        role="group"
         aria-label={restaurant.imageAlt}
         style={{
+          position: "relative",
           borderRadius: 24,
           backgroundColor: restaurant.heroAccent,
           backgroundImage: `url("${restaurant.imageUrl}")`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
-      />
+      >
+        <Button
+          variant="white"
+          color="dark"
+          leftSection={<IconPhoto size={16} />}
+          onClick={gallery.open}
+          style={{ position: "absolute", right: 16, bottom: 16 }}
+        >
+          View {galleryImages.length} {galleryImages.length === 1 ? "photo" : "photos"}
+        </Button>
+      </Box>
+
+      <Modal
+        opened={galleryOpened}
+        onClose={gallery.close}
+        title={<Text fw={800}>{restaurant.name} photos</Text>}
+        size="xl"
+        centered
+      >
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          {galleryImages.map((image, index) => (
+            <Image
+              key={`${image.imageUrl}-${index}`}
+              src={image.imageUrl}
+              alt={image.imageAlt}
+              h={260}
+              radius="md"
+              fit="cover"
+            />
+          ))}
+        </SimpleGrid>
+      </Modal>
 
       <Stack gap="sm">
         <Text size="sm" fw={700} c={uiColors.textSecondary}>{restaurant.cuisineLabel} · {restaurant.district}</Text>
