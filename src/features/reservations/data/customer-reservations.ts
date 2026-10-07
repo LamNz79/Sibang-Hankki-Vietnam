@@ -5,7 +5,7 @@ import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
 import { getCsrfToken } from "@/features/auth/data/session";
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
-import { apiFetch } from "@/lib/api/client";
+import { ApiError, apiFetch } from "@/lib/api/client";
 import { apiEndpoints } from "@/lib/api/endpoints";
 
 dayjs.extend(utc);
@@ -79,11 +79,33 @@ export function mapAccountReservation(
 }
 
 export async function getAccountReservations(signal?: AbortSignal) {
-  const records = await apiFetch<CustomerReservationRecord[]>(
-    apiEndpoints.customerAccountReservations,
-    { cache: "no-store", signal },
-  );
-  return records.map(mapAccountReservation);
+  try {
+    const records = await apiFetch<CustomerReservationRecord[]>(
+      apiEndpoints.customerAccountReservations,
+      { cache: "no-store", signal },
+    );
+    return records.map(mapAccountReservation);
+  } catch (error) {
+    if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+export function selectVisibleReservations(
+  stored: CustomerReservation[],
+  account: CustomerReservation[] | null | undefined,
+) {
+  if (account === null) {
+    return stored.filter((reservation) => reservation.managementToken);
+  }
+  if (!account) return [];
+
+  return account.map((reservation) => {
+    const local = stored.find(({ id }) => id === reservation.id);
+    return local ? { ...local, ...reservation } : reservation;
+  });
 }
 
 export async function getCustomerReservation(

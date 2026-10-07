@@ -6,6 +6,7 @@ import {
   cancelCustomerReservation,
   getAccountReservations,
   getCustomerReservation,
+  selectVisibleReservations,
 } from "@/features/reservations/data/customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
 import {
@@ -42,15 +43,8 @@ export function useCustomerReservations() {
   const refreshedStored = storedReservations.map(
     (reservation, index) => remoteReservations[index]?.data ?? reservation,
   );
-  const accountIds = new Set(accountReservations.data?.map(({ id }) => id));
 
-  return [
-    ...(accountReservations.data ?? []).map((reservation) => {
-      const stored = refreshedStored.find(({ id }) => id === reservation.id);
-      return stored ? { ...stored, ...reservation } : reservation;
-    }),
-    ...refreshedStored.filter(({ id }) => !accountIds.has(id)),
-  ];
+  return selectVisibleReservations(refreshedStored, accountReservations.data);
 }
 
 /** Returns the customer reservation matching `id`, if one exists. */
@@ -72,12 +66,12 @@ export function useCancelCustomerReservation(
         ["customer-reservations", cancelled.id],
         cancelled,
       );
-      queryClient.setQueryData<CustomerReservation[]>(
+      queryClient.setQueryData<CustomerReservation[] | null>(
         ["customer-account-reservations"],
         (reservations) =>
           reservations?.map((reservation) =>
             reservation.id === cancelled.id ? cancelled : reservation,
-          ),
+          ) ?? reservations,
       );
     },
   });

@@ -5,6 +5,7 @@ import {
   getAccountReservations,
   getCustomerReservation,
   mergeCustomerReservation,
+  selectVisibleReservations,
 } from "./customer-reservations";
 
 afterEach(() => {
@@ -114,6 +115,24 @@ describe("customer reservation API", () => {
       "/api/customer/account/reservations",
       expect.objectContaining({ cache: "no-store" }),
     );
+  });
+
+  it("shows only account reservations when signed in and token-owned guests when signed out", () => {
+    const account = { ...stored, id: "account-id", managementToken: undefined, accountLinked: true };
+    const otherAccount = { ...account, id: "other-account-id" };
+
+    expect(selectVisibleReservations([stored, otherAccount], [account])).toEqual([account]);
+    expect(selectVisibleReservations([stored, otherAccount], null)).toEqual([stored]);
+    expect(selectVisibleReservations([stored, otherAccount], undefined)).toEqual([]);
+  });
+
+  it("treats an unauthorized account request as a guest session", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
+      new Response(null, { status: 401 }),
+    ));
+
+    await expect(getAccountReservations()).resolves.toBeNull();
   });
 
   it("gets CSRF before cancelling an account reservation", async () => {
