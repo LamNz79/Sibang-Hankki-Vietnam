@@ -23,7 +23,7 @@ export type CreateReservationResponse = {
   partySize: number;
   status: "PENDING" | "CONFIRMED";
   requiresRestaurantConfirmation: boolean;
-  managementToken: string;
+  managementToken?: string | null;
   createdAt: string;
 };
 

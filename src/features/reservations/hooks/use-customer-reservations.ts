@@ -1,9 +1,10 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   cancelCustomerReservation,
+  getAccountReservations,
   getCustomerReservation,
 } from "@/features/reservations/data/customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
@@ -33,10 +34,23 @@ export function useCustomerReservations() {
       retry: false,
     })),
   });
-
-  return storedReservations.map(
+  const accountReservations = useQuery({
+    queryKey: ["customer-account-reservations"],
+    queryFn: ({ signal }) => getAccountReservations(signal),
+    retry: false,
+  });
+  const refreshedStored = storedReservations.map(
     (reservation, index) => remoteReservations[index]?.data ?? reservation,
   );
+  const accountIds = new Set(accountReservations.data?.map(({ id }) => id));
+
+  return [
+    ...(accountReservations.data ?? []).map((reservation) => {
+      const stored = refreshedStored.find(({ id }) => id === reservation.id);
+      return stored ? { ...stored, ...reservation } : reservation;
+    }),
+    ...refreshedStored.filter(({ id }) => !accountIds.has(id)),
+  ];
 }
 
 /** Returns the customer reservation matching `id`, if one exists. */
@@ -57,6 +71,13 @@ export function useCancelCustomerReservation(
       queryClient.setQueryData(
         ["customer-reservations", cancelled.id],
         cancelled,
+      );
+      queryClient.setQueryData<CustomerReservation[]>(
+        ["customer-account-reservations"],
+        (reservations) =>
+          reservations?.map((reservation) =>
+            reservation.id === cancelled.id ? cancelled : reservation,
+          ),
       );
     },
   });

@@ -52,6 +52,7 @@ export interface CustomerReservation {
   status: ReservationStatus;
   reference?: string;
   managementToken?: string;
+  accountLinked?: boolean;
   checkInToken?: string;
   alternativeProposal?: CustomerAlternativeProposal;
   previousDate?: string;
