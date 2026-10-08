@@ -122,6 +122,10 @@ export function checkInOwnerReservation(checkInToken: string) {
   return postOwnerReservation(apiEndpoints.ownerCheckIns, { checkInToken });
 }
 
+export function manuallyCheckInOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.checkInOwnerReservation(id));
+}
+
 export function seatOwnerReservation(id: string) {
   return postOwnerReservation(apiEndpoints.seatOwnerReservation(id));
 }

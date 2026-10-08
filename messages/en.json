@@ -208,6 +208,7 @@
     "searchPlaceholder": "Reservation no., guest name, or phone",
     "searchLabel": "Search by reservation number, guest name, or phone",
     "noMatch": "No matching reservation found",
+    "manualError": "Could not check in this guest. Refresh and try again.",
     "searchTitle": "Search for a reservation",
     "searchHelp": "Enter a booking reference, guest name, or phone number.",
     "guidance": "Confirm the reservation details before checking in the guest. Camera access requires a supported browser and a secure connection.",

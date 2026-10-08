@@ -5,6 +5,7 @@ import {
   completeOwnerReservation,
   confirmOwnerReservation,
   declineOwnerReservation,
+  manuallyCheckInOwnerReservation,
   seatOwnerReservation,
   toOwnerReservation,
 } from "./owner-reservations";
@@ -140,6 +141,34 @@ describe("owner reservation API mapping", () => {
         method: "POST",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ checkInToken: "raw-token" }),
+      }),
+    ]);
+  });
+
+  it("manually checks in a reservation by id with CSRF", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...pendingRecord,
+        status: "CONFIRMED",
+        visitStatus: "ARRIVED",
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      manuallyCheckInOwnerReservation("reservation-id"),
+    ).resolves.toMatchObject({ visitStatus: VisitStatus.Arrived });
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/reservations/reservation-id/check-in",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
       }),
     ]);
   });

@@ -10,6 +10,7 @@ import {
   declineOwnerReservation,
   getOwnerReservation,
   getOwnerReservations,
+  manuallyCheckInOwnerReservation,
   seatOwnerReservation,
 } from "@/features/owner/data/owner-reservations";
 import { ApiError } from "@/lib/api/client";
@@ -92,4 +93,20 @@ export function useOwnerReservationActions(id: string) {
     seat: () => mutation.mutate({ kind: "seat" }),
     complete: () => mutation.mutate({ kind: "complete" }),
   };
+}
+
+export function useOwnerManualCheckIn() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: manuallyCheckInOwnerReservation,
+    onSuccess: async (reservation) => {
+      queryClient.setQueryData(
+        ["owner-reservations", reservation.id],
+        reservation,
+      );
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
+    },
+  });
+  useLoginRedirect(mutation.error);
+  return mutation;
 }
