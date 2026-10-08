@@ -20,7 +20,7 @@ import { findReservationById } from "@/features/reservations/domain/selectors";
  * Subscribes React components to the current customer reservation collection.
  * This hook is the UI boundary that can later switch from local storage to API data.
  */
-export function useCustomerReservations() {
+export function useCustomerReservationsState() {
   const storedReservations = useSyncExternalStore(
     subscribeToReservations,
     getReservationsSnapshot,
@@ -44,7 +44,19 @@ export function useCustomerReservations() {
     (reservation, index) => remoteReservations[index]?.data ?? reservation,
   );
 
-  return selectVisibleReservations(refreshedStored, accountReservations.data);
+  return {
+    reservations: selectVisibleReservations(
+      refreshedStored,
+      accountReservations.data,
+    ),
+    isLoading: accountReservations.isPending,
+    isError: accountReservations.isError,
+    retry: accountReservations.refetch,
+  };
+}
+
+export function useCustomerReservations() {
+  return useCustomerReservationsState().reservations;
 }
 
 /** Returns the customer reservation matching `id`, if one exists. */

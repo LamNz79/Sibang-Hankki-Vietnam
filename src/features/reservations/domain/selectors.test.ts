@@ -5,6 +5,7 @@ import {
   getReservationDisplaySlot,
   getReservationReference,
   getReservationStatusFlags,
+  partitionCustomerReservations,
 } from "@/features/reservations/domain/selectors";
 import {
   ReservationStatus,
@@ -95,5 +96,26 @@ describe("reservation selectors", () => {
         createFixture({ status: ReservationStatus.Cancelled }),
       ).isCancelled,
     ).toBe(true);
+  });
+
+  it("splits active future reservations from terminal and elapsed reservations", () => {
+    const future = createFixture({ id: "future", date: "2026-10-09" });
+    const later = createFixture({ id: "later", date: "2026-10-10" });
+    const elapsed = createFixture({ id: "elapsed", date: "2026-10-07" });
+    const cancelled = createFixture({
+      id: "cancelled",
+      date: "2026-10-11",
+      status: ReservationStatus.Cancelled,
+    });
+
+    expect(
+      partitionCustomerReservations(
+        [cancelled, elapsed, later, future],
+        "2026-10-08T12:00",
+      ),
+    ).toEqual({
+      upcoming: [future, later],
+      past: [cancelled, elapsed],
+    });
   });
 });
