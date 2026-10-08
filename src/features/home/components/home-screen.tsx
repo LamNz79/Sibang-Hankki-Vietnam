@@ -5,7 +5,9 @@ import {
   Box,
   Button,
   Card,
+  Center,
   Group,
+  Loader,
   Modal,
   SimpleGrid,
   Stack,
@@ -35,7 +37,10 @@ import {
   priceRanges,
 } from "@/features/home/data/home-data";
 import { getUpcomingConfirmedReservations } from "@/features/reservations/domain/selectors";
-import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
+import {
+  useCustomerCheckInToken,
+  useCustomerReservations,
+} from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 
 const quickSortOptions = ["Recommended", "Top rated", "Earliest available"];
@@ -76,6 +81,7 @@ function HomeContent() {
   const selectedReservation = confirmedReservations.find(
     (reservation) => reservation.id === selectedQrId,
   );
+  const checkInToken = useCustomerCheckInToken(selectedReservation);
 
   const openQr = () => {
     setPickedQrId(
@@ -133,7 +139,7 @@ function HomeContent() {
         }}
       />
 
-      {nextConfirmedReservation?.checkInToken ? (
+      {nextConfirmedReservation ? (
         <>
           <Card
             radius="lg"
@@ -189,23 +195,36 @@ function HomeContent() {
             radius="lg"
             size="xs"
           >
-            {selectedReservation?.checkInToken ? (
+            {selectedReservation ? (
               <Stack align="center" gap="md">
-                <div
-                  style={{
-                    padding: 12,
-                    background: "white",
-                    borderRadius: 12,
-                    lineHeight: 0,
-                  }}
-                >
-                  <QRCodeSVG
-                    value={selectedReservation.checkInToken}
-                    size={200}
-                    level="M"
-                    title={t("ariaTitle")}
-                  />
-                </div>
+                {checkInToken.isPending ? (
+                  <Center mih={200}><Loader size="sm" /></Center>
+                ) : checkInToken.isError ? (
+                  <Stack align="center" gap="xs">
+                    <Text size="sm" c="red" ta="center">
+                      {t("detail.errorDescription")}
+                    </Text>
+                    <Button size="compact-sm" variant="light" onClick={() => checkInToken.refetch()}>
+                      {t("detail.retry")}
+                    </Button>
+                  </Stack>
+                ) : checkInToken.data ? (
+                  <div
+                    style={{
+                      padding: 12,
+                      background: "white",
+                      borderRadius: 12,
+                      lineHeight: 0,
+                    }}
+                  >
+                    <QRCodeSVG
+                      value={checkInToken.data}
+                      size={200}
+                      level="M"
+                      title={t("ariaTitle")}
+                    />
+                  </div>
+                ) : null}
                 <Stack gap={2} align="center">
                   <Text fw={800}>{selectedReservation.restaurantName}</Text>
                   <Text size="sm" c={uiColors.textSecondary}>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   findReservationById,
+  getCustomerReservationDisplayStatus,
   getUpcomingConfirmedReservations,
   getReservationDisplaySlot,
   getReservationReference,
@@ -9,6 +10,7 @@ import {
 } from "@/features/reservations/domain/selectors";
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/domain/types";
 
@@ -38,28 +40,31 @@ describe("reservation selectors", () => {
     );
   });
 
-  it("returns upcoming confirmed reservations with QR tokens in slot order", () => {
+  it("returns upcoming confirmed reservations in slot order", () => {
     const next = createFixture({
       id: "next",
       date: "2026-08-24",
       time: "18:00",
       status: ReservationStatus.Confirmed,
-      checkInToken: "next-token",
     });
     const later = createFixture({
       id: "later",
       date: "2026-08-25",
       status: ReservationStatus.Confirmed,
-      checkInToken: "later-token",
     });
     const past = createFixture({
       status: ReservationStatus.Confirmed,
-      checkInToken: "past-token",
+    });
+    const arrived = createFixture({
+      id: "arrived",
+      date: "2026-08-26",
+      status: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Arrived,
     });
 
     expect(
       getUpcomingConfirmedReservations(
-        [later, past, next],
+        [later, past, arrived, next],
         "2026-08-24T10:00",
       ),
     ).toEqual([next, later]);
@@ -98,6 +103,17 @@ describe("reservation selectors", () => {
     ).toBe(true);
   });
 
+  it("shows visit progress after a confirmed guest checks in", () => {
+    expect(
+      getCustomerReservationDisplayStatus(
+        createFixture({
+          status: ReservationStatus.Confirmed,
+          visitStatus: VisitStatus.Arrived,
+        }),
+      ),
+    ).toBe(VisitStatus.Arrived);
+  });
+
   it("splits active future reservations from terminal and elapsed reservations", () => {
     const future = createFixture({ id: "future", date: "2026-10-09" });
     const later = createFixture({ id: "later", date: "2026-10-10" });
@@ -107,15 +123,21 @@ describe("reservation selectors", () => {
       date: "2026-10-11",
       status: ReservationStatus.Cancelled,
     });
+    const completed = createFixture({
+      id: "completed",
+      date: "2026-10-11",
+      status: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Completed,
+    });
 
     expect(
       partitionCustomerReservations(
-        [cancelled, elapsed, later, future],
+        [cancelled, elapsed, completed, later, future],
         "2026-10-08T12:00",
       ),
     ).toEqual({
       upcoming: [future, later],
-      past: [cancelled, elapsed],
+      past: [cancelled, completed, elapsed],
     });
   });
 });

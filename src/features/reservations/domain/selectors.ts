@@ -1,5 +1,6 @@
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/domain/types";
 
@@ -11,7 +12,7 @@ export function findReservationById(
   return reservations.find((reservation) => reservation.id === id);
 }
 
-/** Returns upcoming confirmed reservations with QR tokens, nearest first. */
+/** Returns upcoming confirmed reservations, nearest first. */
 export function getUpcomingConfirmedReservations(
   reservations: CustomerReservation[],
   currentSlot: string,
@@ -20,7 +21,8 @@ export function getUpcomingConfirmedReservations(
     .filter(
       (reservation) =>
         reservation.status === ReservationStatus.Confirmed &&
-        reservation.checkInToken &&
+        (!reservation.visitStatus ||
+          reservation.visitStatus === VisitStatus.Expected) &&
         `${reservation.date}T${reservation.time}` >= currentSlot,
     )
     .sort((left, right) =>
@@ -40,6 +42,21 @@ export function getReservationStatusFlags(reservation: CustomerReservation) {
   };
 }
 
+/** Shows visit progress after confirmation without changing the booking decision. */
+export function getCustomerReservationDisplayStatus(
+  reservation: CustomerReservation,
+) {
+  if (
+    reservation.status === ReservationStatus.Confirmed &&
+    reservation.visitStatus &&
+    reservation.visitStatus !== VisitStatus.Expected
+  ) {
+    return reservation.visitStatus;
+  }
+
+  return reservation.status;
+}
+
 /** Splits reservations by lifecycle and visit time, sorting each section for display. */
 export function partitionCustomerReservations(
   reservations: CustomerReservation[],
@@ -56,6 +73,8 @@ export function partitionCustomerReservations(
   for (const reservation of reservations) {
     const slot = getReservationDisplaySlot(reservation);
     (terminalStatuses.has(reservation.status) ||
+    reservation.visitStatus === VisitStatus.Completed ||
+    reservation.visitStatus === VisitStatus.NoShow ||
     `${slot.date}T${slot.time}` < currentSlot
       ? past
       : upcoming

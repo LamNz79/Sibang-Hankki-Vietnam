@@ -9,9 +9,13 @@ export const apiEndpoints = {
     `/api/customer/reservations/${seg(id)}`,
   cancelCustomerReservation: (id: string) =>
     `/api/customer/reservations/${seg(id)}/cancel`,
+  customerReservationCheckInToken: (id: string) =>
+    `/api/customer/reservations/${seg(id)}/check-in-token`,
   customerAccountReservations: "/api/customer/account/reservations",
   cancelCustomerAccountReservation: (id: string) =>
     `/api/customer/account/reservations/${seg(id)}/cancel`,
+  customerAccountReservationCheckInToken: (id: string) =>
+    `/api/customer/account/reservations/${seg(id)}/check-in-token`,
   authCsrf: "/api/auth/csrf",
   authLogin: "/api/auth/login",
   authRegister: "/api/auth/register",
@@ -34,4 +38,5 @@ export const apiEndpoints = {
     `/api/owner/reservations/${seg(id)}/confirm`,
   declineOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/decline`,
+  ownerCheckIns: "/api/owner/check-ins",
 } as const;

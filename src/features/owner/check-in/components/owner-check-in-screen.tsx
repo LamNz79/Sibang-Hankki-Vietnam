@@ -30,11 +30,13 @@ import {
   IconSearch,
   IconUserCheck,
 } from "@tabler/icons-react";
-import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
+import {
+  useOwnerCheckIn,
+  useOwnerReservations,
+} from "@/features/owner/hooks/use-owner-reservations";
 import { GuestContextBadges } from "@/features/owner/reservations";
 import {
   canOwnerReservationCheckIn,
-  findOwnerReservationByCheckInToken,
   matchesOwnerReservationSearch,
 } from "@/features/owner/selectors/owner-reservation-selectors";
 import { OwnerShell } from "@/features/owner/shared";
@@ -49,6 +51,7 @@ type ScannerStatus =
   | "idle"
   | "starting"
   | "scanning"
+  | "checking"
   | "found"
   | "not-found"
   | "unavailable";
@@ -128,19 +131,20 @@ function OwnerCheckInContent() {
   const t = useTranslations("OwnerCheckIn");
   const searchParams = useSearchParams();
   const { reservations: ownerReservations } = useOwnerReservations();
+  const checkIn = useOwnerCheckIn();
   const [mode, setMode] = useState("manual");
   const [query, setQuery] = useState("");
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>("idle");
-  const [qrReservationId, setQrReservationId] = useState<string | null>(null);
+  const [scannedReservation, setScannedReservation] =
+    useState<OwnerReservation | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const scannerRef = useRef<QrScanner | null>(null);
   const linkedReservation = ownerReservations.find(
     (reservation) => reservation.id === searchParams.get("reservation"),
   );
   const qrReservation =
-    ownerReservations.find(
-      (reservation) => reservation.id === qrReservationId,
-    ) ?? (scannerStatus !== "not-found" ? linkedReservation : undefined);
+    scannedReservation ??
+    (scannerStatus !== "not-found" ? linkedReservation : undefined);
   const manualResults = query.trim()
     ? ownerReservations.filter((reservation) =>
         matchesOwnerReservationSearch(reservation, query),
@@ -159,7 +163,7 @@ function OwnerCheckInContent() {
 
   const startCamera = async () => {
     stopCamera();
-    setQrReservationId(null);
+    setScannedReservation(null);
 
     const video = videoRef.current;
     if (!navigator.mediaDevices?.getUserMedia || !video) {
@@ -174,13 +178,15 @@ function OwnerCheckInContent() {
       ({ data }) => {
         if (scannerRef.current !== scanner) return;
 
-        const reservation = findOwnerReservationByCheckInToken(
-          ownerReservations,
-          data,
-        );
         stopCamera();
-        setQrReservationId(reservation?.id ?? null);
-        setScannerStatus(reservation ? "found" : "not-found");
+        setScannerStatus("checking");
+        checkIn.mutate(data, {
+          onSuccess: (reservation) => {
+            setScannedReservation(reservation);
+            setScannerStatus("found");
+          },
+          onError: () => setScannerStatus("not-found"),
+        });
       },
       {
         preferredCamera: "environment",
@@ -205,7 +211,7 @@ function OwnerCheckInContent() {
   const changeMode = (nextMode: string) => {
     stopCamera();
     setScannerStatus("idle");
-    setQrReservationId(null);
+    setScannedReservation(null);
     setMode(nextMode);
   };
 
@@ -218,7 +224,7 @@ function OwnerCheckInContent() {
           onChange={changeMode}
           color="warmCoral"
           data={[
-            { value: "qr", label: t("modes.qr"), disabled: true },
+            { value: "qr", label: t("modes.qr") },
             { value: "manual", label: t("modes.manual") },
           ]}
         />
@@ -296,7 +302,10 @@ function OwnerCheckInContent() {
                   <Group justify="center">
                     <Button
                       leftSection={<IconCamera size={18} />}
-                      loading={scannerStatus === "starting"}
+                      loading={
+                        scannerStatus === "starting" ||
+                        scannerStatus === "checking"
+                      }
                       onClick={startCamera}
                     >
                       {scannerStatus === "idle"

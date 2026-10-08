@@ -78,6 +78,10 @@
     "detail": {
       "readyTitle": "Mã QR check-in của bạn",
       "readyDescription": "Đưa mã này cho nhà hàng khi bạn đến.",
+      "errorDescription": "Không thể tải mã QR check-in.",
+      "retry": "Thử lại",
+      "checkedInTitle": "Bạn đã check-in",
+      "checkedInDescription": "Nhà hàng đã ghi nhận bạn đến.",
       "pendingTitle": "Mã check-in sẽ có sau khi được xác nhận",
       "pendingDescription": "Nhà hàng có thể liên hệ trước khi xác nhận yêu cầu này.",
       "alternativeTitle": "Hãy phản hồi trước khi đặt bàn được xác nhận",
@@ -96,7 +100,13 @@
       "alternative": { "badge": "Cần phản hồi", "title": "Nhà hàng đề xuất giờ mới", "description": "Hãy xem giờ được đề xuất bên dưới. Bàn chỉ được xác nhận sau khi bạn chấp nhận." },
       "declined": { "badge": "Yêu cầu bị từ chối", "restaurantTitle": "Nhà hàng không thể xác nhận yêu cầu này", "restaurantDescription": "Hiện không có bàn được giữ. Hãy chọn giờ khác khi bạn sẵn sàng.", "customerTitle": "Yêu cầu này đã đóng", "customerDescription": "Nhà hàng đã được thông báo rằng bạn từ chối giờ đề xuất." },
       "confirmed": { "badge": "Đã xác nhận đặt bàn", "title": "Bàn của bạn đã được xác nhận", "description": "Đặt bàn đã sẵn sàng. Hãy đưa mã đặt bàn khi bạn đến." },
-      "cancelled": { "badge": "Đã hủy đặt bàn", "title": "Đặt bàn này đã được hủy", "description": "Bàn không còn được giữ. Bạn có thể tạo đặt bàn mới bất cứ lúc nào." }
+      "cancelled": { "badge": "Đã hủy đặt bàn", "title": "Đặt bàn này đã được hủy", "description": "Bàn không còn được giữ. Bạn có thể tạo đặt bàn mới bất cứ lúc nào." },
+      "visit": {
+        "arrived": { "badge": "Đã check-in", "title": "Nhà hàng đã ghi nhận bạn đến", "description": "Nhân viên đã nhận được thông tin check-in của bạn." },
+        "seated": { "badge": "Đã xếp bàn", "title": "Bàn của bạn đã sẵn sàng", "description": "Nhà hàng đã xếp bàn cho nhóm của bạn." },
+        "completed": { "badge": "Đã hoàn tất", "title": "Cảm ơn bạn đã dùng bữa", "description": "Lượt dùng bữa này đã hoàn tất." },
+        "noShow": { "badge": "Không đến", "title": "Nhà hàng ghi nhận bạn không đến", "description": "Hãy liên hệ nhà hàng nếu thông tin này không chính xác." }
+      }
     },
     "reference": { "label": "Mã đặt bàn", "copy": "Sao chép mã đặt bàn" },
     "information": { "date": "Ngày", "timeGuests": "Giờ · số khách", "guestCount": "{count} khách", "preOrder": "Đặt món trước", "noPreOrder": "Chưa thêm", "request": "Yêu cầu", "noRequest": "Không có yêu cầu đặc biệt" },
@@ -134,6 +144,7 @@
       "idle": "Mở camera sau và hướng vào mã QR của khách.",
       "starting": "Đang mở camera...",
       "scanning": "Giữ mã QR trong vùng camera.",
+      "checking": "Đang check-in khách...",
       "found": "Đã tìm thấy đặt bàn. Hãy kiểm tra trước khi nhận khách.",
       "not-found": "Mã QR này không khớp với đặt bàn tại nhà hàng.",
       "unavailable": "Không thể mở camera. Hãy kiểm tra quyền camera hoặc tìm thủ công."

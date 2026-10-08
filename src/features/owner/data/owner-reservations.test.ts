@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import {
+  checkInOwnerReservation,
   confirmOwnerReservation,
   declineOwnerReservation,
   toOwnerReservation,
@@ -107,6 +108,36 @@ describe("owner reservation API mapping", () => {
         method: "POST",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ reason: "Fully booked" }),
+      }),
+    ]);
+  });
+
+  it("checks in a reservation with the scanned token", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...pendingRecord,
+        status: "CONFIRMED",
+        visitStatus: "ARRIVED",
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(checkInOwnerReservation("raw-token")).resolves.toMatchObject({
+      reservationStatus: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Arrived,
+    });
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/check-ins",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({ checkInToken: "raw-token" }),
       }),
     ]);
   });
