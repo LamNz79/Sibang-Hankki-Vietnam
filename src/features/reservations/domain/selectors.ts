@@ -42,6 +42,21 @@ export function getReservationStatusFlags(reservation: CustomerReservation) {
   };
 }
 
+/** Shows visit progress after confirmation without changing the booking decision. */
+export function getCustomerReservationDisplayStatus(
+  reservation: CustomerReservation,
+) {
+  if (
+    reservation.status === ReservationStatus.Confirmed &&
+    reservation.visitStatus &&
+    reservation.visitStatus !== VisitStatus.Expected
+  ) {
+    return reservation.visitStatus;
+  }
+
+  return reservation.status;
+}
+
 /** Splits reservations by lifecycle and visit time, sorting each section for display. */
 export function partitionCustomerReservations(
   reservations: CustomerReservation[],
@@ -58,6 +73,8 @@ export function partitionCustomerReservations(
   for (const reservation of reservations) {
     const slot = getReservationDisplaySlot(reservation);
     (terminalStatuses.has(reservation.status) ||
+    reservation.visitStatus === VisitStatus.Completed ||
+    reservation.visitStatus === VisitStatus.NoShow ||
     `${slot.date}T${slot.time}` < currentSlot
       ? past
       : upcoming

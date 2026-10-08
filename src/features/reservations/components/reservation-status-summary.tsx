@@ -9,9 +9,13 @@ import {
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
-import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
+import {
+  getCustomerReservationDisplayStatus,
+  getReservationStatusFlags,
+} from "@/features/reservations/domain/selectors";
 import {
   ReservationCustomerAction,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -27,7 +31,19 @@ export function ReservationStatusSummary({
   const t = useTranslations("CustomerReservationDetails.status");
   const { isPending, isAlternative, isDeclined, isCancelled } =
     getReservationStatusFlags(reservation);
-  const isClosed = isDeclined || isCancelled;
+  const displayStatus = getCustomerReservationDisplayStatus(reservation);
+  const visitKey =
+    displayStatus === VisitStatus.Arrived
+      ? "arrived"
+      : displayStatus === VisitStatus.Seated
+        ? "seated"
+        : displayStatus === VisitStatus.Completed
+          ? "completed"
+          : displayStatus === VisitStatus.NoShow
+            ? "noShow"
+            : null;
+  const isClosed =
+    isDeclined || isCancelled || displayStatus === VisitStatus.NoShow;
   const wasDeclinedByCustomer =
     reservation.customerAction ===
     ReservationCustomerAction.DeclinedAlternative;
@@ -94,7 +110,9 @@ export function ReservationStatusSummary({
             }
             w="fit-content"
           >
-            {isPending
+            {visitKey
+              ? t(`visit.${visitKey}.badge`)
+              : isPending
               ? t("pending.badge")
               : isAlternative
                 ? t("alternative.badge")
@@ -105,7 +123,9 @@ export function ReservationStatusSummary({
                   : t("confirmed.badge")}
           </StatusBadge>
           <Text fw={800} c={uiColors.textPrimary}>
-            {isPending
+            {visitKey
+              ? t(`visit.${visitKey}.title`)
+              : isPending
               ? t("pending.title")
               : isAlternative
                 ? t("alternative.title")
@@ -118,7 +138,9 @@ export function ReservationStatusSummary({
                   : t("confirmed.title")}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
-            {isPending
+            {visitKey
+              ? t(`visit.${visitKey}.description`)
+              : isPending
               ? t("pending.description")
               : isAlternative
                 ? t("alternative.description")

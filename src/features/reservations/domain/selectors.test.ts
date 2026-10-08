@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   findReservationById,
+  getCustomerReservationDisplayStatus,
   getUpcomingConfirmedReservations,
   getReservationDisplaySlot,
   getReservationReference,
@@ -102,6 +103,17 @@ describe("reservation selectors", () => {
     ).toBe(true);
   });
 
+  it("shows visit progress after a confirmed guest checks in", () => {
+    expect(
+      getCustomerReservationDisplayStatus(
+        createFixture({
+          status: ReservationStatus.Confirmed,
+          visitStatus: VisitStatus.Arrived,
+        }),
+      ),
+    ).toBe(VisitStatus.Arrived);
+  });
+
   it("splits active future reservations from terminal and elapsed reservations", () => {
     const future = createFixture({ id: "future", date: "2026-10-09" });
     const later = createFixture({ id: "later", date: "2026-10-10" });
@@ -111,15 +123,21 @@ describe("reservation selectors", () => {
       date: "2026-10-11",
       status: ReservationStatus.Cancelled,
     });
+    const completed = createFixture({
+      id: "completed",
+      date: "2026-10-11",
+      status: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Completed,
+    });
 
     expect(
       partitionCustomerReservations(
-        [cancelled, elapsed, later, future],
+        [cancelled, elapsed, completed, later, future],
         "2026-10-08T12:00",
       ),
     ).toEqual({
       upcoming: [future, later],
-      past: [cancelled, elapsed],
+      past: [cancelled, completed, elapsed],
     });
   });
 });

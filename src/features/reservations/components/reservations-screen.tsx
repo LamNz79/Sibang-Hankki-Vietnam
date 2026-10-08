@@ -24,6 +24,7 @@ import {
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { StatusBadge } from "@/components/ui";
 import {
+  getCustomerReservationDisplayStatus,
   getReservationDisplaySlot,
   getReservationStatusFlags,
   partitionCustomerReservations,
@@ -31,6 +32,7 @@ import {
 import { useCustomerReservationsState } from "@/features/reservations/hooks/use-customer-reservations";
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -50,8 +52,13 @@ function ReservationCards({
           isCancelled,
         } = getReservationStatusFlags(reservation);
         const displaySlot = getReservationDisplaySlot(reservation);
+        const displayStatus = getCustomerReservationDisplayStatus(reservation);
         const isExpired = reservation.status === ReservationStatus.Expired;
-        const isUnavailable = isDeclined || isExpired || isCancelled;
+        const isUnavailable =
+          isDeclined ||
+          isExpired ||
+          isCancelled ||
+          displayStatus === VisitStatus.NoShow;
 
         return (
           <Card
@@ -101,7 +108,15 @@ function ReservationCards({
                           ? "Request expired"
                           : isDeclined
                             ? "Request declined"
-                            : "Confirmed"}
+                            : displayStatus === VisitStatus.Arrived
+                              ? "Checked in"
+                              : displayStatus === VisitStatus.Seated
+                                ? "Seated"
+                                : displayStatus === VisitStatus.Completed
+                                  ? "Completed"
+                                  : displayStatus === VisitStatus.NoShow
+                                    ? "No-show"
+                                    : "Confirmed"}
                 </StatusBadge>
                 <Text fw={750} c={uiColors.textPrimary}>
                   {reservation.restaurantName}

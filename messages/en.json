@@ -104,7 +104,13 @@
       "alternative": { "badge": "Action required", "title": "The restaurant suggested a new time", "description": "Review the proposed time below. Your table is not confirmed until you accept it." },
       "declined": { "badge": "Request declined", "restaurantTitle": "The restaurant could not confirm this request", "restaurantDescription": "No table is being held. Choose another time when you are ready.", "customerTitle": "This request is closed", "customerDescription": "The restaurant has been notified that you declined the proposed time." },
       "confirmed": { "badge": "Reservation confirmed", "title": "Your table is confirmed", "description": "Your reservation is ready. Show the booking code when you arrive." },
-      "cancelled": { "badge": "Reservation cancelled", "title": "This reservation was cancelled", "description": "The table is no longer being held. You can make a new reservation at any time." }
+      "cancelled": { "badge": "Reservation cancelled", "title": "This reservation was cancelled", "description": "The table is no longer being held. You can make a new reservation at any time." },
+      "visit": {
+        "arrived": { "badge": "Checked in", "title": "Your arrival is recorded", "description": "The restaurant knows you have arrived." },
+        "seated": { "badge": "Seated", "title": "Your table is ready", "description": "The restaurant has seated your party." },
+        "completed": { "badge": "Visit completed", "title": "Thank you for dining with us", "description": "This restaurant visit is complete." },
+        "noShow": { "badge": "No-show", "title": "The restaurant marked this visit as a no-show", "description": "Contact the restaurant if this is incorrect." }
+      }
     },
     "reference": { "label": "Booking reference", "copy": "Copy booking reference" },
     "information": {
