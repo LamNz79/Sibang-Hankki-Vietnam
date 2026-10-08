@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   ActionIcon,
@@ -164,11 +165,16 @@ export function OwnerReservationDetailScreen() {
 
   const footerAction = displayStatus === ReservationStatus.Confirmed ? (
     <Button
+      component={Link}
+      href={
+        hasArrived
+          ? `/owner/reservations/${reservation.id}/arrival`
+          : `/owner/check-in?reservation=${reservation.id}`
+      }
       fullWidth
       size="md"
       radius="md"
       leftSection={<IconUserCheck size={19} />}
-      disabled
     >
       {hasArrived
         ? t("footer.viewArrival", { guest: reservation.guestName })
