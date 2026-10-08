@@ -169,7 +169,8 @@
     "arrival": {
       "title": "Khách đến",
       "eyebrow": "Quản lý lượt phục vụ",
-      "notFound": "Không tìm thấy đặt bàn.",
+        "notFound": "Không tìm thấy đặt bàn.",
+        "updateError": "Không thể cập nhật trạng thái lượt phục vụ. Hãy tải lại và thử lại.",
       "visitStatus": "Trạng thái lượt phục vụ",
       "statuses": {
         "expected": "Đã xác nhận",

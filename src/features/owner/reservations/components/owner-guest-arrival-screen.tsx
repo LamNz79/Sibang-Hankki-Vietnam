@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
+import { Alert, Card, SimpleGrid, Stack, Text } from "@mantine/core";
 import {
   IconCheck,
   IconCircleCheck,
@@ -10,7 +10,10 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { ChoiceButton } from "@/components/ui";
-import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import {
+  useOwnerReservation,
+  useOwnerReservationActions,
+} from "@/features/owner/hooks/use-owner-reservations";
 import { OwnerShell } from "@/features/owner/shared";
 import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
@@ -31,6 +34,7 @@ export function OwnerGuestArrivalScreen() {
   const t = useTranslations("OwnerCheckIn.arrival");
   const params = useParams<{ id: string }>();
   const { reservation, isPending } = useOwnerReservation(params.id);
+  const actions = useOwnerReservationActions(params.id);
 
   if (isPending) {
     return (
@@ -75,11 +79,21 @@ export function OwnerGuestArrivalScreen() {
           <SimpleGrid cols={2} spacing="sm">
             {arrivalStatuses.map((option) => {
               const StatusIcon = option.icon;
+              const canSelect =
+                (reservation.visitStatus === VisitStatus.Arrived &&
+                  option.value === VisitStatus.Seated) ||
+                (reservation.visitStatus === VisitStatus.Seated &&
+                  option.value === VisitStatus.Completed);
               return (
                 <ChoiceButton
                   key={option.value}
                   selected={reservation.visitStatus === option.value}
-                  disabled
+                  disabled={!canSelect || actions.isPending}
+                  loading={actions.isPending && canSelect}
+                  onClick={() => {
+                    if (option.value === VisitStatus.Seated) actions.seat();
+                    if (option.value === VisitStatus.Completed) actions.complete();
+                  }}
                   leftSection={<StatusIcon size={17} />}
                 >
                   {t(`statuses.${option.value}`)}
@@ -87,6 +101,9 @@ export function OwnerGuestArrivalScreen() {
               );
             })}
           </SimpleGrid>
+          {actions.isError ? (
+            <Alert color="red">{t("updateError")}</Alert>
+          ) : null}
         </Stack>
 
         <Stack gap="sm">

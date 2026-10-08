@@ -169,7 +169,8 @@
     "arrival": {
       "title": "고객 방문",
       "eyebrow": "방문 상태 관리",
-      "notFound": "예약을 찾을 수 없습니다.",
+        "notFound": "예약을 찾을 수 없습니다.",
+        "updateError": "방문 상태를 업데이트할 수 없습니다. 새로고침 후 다시 시도해 주세요.",
       "visitStatus": "방문 상태",
       "statuses": {
         "expected": "예약 확정",
