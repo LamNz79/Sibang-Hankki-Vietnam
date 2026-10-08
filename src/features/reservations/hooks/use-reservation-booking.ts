@@ -9,6 +9,7 @@ import {
 } from "@/features/reservations/data/reservation-storage";
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -78,6 +79,8 @@ export function useReservationBooking({
           response.status === "CONFIRMED"
             ? ReservationStatus.Confirmed
             : ReservationStatus.Pending,
+        visitStatus:
+          response.status === "CONFIRMED" ? VisitStatus.Expected : undefined,
         createdAt: response.createdAt,
         updatedAt: response.createdAt,
       };

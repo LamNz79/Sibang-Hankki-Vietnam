@@ -6,9 +6,11 @@ import {
   cancelCustomerReservation,
   getAccountReservations,
   getCustomerReservation,
+  issueCustomerCheckInToken,
   selectVisibleReservations,
 } from "@/features/reservations/data/customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import {
   getReservationsServerSnapshot,
   getReservationsSnapshot,
@@ -86,5 +88,20 @@ export function useCancelCustomerReservation(
           ) ?? reservations,
       );
     },
+  });
+}
+
+export function useCustomerCheckInToken(
+  reservation: CustomerReservation | undefined,
+) {
+  return useQuery({
+    queryKey: ["customer-check-in-token", reservation?.id],
+    queryFn: () => issueCustomerCheckInToken(reservation!),
+    enabled:
+      reservation?.status === ReservationStatus.Confirmed &&
+      (!reservation.visitStatus ||
+        reservation.visitStatus === VisitStatus.Expected),
+    retry: false,
+    staleTime: Infinity,
   });
 }

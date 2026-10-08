@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  checkInOwnerReservation,
   confirmOwnerReservation,
   declineOwnerReservation,
   getOwnerReservation,
@@ -18,6 +19,22 @@ function useLoginRedirect(error: Error | null) {
       router.replace("/login");
     }
   }, [error, router]);
+}
+
+export function useOwnerCheckIn() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: checkInOwnerReservation,
+    onSuccess: async (reservation) => {
+      queryClient.setQueryData(
+        ["owner-reservations", reservation.id],
+        reservation,
+      );
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
+    },
+  });
+  useLoginRedirect(mutation.error);
+  return mutation;
 }
 
 export function useOwnerReservations() {

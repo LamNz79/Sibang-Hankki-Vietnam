@@ -1,11 +1,13 @@
 "use client";
 
-import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
+import { Button, Card, Center, Group, Loader, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconClock, IconQrcode } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
 import { getReservationStatusFlags } from "@/features/reservations/domain/selectors";
+import { useCustomerCheckInToken } from "@/features/reservations/hooks/use-customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { VisitStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 type ReservationCheckInCardProps = {
@@ -19,10 +21,15 @@ export function ReservationCheckInCard({
   const t = useTranslations("ReservationQr");
   const { isPending, isAlternative, isConfirmed, isDeclined, isCancelled } =
     getReservationStatusFlags(reservation);
+  const checkInToken = useCustomerCheckInToken(reservation);
+  const hasCheckedIn =
+    isConfirmed &&
+    reservation.visitStatus !== undefined &&
+    reservation.visitStatus !== VisitStatus.Expected;
   const isAwaitingConfirmation =
     isPending || isAlternative || isDeclined || isCancelled;
 
-  if (isConfirmed && reservation.checkInToken) {
+  if (isConfirmed && !hasCheckedIn) {
     return (
       <Card
         radius="lg"
@@ -46,21 +53,32 @@ export function ReservationCheckInCard({
               </Text>
             </Stack>
           </Group>
-          <div
-            style={{
-              padding: 12,
-              background: "white",
-              borderRadius: 12,
-              lineHeight: 0,
-            }}
-          >
-            <QRCodeSVG
-              value={reservation.checkInToken}
-              size={184}
-              level="M"
-              title={t("ariaTitle")}
-            />
-          </div>
+          {checkInToken.isPending ? (
+            <Center mih={184}><Loader size="sm" /></Center>
+          ) : checkInToken.isError ? (
+            <Stack align="center" gap="xs">
+              <Text size="sm" c="red" ta="center">{t("detail.errorDescription")}</Text>
+              <Button size="compact-sm" variant="light" onClick={() => checkInToken.refetch()}>
+                {t("detail.retry")}
+              </Button>
+            </Stack>
+          ) : checkInToken.data ? (
+            <div
+              style={{
+                padding: 12,
+                background: "white",
+                borderRadius: 12,
+                lineHeight: 0,
+              }}
+            >
+              <QRCodeSVG
+                value={checkInToken.data}
+                size={184}
+                level="M"
+                title={t("ariaTitle")}
+              />
+            </div>
+          ) : null}
         </Stack>
       </Card>
     );
@@ -94,7 +112,9 @@ export function ReservationCheckInCard({
         </ThemeIcon>
         <Stack gap={2}>
           <Text fw={750} size="sm" c={uiColors.textPrimary}>
-            {isPending
+            {hasCheckedIn
+              ? t("detail.checkedInTitle")
+              : isPending
               ? t("detail.pendingTitle")
               : isAlternative
                 ? t("detail.alternativeTitle")
@@ -103,7 +123,9 @@ export function ReservationCheckInCard({
                   : t("detail.fallbackTitle")}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
-            {isPending
+            {hasCheckedIn
+              ? t("detail.checkedInDescription")
+              : isPending
               ? t("detail.pendingDescription")
               : isAlternative
                 ? t("detail.alternativeDescription")

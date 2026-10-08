@@ -9,6 +9,7 @@ import {
 } from "@/features/reservations/domain/selectors";
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/domain/types";
 
@@ -38,28 +39,31 @@ describe("reservation selectors", () => {
     );
   });
 
-  it("returns upcoming confirmed reservations with QR tokens in slot order", () => {
+  it("returns upcoming confirmed reservations in slot order", () => {
     const next = createFixture({
       id: "next",
       date: "2026-08-24",
       time: "18:00",
       status: ReservationStatus.Confirmed,
-      checkInToken: "next-token",
     });
     const later = createFixture({
       id: "later",
       date: "2026-08-25",
       status: ReservationStatus.Confirmed,
-      checkInToken: "later-token",
     });
     const past = createFixture({
       status: ReservationStatus.Confirmed,
-      checkInToken: "past-token",
+    });
+    const arrived = createFixture({
+      id: "arrived",
+      date: "2026-08-26",
+      status: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Arrived,
     });
 
     expect(
       getUpcomingConfirmedReservations(
-        [later, past, next],
+        [later, past, arrived, next],
         "2026-08-24T10:00",
       ),
     ).toEqual([next, later]);

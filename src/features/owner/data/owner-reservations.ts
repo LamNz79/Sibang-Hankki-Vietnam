@@ -117,3 +117,7 @@ export function confirmOwnerReservation(id: string) {
 export function declineOwnerReservation(id: string, reason: string) {
   return postOwnerReservation(apiEndpoints.declineOwnerReservation(id), { reason });
 }
+
+export function checkInOwnerReservation(checkInToken: string) {
+  return postOwnerReservation(apiEndpoints.ownerCheckIns, { checkInToken });
+}

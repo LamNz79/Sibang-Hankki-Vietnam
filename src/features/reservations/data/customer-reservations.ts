@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import type { CustomerReservation } from "@/features/reservations/types";
-import { ReservationStatus } from "@/features/reservations/types";
+import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import { getCsrfToken } from "@/features/auth/data/session";
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { ApiError, apiFetch } from "@/lib/api/client";
@@ -17,6 +17,7 @@ type CustomerReservationRecord = {
   startsAt: string;
   partySize: number;
   status: keyof typeof reservationStatuses;
+  visitStatus?: keyof typeof visitStatuses | null;
   specialRequest?: string | null;
   preOrderNote?: string | null;
   createdAt: string;
@@ -34,6 +35,14 @@ const reservationStatuses = {
   CANCELLED: ReservationStatus.Cancelled,
 };
 
+const visitStatuses = {
+  EXPECTED: VisitStatus.Expected,
+  ARRIVED: VisitStatus.Arrived,
+  SEATED: VisitStatus.Seated,
+  COMPLETED: VisitStatus.Completed,
+  NO_SHOW: VisitStatus.NoShow,
+};
+
 export function mergeCustomerReservation(
   stored: CustomerReservation,
   record: CustomerReservationRecord,
@@ -48,6 +57,9 @@ export function mergeCustomerReservation(
     time: startsAt.format("HH:mm"),
     guests: record.partySize,
     status: reservationStatuses[record.status],
+    visitStatus: record.visitStatus
+      ? visitStatuses[record.visitStatus]
+      : undefined,
     specialRequest: record.specialRequest ?? undefined,
     preOrder: record.preOrderNote ?? undefined,
     createdAt: record.createdAt,
@@ -152,4 +164,39 @@ export async function cancelCustomerReservation(stored: CustomerReservation) {
     },
   );
   return mergeCustomerReservation(stored, record);
+}
+
+type CheckInTokenResponse = {
+  reservationId: string;
+  checkInToken: string;
+};
+
+export async function issueCustomerCheckInToken(
+  reservation: CustomerReservation,
+) {
+  if (reservation.accountLinked) {
+    const csrf = await getCsrfToken();
+    const response = await apiFetch<CheckInTokenResponse>(
+      apiEndpoints.customerAccountReservationCheckInToken(reservation.id),
+      {
+        method: "POST",
+        headers: { [csrf.headerName]: csrf.token },
+      },
+    );
+    return response.checkInToken;
+  }
+
+  if (!reservation.managementToken) {
+    throw new Error("Reservation management token is unavailable");
+  }
+  const response = await apiFetch<CheckInTokenResponse>(
+    apiEndpoints.customerReservationCheckInToken(reservation.id),
+    {
+      method: "POST",
+      headers: {
+        "X-Reservation-Management-Token": reservation.managementToken,
+      },
+    },
+  );
+  return response.checkInToken;
 }

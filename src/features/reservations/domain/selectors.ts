@@ -1,5 +1,6 @@
 import {
   ReservationStatus,
+  VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/domain/types";
 
@@ -11,7 +12,7 @@ export function findReservationById(
   return reservations.find((reservation) => reservation.id === id);
 }
 
-/** Returns upcoming confirmed reservations with QR tokens, nearest first. */
+/** Returns upcoming confirmed reservations, nearest first. */
 export function getUpcomingConfirmedReservations(
   reservations: CustomerReservation[],
   currentSlot: string,
@@ -20,7 +21,8 @@ export function getUpcomingConfirmedReservations(
     .filter(
       (reservation) =>
         reservation.status === ReservationStatus.Confirmed &&
-        reservation.checkInToken &&
+        (!reservation.visitStatus ||
+          reservation.visitStatus === VisitStatus.Expected) &&
         `${reservation.date}T${reservation.time}` >= currentSlot,
     )
     .sort((left, right) =>

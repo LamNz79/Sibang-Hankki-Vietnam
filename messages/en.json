@@ -78,6 +78,10 @@
     "detail": {
       "readyTitle": "Your check-in QR code",
       "readyDescription": "Show this code to the restaurant when you arrive.",
+      "errorDescription": "The check-in QR code could not be loaded.",
+      "retry": "Try again",
+      "checkedInTitle": "You are checked in",
+      "checkedInDescription": "The restaurant has recorded your arrival.",
       "pendingTitle": "Check-in code available after confirmation",
       "pendingDescription": "The restaurant may contact you before confirming this request.",
       "alternativeTitle": "Respond before this booking can be confirmed",
@@ -185,6 +189,7 @@
       "idle": "Open the rear camera and point it at the guest's QR code.",
       "starting": "Starting camera...",
       "scanning": "Hold the QR code inside the camera view.",
+      "checking": "Checking in the guest...",
       "found": "Reservation found. Review it before checking in the guest.",
       "not-found": "This QR code does not match a reservation at this restaurant.",
       "unavailable": "The camera could not be opened. Check camera permission or use manual lookup."
