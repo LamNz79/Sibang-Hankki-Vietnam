@@ -40,6 +40,38 @@ export function getReservationStatusFlags(reservation: CustomerReservation) {
   };
 }
 
+/** Splits reservations by lifecycle and visit time, sorting each section for display. */
+export function partitionCustomerReservations(
+  reservations: CustomerReservation[],
+  currentSlot: string,
+) {
+  const terminalStatuses = new Set([
+    ReservationStatus.Declined,
+    ReservationStatus.Expired,
+    ReservationStatus.Cancelled,
+  ]);
+  const upcoming: CustomerReservation[] = [];
+  const past: CustomerReservation[] = [];
+
+  for (const reservation of reservations) {
+    const slot = getReservationDisplaySlot(reservation);
+    (terminalStatuses.has(reservation.status) ||
+    `${slot.date}T${slot.time}` < currentSlot
+      ? past
+      : upcoming
+    ).push(reservation);
+  }
+
+  const slotValue = (reservation: CustomerReservation) => {
+    const slot = getReservationDisplaySlot(reservation);
+    return `${slot.date}T${slot.time}`;
+  };
+  upcoming.sort((left, right) => slotValue(left).localeCompare(slotValue(right)));
+  past.sort((left, right) => slotValue(right).localeCompare(slotValue(left)));
+
+  return { upcoming, past };
+}
+
 /**
  * Returns the slot that should be displayed to the customer.
  * An active restaurant proposal takes precedence over the requested slot.
