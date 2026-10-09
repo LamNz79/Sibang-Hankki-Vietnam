@@ -38,7 +38,7 @@ import type { OwnerReservationPageStatus } from "@/features/owner/data/owner-res
 import { useOwnerReservationPage } from "@/features/owner/hooks/use-owner-reservations";
 import { uiColors } from "@/theme";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
 
 const apiStatuses: Record<AdminReservationStatus, OwnerReservationPageStatus> = {
   pending: "PENDING",
@@ -66,6 +66,7 @@ export function AdminReservationsScreen() {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 500);
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [period, setPeriod] = useState<AdminReservationPeriod>("all");
   const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
   const dateRange = useMemo(
@@ -74,7 +75,7 @@ export function AdminReservationsScreen() {
   );
   const { data, isFetching, isError } = useOwnerReservationPage({
     page: page - 1,
-    size: PAGE_SIZE,
+    size: pageSize,
     query: debouncedQuery.trim() || undefined,
     status: status === "all" ? undefined : apiStatuses[status],
     ...dateRange,
@@ -174,12 +175,11 @@ export function AdminReservationsScreen() {
   return (
     <AdminShell>
       <Stack gap="xl">
-        <Group justify="space-between" align="flex-end">
+        <Group align="flex-end">
           <Stack gap={3}>
             <Title order={1}>{t("title")}</Title>
             <Text c={uiColors.textSecondary}>{t("description")}</Text>
           </Stack>
-          <Button variant="default" radius="sm" disabled>{t("export")}</Button>
         </Group>
 
         <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }} spacing="md">
@@ -279,7 +279,13 @@ export function AdminReservationsScreen() {
           page={page}
           onPageChange={setPage}
           totalRecords={data?.totalElements ?? 0}
-          recordsPerPage={PAGE_SIZE}
+          recordsPerPage={pageSize}
+          onRecordsPerPageChange={(value) => {
+            setPageSize(value);
+            setPage(1);
+          }}
+          recordsPerPageOptions={PAGE_SIZE_OPTIONS}
+          recordsPerPageLabel={t("pagination.rowsPerPage")}
           idAccessor="id"
           noRecordsText={t("empty")}
           columns={reservationColumns}

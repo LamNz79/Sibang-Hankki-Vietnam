@@ -286,7 +286,6 @@
     "reservations": {
       "title": "Đặt bàn",
       "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show tại một nơi.",
-      "export": "Dữ liệu đặt bàn",
       "metrics": {
         "confirmed": { "label": "Đã xác nhận", "detail": "Tất cả dữ liệu" },
         "checkedIn": { "label": "Đã check-in", "detail": "Tất cả dữ liệu" },
@@ -316,7 +315,8 @@
       "details": "Chi tiết",
       "resolve": "Xử lý",
       "empty": "Không có đặt bàn phù hợp với bộ lọc.",
-      "loadError": "Không thể tải danh sách đặt bàn. Hãy tải lại hoặc đăng nhập lại."
+    "loadError": "Không thể tải danh sách đặt bàn. Hãy tải lại hoặc đăng nhập lại.",
+    "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "reservationDetail": {
       "title": "Chi tiết đặt bàn",

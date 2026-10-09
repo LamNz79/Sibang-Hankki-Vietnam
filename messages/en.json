@@ -337,7 +337,6 @@
     "reservations": {
       "title": "Reservations",
       "description": "Manage reservations, check-ins, cancellations, and no-show cases in one place.",
-      "export": "Reservation data",
       "metrics": {
         "confirmed": { "label": "Confirmed", "detail": "All records" },
         "checkedIn": { "label": "Checked in", "detail": "All records" },
@@ -367,7 +366,8 @@
       "details": "Details",
       "resolve": "Resolve",
       "empty": "No reservations match these filters.",
-      "loadError": "Unable to load reservations. Refresh or sign in again."
+    "loadError": "Unable to load reservations. Refresh or sign in again.",
+    "pagination": { "rowsPerPage": "Rows per page" }
     },
     "reservationDetail": {
       "title": "Reservation details",
