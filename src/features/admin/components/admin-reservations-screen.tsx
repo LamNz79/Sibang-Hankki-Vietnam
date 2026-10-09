@@ -116,9 +116,17 @@ export function AdminReservationsScreen() {
       title: t("table.id"),
       width: 190,
       render: (reservation) => (
-        <Stack gap={1}>
-          <Text fw={750} size="sm">{reservation.reference}</Text>
-          <Text size="xs" c={uiColors.textSecondary}>{reservation.id}</Text>
+        <Stack gap={1} style={{ minWidth: 0 }}>
+          <Text fw={750} size="sm" style={{ overflowWrap: "anywhere" }}>
+            {reservation.reference}
+          </Text>
+          <Text
+            size="xs"
+            c={uiColors.textSecondary}
+            style={{ overflowWrap: "anywhere" }}
+          >
+            {reservation.id}
+          </Text>
         </Stack>
       ),
     },
