@@ -334,31 +334,21 @@
     },
     "customers": {
       "title": "Khách hàng",
-      "description": "Quản lý hồ sơ, hoạt động và trạng thái tài khoản.",
-      "export": "Xuất dữ liệu",
+      "description": "Xem khách và lịch sử đặt bàn tại nhà hàng này.",
       "filters": {
-        "searchPlaceholder": "Tìm tên, số điện thoại, email hoặc mã khách hàng",
-        "searchLabel": "Tìm kiếm khách hàng",
-        "statusLabel": "Trạng thái khách hàng",
-        "tierLabel": "Hạng khách hàng",
-        "status": { "all": "Tất cả trạng thái" },
-        "tier": { "all": "Tất cả hạng" }
+        "searchPlaceholder": "Tìm tên, số điện thoại hoặc email",
+        "searchLabel": "Tìm kiếm khách hàng"
       },
       "table": {
         "customer": "Khách hàng",
-        "countryLanguage": "Quốc gia / Ngôn ngữ",
-        "reservationsVisits": "Đặt bàn / Đã đến",
+        "reservations": "Lượt đặt bàn",
+        "visits": "Lượt đã đến",
         "noShows": "No-show",
-        "joined": "Ngày tham gia",
-        "status": "Trạng thái"
+        "lastReservation": "Đặt bàn gần nhất"
       },
-      "statuses": { "active": "Hoạt động", "review": "Cần xem xét", "restricted": "Bị hạn chế", "closed": "Đã đóng" },
-      "tiers": { "regular": "Thường", "vip": "VIP" },
-      "countries": { "vietnam": "Việt Nam", "korea": "Hàn Quốc" },
-      "languages": { "vi": "Tiếng Việt", "en": "Tiếng Anh", "ko": "Tiếng Hàn" },
-      "details": "Chi tiết",
-      "empty": "Không có khách hàng phù hợp với bộ lọc.",
-      "resultCount": "{count} khách hàng"
+      "empty": "Không có khách phù hợp với tìm kiếm.",
+      "loadError": "Không thể tải danh sách khách. Hãy tải lại hoặc đăng nhập lại.",
+      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "stores": {
       "title": "Cửa hàng",
@@ -484,6 +474,17 @@
       "owner": "Chủ quán",
       "admin": "Quản trị"
     }
+  },
+  "OwnerGuests": {
+    "title": "Quản lý khách",
+    "eyebrow": "Lịch sử đặt bàn",
+    "stats": { "profiles": "Hồ sơ khách", "repeatGuests": "Khách quay lại", "returnRate": "Tỷ lệ quay lại" },
+    "searchPlaceholder": "Tìm tên, số điện thoại hoặc email",
+    "searchLabel": "Tìm kiếm khách",
+    "history": "{reservations} lượt đặt · {visits} lượt đến · {noShows} no-show",
+    "lastReservation": "Đặt gần nhất",
+    "empty": "Không có khách phù hợp với tìm kiếm.",
+    "loadError": "Không thể tải danh sách khách"
   },
   "OwnerSettings": {
     "page": {

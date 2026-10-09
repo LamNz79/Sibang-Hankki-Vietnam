@@ -334,31 +334,21 @@
     },
     "customers": {
       "title": "고객 관리",
-      "description": "고객 프로필, 이용 내역 및 계정 상태를 관리합니다.",
-      "export": "내보내기",
+      "description": "이 레스토랑의 고객과 예약 내역을 확인합니다.",
       "filters": {
-        "searchPlaceholder": "이름, 전화번호, 이메일 또는 고객 ID 검색",
-        "searchLabel": "고객 검색",
-        "statusLabel": "고객 상태",
-        "tierLabel": "고객 등급",
-        "status": { "all": "전체 상태" },
-        "tier": { "all": "전체 등급" }
+        "searchPlaceholder": "이름, 전화번호 또는 이메일 검색",
+        "searchLabel": "고객 검색"
       },
       "table": {
         "customer": "고객",
-        "countryLanguage": "국가 / 언어",
-        "reservationsVisits": "예약 / 방문",
+        "reservations": "예약",
+        "visits": "방문",
         "noShows": "노쇼",
-        "joined": "가입일",
-        "status": "상태"
+        "lastReservation": "최근 예약"
       },
-      "statuses": { "active": "정상", "review": "검토", "restricted": "이용 제한", "closed": "탈퇴" },
-      "tiers": { "regular": "일반", "vip": "VIP" },
-      "countries": { "vietnam": "베트남", "korea": "한국" },
-      "languages": { "vi": "베트남어", "en": "영어", "ko": "한국어" },
-      "details": "상세",
-      "empty": "필터 조건에 맞는 고객이 없습니다.",
-      "resultCount": "고객 {count}명"
+      "empty": "검색 조건에 맞는 고객이 없습니다.",
+      "loadError": "고객 목록을 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요.",
+      "pagination": { "rowsPerPage": "페이지당 행" }
     },
     "stores": {
       "title": "가게 관리",
@@ -484,6 +474,17 @@
       "owner": "사장님",
       "admin": "관리자"
     }
+  },
+  "OwnerGuests": {
+    "title": "고객 관리",
+    "eyebrow": "예약 내역",
+    "stats": { "profiles": "고객 프로필", "repeatGuests": "재방문 고객", "returnRate": "재방문율" },
+    "searchPlaceholder": "이름, 전화번호 또는 이메일 검색",
+    "searchLabel": "고객 검색",
+    "history": "예약 {reservations}건 · 방문 {visits}회 · 노쇼 {noShows}회",
+    "lastReservation": "최근 예약",
+    "empty": "검색 조건에 맞는 고객이 없습니다.",
+    "loadError": "고객 목록을 불러올 수 없습니다"
   },
   "OwnerSettings": {
     "page": {
