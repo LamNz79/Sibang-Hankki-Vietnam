@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   Alert,
   Button,
@@ -50,7 +50,6 @@ const statusTones: Record<
 
 export function AdminReservationsScreen() {
   const t = useTranslations("Admin.reservations");
-  const format = useFormatter();
   const { reservations: ownerReservations, isPending, isError } =
     useOwnerReservations();
   const [query, setQuery] = useState("");
@@ -119,10 +118,7 @@ export function AdminReservationsScreen() {
       textAlign: "center",
       render: (reservation) =>
         t("table.slot", {
-          date: format.dateTime(new Date(`${reservation.date}T00:00:00`), {
-            month: "short",
-            day: "numeric",
-          }),
+          date: reservation.date.split("-").reverse().join("/"),
           time: reservation.time,
           count: reservation.partySize,
         }),
