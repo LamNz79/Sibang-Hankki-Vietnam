@@ -12,6 +12,12 @@ export type AdminReservationStatus =
   | "declined"
   | "noShow";
 
+export type AdminReservationPeriod =
+  | "all"
+  | "today"
+  | "last7Days"
+  | "thisMonth";
+
 export type AdminReservationRecord = {
   id: string;
   reference: string;
@@ -71,41 +77,23 @@ export function toAdminReservation(
   };
 }
 
-export function filterAdminReservations(
-  records: AdminReservationRecord[],
-  query: string,
-  status: AdminReservationStatus | "all",
-  period: "all" | "today" | "last7Days" | "thisMonth",
+export function getAdminReservationDateRange(
+  period: AdminReservationPeriod,
   today = new Date(),
 ) {
-  const normalizedQuery = query.trim().toLowerCase();
+  if (period === "all") return {};
   const todayKey = localDateKey(today);
-  const firstDay = new Date(today);
-  firstDay.setHours(0, 0, 0, 0);
-  firstDay.setDate(firstDay.getDate() - 6);
-  const firstDayKey = localDateKey(firstDay);
-  const monthKey = todayKey.slice(0, 7);
-
-  return records.filter((reservation) => {
-    const matchesQuery =
-      !normalizedQuery ||
-      `${reservation.id} ${reservation.reference} ${reservation.customer} ${reservation.phone} ${reservation.email}`
-        .toLowerCase()
-        .includes(normalizedQuery);
-    const matchesPeriod =
-      period === "all" ||
-      (period === "today"
-        ? reservation.date === todayKey
-        : period === "last7Days"
-          ? reservation.date >= firstDayKey && reservation.date <= todayKey
-          : reservation.date.startsWith(monthKey));
-
-    return (
-      matchesQuery &&
-      (status === "all" || reservation.status === status) &&
-      matchesPeriod
-    );
-  });
+  if (period === "today") return { dateFrom: todayKey, dateTo: todayKey };
+  if (period === "last7Days") {
+    const firstDay = new Date(today);
+    firstDay.setHours(0, 0, 0, 0);
+    firstDay.setDate(firstDay.getDate() - 6);
+    return { dateFrom: localDateKey(firstDay), dateTo: todayKey };
+  }
+  return {
+    dateFrom: localDateKey(new Date(today.getFullYear(), today.getMonth(), 1)),
+    dateTo: localDateKey(new Date(today.getFullYear(), today.getMonth() + 1, 0)),
+  };
 }
 
 function localDateKey(date: Date) {

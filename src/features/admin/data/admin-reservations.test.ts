@@ -5,7 +5,7 @@ import {
 } from "@/features/reservations/types";
 import type { OwnerReservation } from "@/features/owner/types";
 import {
-  filterAdminReservations,
+  getAdminReservationDateRange,
   toAdminReservation,
 } from "@/features/admin/data/admin-reservations";
 
@@ -39,44 +39,20 @@ describe("admin reservation data", () => {
     });
   });
 
-  it("combines query, status, and period filters", () => {
-    const records = [
-      toAdminReservation(ownerReservation),
-      toAdminReservation({
-        ...ownerReservation,
-        id: "older",
-        reference: "SHK-OLD",
-        date: "2026-10-02",
-        reservationStatus: ReservationStatus.Cancelled,
-      }),
-    ];
-
-    expect(
-      filterAdminReservations(
-        records,
-        "minh@example.com",
-        "confirmed",
-        "today",
-        new Date("2026-10-09T12:00:00"),
-      ).map(({ id }) => id),
-    ).toEqual(["reservation-id"]);
-    expect(
-      filterAdminReservations(
-        records,
-        "",
-        "all",
-        "thisMonth",
-        new Date("2026-10-09T12:00:00"),
-      ),
-    ).toHaveLength(2);
-    expect(
-      filterAdminReservations(
-        records,
-        "",
-        "all",
-        "all",
-        new Date("2026-10-09T12:00:00"),
-      ),
-    ).toHaveLength(2);
+  it("maps period filters to inclusive backend date ranges", () => {
+    const today = new Date("2026-10-09T12:00:00");
+    expect(getAdminReservationDateRange("all", today)).toEqual({});
+    expect(getAdminReservationDateRange("today", today)).toEqual({
+      dateFrom: "2026-10-09",
+      dateTo: "2026-10-09",
+    });
+    expect(getAdminReservationDateRange("last7Days", today)).toEqual({
+      dateFrom: "2026-10-03",
+      dateTo: "2026-10-09",
+    });
+    expect(getAdminReservationDateRange("thisMonth", today)).toEqual({
+      dateFrom: "2026-10-01",
+      dateTo: "2026-10-31",
+    });
   });
 });

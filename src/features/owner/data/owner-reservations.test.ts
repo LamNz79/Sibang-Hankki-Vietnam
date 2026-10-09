@@ -6,6 +6,7 @@ import {
   completeOwnerReservation,
   confirmOwnerReservation,
   declineOwnerReservation,
+  getOwnerReservationPage,
   manuallyCheckInOwnerReservation,
   seatOwnerReservation,
   toOwnerReservation,
@@ -57,6 +58,36 @@ describe("owner reservation API mapping", () => {
       preOrder: true,
       preOrderName: "No peanuts",
     });
+  });
+
+  it("requests a filtered owner reservation page", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({
+      items: [pendingRecord],
+      page: 1,
+      size: 20,
+      totalElements: 21,
+      totalPages: 2,
+      summary: { confirmed: 13, checkedIn: 3, cancelled: 2, noShow: 0 },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getOwnerReservationPage({
+      page: 1,
+      size: 20,
+      query: "Minh",
+      status: "CONFIRMED",
+      dateFrom: "2026-10-01",
+      dateTo: "2026-10-31",
+    })).resolves.toMatchObject({
+      reservations: [expect.objectContaining({ id: "reservation-id" })],
+      totalElements: 21,
+      summary: { confirmed: 13, checkedIn: 3, cancelled: 2, noShow: 0 },
+    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/owner/reservations/paged?page=1&size=20&query=Minh&status=CONFIRMED&dateFrom=2026-10-01&dateTo=2026-10-31",
+      expect.objectContaining({ cache: "no-store" }),
+    );
   });
 
   it("confirms with the session CSRF token", async () => {

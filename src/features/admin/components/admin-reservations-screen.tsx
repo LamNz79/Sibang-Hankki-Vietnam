@@ -28,13 +28,26 @@ import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
-  filterAdminReservations,
+  getAdminReservationDateRange,
   toAdminReservation,
+  type AdminReservationPeriod,
   type AdminReservationRecord,
   type AdminReservationStatus,
 } from "@/features/admin/data/admin-reservations";
-import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
+import type { OwnerReservationPageStatus } from "@/features/owner/data/owner-reservations";
+import { useOwnerReservationPage } from "@/features/owner/hooks/use-owner-reservations";
 import { uiColors } from "@/theme";
+
+const PAGE_SIZE = 20;
+
+const apiStatuses: Record<AdminReservationStatus, OwnerReservationPageStatus> = {
+  pending: "PENDING",
+  confirmed: "CONFIRMED",
+  checkedIn: "CHECKED_IN",
+  cancelled: "CANCELLED",
+  declined: "DECLINED",
+  noShow: "NO_SHOW",
+};
 
 const statusTones: Record<
   AdminReservationStatus,
@@ -50,50 +63,48 @@ const statusTones: Record<
 
 export function AdminReservationsScreen() {
   const t = useTranslations("Admin.reservations");
-  const { reservations: ownerReservations, isPending, isError } =
-    useOwnerReservations();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 500);
-  const [period, setPeriod] = useState<
-    "all" | "today" | "last7Days" | "thisMonth"
-  >("all");
+  const [page, setPage] = useState(1);
+  const [period, setPeriod] = useState<AdminReservationPeriod>("all");
   const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
-  const allReservations = useMemo(
-    () => ownerReservations.map(toAdminReservation),
-    [ownerReservations],
+  const dateRange = useMemo(
+    () => getAdminReservationDateRange(period),
+    [period],
   );
+  const { data, isFetching, isError } = useOwnerReservationPage({
+    page: page - 1,
+    size: PAGE_SIZE,
+    query: debouncedQuery.trim() || undefined,
+    status: status === "all" ? undefined : apiStatuses[status],
+    ...dateRange,
+  });
   const reservations = useMemo(
-    () =>
-      filterAdminReservations(
-        allReservations,
-        debouncedQuery,
-        status,
-        period,
-      ),
-    [allReservations, debouncedQuery, period, status],
+    () => (data?.reservations ?? []).map(toAdminReservation),
+    [data?.reservations],
   );
   const metrics = [
     {
       key: "confirmed",
-      value: allReservations.filter(({ status }) => status === "confirmed").length,
+      value: data?.summary.confirmed ?? 0,
       icon: IconCalendarCheck,
       tone: "success",
     },
     {
       key: "checkedIn",
-      value: allReservations.filter(({ status }) => status === "checkedIn").length,
+      value: data?.summary.checkedIn ?? 0,
       icon: IconCircleCheck,
       tone: "success",
     },
     {
       key: "cancelled",
-      value: allReservations.filter(({ status }) => status === "cancelled").length,
+      value: data?.summary.cancelled ?? 0,
       icon: IconCalendarX,
       tone: "error",
     },
     {
       key: "noShow",
-      value: allReservations.filter(({ status }) => status === "noShow").length,
+      value: data?.summary.noShow ?? 0,
       icon: IconUserQuestion,
       tone: "warning",
     },
@@ -203,7 +214,10 @@ export function AdminReservationsScreen() {
         <Group align="flex-end" gap="sm">
           <TextInput
             value={query}
-            onChange={(event) => setQuery(event.currentTarget.value)}
+            onChange={(event) => {
+              setQuery(event.currentTarget.value);
+              setPage(1);
+            }}
             placeholder={t("filters.searchPlaceholder")}
             aria-label={t("filters.searchLabel")}
             leftSection={<IconSearch size={16} />}
@@ -214,7 +228,10 @@ export function AdminReservationsScreen() {
           <Select
             value={period}
             aria-label={t("filters.periodLabel")}
-            onChange={(value) => setPeriod((value ?? "all") as typeof period)}
+            onChange={(value) => {
+              setPeriod((value ?? "all") as AdminReservationPeriod);
+              setPage(1);
+            }}
             data={[
               { value: "all", label: t("filters.period.all") },
               { value: "today", label: t("filters.period.today") },
@@ -228,7 +245,10 @@ export function AdminReservationsScreen() {
           <Select
             value={status}
             aria-label={t("filters.statusLabel")}
-            onChange={(value) => setStatus((value ?? "all") as typeof status)}
+            onChange={(value) => {
+              setStatus((value ?? "all") as typeof status);
+              setPage(1);
+            }}
             data={[
               { value: "all", label: t("filters.status.all") },
               { value: "pending", label: t("statuses.pending") },
@@ -255,7 +275,11 @@ export function AdminReservationsScreen() {
           verticalAlign="center"
           horizontalSpacing="md"
           records={reservations}
-          fetching={isPending}
+          fetching={isFetching}
+          page={page}
+          onPageChange={setPage}
+          totalRecords={data?.totalElements ?? 0}
+          recordsPerPage={PAGE_SIZE}
           idAccessor="id"
           noRecordsText={t("empty")}
           columns={reservationColumns}
