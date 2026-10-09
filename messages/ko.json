@@ -156,6 +156,7 @@
     "searchPlaceholder": "예약번호, 고객명 또는 전화번호",
     "searchLabel": "예약번호, 고객명 또는 전화번호로 검색",
     "noMatch": "일치하는 예약이 없습니다",
+    "manualError": "고객을 체크인할 수 없습니다. 새로고침 후 다시 시도해 주세요.",
     "searchTitle": "예약 검색",
     "searchHelp": "예약번호, 고객명 또는 전화번호를 입력하세요.",
     "guidance": "체크인 전에 예약 정보를 확인하세요. 카메라는 지원되는 브라우저와 보안 연결에서 사용할 수 있습니다.",
@@ -169,7 +170,8 @@
     "arrival": {
       "title": "고객 방문",
       "eyebrow": "방문 상태 관리",
-      "notFound": "예약을 찾을 수 없습니다.",
+        "notFound": "예약을 찾을 수 없습니다.",
+        "updateError": "방문 상태를 업데이트할 수 없습니다. 새로고침 후 다시 시도해 주세요.",
       "visitStatus": "방문 상태",
       "statuses": {
         "expected": "예약 확정",

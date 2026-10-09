@@ -13,6 +13,7 @@ import {
 } from "react";
 import {
   Avatar,
+  Alert,
   Button,
   Card,
   Group,
@@ -32,6 +33,7 @@ import {
 } from "@tabler/icons-react";
 import {
   useOwnerCheckIn,
+  useOwnerManualCheckIn,
   useOwnerReservations,
 } from "@/features/owner/hooks/use-owner-reservations";
 import { GuestContextBadges } from "@/features/owner/reservations";
@@ -58,8 +60,12 @@ type ScannerStatus =
 
 function ReservationLookupCard({
   reservation,
+  onCheckIn,
+  checkInPending = false,
 }: {
   reservation: OwnerReservation;
+  onCheckIn?: () => void;
+  checkInPending?: boolean;
 }) {
   const t = useTranslations("OwnerCheckIn");
   const canCheckIn = canOwnerReservationCheckIn(reservation);
@@ -104,7 +110,9 @@ function ReservationLookupCard({
             size="sm"
             radius="md"
             leftSection={<IconUserCheck size={16} />}
-            disabled
+            loading={checkInPending}
+            disabled={!onCheckIn}
+            onClick={onCheckIn}
           >
             {t("checkIn")}
           </Button>
@@ -132,6 +140,7 @@ function OwnerCheckInContent() {
   const searchParams = useSearchParams();
   const { reservations: ownerReservations } = useOwnerReservations();
   const checkIn = useOwnerCheckIn();
+  const manualCheckIn = useOwnerManualCheckIn();
   const [mode, setMode] = useState("manual");
   const [query, setQuery] = useState("");
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>("idle");
@@ -348,8 +357,20 @@ function OwnerCheckInContent() {
                   <ReservationLookupCard
                     key={reservation.id}
                     reservation={reservation}
+                    onCheckIn={
+                      canOwnerReservationCheckIn(reservation)
+                        ? () => manualCheckIn.mutate(reservation.id)
+                        : undefined
+                    }
+                    checkInPending={
+                      manualCheckIn.isPending &&
+                      manualCheckIn.variables === reservation.id
+                    }
                   />
                 ))}
+                {manualCheckIn.isError ? (
+                  <Alert color="red">{t("manualError")}</Alert>
+                ) : null}
               </Stack>
             ) : (
               <Card radius="lg" p="xl" withBorder>

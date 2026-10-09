@@ -121,3 +121,15 @@ export function declineOwnerReservation(id: string, reason: string) {
 export function checkInOwnerReservation(checkInToken: string) {
   return postOwnerReservation(apiEndpoints.ownerCheckIns, { checkInToken });
 }
+
+export function manuallyCheckInOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.checkInOwnerReservation(id));
+}
+
+export function seatOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.seatOwnerReservation(id));
+}
+
+export function completeOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.completeOwnerReservation(id));
+}

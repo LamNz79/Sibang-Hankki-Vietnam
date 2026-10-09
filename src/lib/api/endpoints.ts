@@ -38,5 +38,11 @@ export const apiEndpoints = {
     `/api/owner/reservations/${seg(id)}/confirm`,
   declineOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/decline`,
+  checkInOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/check-in`,
+  seatOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/seat`,
+  completeOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/complete`,
   ownerCheckIns: "/api/owner/check-ins",
 } as const;

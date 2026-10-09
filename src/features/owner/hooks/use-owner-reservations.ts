@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   checkInOwnerReservation,
+  completeOwnerReservation,
   confirmOwnerReservation,
   declineOwnerReservation,
   getOwnerReservation,
   getOwnerReservations,
+  manuallyCheckInOwnerReservation,
+  seatOwnerReservation,
 } from "@/features/owner/data/owner-reservations";
 import { ApiError } from "@/lib/api/client";
 
@@ -61,10 +64,21 @@ export function useOwnerReservation(id: string) {
 export function useOwnerReservationActions(id: string) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (action: { kind: "confirm" } | { kind: "decline"; reason: string }) =>
-      action.kind === "confirm"
-        ? confirmOwnerReservation(id)
-        : declineOwnerReservation(id, action.reason),
+    mutationFn: (
+      action:
+        | { kind: "confirm" }
+        | { kind: "decline"; reason: string }
+        | { kind: "seat" }
+        | { kind: "complete" },
+    ) => {
+      if (action.kind === "confirm") return confirmOwnerReservation(id);
+      if (action.kind === "decline") {
+        return declineOwnerReservation(id, action.reason);
+      }
+      return action.kind === "seat"
+        ? seatOwnerReservation(id)
+        : completeOwnerReservation(id);
+    },
     onSuccess: async (reservation) => {
       queryClient.setQueryData(["owner-reservations", id], reservation);
       await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
@@ -76,5 +90,23 @@ export function useOwnerReservationActions(id: string) {
     ...mutation,
     confirm: () => mutation.mutate({ kind: "confirm" }),
     decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
+    seat: () => mutation.mutate({ kind: "seat" }),
+    complete: () => mutation.mutate({ kind: "complete" }),
   };
+}
+
+export function useOwnerManualCheckIn() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: manuallyCheckInOwnerReservation,
+    onSuccess: async (reservation) => {
+      queryClient.setQueryData(
+        ["owner-reservations", reservation.id],
+        reservation,
+      );
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
+    },
+  });
+  useLoginRedirect(mutation.error);
+  return mutation;
 }

@@ -156,6 +156,7 @@
     "searchPlaceholder": "Mã đặt bàn, tên khách hoặc số điện thoại",
     "searchLabel": "Tìm theo mã đặt bàn, tên khách hoặc số điện thoại",
     "noMatch": "Không tìm thấy đặt bàn phù hợp",
+    "manualError": "Không thể check-in khách này. Hãy tải lại và thử lại.",
     "searchTitle": "Tìm đặt bàn",
     "searchHelp": "Nhập mã đặt bàn, tên khách hoặc số điện thoại.",
     "guidance": "Kiểm tra thông tin đặt bàn trước khi nhận khách. Camera cần trình duyệt được hỗ trợ và kết nối an toàn.",
@@ -169,7 +170,8 @@
     "arrival": {
       "title": "Khách đến",
       "eyebrow": "Quản lý lượt phục vụ",
-      "notFound": "Không tìm thấy đặt bàn.",
+        "notFound": "Không tìm thấy đặt bàn.",
+        "updateError": "Không thể cập nhật trạng thái lượt phục vụ. Hãy tải lại và thử lại.",
       "visitStatus": "Trạng thái lượt phục vụ",
       "statuses": {
         "expected": "Đã xác nhận",
