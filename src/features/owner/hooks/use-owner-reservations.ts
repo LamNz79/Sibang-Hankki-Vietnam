@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  cancelOwnerReservation,
   checkInOwnerReservation,
   completeOwnerReservation,
   confirmOwnerReservation,
@@ -68,12 +69,16 @@ export function useOwnerReservationActions(id: string) {
       action:
         | { kind: "confirm" }
         | { kind: "decline"; reason: string }
+        | { kind: "cancel"; reason: string }
         | { kind: "seat" }
         | { kind: "complete" },
     ) => {
       if (action.kind === "confirm") return confirmOwnerReservation(id);
       if (action.kind === "decline") {
         return declineOwnerReservation(id, action.reason);
+      }
+      if (action.kind === "cancel") {
+        return cancelOwnerReservation(id, action.reason);
       }
       return action.kind === "seat"
         ? seatOwnerReservation(id)
@@ -90,6 +95,7 @@ export function useOwnerReservationActions(id: string) {
     ...mutation,
     confirm: () => mutation.mutate({ kind: "confirm" }),
     decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
+    cancel: (reason: string) => mutation.mutateAsync({ kind: "cancel", reason }),
     seat: () => mutation.mutate({ kind: "seat" }),
     complete: () => mutation.mutate({ kind: "complete" }),
   };

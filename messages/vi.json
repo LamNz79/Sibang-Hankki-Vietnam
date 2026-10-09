@@ -120,6 +120,7 @@
     "notification": { "title": "Đã gửi xác nhận", "message": "Đã thông báo cho {guest} rằng bàn đã được xác nhận." },
     "footer": { "viewArrival": "Xem trạng thái đến của {guest}", "checkIn": "Check-in {guest}", "waiting": "Đang chờ khách phản hồi", "closed": "Yêu cầu đã đóng", "confirm": "Xác nhận đặt bàn" },
     "menu": { "aria": "Thao tác đặt bàn", "label": "Thao tác đặt bàn", "contact": "Liên hệ khách", "cancel": "Hủy đặt bàn" },
+    "cancel": { "title": "Hủy đặt bàn này?", "description": "Bàn sẽ được giải phóng và thao tác này không thể hoàn tác.", "reason": "Lý do hủy", "placeholder": "Cho khách biết lý do nhà hàng hủy đặt bàn", "keep": "Giữ đặt bàn", "confirm": "Hủy đặt bàn", "error": "Không thể hủy đặt bàn. Hãy tải lại trang và thử lại." },
     "information": { "title": "Thông tin đặt bàn", "date": "Ngày", "largeParty": "Nhóm đông", "guests": "Số khách", "guestCount": "{count} khách", "table": "Bàn", "notAssigned": "Chưa xếp bàn", "preOrder": "Đặt món trước", "noPreOrder": "Chưa đặt món trước" },
     "confirmation": { "title": "Xác nhận với khách", "description": "Gửi xác nhận đặt bàn trong ứng dụng. Chỉ gọi khi khách cần được hỗ trợ gấp hoặc đặc biệt.", "notify": "Thông báo khách", "call": "Gọi khách" },
     "summary": { "meta": "{time} · {count} khách · Mã {reference}" },

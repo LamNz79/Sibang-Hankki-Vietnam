@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import {
+  cancelOwnerReservation,
   checkInOwnerReservation,
   completeOwnerReservation,
   confirmOwnerReservation,
@@ -111,6 +112,34 @@ describe("owner reservation API mapping", () => {
         method: "POST",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ reason: "Fully booked" }),
+      }),
+    ]);
+  });
+
+  it("cancels with a reason and the session CSRF token", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...pendingRecord,
+        status: "CANCELLED",
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      cancelOwnerReservation("reservation-id", "Restaurant closed"),
+    ).resolves.toMatchObject({ reservationStatus: ReservationStatus.Cancelled });
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/reservations/reservation-id/cancel",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({ reason: "Restaurant closed" }),
       }),
     ]);
   });

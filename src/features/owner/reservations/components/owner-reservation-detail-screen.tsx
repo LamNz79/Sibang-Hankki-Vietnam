@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -9,8 +10,10 @@ import {
   Card,
   Group,
   Menu,
+  Modal,
   Stack,
   Text,
+  Textarea,
   ThemeIcon,
 } from "@mantine/core";
 import { useFormatter, useTranslations } from "next-intl";
@@ -121,6 +124,8 @@ export function OwnerReservationDetailScreen() {
   const params = useParams<{ id: string }>();
   const { reservation, isPending } = useOwnerReservation(params.id);
   const actions = useOwnerReservationActions(params.id);
+  const [cancelOpened, setCancelOpened] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
   const formatDate = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00`), {
       weekday: "long",
@@ -151,6 +156,8 @@ export function OwnerReservationDetailScreen() {
   const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
   const isLargeParty = reservation.partySize > LARGE_PARTY_THRESHOLD;
   const displayStatus = reservation.reservationStatus;
+  const canCancel =
+    displayStatus === ReservationStatus.Confirmed && !hasArrived;
   const persistedResponse = getPersistedResponse(reservation, formatDate);
   const response =
     persistedResponse.kind === "alternative-sent"
@@ -162,6 +169,19 @@ export function OwnerReservationDetailScreen() {
     reservation.requestResponse?.kind === "unavailable" ||
     (displayStatus === ReservationStatus.Declined &&
       reservation.customerResponse?.kind === "declined-alternative");
+
+  const cancelReservation = async () => {
+    const reason = cancelReason.trim();
+    if (!reason) return;
+
+    try {
+      await actions.cancel(reason);
+      setCancelOpened(false);
+      setCancelReason("");
+    } catch {
+      // The modal keeps the reason so the owner can retry.
+    }
+  };
 
   const footerAction = displayStatus === ReservationStatus.Confirmed ? (
     <Button
@@ -232,7 +252,11 @@ export function OwnerReservationDetailScreen() {
             <Menu.Item
               color="red"
               leftSection={<IconX size={16} />}
-              disabled
+              disabled={!canCancel || actions.isPending}
+              onClick={() => {
+                actions.reset();
+                setCancelOpened(true);
+              }}
             >
               {t("menu.cancel")}
             </Menu.Item>
@@ -379,6 +403,49 @@ export function OwnerReservationDetailScreen() {
           </Card>
         ) : null}
       </Stack>
+
+      <Modal
+        opened={cancelOpened}
+        onClose={() => setCancelOpened(false)}
+        title={t("cancel.title")}
+        centered
+      >
+        <Stack gap="md">
+          <Text size="sm" c={uiColors.textSecondary}>
+            {t("cancel.description")}
+          </Text>
+          <Textarea
+            label={t("cancel.reason")}
+            placeholder={t("cancel.placeholder")}
+            value={cancelReason}
+            onChange={(event) => setCancelReason(event.currentTarget.value)}
+            maxLength={500}
+            minRows={3}
+            autosize
+            required
+          />
+          {actions.isError ? (
+            <Alert color="red" title={t("cancel.error")} role="alert" />
+          ) : null}
+          <Group justify="flex-end">
+            <Button
+              variant="default"
+              disabled={actions.isPending}
+              onClick={() => setCancelOpened(false)}
+            >
+              {t("cancel.keep")}
+            </Button>
+            <Button
+              color="red"
+              loading={actions.isPending}
+              disabled={!cancelReason.trim()}
+              onClick={cancelReservation}
+            >
+              {t("cancel.confirm")}
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
     </OwnerShell>
   );
 }
