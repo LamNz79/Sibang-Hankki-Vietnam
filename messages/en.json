@@ -308,31 +308,21 @@
       }
     },
     "dashboard": {
-      "title": "Operations Dashboard",
-      "description": "Monitor key platform metrics and pending operational tasks.",
-      "report": "Report",
+      "title": "Restaurant dashboard",
+      "description": "Monitor today's reservations and pending guest requests.",
       "refresh": "Refresh",
       "metrics": {
-        "bookings": { "label": "Today's bookings", "detail": "+8.4% vs. yesterday" },
-        "checkedIn": { "label": "Checked in", "detail": "73.2% check-in rate" },
-        "gmv": { "label": "GMV", "detail": "+12.1% vs. last week" },
-        "pending": { "label": "Pending actions", "detail": "7 store approvals · 18 reports" }
+        "bookings": { "label": "Today's reservations", "detail": "All statuses" },
+        "checkedIn": { "label": "Checked in", "detail": "Arrived, seated, or completed" },
+        "pending": { "label": "Pending today", "detail": "Waiting for restaurant response" },
+        "noShow": { "label": "No-show today", "detail": "Marked as no-show" }
       },
       "trend": {
-        "title": "Weekly reservation trend",
-        "period": "Last 7 days",
-        "days": { "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat", "sun": "Sun" }
+        "title": "Reservations by service date",
+        "period": "Last 7 days"
       },
-      "alerts": {
-        "title": "Recent operations alerts",
-        "viewAll": "View all",
-        "items": {
-          "storeApproval": { "title": "New store approval request", "detail": "Demo Bistro A + 2 more", "time": "10 min ago" },
-          "noShowAppeal": { "title": "No-show appeal", "detail": "Reservation RES-DEMO-002", "time": "34 min ago" },
-          "bannerEnding": { "title": "Main banner ending soon", "detail": "Weekend Dining", "time": "2 hours ago" },
-          "settlementReview": { "title": "Settlement review required", "detail": "August week 4 settlement", "time": "Today" }
-        }
-      }
+      "pending": { "title": "Pending requests", "total": "{count} total", "review": "Review", "empty": "No pending requests" },
+      "loadError": "Unable to load restaurant operations. Refresh or sign in again."
     },
     "reservations": {
       "title": "Reservations",
