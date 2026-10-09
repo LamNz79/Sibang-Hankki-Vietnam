@@ -7,7 +7,6 @@ import {
   ActionIcon,
   AppShell,
   Avatar,
-  Box,
   Burger,
   Group,
   Stack,
@@ -19,7 +18,6 @@ import { useDisclosure } from "@mantine/hooks";
 import {
   IconAd2,
   IconBell,
-  IconBuildingStore,
   IconCalendarEvent,
   IconChartBar,
   IconLayoutDashboard,
@@ -35,28 +33,12 @@ import { uiColors } from "@/theme";
 
 const adminNavigation = [
   { href: "/admin", labelKey: "dashboard", icon: IconLayoutDashboard },
-  {
-    href: "/admin/reservations",
-    labelKey: "reservations",
-    icon: IconCalendarEvent,
-    count: 18,
-  },
+  { href: "/admin/reservations", labelKey: "reservations", icon: IconCalendarEvent },
   { href: "/admin/customers", labelKey: "customers", icon: IconUsers },
   { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2 },
   { href: "/admin/media", labelKey: "media", icon: IconPhoto },
-  {
-    href: "/admin/stores",
-    labelKey: "stores",
-    icon: IconBuildingStore,
-    count: 7,
-  },
   { href: "/admin/revenue", labelKey: "revenue", icon: IconChartBar },
-  {
-    href: "/admin/campaigns",
-    labelKey: "campaigns",
-    icon: IconAd2,
-    count: 3,
-  },
+  { href: "/admin/campaigns", labelKey: "campaigns", icon: IconAd2 },
   { href: "/admin/settings", labelKey: "settings", icon: IconSettings },
 ] as const;
 
@@ -176,19 +158,6 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     <Text size="sm" fw={700} style={{ flex: 1 }}>
                       {t(`navigation.${item.labelKey}`)}
                     </Text>
-                    {"count" in item ? (
-                      <Box
-                        px={7}
-                        py={1}
-                        style={{
-                          borderRadius: 999,
-                          background: "rgba(255, 255, 255, 0.16)",
-                          fontSize: 10,
-                        }}
-                      >
-                        {item.count}
-                      </Box>
-                    ) : null}
                   </Group>
                 </UnstyledButton>
               );
