@@ -120,6 +120,7 @@
     "notification": { "title": "확정 알림 전송", "message": "{guest}님에게 테이블 확정 알림을 보냈습니다." },
     "footer": { "viewArrival": "{guest}님의 방문 상태 보기", "checkIn": "{guest}님 체크인", "waiting": "고객 응답 대기 중", "closed": "요청 종료", "confirm": "예약 확정" },
     "menu": { "aria": "예약 작업", "label": "예약 작업", "contact": "고객에게 연락", "cancel": "예약 취소" },
+    "cancel": { "title": "이 예약을 취소할까요?", "description": "테이블이 해제되며 이 작업은 되돌릴 수 없습니다.", "reason": "취소 사유", "placeholder": "매장에서 예약을 취소하는 이유를 고객에게 알려 주세요", "keep": "예약 유지", "confirm": "예약 취소", "error": "예약을 취소할 수 없습니다. 새로고침 후 다시 시도해 주세요." },
     "information": { "title": "예약 정보", "date": "날짜", "largeParty": "단체 예약", "guests": "인원", "guestCount": "{count}명", "table": "테이블", "notAssigned": "미배정", "preOrder": "사전 주문", "noPreOrder": "사전 주문 없음" },
     "confirmation": { "title": "고객 예약 확정", "description": "앱으로 예약 확정을 보내세요. 긴급하거나 특별한 확인이 필요할 때만 전화하세요.", "notify": "고객에게 알림", "call": "고객에게 전화" },
     "summary": { "meta": "{time} · {count}명 · 예약번호 {reference}" },

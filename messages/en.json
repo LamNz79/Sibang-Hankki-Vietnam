@@ -164,6 +164,7 @@
     "notification": { "title": "Confirmation sent", "message": "{guest} was notified that the table is confirmed." },
     "footer": { "viewArrival": "View {guest}'s arrival", "checkIn": "Check in {guest}", "waiting": "Waiting for guest response", "closed": "Request closed", "confirm": "Confirm reservation" },
     "menu": { "aria": "Reservation actions", "label": "Reservation actions", "contact": "Contact guest", "cancel": "Cancel reservation" },
+    "cancel": { "title": "Cancel this reservation?", "description": "The table will be released and this action cannot be undone.", "reason": "Cancellation reason", "placeholder": "Tell the guest why the reservation is being cancelled", "keep": "Keep reservation", "confirm": "Cancel reservation", "error": "Unable to cancel the reservation. Refresh and try again." },
     "information": { "title": "Reservation information", "date": "Date", "largeParty": "Large party", "guests": "Guests", "guestCount": "{count, plural, one {# guest} other {# guests}}", "table": "Table", "notAssigned": "Not assigned", "preOrder": "Pre-order", "noPreOrder": "No pre-order" },
     "confirmation": { "title": "Guest confirmation", "description": "Send the confirmed booking in the app. Call only when the guest needs urgent or special follow-up.", "notify": "Notify guest", "call": "Call guest" },
     "summary": { "meta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}" },
