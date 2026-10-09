@@ -75,6 +75,7 @@ export function toOwnerReservation(record: OwnerReservationRecord): OwnerReserva
     preOrderName: record.preOrderNote ?? undefined,
     note: record.specialRequest ?? undefined,
     phone: record.customerPhone,
+    email: record.customerEmail ?? undefined,
     reference: record.reference,
     visits: 0,
     points: 0,

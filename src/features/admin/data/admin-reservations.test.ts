@@ -1,34 +1,73 @@
 import { describe, expect, it } from "vitest";
 import {
-  adminReservationRecords,
+  ReservationStatus,
+  VisitStatus,
+} from "@/features/reservations/types";
+import type { OwnerReservation } from "@/features/owner/types";
+import {
   filterAdminReservations,
-  getAdminReservationById,
+  toAdminReservation,
 } from "@/features/admin/data/admin-reservations";
 
-describe("filterAdminReservations", () => {
-  it("combines query, status, and period filters", () => {
-    expect(
-      filterAdminReservations(
-        adminReservationRecords,
-        "bistro",
-        "checkedIn",
-        "today",
-      ).map(({ id }) => id),
-    ).toEqual(["RES-DEMO-001"]);
-    expect(
-      filterAdminReservations(
-        adminReservationRecords,
-        "",
-        "all",
-        "last7Days",
-      ),
-    ).toHaveLength(5);
+const ownerReservation: OwnerReservation = {
+  id: "reservation-id",
+  reference: "SHK-123",
+  guestName: "Minh Lam",
+  initials: "ML",
+  date: "2026-10-09",
+  time: "18:30",
+  table: "Not assigned",
+  partySize: 4,
+  reservationStatus: ReservationStatus.Confirmed,
+  visitStatus: VisitStatus.Expected,
+  phone: "0900000000",
+  email: "minh@example.com",
+  note: "Window seat",
+  visits: 0,
+  points: 0,
+};
+
+describe("admin reservation data", () => {
+  it("maps the restaurant-scoped owner record", () => {
+    expect(toAdminReservation(ownerReservation)).toMatchObject({
+      id: "reservation-id",
+      reference: "SHK-123",
+      customer: "Minh Lam",
+      status: "confirmed",
+      checkIn: "pending",
+      email: "minh@example.com",
+    });
   });
 
-  it("finds a reservation by ID", () => {
-    expect(getAdminReservationById("RES-DEMO-003")?.customer).toBe(
-      "Demo Customer C",
-    );
-    expect(getAdminReservationById("UNKNOWN")).toBeUndefined();
+  it("combines query, status, and period filters", () => {
+    const records = [
+      toAdminReservation(ownerReservation),
+      toAdminReservation({
+        ...ownerReservation,
+        id: "older",
+        reference: "SHK-OLD",
+        date: "2026-10-02",
+        reservationStatus: ReservationStatus.Cancelled,
+      }),
+    ];
+
+    expect(
+      filterAdminReservations(
+        records,
+        "minh@example.com",
+        "confirmed",
+        "today",
+        new Date("2026-10-09T12:00:00"),
+      ).map(({ id }) => id),
+    ).toEqual(["reservation-id"]);
+    expect(
+      filterAdminReservations(
+        records,
+        "",
+        "all",
+        "thisMonth",
+        new Date("2026-10-09T12:00:00"),
+      ),
+    ).toHaveLength(2);
   });
 });

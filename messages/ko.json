@@ -288,13 +288,13 @@
       "description": "예약, 체크인, 취소 및 노쇼 사례를 한곳에서 관리합니다.",
       "export": "예약 데이터",
       "metrics": {
-        "confirmed": { "label": "예약 확정", "detail": "오늘" },
-        "checkedIn": { "label": "체크인", "detail": "73.2%" },
-        "cancelled": { "label": "취소", "detail": "취소율 6.8%" },
-        "noShow": { "label": "노쇼 검토", "detail": "이의 신청 4건" }
+        "confirmed": { "label": "예약 확정", "detail": "전체 기록" },
+        "checkedIn": { "label": "체크인", "detail": "전체 기록" },
+        "cancelled": { "label": "취소", "detail": "전체 기록" },
+        "noShow": { "label": "노쇼", "detail": "전체 기록" }
       },
       "filters": {
-        "searchPlaceholder": "예약번호, 고객 또는 가게 검색",
+        "searchPlaceholder": "예약번호, 고객, 전화번호 또는 이메일 검색",
         "searchLabel": "예약 검색",
         "periodLabel": "예약 기간",
         "statusLabel": "예약 상태",
@@ -308,19 +308,22 @@
         "dateParty": "시간 / 인원",
         "checkIn": "체크인",
         "status": "상태",
-        "slot": "{time} · {count}명"
+        "slot": "{date} · {time} · {count}명"
       },
       "channels": { "app": "앱 예약", "web": "웹 예약" },
-      "checkIn": { "qrComplete": "QR 완료", "pending": "대기 중", "none": "-" },
-      "statuses": { "checkedIn": "체크인", "noShowReview": "노쇼 검토", "confirmed": "예약 확정", "cancelled": "취소" },
+      "checkIn": { "complete": "완료", "pending": "대기 중", "none": "-" },
+      "statuses": { "pending": "대기 중", "confirmed": "예약 확정", "checkedIn": "체크인", "cancelled": "취소", "declined": "거절", "noShow": "노쇼" },
       "details": "상세",
       "resolve": "처리",
-      "empty": "필터 조건에 맞는 예약이 없습니다."
+      "empty": "필터 조건에 맞는 예약이 없습니다.",
+      "loadError": "예약 목록을 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요."
     },
     "reservationDetail": {
       "title": "예약 상세",
       "back": "예약 목록으로",
-      "changeStatus": "상태 변경",
+      "manageReservation": "예약 관리",
+      "loading": "예약을 불러오는 중...",
+      "loadError": "이 예약을 불러올 수 없습니다.",
       "reservation": { "title": "예약 정보", "date": "날짜", "time": "시간", "partySize": "인원", "guests": "{count}명", "channel": "예약 채널", "request": "요청사항" },
       "customer": { "title": "고객 및 가게", "name": "고객", "phone": "전화번호", "email": "이메일", "language": "언어", "store": "가게" },
       "languages": { "en": "영어", "vi": "베트남어", "ko": "한국어" },

@@ -1,55 +1,57 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  Button,
-  Card,
-  Grid,
-  Group,
-  Modal,
-  Select,
-  Stack,
-  Text,
-  Textarea,
-  Title,
-} from "@mantine/core";
+import { Alert, Button, Card, Grid, Group, Stack, Text, Title } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
-import type {
-  AdminReservationRecord,
-  AdminReservationStatus,
+import {
+  toAdminReservation,
+  type AdminReservationStatus,
 } from "@/features/admin/data/admin-reservations";
+import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
 import { uiColors } from "@/theme";
 
 const statusTones: Record<
   AdminReservationStatus,
   "success" | "warning" | "info" | "error"
 > = {
-  checkedIn: "success",
-  noShowReview: "warning",
+  pending: "warning",
   confirmed: "info",
+  checkedIn: "success",
   cancelled: "error",
+  declined: "error",
+  noShow: "warning",
 };
 
-export function AdminReservationDetailScreen({
-  reservation,
-}: {
-  reservation: AdminReservationRecord;
-}) {
+export function AdminReservationDetailScreen({ id }: { id: string }) {
   const locale = useLocale();
   const t = useTranslations("Admin.reservationDetail");
   const reservationsT = useTranslations("Admin.reservations");
-  const [status, setStatus] = useState(reservation.status);
-  const [nextStatus, setNextStatus] = useState<AdminReservationStatus>(
-    reservation.status,
-  );
-  const [reason, setReason] = useState("");
-  const [opened, setOpened] = useState(false);
-  const reasonRequired =
-    nextStatus === "cancelled" || nextStatus === "noShowReview";
+  const { reservation: ownerReservation, isPending, isError } =
+    useOwnerReservation(id);
+  const { query: settingsQuery } = useOwnerSettings();
+
+  if (isPending) {
+    return (
+      <AdminShell>
+        <Text fw={700}>{t("loading")}</Text>
+      </AdminShell>
+    );
+  }
+
+  if (isError || !ownerReservation) {
+    return (
+      <AdminShell>
+        <Alert color="red" title={t("loadError")} role="alert" />
+      </AdminShell>
+    );
+  }
+
+  const reservation = toAdminReservation(ownerReservation);
   const formattedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   }).format(new Date(`${reservation.date}T00:00:00`));
@@ -72,22 +74,19 @@ export function AdminReservationDetailScreen({
           <Group justify="space-between" align="flex-end">
             <Stack gap={3}>
               <Title order={1}>{t("title")}</Title>
-              <Text c={uiColors.textSecondary}>{reservation.id}</Text>
+              <Text c={uiColors.textSecondary}>{reservation.reference}</Text>
             </Stack>
             <Group>
-              <StatusBadge tone={statusTones[status]}>
-                {reservationsT(`statuses.${status}`)}
+              <StatusBadge tone={statusTones[reservation.status]}>
+                {reservationsT(`statuses.${reservation.status}`)}
               </StatusBadge>
               <Button
+                component={Link}
+                href={`/owner/reservations/${reservation.id}`}
                 color="warmCoral"
                 radius="sm"
-                onClick={() => {
-                  setNextStatus(status);
-                  setReason("");
-                  setOpened(true);
-                }}
               >
-                {t("changeStatus")}
+                {t("manageReservation")}
               </Button>
             </Group>
           </Group>
@@ -103,23 +102,27 @@ export function AdminReservationDetailScreen({
                 value={t("reservation.guests", { count: reservation.partySize })}
               />
               <DetailRow
-                label={t("reservation.channel")}
-                value={reservationsT(`channels.${reservation.channel}`)}
+                label={t("reservation.request")}
+                value={reservation.request || t("notAvailable")}
               />
-              <DetailRow label={t("reservation.request")} value={reservation.request} />
             </DetailCard>
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, lg: 6 }}>
             <DetailCard title={t("customer.title")}>
               <DetailRow label={t("customer.name")} value={reservation.customer} />
-              <DetailRow label={t("customer.phone")} value={reservation.phone} />
-              <DetailRow label={t("customer.email")} value={reservation.email} />
               <DetailRow
-                label={t("customer.language")}
-                value={t(`languages.${reservation.language}`)}
+                label={t("customer.phone")}
+                value={reservation.phone || t("notAvailable")}
               />
-              <DetailRow label={t("customer.store")} value={reservation.store} />
+              <DetailRow
+                label={t("customer.email")}
+                value={reservation.email || t("notAvailable")}
+              />
+              <DetailRow
+                label={t("customer.store")}
+                value={settingsQuery.data?.name ?? t("notAvailable")}
+              />
             </DetailCard>
           </Grid.Col>
         </Grid>
@@ -133,75 +136,20 @@ export function AdminReservationDetailScreen({
               />
               <DetailRow
                 label={t("checkIn.method")}
-                value={reservation.checkIn === "qrComplete" ? t("checkIn.qr") : t("notAvailable")}
+                value={t("notAvailable")}
               />
             </DetailCard>
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }}>
             <DetailCard title={t("history.title")}>
               <DetailRow
-                label={t("history.created")}
-                value={`${reservation.date} · ${reservation.time}`}
-              />
-              <DetailRow
                 label={t("history.currentStatus")}
-                value={reservationsT(`statuses.${status}`)}
+                value={reservationsT(`statuses.${reservation.status}`)}
               />
             </DetailCard>
           </Grid.Col>
         </Grid>
       </Stack>
-
-      <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title={t("modal.title")}
-        radius="sm"
-      >
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            setStatus(nextStatus);
-            setOpened(false);
-            setReason("");
-          }}
-        >
-          <Stack>
-            <Select
-              label={t("modal.status")}
-              value={nextStatus}
-              onChange={(value) =>
-                setNextStatus((value ?? reservation.status) as AdminReservationStatus)
-              }
-              data={(["confirmed", "checkedIn", "cancelled", "noShowReview"] as const).map(
-                (value) => ({
-                  value,
-                  label: reservationsT(`statuses.${value}`),
-                }),
-              )}
-              allowDeselect={false}
-              radius="sm"
-            />
-            <Textarea
-              label={t("modal.reason")}
-              value={reason}
-              onChange={(event) => setReason(event.currentTarget.value)}
-              required={reasonRequired}
-              description={reasonRequired ? t("modal.reasonRequired") : undefined}
-              radius="sm"
-            />
-            <Text size="xs" c={uiColors.textSecondary}>{t("modal.prototypeNotice")}</Text>
-            <Group justify="flex-end">
-              <Button variant="default" radius="sm" onClick={() => setOpened(false)}>
-                {t("modal.cancel")}
-              </Button>
-              <Button type="submit" color="warmCoral" radius="sm">
-                {t("modal.save")}
-              </Button>
-            </Group>
-          </Stack>
-        </form>
-      </Modal>
     </AdminShell>
   );
 }
@@ -215,7 +163,12 @@ function DetailCard({
 }) {
   return (
     <Card withBorder radius="sm" p={0} h="100%">
-      <Text fw={800} px="md" py="sm" style={{ borderBottom: `1px solid ${uiColors.border}` }}>
+      <Text
+        fw={800}
+        px="md"
+        py="sm"
+        style={{ borderBottom: `1px solid ${uiColors.border}` }}
+      >
         {title}
       </Text>
       <Stack gap={0}>{children}</Stack>

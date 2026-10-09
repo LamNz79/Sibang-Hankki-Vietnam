@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import {
+  Alert,
   Button,
   Card,
   Group,
@@ -27,60 +28,101 @@ import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
-  adminReservationRecords,
   filterAdminReservations,
+  toAdminReservation,
   type AdminReservationRecord,
   type AdminReservationStatus,
 } from "@/features/admin/data/admin-reservations";
+import { useOwnerReservations } from "@/features/owner/hooks/use-owner-reservations";
 import { uiColors } from "@/theme";
 
-const metrics = [
-  { key: "confirmed", value: "1,248", icon: IconCalendarCheck, tone: "success" },
-  { key: "checkedIn", value: "914", icon: IconCircleCheck, tone: "success" },
-  { key: "cancelled", value: "86", icon: IconCalendarX, tone: "error" },
-  { key: "noShow", value: "18", icon: IconUserQuestion, tone: "warning" },
-] as const;
-
-const statusTones: Record<AdminReservationStatus, "success" | "warning" | "info" | "error"> = {
-  checkedIn: "success",
-  noShowReview: "warning",
+const statusTones: Record<
+  AdminReservationStatus,
+  "success" | "warning" | "info" | "error"
+> = {
+  pending: "warning",
   confirmed: "info",
+  checkedIn: "success",
   cancelled: "error",
+  declined: "error",
+  noShow: "warning",
 };
 
 export function AdminReservationsScreen() {
   const t = useTranslations("Admin.reservations");
+  const format = useFormatter();
+  const { reservations: ownerReservations, isPending, isError } =
+    useOwnerReservations();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 500);
-  const [period, setPeriod] = useState<"today" | "last7Days" | "thisMonth">("today");
-  const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
-  const reservations = useMemo(
-    () => filterAdminReservations(adminReservationRecords, debouncedQuery, status, period),
-    [debouncedQuery, period, status],
+  const [period, setPeriod] = useState<"today" | "last7Days" | "thisMonth">(
+    "today",
   );
+  const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
+  const allReservations = useMemo(
+    () => ownerReservations.map(toAdminReservation),
+    [ownerReservations],
+  );
+  const reservations = useMemo(
+    () =>
+      filterAdminReservations(
+        allReservations,
+        debouncedQuery,
+        status,
+        period,
+      ),
+    [allReservations, debouncedQuery, period, status],
+  );
+  const metrics = [
+    {
+      key: "confirmed",
+      value: allReservations.filter(({ status }) => status === "confirmed").length,
+      icon: IconCalendarCheck,
+      tone: "success",
+    },
+    {
+      key: "checkedIn",
+      value: allReservations.filter(({ status }) => status === "checkedIn").length,
+      icon: IconCircleCheck,
+      tone: "success",
+    },
+    {
+      key: "cancelled",
+      value: allReservations.filter(({ status }) => status === "cancelled").length,
+      icon: IconCalendarX,
+      tone: "error",
+    },
+    {
+      key: "noShow",
+      value: allReservations.filter(({ status }) => status === "noShow").length,
+      icon: IconUserQuestion,
+      tone: "warning",
+    },
+  ] as const;
   const reservationColumns: DataTableColumn<AdminReservationRecord>[] = [
     {
-      accessor: "id",
+      accessor: "reference",
       title: t("table.id"),
-      width: 170,
+      width: 190,
       render: (reservation) => (
         <Stack gap={1}>
-          <Text fw={750} size="sm">{reservation.id}</Text>
-          <Text size="xs" c={uiColors.textSecondary}>
-            {t(`channels.${reservation.channel}`)}
-          </Text>
+          <Text fw={750} size="sm">{reservation.reference}</Text>
+          <Text size="xs" c={uiColors.textSecondary}>{reservation.id}</Text>
         </Stack>
       ),
     },
-    { accessor: "customer", title: t("table.customer"), width: 160 },
-    { accessor: "store", title: t("table.store"), width: 170 },
+    { accessor: "customer", title: t("table.customer"), width: 170 },
     {
-      accessor: "time",
+      accessor: "date",
       title: t("table.dateParty"),
-      width: 160,
+      width: 190,
       textAlign: "center",
       render: (reservation) =>
         t("table.slot", {
+          date: format.dateTime(new Date(`${reservation.date}T00:00:00`), {
+            month: "short",
+            day: "numeric",
+          }),
           time: reservation.time,
           count: reservation.partySize,
         }),
@@ -116,7 +158,7 @@ export function AdminReservationsScreen() {
           color="warmCoral"
           size="compact-sm"
         >
-          {reservation.status === "noShowReview" ? t("resolve") : t("details")}
+          {t("details")}
         </Button>
       ),
     },
@@ -130,7 +172,7 @@ export function AdminReservationsScreen() {
             <Title order={1}>{t("title")}</Title>
             <Text c={uiColors.textSecondary}>{t("description")}</Text>
           </Stack>
-          <Button variant="default" radius="sm">{t("export")}</Button>
+          <Button variant="default" radius="sm" disabled>{t("export")}</Button>
         </Group>
 
         <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }} spacing="md">
@@ -154,7 +196,9 @@ export function AdminReservationsScreen() {
                     {t(`metrics.${key}.detail`)}
                   </Text>
                 </Stack>
-                <ThemeIcon color="warmCoral" variant="light" size={38} radius="sm"><Icon size={19} /></ThemeIcon>
+                <ThemeIcon color="warmCoral" variant="light" size={38} radius="sm">
+                  <Icon size={19} />
+                </ThemeIcon>
               </Group>
             </Card>
           ))}
@@ -190,16 +234,20 @@ export function AdminReservationsScreen() {
             onChange={(value) => setStatus((value ?? "all") as typeof status)}
             data={[
               { value: "all", label: t("filters.status.all") },
+              { value: "pending", label: t("statuses.pending") },
               { value: "confirmed", label: t("statuses.confirmed") },
               { value: "checkedIn", label: t("statuses.checkedIn") },
               { value: "cancelled", label: t("statuses.cancelled") },
-              { value: "noShowReview", label: t("statuses.noShowReview") },
+              { value: "declined", label: t("statuses.declined") },
+              { value: "noShow", label: t("statuses.noShow") },
             ]}
             allowDeselect={false}
             w={210}
             radius="sm"
           />
         </Group>
+
+        {isError ? <Alert color="red" title={t("loadError")} role="alert" /> : null}
 
         <DataTable
           withTableBorder
@@ -210,6 +258,7 @@ export function AdminReservationsScreen() {
           verticalAlign="center"
           horizontalSpacing="md"
           records={reservations}
+          fetching={isPending}
           idAccessor="id"
           noRecordsText={t("empty")}
           columns={reservationColumns}
