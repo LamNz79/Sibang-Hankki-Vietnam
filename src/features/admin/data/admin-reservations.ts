@@ -75,7 +75,7 @@ export function filterAdminReservations(
   records: AdminReservationRecord[],
   query: string,
   status: AdminReservationStatus | "all",
-  period: "today" | "last7Days" | "thisMonth",
+  period: "all" | "today" | "last7Days" | "thisMonth",
   today = new Date(),
 ) {
   const normalizedQuery = query.trim().toLowerCase();
@@ -93,11 +93,12 @@ export function filterAdminReservations(
         .toLowerCase()
         .includes(normalizedQuery);
     const matchesPeriod =
-      period === "today"
+      period === "all" ||
+      (period === "today"
         ? reservation.date === todayKey
         : period === "last7Days"
           ? reservation.date >= firstDayKey && reservation.date <= todayKey
-          : reservation.date.startsWith(monthKey);
+          : reservation.date.startsWith(monthKey));
 
     return (
       matchesQuery &&

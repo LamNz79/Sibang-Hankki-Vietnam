@@ -69,5 +69,14 @@ describe("admin reservation data", () => {
         new Date("2026-10-09T12:00:00"),
       ),
     ).toHaveLength(2);
+    expect(
+      filterAdminReservations(
+        records,
+        "",
+        "all",
+        "all",
+        new Date("2026-10-09T12:00:00"),
+      ),
+    ).toHaveLength(2);
   });
 });

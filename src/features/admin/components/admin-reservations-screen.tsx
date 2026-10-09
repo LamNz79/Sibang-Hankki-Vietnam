@@ -55,9 +55,9 @@ export function AdminReservationsScreen() {
     useOwnerReservations();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 500);
-  const [period, setPeriod] = useState<"today" | "last7Days" | "thisMonth">(
-    "today",
-  );
+  const [period, setPeriod] = useState<
+    "all" | "today" | "last7Days" | "thisMonth"
+  >("all");
   const [status, setStatus] = useState<AdminReservationStatus | "all">("all");
   const allReservations = useMemo(
     () => ownerReservations.map(toAdminReservation),
@@ -218,8 +218,9 @@ export function AdminReservationsScreen() {
           <Select
             value={period}
             aria-label={t("filters.periodLabel")}
-            onChange={(value) => setPeriod((value ?? "today") as typeof period)}
+            onChange={(value) => setPeriod((value ?? "all") as typeof period)}
             data={[
+              { value: "all", label: t("filters.period.all") },
               { value: "today", label: t("filters.period.today") },
               { value: "last7Days", label: t("filters.period.last7Days") },
               { value: "thisMonth", label: t("filters.period.thisMonth") },

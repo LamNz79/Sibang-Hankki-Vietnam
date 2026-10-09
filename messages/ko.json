@@ -298,7 +298,7 @@
         "searchLabel": "예약 검색",
         "periodLabel": "예약 기간",
         "statusLabel": "예약 상태",
-        "period": { "today": "오늘", "last7Days": "최근 7일", "thisMonth": "이번 달" },
+        "period": { "all": "전체 예약", "today": "오늘", "last7Days": "최근 7일", "thisMonth": "이번 달" },
         "status": { "all": "전체 예약 상태" }
       },
       "table": {

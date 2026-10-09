@@ -349,7 +349,7 @@
         "searchLabel": "Search reservations",
         "periodLabel": "Reservation period",
         "statusLabel": "Reservation status",
-        "period": { "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
+        "period": { "all": "All reservations", "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
         "status": { "all": "All reservation statuses" }
       },
       "table": {
