@@ -71,16 +71,6 @@ export type OwnerReservation = {
   requestResponse?: OwnerRequestResponse;
 };
 
-/** Compact guest record used by the owner guest-management prototype. */
-export type OwnerGuest = {
-  id: string;
-  name: string;
-  initials: string;
-  visits: number;
-  tier: GuestTier;
-  note: string;
-};
-
 /** Marketing campaign summary used by the owner marketing prototype. */
 export type OwnerCampaign = {
   id: string;

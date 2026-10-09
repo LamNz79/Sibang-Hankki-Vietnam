@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import type {
   OwnerCampaign,
-  OwnerGuest,
   OwnerReservation,
 } from "@/features/owner/types";
 import {
@@ -83,33 +82,6 @@ export const ownerReservations: OwnerReservation[] = [
     visits: 1,
     points: 40,
     lastVisit: "First visit",
-  },
-];
-
-export const ownerGuests: OwnerGuest[] = [
-  {
-    id: "guest-001",
-    name: "Kim Minji",
-    initials: "KM",
-    visits: 7,
-    tier: "vip",
-    note: "Window seating",
-  },
-  {
-    id: "guest-002",
-    name: "Park Ara",
-    initials: "PA",
-    visits: 3,
-    tier: "regular",
-    note: "Allergy note",
-  },
-  {
-    id: "guest-003",
-    name: "Lee Hwan",
-    initials: "LH",
-    visits: 0,
-    tier: "new",
-    note: "First visit scheduled",
   },
 ];
 

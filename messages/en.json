@@ -385,31 +385,21 @@
     },
     "customers": {
       "title": "Customers",
-      "description": "Manage member profiles, activity, and account status.",
-      "export": "Export",
+      "description": "View guests and their reservation history at this restaurant.",
       "filters": {
-        "searchPlaceholder": "Search name, phone, email, or customer ID",
-        "searchLabel": "Search customers",
-        "statusLabel": "Customer status",
-        "tierLabel": "Customer tier",
-        "status": { "all": "All statuses" },
-        "tier": { "all": "All tiers" }
+        "searchPlaceholder": "Search name, phone, or email",
+        "searchLabel": "Search customers"
       },
       "table": {
         "customer": "Customer",
-        "countryLanguage": "Country / Language",
-        "reservationsVisits": "Reservations / Visits",
+        "reservations": "Reservations",
+        "visits": "Visits",
         "noShows": "No-shows",
-        "joined": "Joined",
-        "status": "Status"
+        "lastReservation": "Last reservation"
       },
-      "statuses": { "active": "Active", "review": "Review", "restricted": "Restricted", "closed": "Closed" },
-      "tiers": { "regular": "Regular", "vip": "VIP" },
-      "countries": { "vietnam": "Vietnam", "korea": "Korea" },
-      "languages": { "vi": "Vietnamese", "en": "English", "ko": "Korean" },
-      "details": "Details",
-      "empty": "No customers match these filters.",
-      "resultCount": "{count, plural, one {# customer} other {# customers}}"
+      "empty": "No guests match this search.",
+      "loadError": "Unable to load guests. Refresh or sign in again.",
+      "pagination": { "rowsPerPage": "Rows per page" }
     },
     "stores": {
       "title": "Stores",
@@ -535,6 +525,17 @@
       "owner": "Owner",
       "admin": "Admin"
     }
+  },
+  "OwnerGuests": {
+    "title": "Guest management",
+    "eyebrow": "Reservation history",
+    "stats": { "profiles": "Guest profiles", "repeatGuests": "Repeat guests", "returnRate": "Return rate" },
+    "searchPlaceholder": "Search name, phone, or email",
+    "searchLabel": "Search guests",
+    "history": "{reservations} bookings · {visits} visits · {noShows} no-shows",
+    "lastReservation": "Last reservation",
+    "empty": "No guests match this search.",
+    "loadError": "Unable to load guests"
   },
   "OwnerSettings": {
     "page": {
