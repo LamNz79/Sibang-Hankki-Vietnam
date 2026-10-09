@@ -337,19 +337,18 @@
     "reservations": {
       "title": "Reservations",
       "description": "Manage reservations, check-ins, cancellations, and no-show cases in one place.",
-      "export": "Reservation data",
       "metrics": {
-        "confirmed": { "label": "Confirmed", "detail": "Today" },
-        "checkedIn": { "label": "Checked in", "detail": "73.2%" },
-        "cancelled": { "label": "Cancelled", "detail": "6.8% cancellation rate" },
-        "noShow": { "label": "No-show review", "detail": "4 appeals" }
+        "confirmed": { "label": "Confirmed", "detail": "All records" },
+        "checkedIn": { "label": "Checked in", "detail": "All records" },
+        "cancelled": { "label": "Cancelled", "detail": "All records" },
+        "noShow": { "label": "No-show", "detail": "All records" }
       },
       "filters": {
-        "searchPlaceholder": "Search reservation ID, customer, or store",
+        "searchPlaceholder": "Search reference, customer, phone, or email",
         "searchLabel": "Search reservations",
         "periodLabel": "Reservation period",
         "statusLabel": "Reservation status",
-        "period": { "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
+        "period": { "all": "All reservations", "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
         "status": { "all": "All reservation statuses" }
       },
       "table": {
@@ -359,19 +358,23 @@
         "dateParty": "Date / Party",
         "checkIn": "Checked in",
         "status": "Status",
-        "slot": "{time} · {count, plural, one {# guest} other {# guests}}"
+        "slot": "{date} · {time} · {count, plural, one {# guest} other {# guests}}"
       },
       "channels": { "app": "App booking", "web": "Web booking" },
-      "checkIn": { "qrComplete": "QR complete", "pending": "Pending", "none": "-" },
-      "statuses": { "checkedIn": "Checked in", "noShowReview": "No-show review", "confirmed": "Confirmed", "cancelled": "Cancelled" },
+      "checkIn": { "complete": "Complete", "pending": "Pending", "none": "-" },
+      "statuses": { "pending": "Pending", "confirmed": "Confirmed", "checkedIn": "Checked in", "cancelled": "Cancelled", "declined": "Declined", "noShow": "No-show" },
       "details": "Details",
       "resolve": "Resolve",
-      "empty": "No reservations match these filters."
+      "empty": "No reservations match these filters.",
+    "loadError": "Unable to load reservations. Refresh or sign in again.",
+    "pagination": { "rowsPerPage": "Rows per page" }
     },
     "reservationDetail": {
       "title": "Reservation details",
       "back": "Back to reservations",
-      "changeStatus": "Change status",
+      "manageReservation": "Manage reservation",
+      "loading": "Loading reservation...",
+      "loadError": "Unable to load this reservation.",
       "reservation": { "title": "Reservation information", "date": "Date", "time": "Time", "partySize": "Party size", "guests": "{count, plural, one {# guest} other {# guests}}", "channel": "Booking channel", "request": "Request" },
       "customer": { "title": "Customer & store", "name": "Customer", "phone": "Phone", "email": "Email", "language": "Language", "store": "Store" },
       "languages": { "en": "English", "vi": "Vietnamese", "ko": "Korean" },

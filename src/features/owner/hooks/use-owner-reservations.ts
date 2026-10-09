@@ -10,9 +10,11 @@ import {
   confirmOwnerReservation,
   declineOwnerReservation,
   getOwnerReservation,
+  getOwnerReservationPage,
   getOwnerReservations,
   manuallyCheckInOwnerReservation,
   seatOwnerReservation,
+  type OwnerReservationPageParams,
 } from "@/features/owner/data/owner-reservations";
 import { ApiError } from "@/lib/api/client";
 
@@ -49,6 +51,17 @@ export function useOwnerReservations() {
   });
   useLoginRedirect(query.error);
   return { ...query, reservations: query.data ?? [] };
+}
+
+export function useOwnerReservationPage(params: OwnerReservationPageParams) {
+  const query = useQuery({
+    queryKey: ["owner-reservations", "paged", params],
+    queryFn: ({ signal }) => getOwnerReservationPage(params, signal),
+    placeholderData: (previousData) => previousData,
+    retry: false,
+  });
+  useLoginRedirect(query.error);
+  return query;
 }
 
 export function useOwnerReservation(id: string) {

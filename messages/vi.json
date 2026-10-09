@@ -286,19 +286,18 @@
     "reservations": {
       "title": "Đặt bàn",
       "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show tại một nơi.",
-      "export": "Dữ liệu đặt bàn",
       "metrics": {
-        "confirmed": { "label": "Đã xác nhận", "detail": "Hôm nay" },
-        "checkedIn": { "label": "Đã check-in", "detail": "73,2%" },
-        "cancelled": { "label": "Đã hủy", "detail": "Tỷ lệ hủy 6,8%" },
-        "noShow": { "label": "Kiểm tra no-show", "detail": "4 khiếu nại" }
+        "confirmed": { "label": "Đã xác nhận", "detail": "Tất cả dữ liệu" },
+        "checkedIn": { "label": "Đã check-in", "detail": "Tất cả dữ liệu" },
+        "cancelled": { "label": "Đã hủy", "detail": "Tất cả dữ liệu" },
+        "noShow": { "label": "Không đến", "detail": "Tất cả dữ liệu" }
       },
       "filters": {
-        "searchPlaceholder": "Tìm mã đặt bàn, khách hàng hoặc cửa hàng",
+        "searchPlaceholder": "Tìm mã, khách hàng, điện thoại hoặc email",
         "searchLabel": "Tìm kiếm đặt bàn",
         "periodLabel": "Khoảng thời gian đặt bàn",
         "statusLabel": "Trạng thái đặt bàn",
-        "period": { "today": "Hôm nay", "last7Days": "7 ngày gần nhất", "thisMonth": "Tháng này" },
+        "period": { "all": "Tất cả đặt bàn", "today": "Hôm nay", "last7Days": "7 ngày gần nhất", "thisMonth": "Tháng này" },
         "status": { "all": "Tất cả trạng thái" }
       },
       "table": {
@@ -308,19 +307,23 @@
         "dateParty": "Thời gian / Số khách",
         "checkIn": "Check-in",
         "status": "Trạng thái",
-        "slot": "{time} · {count} khách"
+        "slot": "{date} · {time} · {count} khách"
       },
       "channels": { "app": "Đặt qua ứng dụng", "web": "Đặt qua web" },
-      "checkIn": { "qrComplete": "Đã quét QR", "pending": "Đang chờ", "none": "-" },
-      "statuses": { "checkedIn": "Đã check-in", "noShowReview": "Kiểm tra no-show", "confirmed": "Đã xác nhận", "cancelled": "Đã hủy" },
+      "checkIn": { "complete": "Hoàn tất", "pending": "Đang chờ", "none": "-" },
+      "statuses": { "pending": "Đang chờ", "confirmed": "Đã xác nhận", "checkedIn": "Đã check-in", "cancelled": "Đã hủy", "declined": "Đã từ chối", "noShow": "Không đến" },
       "details": "Chi tiết",
       "resolve": "Xử lý",
-      "empty": "Không có đặt bàn phù hợp với bộ lọc."
+      "empty": "Không có đặt bàn phù hợp với bộ lọc.",
+    "loadError": "Không thể tải danh sách đặt bàn. Hãy tải lại hoặc đăng nhập lại.",
+    "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "reservationDetail": {
       "title": "Chi tiết đặt bàn",
       "back": "Quay lại danh sách",
-      "changeStatus": "Đổi trạng thái",
+      "manageReservation": "Quản lý đặt bàn",
+      "loading": "Đang tải đặt bàn...",
+      "loadError": "Không thể tải đặt bàn này.",
       "reservation": { "title": "Thông tin đặt bàn", "date": "Ngày", "time": "Giờ", "partySize": "Số khách", "guests": "{count} khách", "channel": "Kênh đặt bàn", "request": "Yêu cầu" },
       "customer": { "title": "Khách hàng & cửa hàng", "name": "Khách hàng", "phone": "Điện thoại", "email": "Email", "language": "Ngôn ngữ", "store": "Cửa hàng" },
       "languages": { "en": "Tiếng Anh", "vi": "Tiếng Việt", "ko": "Tiếng Hàn" },

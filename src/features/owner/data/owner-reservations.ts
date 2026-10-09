@@ -30,6 +30,41 @@ type OwnerReservationRecord = {
   updatedAt: string;
 };
 
+export type OwnerReservationPageStatus =
+  | "PENDING"
+  | "CONFIRMED"
+  | "CHECKED_IN"
+  | "CANCELLED"
+  | "DECLINED"
+  | "NO_SHOW";
+
+export type OwnerReservationPageParams = {
+  page: number;
+  size: number;
+  query?: string;
+  status?: OwnerReservationPageStatus;
+  dateFrom?: string;
+  dateTo?: string;
+};
+
+type OwnerReservationPageRecord = {
+  items: OwnerReservationRecord[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  summary: {
+    confirmed: number;
+    checkedIn: number;
+    cancelled: number;
+    noShow: number;
+  };
+};
+
+export type OwnerReservationPage = Omit<OwnerReservationPageRecord, "items"> & {
+  reservations: OwnerReservation[];
+};
+
 const reservationStatuses = {
   PENDING: ReservationStatus.Pending,
   ALTERNATIVE_PROPOSED: ReservationStatus.AlternativeProposed,
@@ -75,6 +110,7 @@ export function toOwnerReservation(record: OwnerReservationRecord): OwnerReserva
     preOrderName: record.preOrderNote ?? undefined,
     note: record.specialRequest ?? undefined,
     phone: record.customerPhone,
+    email: record.customerEmail ?? undefined,
     reference: record.reference,
     visits: 0,
     points: 0,
@@ -87,6 +123,28 @@ export async function getOwnerReservations(signal?: AbortSignal) {
     { cache: "no-store", signal },
   );
   return records.map(toOwnerReservation);
+}
+
+export async function getOwnerReservationPage(
+  params: OwnerReservationPageParams,
+  signal?: AbortSignal,
+): Promise<OwnerReservationPage> {
+  const searchParams = new URLSearchParams({
+    page: String(params.page),
+    size: String(params.size),
+  });
+  for (const key of ["query", "status", "dateFrom", "dateTo"] as const) {
+    const value = params[key];
+    if (value) searchParams.set(key, value);
+  }
+  const { items, ...page } = await apiFetch<OwnerReservationPageRecord>(
+    `${apiEndpoints.ownerReservationsPaged}?${searchParams}`,
+    { cache: "no-store", signal },
+  );
+  return {
+    ...page,
+    reservations: items.map(toOwnerReservation),
+  };
 }
 
 export async function getOwnerReservation(id: string, signal?: AbortSignal) {

@@ -61,6 +61,7 @@ export type OwnerReservation = {
   preOrderName?: string;
   note?: string;
   phone?: string;
+  email?: string;
   reference: string;
   checkInToken?: string;
   visits: number;
