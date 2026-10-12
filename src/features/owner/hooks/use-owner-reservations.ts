@@ -13,6 +13,7 @@ import {
   getOwnerReservation,
   getOwnerReservationPage,
   getOwnerReservations,
+  markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
   seatOwnerReservation,
   type OwnerReservationPageParams,
@@ -100,6 +101,7 @@ export function useOwnerReservationActions(id: string) {
         | { kind: "confirm" }
         | { kind: "decline"; reason: string }
         | { kind: "cancel"; reason: string }
+        | { kind: "no-show" }
         | { kind: "seat" }
         | { kind: "complete" },
     ) => {
@@ -110,6 +112,7 @@ export function useOwnerReservationActions(id: string) {
       if (action.kind === "cancel") {
         return cancelOwnerReservation(id, action.reason);
       }
+      if (action.kind === "no-show") return markNoShowOwnerReservation(id);
       return action.kind === "seat"
         ? seatOwnerReservation(id)
         : completeOwnerReservation(id);
@@ -126,6 +129,7 @@ export function useOwnerReservationActions(id: string) {
     confirm: () => mutation.mutate({ kind: "confirm" }),
     decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
     cancel: (reason: string) => mutation.mutateAsync({ kind: "cancel", reason }),
+    markNoShow: () => mutation.mutateAsync({ kind: "no-show" }),
     seat: () => mutation.mutate({ kind: "seat" }),
     complete: () => mutation.mutate({ kind: "complete" }),
   };

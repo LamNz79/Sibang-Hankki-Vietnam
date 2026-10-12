@@ -26,6 +26,7 @@ import {
   IconSofa,
   IconToolsKitchen3,
   IconUserCheck,
+  IconUserX,
   IconUsers,
   IconX,
 } from "@tabler/icons-react";
@@ -125,6 +126,7 @@ export function OwnerReservationDetailScreen() {
   const { reservation, isPending } = useOwnerReservation(params.id);
   const actions = useOwnerReservationActions(params.id);
   const [cancelOpened, setCancelOpened] = useState(false);
+  const [noShowOpened, setNoShowOpened] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const formatDate = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00`), {
@@ -153,11 +155,18 @@ export function OwnerReservationDetailScreen() {
     );
   }
 
-  const hasArrived = reservation.visitStatus !== VisitStatus.Expected;
+  const isExpected = reservation.visitStatus === VisitStatus.Expected;
+  const isNoShow = reservation.visitStatus === VisitStatus.NoShow;
+  const hasArrived = [
+    VisitStatus.Arrived,
+    VisitStatus.Seated,
+    VisitStatus.Completed,
+  ].includes(reservation.visitStatus);
   const isLargeParty = reservation.partySize > LARGE_PARTY_THRESHOLD;
   const displayStatus = reservation.reservationStatus;
   const canCancel =
-    displayStatus === ReservationStatus.Confirmed && !hasArrived;
+    displayStatus === ReservationStatus.Confirmed && isExpected;
+  const canMarkNoShow = canCancel;
   const persistedResponse = getPersistedResponse(reservation, formatDate);
   const response =
     persistedResponse.kind === "alternative-sent"
@@ -183,7 +192,17 @@ export function OwnerReservationDetailScreen() {
     }
   };
 
-  const footerAction = displayStatus === ReservationStatus.Confirmed ? (
+  const markNoShow = async () => {
+    try {
+      await actions.markNoShow();
+      setNoShowOpened(false);
+    } catch {
+      // Keep the modal open so the owner can review the error and retry.
+    }
+  };
+
+  const footerAction =
+    displayStatus === ReservationStatus.Confirmed && !isNoShow ? (
     <Button
       component={Link}
       href={
@@ -249,6 +268,19 @@ export function OwnerReservationDetailScreen() {
             >
               {t("menu.contact")}
             </Menu.Item>
+            {canMarkNoShow ? (
+              <Menu.Item
+                color="orange"
+                leftSection={<IconUserX size={16} />}
+                disabled={actions.isPending}
+                onClick={() => {
+                  actions.reset();
+                  setNoShowOpened(true);
+                }}
+              >
+                {t("menu.noShow")}
+              </Menu.Item>
+            ) : null}
             <Menu.Item
               color="red"
               leftSection={<IconX size={16} />}
@@ -274,7 +306,7 @@ export function OwnerReservationDetailScreen() {
 
         <OwnerReservationSummaryCard
           reservation={reservation}
-          status={hasArrived ? reservation.visitStatus : displayStatus}
+          status={isExpected ? displayStatus : reservation.visitStatus}
         />
 
         <OwnerCustomerResponseCard reservation={reservation} />
@@ -403,6 +435,38 @@ export function OwnerReservationDetailScreen() {
           </Card>
         ) : null}
       </Stack>
+
+      <Modal
+        opened={noShowOpened}
+        onClose={() => setNoShowOpened(false)}
+        title={t("noShow.title", { guest: reservation.guestName })}
+        centered
+      >
+        <Stack gap="md">
+          <Text size="sm" c={uiColors.textSecondary}>
+            {t("noShow.description")}
+          </Text>
+          {actions.isError ? (
+            <Alert color="red" title={t("noShow.error")} role="alert" />
+          ) : null}
+          <Group justify="flex-end">
+            <Button
+              variant="default"
+              disabled={actions.isPending}
+              onClick={() => setNoShowOpened(false)}
+            >
+              {t("noShow.keep")}
+            </Button>
+            <Button
+              color="orange"
+              loading={actions.isPending}
+              onClick={markNoShow}
+            >
+              {t("noShow.confirm")}
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
 
       <Modal
         opened={cancelOpened}

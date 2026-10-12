@@ -42,6 +42,8 @@ export const apiEndpoints = {
     `/api/owner/reservations/${seg(id)}/decline`,
   cancelOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/cancel`,
+  markNoShowOwnerReservation: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/no-show`,
   checkInOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/check-in`,
   seatOwnerReservation: (id: string) =>
