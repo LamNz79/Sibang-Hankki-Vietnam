@@ -257,31 +257,21 @@
       }
     },
     "dashboard": {
-      "title": "운영 대시보드",
-      "description": "플랫폼 주요 지표와 대기 중인 운영 업무를 확인합니다.",
-      "report": "보고서",
+      "title": "레스토랑 대시보드",
+      "description": "오늘의 예약과 대기 중인 고객 요청을 확인합니다.",
       "refresh": "새로고침",
       "metrics": {
-        "bookings": { "label": "오늘 예약", "detail": "어제 대비 +8.4%" },
-        "checkedIn": { "label": "체크인", "detail": "체크인율 73.2%" },
-        "gmv": { "label": "거래액", "detail": "지난주 대비 +12.1%" },
-        "pending": { "label": "처리 대기", "detail": "가게 승인 7건 · 신고 18건" }
+        "bookings": { "label": "오늘 예약", "detail": "전체 상태" },
+        "checkedIn": { "label": "체크인", "detail": "도착, 착석 또는 완료" },
+        "pending": { "label": "오늘 처리 대기", "detail": "레스토랑 응답 대기 중" },
+        "noShow": { "label": "오늘 노쇼", "detail": "노쇼로 표시됨" }
       },
       "trend": {
-        "title": "주간 예약 추이",
-        "period": "최근 7일",
-        "days": { "mon": "월", "tue": "화", "wed": "수", "thu": "목", "fri": "금", "sat": "토", "sun": "일" }
+        "title": "서비스 날짜별 예약",
+        "period": "최근 7일"
       },
-      "alerts": {
-        "title": "최근 운영 알림",
-        "viewAll": "전체 보기",
-        "items": {
-          "storeApproval": { "title": "신규 가게 승인 요청", "detail": "Demo Bistro A 외 2곳", "time": "10분 전" },
-          "noShowAppeal": { "title": "노쇼 이의 신청", "detail": "예약 RES-DEMO-002", "time": "34분 전" },
-          "bannerEnding": { "title": "메인 배너 종료 예정", "detail": "Weekend Dining", "time": "2시간 전" },
-          "settlementReview": { "title": "정산 검토 필요", "detail": "8월 4주차 정산", "time": "오늘" }
-        }
-      }
+      "pending": { "title": "대기 중인 요청", "total": "총 {count}건", "review": "검토", "empty": "대기 중인 요청이 없습니다" },
+      "loadError": "레스토랑 운영 데이터를 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요."
     },
     "reservations": {
       "title": "예약 운영",

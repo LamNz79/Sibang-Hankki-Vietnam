@@ -257,31 +257,21 @@
       }
     },
     "dashboard": {
-      "title": "Tổng quan vận hành",
-      "description": "Theo dõi các chỉ số chính và công việc vận hành đang chờ xử lý.",
-      "report": "Báo cáo",
+      "title": "Tổng quan nhà hàng",
+      "description": "Theo dõi đặt bàn hôm nay và các yêu cầu khách đang chờ xử lý.",
       "refresh": "Làm mới",
       "metrics": {
-        "bookings": { "label": "Đặt bàn hôm nay", "detail": "+8,4% so với hôm qua" },
-        "checkedIn": { "label": "Đã check-in", "detail": "Tỷ lệ check-in 73,2%" },
-        "gmv": { "label": "GMV", "detail": "+12,1% so với tuần trước" },
-        "pending": { "label": "Chờ xử lý", "detail": "7 cửa hàng · 18 báo cáo" }
+        "bookings": { "label": "Đặt bàn hôm nay", "detail": "Tất cả trạng thái" },
+        "checkedIn": { "label": "Đã check-in", "detail": "Đã đến, đã xếp bàn hoặc hoàn tất" },
+        "pending": { "label": "Chờ xử lý hôm nay", "detail": "Đang chờ nhà hàng phản hồi" },
+        "noShow": { "label": "No-show hôm nay", "detail": "Đã đánh dấu không đến" }
       },
       "trend": {
-        "title": "Xu hướng đặt bàn trong tuần",
-        "period": "7 ngày gần nhất",
-        "days": { "mon": "T2", "tue": "T3", "wed": "T4", "thu": "T5", "fri": "T6", "sat": "T7", "sun": "CN" }
+        "title": "Đặt bàn theo ngày phục vụ",
+        "period": "7 ngày gần nhất"
       },
-      "alerts": {
-        "title": "Thông báo vận hành gần đây",
-        "viewAll": "Xem tất cả",
-        "items": {
-          "storeApproval": { "title": "Yêu cầu duyệt cửa hàng mới", "detail": "Demo Bistro A và 2 cửa hàng khác", "time": "10 phút trước" },
-          "noShowAppeal": { "title": "Khiếu nại no-show", "detail": "Đặt bàn RES-DEMO-002", "time": "34 phút trước" },
-          "bannerEnding": { "title": "Banner chính sắp kết thúc", "detail": "Weekend Dining", "time": "2 giờ trước" },
-          "settlementReview": { "title": "Cần kiểm tra quyết toán", "detail": "Quyết toán tuần 4 tháng 8", "time": "Hôm nay" }
-        }
-      }
+      "pending": { "title": "Yêu cầu đang chờ", "total": "Tổng {count}", "review": "Xử lý", "empty": "Không có yêu cầu đang chờ" },
+      "loadError": "Không thể tải dữ liệu vận hành. Hãy tải lại hoặc đăng nhập lại."
     },
     "reservations": {
       "title": "Đặt bàn",
