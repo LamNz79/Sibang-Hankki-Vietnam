@@ -5,6 +5,7 @@ import {
   checkInOwnerReservation,
   completeOwnerReservation,
   confirmOwnerReservation,
+  createOwnerWalkIn,
   declineOwnerReservation,
   getOwnerReservationPage,
   manuallyCheckInOwnerReservation,
@@ -115,6 +116,52 @@ describe("owner reservation API mapping", () => {
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+      }),
+    ]);
+  });
+
+  it("creates a walk-in with CSRF and an idempotency key", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    vi.spyOn(crypto, "randomUUID").mockReturnValue(
+      "00000000-0000-4000-8000-000000000040",
+    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...pendingRecord,
+        status: "CONFIRMED",
+        visitStatus: "ARRIVED",
+      }, { status: 201 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(createOwnerWalkIn({
+      customerName: "Walk-in guest",
+      customerPhone: "0901234567",
+      partySize: 4,
+      specialRequest: "Window",
+    })).resolves.toMatchObject({
+      reservationStatus: ReservationStatus.Confirmed,
+      visitStatus: VisitStatus.Arrived,
+    });
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/reservations/walk-ins",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "X-CSRF-TOKEN": "csrf-token",
+          "Idempotency-Key": "00000000-0000-4000-8000-000000000040",
+        }),
+        body: JSON.stringify({
+          customerName: "Walk-in guest",
+          customerPhone: "0901234567",
+          partySize: 4,
+          specialRequest: "Window",
+        }),
       }),
     ]);
   });

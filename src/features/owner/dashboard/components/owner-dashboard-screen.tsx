@@ -26,7 +26,7 @@ export function OwnerDashboardScreen() {
         footerAction={
           <PrimaryActionButton
             leftSection={<IconPlus size={20} />}
-            disabled
+            onClick={() => setWalkInOpened(true)}
           >
             Add walk-in
           </PrimaryActionButton>

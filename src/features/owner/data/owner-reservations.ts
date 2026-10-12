@@ -47,6 +47,13 @@ export type OwnerReservationPageParams = {
   dateTo?: string;
 };
 
+export type CreateOwnerWalkIn = {
+  customerName: string;
+  customerPhone: string;
+  partySize: number;
+  specialRequest?: string;
+};
+
 type OwnerReservationPageRecord = {
   items: OwnerReservationRecord[];
   page: number;
@@ -151,6 +158,22 @@ export async function getOwnerReservation(id: string, signal?: AbortSignal) {
   const record = await apiFetch<OwnerReservationRecord>(
     apiEndpoints.ownerReservation(id),
     { cache: "no-store", signal },
+  );
+  return toOwnerReservation(record);
+}
+
+export async function createOwnerWalkIn(input: CreateOwnerWalkIn) {
+  const csrf = await getCsrfToken();
+  const record = await apiFetch<OwnerReservationRecord>(
+    apiEndpoints.ownerWalkIns,
+    {
+      method: "POST",
+      headers: {
+        [csrf.headerName]: csrf.token,
+        "Idempotency-Key": crypto.randomUUID(),
+      },
+      body: JSON.stringify(input),
+    },
   );
   return toOwnerReservation(record);
 }
