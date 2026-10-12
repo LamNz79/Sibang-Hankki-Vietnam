@@ -8,6 +8,7 @@ import {
   checkInOwnerReservation,
   completeOwnerReservation,
   confirmOwnerReservation,
+  createOwnerWalkIn,
   declineOwnerReservation,
   getOwnerReservation,
   getOwnerReservationPage,
@@ -51,6 +52,22 @@ export function useOwnerReservations() {
   });
   useLoginRedirect(query.error);
   return { ...query, reservations: query.data ?? [] };
+}
+
+export function useOwnerWalkIn() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: createOwnerWalkIn,
+    onSuccess: async (reservation) => {
+      queryClient.setQueryData(
+        ["owner-reservations", reservation.id],
+        reservation,
+      );
+      await queryClient.invalidateQueries({ queryKey: ["owner-reservations"] });
+    },
+  });
+  useLoginRedirect(mutation.error);
+  return mutation;
 }
 
 export function useOwnerReservationPage(params: OwnerReservationPageParams) {

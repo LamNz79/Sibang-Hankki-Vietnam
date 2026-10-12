@@ -23,6 +23,7 @@ export const apiEndpoints = {
   authMe: "/api/auth/me",
   customerProfile: "/api/customer/profile",
   ownerReservations: "/api/owner/reservations",
+  ownerWalkIns: "/api/owner/reservations/walk-ins",
   ownerReservationsPaged: "/api/owner/reservations/paged",
   ownerSettings: "/api/owner/settings",
   ownerBusinessHours: "/api/owner/settings/business-hours",
