@@ -379,7 +379,12 @@ export function OwnerReservationDetailScreen() {
           <OwnerReservationResponsePanel
             reservation={reservation}
             response={response}
-            readOnly
+            readOnly={displayStatus !== ReservationStatus.Pending}
+            onPropose={
+              displayStatus === ReservationStatus.Pending
+                ? actions.propose
+                : undefined
+            }
             onDecline={
               displayStatus === ReservationStatus.Pending
                 ? actions.decline
@@ -387,6 +392,8 @@ export function OwnerReservationDetailScreen() {
             }
             declinePending={actions.isPending}
             declineError={actions.isError}
+            proposePending={actions.isPending}
+            proposeError={actions.isError}
           />
         ) : null}
 

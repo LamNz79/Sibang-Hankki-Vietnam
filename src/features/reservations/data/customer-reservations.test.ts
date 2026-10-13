@@ -3,9 +3,11 @@ import { ReservationStatus, VisitStatus, type CustomerReservation } from "@/feat
 import {
   cancelCustomerReservation,
   getAccountReservations,
+  getCustomerAccountReservation,
   getCustomerReservation,
   issueCustomerCheckInToken,
   mergeCustomerReservation,
+  respondToAlternativeProposal,
   selectVisibleReservations,
 } from "./customer-reservations";
 
@@ -46,6 +48,19 @@ const accountRecord = {
   ...confirmedRecord,
   restaurantSlug: "royal-pavilion",
   restaurantName: "The Royal Pavilion",
+};
+
+const proposalRecord = {
+  ...accountRecord,
+  status: "ALTERNATIVE_PROPOSED" as const,
+  alternativeProposal: {
+    id: "proposal-id",
+    startsAt: "2026-10-08T11:00:00Z",
+    message: "A later table is available",
+    respondBy: null,
+    status: "PENDING" as const,
+    createdAt: "2026-10-06T04:00:00Z",
+  },
 };
 
 describe("customer reservation API", () => {
@@ -118,6 +133,102 @@ describe("customer reservation API", () => {
       "/api/customer/account/reservations",
       expect.objectContaining({ cache: "no-store" }),
     );
+  });
+
+  it("loads an account reservation detail with its proposal", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn().mockResolvedValue(Response.json(proposalRecord));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getCustomerAccountReservation({
+      ...stored,
+      accountLinked: true,
+      managementToken: undefined,
+    })).resolves.toMatchObject({
+      status: ReservationStatus.AlternativeProposed,
+      alternativeProposal: {
+        id: "proposal-id",
+        date: "2026-10-08",
+        time: "18:00",
+      },
+    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/customer/account/reservations/reservation-id",
+      expect.objectContaining({ cache: "no-store" }),
+    );
+  });
+
+  it("accepts a guest proposal with its management token", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({
+      ...proposalRecord,
+      status: "CONFIRMED",
+      alternativeProposal: {
+        ...proposalRecord.alternativeProposal,
+        status: "ACCEPTED",
+      },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(respondToAlternativeProposal({
+      ...stored,
+      alternativeProposal: {
+        id: "proposal-id",
+        date: "2026-10-08",
+        time: "18:00",
+        proposedAt: "2026-10-06T04:00:00Z",
+      },
+    }, "accept")).resolves.toMatchObject({
+      status: ReservationStatus.Confirmed,
+    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/customer/reservations/reservation-id/proposals/proposal-id/accept",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "X-Reservation-Management-Token": "management-token",
+        }),
+      }),
+    );
+  });
+
+  it("declines an account proposal with CSRF", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...proposalRecord,
+        status: "DECLINED",
+        alternativeProposal: {
+          ...proposalRecord.alternativeProposal,
+          status: "DECLINED",
+        },
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await respondToAlternativeProposal({
+      ...stored,
+      accountLinked: true,
+      managementToken: undefined,
+      alternativeProposal: {
+        id: "proposal-id",
+        date: "2026-10-08",
+        time: "18:00",
+        proposedAt: "2026-10-06T04:00:00Z",
+      },
+    }, "decline");
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/customer/account/reservations/reservation-id/proposals/proposal-id/decline",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+      }),
+    ]);
   });
 
   it("shows only account reservations when signed in and token-owned guests when signed out", () => {
