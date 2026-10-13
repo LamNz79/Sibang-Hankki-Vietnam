@@ -7,9 +7,9 @@ afterEach(() => {
 });
 
 describe("owner settings API", () => {
-  it("updates settings with the session CSRF token", async () => {
+  it.each([0, null])("sends no-show grace %s with the session CSRF token", async (noShowGraceMinutes) => {
     vi.stubEnv("API_BASE_URL", "");
-    const update = settingsUpdate();
+    const update = settingsUpdate(noShowGraceMinutes);
     const fetchMock = vi.fn()
       .mockResolvedValueOnce(Response.json({
         headerName: "X-CSRF-TOKEN",
@@ -28,6 +28,7 @@ describe("owner settings API", () => {
     await expect(updateOwnerSettings(update)).resolves.toMatchObject({
       restaurantId: "restaurant-id",
       guestCapacity: 48,
+      noShowGraceMinutes,
     });
     expect(fetchMock.mock.calls[1]).toEqual([
       "/api/owner/settings",
@@ -40,7 +41,7 @@ describe("owner settings API", () => {
   });
 });
 
-function settingsUpdate(): OwnerSettingsUpdate {
+function settingsUpdate(noShowGraceMinutes: number | null): OwnerSettingsUpdate {
   return {
     name: "The Royal Pavilion",
     description: null,
@@ -61,5 +62,6 @@ function settingsUpdate(): OwnerSettingsUpdate {
     maximumOnlinePartySize: 6,
     largePartyThreshold: 10,
     customerCancellationCutoffMinutes: 120,
+    noShowGraceMinutes,
   };
 }

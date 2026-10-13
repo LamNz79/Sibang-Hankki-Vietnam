@@ -70,6 +70,7 @@ const editableSettings = (settings: OwnerSettings): OwnerSettingsUpdate => ({
   maximumOnlinePartySize: settings.maximumOnlinePartySize,
   largePartyThreshold: settings.largePartyThreshold,
   customerCancellationCutoffMinutes: settings.customerCancellationCutoffMinutes,
+  noShowGraceMinutes: settings.noShowGraceMinutes,
 });
 
 function SectionCard({
@@ -263,6 +264,17 @@ export function OwnerSettingsScreen() {
                 value={form.customerCancellationCutoffMinutes ?? ""}
                 onChange={(value) => set(
                   "customerCancellationCutoffMinutes",
+                  value === "" ? null : numberValue(value),
+                )}
+              />
+              <NumberInput
+                label={pageT("policy.noShowGrace")}
+                description={pageT("policy.noShowGraceDescription")}
+                min={0}
+                allowDecimal={false}
+                value={form.noShowGraceMinutes ?? ""}
+                onChange={(value) => set(
+                  "noShowGraceMinutes",
                   value === "" ? null : numberValue(value),
                 )}
               />
