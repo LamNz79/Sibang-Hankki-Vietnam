@@ -497,6 +497,23 @@
       "modal": { "title": "Invite admin", "email": "Email address", "role": "Admin role", "requireMfa": "Require MFA", "cancel": "Cancel", "invite": "Send invitation" }
     }
   },
+  "SystemAdmin": {
+    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "users": "Users", "restaurants": "Restaurants" } },
+    "users": {
+      "title": "Users", "description": "Search and review every active system account.", "loadError": "Could not load users.", "empty": "No users match these filters.",
+      "filters": { "search": "Search userid, name, or email", "role": "Filter by role", "status": "Filter by status", "allRoles": "All roles", "allStatuses": "All statuses" },
+      "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created" },
+      "statuses": { "ACTIVE": "Active", "SUSPENDED": "Suspended", "CLOSED": "Closed" },
+      "pagination": { "rowsPerPage": "Rows per page" }
+    },
+    "restaurants": {
+      "title": "Restaurants", "description": "Review restaurants across every approval status.", "loadError": "Could not load restaurants.", "empty": "No restaurants match these filters.",
+      "filters": { "search": "Search name or slug", "city": "City slug", "status": "Filter by status", "allStatuses": "All statuses" },
+      "table": { "restaurant": "Restaurant", "city": "City", "location": "Area / district", "status": "Approval status", "created": "Created" },
+      "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
+      "pagination": { "rowsPerPage": "Rows per page" }
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",

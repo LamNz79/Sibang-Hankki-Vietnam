@@ -46,7 +46,11 @@ export function AuthScreen({ mode }: { mode: AuthMode }) {
           String(form.get("password") ?? ""),
         );
         router.push(
-          user.role === "OWNER" || user.role === "STAFF" ? "/owner" : "/",
+          user.role === "ADMIN"
+            ? "/system-admin"
+            : user.role === "OWNER" || user.role === "STAFF"
+              ? "/owner"
+              : "/",
         );
       } catch {
         notifications.show({

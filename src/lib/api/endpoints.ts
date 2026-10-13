@@ -67,4 +67,6 @@ export const apiEndpoints = {
   completeOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/complete`,
   ownerCheckIns: "/api/owner/check-ins",
+  systemAdminUsers: "/api/admin/users",
+  systemAdminRestaurants: "/api/admin/restaurants",
 } as const;
