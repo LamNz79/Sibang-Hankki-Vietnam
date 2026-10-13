@@ -8,6 +8,7 @@ import {
   createOwnerWalkIn,
   declineOwnerReservation,
   getOwnerReservationPage,
+  markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
   seatOwnerReservation,
   toOwnerReservation,
@@ -281,6 +282,7 @@ describe("owner reservation API mapping", () => {
   });
 
   it.each([
+    ["no-show", markNoShowOwnerReservation, "NO_SHOW", VisitStatus.NoShow],
     ["seat", seatOwnerReservation, "SEATED", VisitStatus.Seated],
     ["complete", completeOwnerReservation, "COMPLETED", VisitStatus.Completed],
   ] as const)("posts the %s visit transition with CSRF", async (

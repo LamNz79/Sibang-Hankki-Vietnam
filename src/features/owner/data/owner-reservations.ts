@@ -203,6 +203,10 @@ export function cancelOwnerReservation(id: string, reason: string) {
   return postOwnerReservation(apiEndpoints.cancelOwnerReservation(id), { reason });
 }
 
+export function markNoShowOwnerReservation(id: string) {
+  return postOwnerReservation(apiEndpoints.markNoShowOwnerReservation(id));
+}
+
 export function checkInOwnerReservation(checkInToken: string) {
   return postOwnerReservation(apiEndpoints.ownerCheckIns, { checkInToken });
 }
