@@ -21,7 +21,9 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { StatusBadge } from "@/components/ui";
+import { getOwnerSettings } from "@/features/owner/settings/data/owner-settings";
 import {
   reopenOwnerReservation,
 } from "@/features/owner/data/owner-reservation-storage";
@@ -29,7 +31,7 @@ import type {
   OwnerRequestResponse,
   OwnerReservation,
 } from "@/features/owner/types";
-import { proposeAlternativeReservation } from "@/features/reservations/data/reservation-storage";
+import { getAvailability } from "@/features/reservations/data/availability";
 import { uiColors } from "@/theme";
 
 type OwnerReservationResponsePanelProps = {
@@ -37,8 +39,15 @@ type OwnerReservationResponsePanelProps = {
   response: OwnerRequestResponse;
   readOnly?: boolean;
   onDecline?: (reason: string) => Promise<OwnerReservation>;
+  onPropose?: (proposal: {
+    proposedDate: string;
+    proposedTime: string;
+    message?: string;
+  }) => Promise<OwnerReservation>;
   declinePending?: boolean;
   declineError?: boolean;
+  proposePending?: boolean;
+  proposeError?: boolean;
 };
 
 const unavailableReasons = [
@@ -97,8 +106,11 @@ export function OwnerReservationResponsePanel({
   response,
   readOnly = false,
   onDecline,
+  onPropose,
   declinePending = false,
   declineError = false,
+  proposePending = false,
+  proposeError = false,
 }: OwnerReservationResponsePanelProps) {
   const format = useFormatter();
   const t = useTranslations("OwnerReservationDetails.response");
@@ -107,6 +119,11 @@ export function OwnerReservationResponsePanel({
   const [selectedAlternative, setSelectedAlternative] = useState("");
   const [selectedReason, setSelectedReason] = useState("");
   const [message, setMessage] = useState("");
+  const settingsQuery = useQuery({
+    queryKey: ["owner-settings"],
+    queryFn: ({ signal }) => getOwnerSettings(signal),
+    retry: false,
+  });
   const formatDate = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00`), {
       weekday: "short",
@@ -118,13 +135,33 @@ export function OwnerReservationResponsePanel({
     return option ? t(`reasons.${option.key}`) : reason;
   };
 
-  const requestedDate = dayjs(reservation.date);
-  const alternativeSlots = [
-      { date: reservation.date, time: "18:00" },
-      { date: reservation.date, time: "19:30" },
-      { date: requestedDate.add(1, "day").format("YYYY-MM-DD"), time: "18:00" },
-      { date: requestedDate.add(1, "day").format("YYYY-MM-DD"), time: "18:30" },
-    ]
+  const alternativeDates = [
+    reservation.date,
+    dayjs(reservation.date).add(1, "day").format("YYYY-MM-DD"),
+  ];
+  const availabilityQueries = useQueries({
+    queries: alternativeDates.map((date) => ({
+      queryKey: [
+        "restaurant-availability",
+        settingsQuery.data?.slug,
+        date,
+        reservation.partySize,
+      ],
+      queryFn: ({ signal }: { signal: AbortSignal }) =>
+        getAvailability(
+          settingsQuery.data!.slug,
+          date,
+          reservation.partySize,
+          signal,
+        ),
+      enabled: alternativeOpened && Boolean(settingsQuery.data?.slug),
+      retry: false,
+    })),
+  });
+  const alternativeSlots = availabilityQueries
+    .flatMap((query) =>
+      query.data?.slots.map((time) => ({ date: query.data.date, time })) ?? [],
+    )
       .filter(
         (slot) =>
           slot.date !== reservation.date || slot.time !== reservation.time,
@@ -134,40 +171,33 @@ export function OwnerReservationResponsePanel({
         id: `${slot.date}|${slot.time}`,
         label: `${formatDate(slot.date)} · ${slot.time}`,
       }));
+  const slotsLoading =
+    settingsQuery.isPending ||
+    availabilityQueries.some((query) => query.isFetching);
 
-  const sendAlternative = () => {
+  const sendAlternative = async () => {
     const selectedSlot = alternativeSlots.find(
       (slot) => slot.id === selectedAlternative,
     );
-    if (!selectedSlot) return;
+    if (!selectedSlot || !onPropose) return;
 
-    proposeAlternativeReservation({
-      id: reservation.id,
-      restaurantSlug: "royal-pavilion",
-      restaurantName: "The Royal Pavilion",
-      district: "District 1",
-      cuisineLabel: "Chinese",
-      date: reservation.date,
-      time: reservation.time,
-      guests: reservation.partySize,
-      reference: reservation.reference,
-      preOrder: reservation.preOrderName,
-      specialRequest: reservation.note,
-      proposedDate: selectedSlot.date,
-      proposedTime: selectedSlot.time,
-      message: message.trim() || undefined,
-      respondBy: dayjs(`${selectedSlot.date}T${selectedSlot.time}`)
-        .subtract(30, "minute")
-        .toISOString(),
-    });
-    setAlternativeOpened(false);
-    notifications.show({
-      color: "warmCoral",
-      title: t("alternativeDrawer.sentTitle"),
-      message: t("alternativeDrawer.sentMessage", {
-        guest: reservation.guestName,
-      }),
-    });
+    try {
+      await onPropose({
+        proposedDate: selectedSlot.date,
+        proposedTime: selectedSlot.time,
+        message: message.trim() || undefined,
+      });
+      setAlternativeOpened(false);
+      notifications.show({
+        color: "warmCoral",
+        title: t("alternativeDrawer.sentTitle"),
+        message: t("alternativeDrawer.sentMessage", {
+          guest: reservation.guestName,
+        }),
+      });
+    } catch {
+      // Keep the drawer open so the owner can retry the same proposal.
+    }
   };
 
   const markUnavailable = async () => {
@@ -294,6 +324,23 @@ export function OwnerReservationResponsePanel({
           </Text>
 
           <Stack gap="sm">
+            {slotsLoading ? (
+              <Text size="sm" c={uiColors.textSecondary}>
+                {t("alternativeDrawer.loading")}
+              </Text>
+            ) : null}
+            {settingsQuery.isError ||
+            availabilityQueries.some((query) => query.isError) ? (
+              <Alert color="red" title={t("alternativeDrawer.loadError")} />
+            ) : null}
+            {!slotsLoading &&
+            !settingsQuery.isError &&
+            !availabilityQueries.some((query) => query.isError) &&
+            alternativeSlots.length === 0 ? (
+              <Text size="sm" c={uiColors.textSecondary}>
+                {t("alternativeDrawer.noSlots")}
+              </Text>
+            ) : null}
             {alternativeSlots.map((slot) => (
               <OptionButton
                 key={slot.id}
@@ -313,12 +360,17 @@ export function OwnerReservationResponsePanel({
             minRows={2}
           />
 
+          {proposeError ? (
+            <Alert color="red" title={t("alternativeDrawer.sendError")} />
+          ) : null}
+
           <Button
             fullWidth
             size="md"
             leftSection={<IconSend size={18} />}
-            disabled={!selectedAlternative}
-            onClick={sendAlternative}
+            disabled={!selectedAlternative || !onPropose}
+            loading={proposePending}
+            onClick={() => void sendAlternative()}
           >
             {t("alternativeDrawer.send")}
           </Button>

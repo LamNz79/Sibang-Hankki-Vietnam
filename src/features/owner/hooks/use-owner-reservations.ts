@@ -15,7 +15,9 @@ import {
   getOwnerReservations,
   markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
+  proposeAlternativeOwnerReservation,
   seatOwnerReservation,
+  type OwnerAlternativeProposalInput,
   type OwnerReservationPageParams,
 } from "@/features/owner/data/owner-reservations";
 import { ApiError } from "@/lib/api/client";
@@ -102,6 +104,7 @@ export function useOwnerReservationActions(id: string) {
         | { kind: "decline"; reason: string }
         | { kind: "cancel"; reason: string }
         | { kind: "no-show" }
+        | { kind: "propose"; proposal: OwnerAlternativeProposalInput }
         | { kind: "seat" }
         | { kind: "complete" },
     ) => {
@@ -113,6 +116,9 @@ export function useOwnerReservationActions(id: string) {
         return cancelOwnerReservation(id, action.reason);
       }
       if (action.kind === "no-show") return markNoShowOwnerReservation(id);
+      if (action.kind === "propose") {
+        return proposeAlternativeOwnerReservation(id, action.proposal);
+      }
       return action.kind === "seat"
         ? seatOwnerReservation(id)
         : completeOwnerReservation(id);
@@ -130,6 +136,8 @@ export function useOwnerReservationActions(id: string) {
     decline: (reason: string) => mutation.mutateAsync({ kind: "decline", reason }),
     cancel: (reason: string) => mutation.mutateAsync({ kind: "cancel", reason }),
     markNoShow: () => mutation.mutateAsync({ kind: "no-show" }),
+    propose: (proposal: OwnerAlternativeProposalInput) =>
+      mutation.mutateAsync({ kind: "propose", proposal }),
     seat: () => mutation.mutate({ kind: "seat" }),
     complete: () => mutation.mutate({ kind: "complete" }),
   };

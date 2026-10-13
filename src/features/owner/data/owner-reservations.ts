@@ -28,6 +28,20 @@ type OwnerReservationRecord = {
   preOrderNote?: string | null;
   createdAt: string;
   updatedAt: string;
+  alternativeProposal?: {
+    id: string;
+    startsAt: string;
+    message?: string | null;
+    respondBy?: string | null;
+    status: "PENDING" | "ACCEPTED" | "DECLINED";
+    createdAt: string;
+  } | null;
+};
+
+export type OwnerAlternativeProposalInput = {
+  proposedDate: string;
+  proposedTime: string;
+  message?: string;
 };
 
 export type OwnerReservationPageStatus =
@@ -101,6 +115,26 @@ function initials(name: string) {
 export function toOwnerReservation(record: OwnerReservationRecord): OwnerReservation {
   // ponytail: the owner API does not expose restaurant timezone yet; use the project default until it does.
   const startsAt = dayjs(record.startsAt).tz("Asia/Ho_Chi_Minh");
+  const proposalStartsAt = record.alternativeProposal
+    ? dayjs(record.alternativeProposal.startsAt).tz("Asia/Ho_Chi_Minh")
+    : null;
+  const customerResponse: OwnerReservation["customerResponse"] =
+    record.alternativeProposal?.status === "PENDING" && proposalStartsAt
+      ? {
+          kind: "awaiting-customer",
+          proposedDate: proposalStartsAt.format("YYYY-MM-DD"),
+          proposedTime: proposalStartsAt.format("HH:mm"),
+          message: record.alternativeProposal.message ?? undefined,
+        }
+      : record.alternativeProposal?.status === "ACCEPTED"
+        ? { kind: "accepted-alternative" }
+        : record.alternativeProposal?.status === "DECLINED" && proposalStartsAt
+          ? {
+              kind: "declined-alternative",
+              proposedDate: proposalStartsAt.format("YYYY-MM-DD"),
+              proposedTime: proposalStartsAt.format("HH:mm"),
+            }
+          : undefined;
   return {
     id: record.id,
     date: startsAt.format("YYYY-MM-DD"),
@@ -121,6 +155,7 @@ export function toOwnerReservation(record: OwnerReservationRecord): OwnerReserva
     reference: record.reference,
     visits: 0,
     points: 0,
+    customerResponse,
   };
 }
 
@@ -180,7 +215,7 @@ export async function createOwnerWalkIn(input: CreateOwnerWalkIn) {
 
 async function postOwnerReservation(
   path: string,
-  body?: Record<string, string>,
+  body?: unknown,
 ) {
   const csrf = await getCsrfToken();
   const record = await apiFetch<OwnerReservationRecord>(path, {
@@ -189,6 +224,16 @@ async function postOwnerReservation(
     body: body ? JSON.stringify(body) : undefined,
   });
   return toOwnerReservation(record);
+}
+
+export function proposeAlternativeOwnerReservation(
+  id: string,
+  proposal: OwnerAlternativeProposalInput,
+) {
+  return postOwnerReservation(
+    apiEndpoints.ownerReservationProposals(id),
+    proposal,
+  );
 }
 
 export function confirmOwnerReservation(id: string) {

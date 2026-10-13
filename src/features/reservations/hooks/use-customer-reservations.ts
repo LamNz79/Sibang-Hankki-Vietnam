@@ -5,8 +5,10 @@ import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/rea
 import {
   cancelCustomerReservation,
   getAccountReservations,
+  getCustomerAccountReservation,
   getCustomerReservation,
   issueCustomerCheckInToken,
+  respondToAlternativeProposal,
   selectVisibleReservations,
 } from "@/features/reservations/data/customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
@@ -63,7 +65,43 @@ export function useCustomerReservations() {
 
 /** Returns the customer reservation matching `id`, if one exists. */
 export function useCustomerReservation(id: string) {
-  return findReservationById(useCustomerReservations(), id);
+  const reservation = findReservationById(useCustomerReservations(), id);
+  const detail = useQuery({
+    queryKey: ["customer-account-reservations", id],
+    queryFn: ({ signal }) => getCustomerAccountReservation(reservation!, signal),
+    enabled: Boolean(reservation?.accountLinked),
+    retry: false,
+  });
+  return detail.data ?? reservation;
+}
+
+export function useRespondToAlternativeProposal(
+  reservation: CustomerReservation | undefined,
+) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (action: "accept" | "decline") => {
+      if (!reservation) throw new Error("Reservation is unavailable");
+      return respondToAlternativeProposal(reservation, action);
+    },
+    onSuccess: (updated) => {
+      queryClient.setQueryData(
+        ["customer-reservations", updated.id],
+        updated,
+      );
+      queryClient.setQueryData(
+        ["customer-account-reservations", updated.id],
+        updated,
+      );
+      queryClient.setQueryData<CustomerReservation[] | null>(
+        ["customer-account-reservations"],
+        (reservations) =>
+          reservations?.map((item) =>
+            item.id === updated.id ? updated : item,
+          ) ?? reservations,
+      );
+    },
+  });
 }
 
 export function useCancelCustomerReservation(

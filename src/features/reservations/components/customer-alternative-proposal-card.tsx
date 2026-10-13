@@ -4,6 +4,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import {
   Button,
+  Alert,
   Card,
   Group,
   Modal,
@@ -22,10 +23,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
-import {
-  acceptAlternativeProposal,
-  declineAlternativeProposal,
-} from "@/features/reservations/data/reservation-storage";
+import { useRespondToAlternativeProposal } from "@/features/reservations/hooks/use-customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
@@ -79,7 +77,7 @@ function TimeOption({
 
 /**
  * Presents an alternative slot and lets the customer accept, reschedule, or
- * decline it while storage commands persist the chosen response.
+ * decline it while API commands persist the chosen response.
  */
 export function CustomerAlternativeProposalCard({
   reservation,
@@ -90,31 +88,40 @@ export function CustomerAlternativeProposalCard({
   const t = useTranslations("CustomerReservationDetails.proposal");
   const [declineOpened, setDeclineOpened] = useState(false);
   const proposal = reservation.alternativeProposal;
+  const response = useRespondToAlternativeProposal(reservation);
 
   if (!proposal) return null;
 
-  const acceptProposal = () => {
-    acceptAlternativeProposal(reservation.id);
-    notifications.show({
-      color: "teal",
-      title: t("acceptedTitle"),
-      message: t("acceptedMessage", {
-        restaurant: reservation.restaurantName,
-        time: proposal.time,
-      }),
-    });
+  const acceptProposal = async () => {
+    try {
+      await response.mutateAsync("accept");
+      notifications.show({
+        color: "teal",
+        title: t("acceptedTitle"),
+        message: t("acceptedMessage", {
+          restaurant: reservation.restaurantName,
+          time: proposal.time,
+        }),
+      });
+    } catch {
+      // Keep the proposal visible so the customer can retry.
+    }
   };
 
-  const declineProposal = () => {
-    declineAlternativeProposal(reservation.id);
-    setDeclineOpened(false);
-    notifications.show({
-      color: "warmCoral",
-      title: t("declinedTitle"),
-      message: t("declinedMessage", {
-        restaurant: reservation.restaurantName,
-      }),
-    });
+  const declineProposal = async () => {
+    try {
+      await response.mutateAsync("decline");
+      setDeclineOpened(false);
+      notifications.show({
+        color: "warmCoral",
+        title: t("declinedTitle"),
+        message: t("declinedMessage", {
+          restaurant: reservation.restaurantName,
+        }),
+      });
+    } catch {
+      // Keep the confirmation open so the customer can retry.
+    }
   };
 
   const respondBy = proposal.respondBy ? dayjs(proposal.respondBy) : null;
@@ -227,12 +234,18 @@ export function CustomerAlternativeProposalCard({
             </Group>
           ) : null}
 
+          {response.isError ? (
+            <Alert color="red" title={t("responseError")} role="alert" />
+          ) : null}
+
           <Button
             fullWidth
             size="md"
             color="warmCoral"
             leftSection={<IconCheck size={18} />}
-            onClick={acceptProposal}
+            loading={response.isPending && response.variables === "accept"}
+            disabled={response.isPending}
+            onClick={() => void acceptProposal()}
           >
             {t("accept", { time: proposal.time })}
           </Button>
@@ -250,6 +263,7 @@ export function CustomerAlternativeProposalCard({
               color="red"
               leftSection={<IconX size={16} />}
               onClick={() => setDeclineOpened(true)}
+              disabled={response.isPending}
             >
               {t("declineRequest")}
             </Button>
@@ -276,7 +290,11 @@ export function CustomerAlternativeProposalCard({
             <Button variant="default" onClick={() => setDeclineOpened(false)}>
               {t("keep")}
             </Button>
-            <Button color="red" onClick={declineProposal}>
+            <Button
+              color="red"
+              loading={response.isPending && response.variables === "decline"}
+              onClick={() => void declineProposal()}
+            >
               {t("decline")}
             </Button>
           </Group>

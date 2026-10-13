@@ -9,11 +9,25 @@ export const apiEndpoints = {
     `/api/customer/reservations/${seg(id)}`,
   cancelCustomerReservation: (id: string) =>
     `/api/customer/reservations/${seg(id)}/cancel`,
+  respondToCustomerReservationProposal: (
+    id: string,
+    proposalId: string,
+    action: "accept" | "decline",
+  ) =>
+    `/api/customer/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
   customerReservationCheckInToken: (id: string) =>
     `/api/customer/reservations/${seg(id)}/check-in-token`,
   customerAccountReservations: "/api/customer/account/reservations",
   cancelCustomerAccountReservation: (id: string) =>
     `/api/customer/account/reservations/${seg(id)}/cancel`,
+  customerAccountReservation: (id: string) =>
+    `/api/customer/account/reservations/${seg(id)}`,
+  respondToCustomerAccountReservationProposal: (
+    id: string,
+    proposalId: string,
+    action: "accept" | "decline",
+  ) =>
+    `/api/customer/account/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
   customerAccountReservationCheckInToken: (id: string) =>
     `/api/customer/account/reservations/${seg(id)}/check-in-token`,
   authCsrf: "/api/auth/csrf",
@@ -36,6 +50,8 @@ export const apiEndpoints = {
   ownerMedia: "/api/owner/media",
   ownerMediaItem: (id: string) => `/api/owner/media/${seg(id)}`,
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
+  ownerReservationProposals: (id: string) =>
+    `/api/owner/reservations/${seg(id)}/proposals`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,
   declineOwnerReservation: (id: string) =>

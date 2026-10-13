@@ -10,6 +10,7 @@ import {
   getOwnerReservationPage,
   markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
+  proposeAlternativeOwnerReservation,
   seatOwnerReservation,
   toOwnerReservation,
 } from "./owner-reservations";
@@ -191,6 +192,54 @@ describe("owner reservation API mapping", () => {
         method: "POST",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ reason: "Fully booked" }),
+      }),
+    ]);
+  });
+
+  it("sends an alternative-time proposal with CSRF", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...pendingRecord,
+        status: "ALTERNATIVE_PROPOSED",
+        alternativeProposal: {
+          id: "proposal-id",
+          startsAt: "2026-10-05T12:30:00Z",
+          message: "A later table is available",
+          respondBy: null,
+          status: "PENDING",
+          createdAt: "2026-10-02T01:00:00Z",
+        },
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(proposeAlternativeOwnerReservation("reservation-id", {
+      proposedDate: "2026-10-05",
+      proposedTime: "19:30",
+      message: "A later table is available",
+    })).resolves.toMatchObject({
+      reservationStatus: ReservationStatus.AlternativeProposed,
+      customerResponse: {
+        kind: "awaiting-customer",
+        proposedTime: "19:30",
+      },
+    });
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/reservations/reservation-id/proposals",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({
+          proposedDate: "2026-10-05",
+          proposedTime: "19:30",
+          message: "A later table is available",
+        }),
       }),
     ]);
   });

@@ -24,6 +24,14 @@ type CustomerReservationRecord = {
   updatedAt: string;
   restaurantSlug?: string;
   restaurantName?: string;
+  alternativeProposal?: {
+    id: string;
+    startsAt: string;
+    message?: string | null;
+    respondBy?: string | null;
+    status: "PENDING" | "ACCEPTED" | "DECLINED";
+    createdAt: string;
+  } | null;
 };
 
 const reservationStatuses = {
@@ -49,6 +57,9 @@ export function mergeCustomerReservation(
 ): CustomerReservation {
   // ponytail: the customer API does not expose restaurant timezone yet.
   const startsAt = dayjs(record.startsAt).tz("Asia/Ho_Chi_Minh");
+  const proposalStartsAt = record.alternativeProposal
+    ? dayjs(record.alternativeProposal.startsAt).tz("Asia/Ho_Chi_Minh")
+    : null;
   return {
     ...stored,
     id: record.id,
@@ -64,6 +75,17 @@ export function mergeCustomerReservation(
     preOrder: record.preOrderNote ?? undefined,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
+    alternativeProposal:
+      record.alternativeProposal && proposalStartsAt
+        ? {
+            id: record.alternativeProposal.id,
+            date: proposalStartsAt.format("YYYY-MM-DD"),
+            time: proposalStartsAt.format("HH:mm"),
+            message: record.alternativeProposal.message ?? undefined,
+            respondBy: record.alternativeProposal.respondBy ?? undefined,
+            proposedAt: record.alternativeProposal.createdAt,
+          }
+        : undefined,
   };
 }
 
@@ -135,6 +157,59 @@ export async function getCustomerReservation(
     },
   );
   return mergeCustomerReservation(stored, record);
+}
+
+export async function getCustomerAccountReservation(
+  reservation: CustomerReservation,
+  signal?: AbortSignal,
+) {
+  const record = await apiFetch<CustomerReservationRecord>(
+    apiEndpoints.customerAccountReservation(reservation.id),
+    { cache: "no-store", signal },
+  );
+  return mergeCustomerReservation(reservation, record);
+}
+
+export async function respondToAlternativeProposal(
+  reservation: CustomerReservation,
+  action: "accept" | "decline",
+) {
+  const proposalId = reservation.alternativeProposal?.id;
+  if (!proposalId) throw new Error("Reservation proposal is unavailable");
+
+  if (reservation.accountLinked) {
+    const csrf = await getCsrfToken();
+    const record = await apiFetch<CustomerReservationRecord>(
+      apiEndpoints.respondToCustomerAccountReservationProposal(
+        reservation.id,
+        proposalId,
+        action,
+      ),
+      {
+        method: "POST",
+        headers: { [csrf.headerName]: csrf.token },
+      },
+    );
+    return mergeCustomerReservation(reservation, record);
+  }
+
+  if (!reservation.managementToken) {
+    throw new Error("Reservation management token is unavailable");
+  }
+  const record = await apiFetch<CustomerReservationRecord>(
+    apiEndpoints.respondToCustomerReservationProposal(
+      reservation.id,
+      proposalId,
+      action,
+    ),
+    {
+      method: "POST",
+      headers: {
+        "X-Reservation-Management-Token": reservation.managementToken,
+      },
+    },
+  );
+  return mergeCustomerReservation(reservation, record);
 }
 
 export async function cancelCustomerReservation(stored: CustomerReservation) {

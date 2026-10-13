@@ -32,6 +32,7 @@ export type ReservationDisplayStatus = ReservationStatus | VisitStatus;
 
 /** Alternative date and time proposed by the restaurant. */
 export interface CustomerAlternativeProposal {
+  id?: string;
   date: string;
   time: string;
   message?: string;
