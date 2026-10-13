@@ -519,6 +519,8 @@
         "maximumOnlineParty": "온라인 최대 예약 인원",
         "largePartyThreshold": "단체 예약 기준 인원",
         "cancellationCutoff": "취소 마감 시간 (분)",
+        "noShowGrace": "노쇼 처리 유예 시간 (분)",
+        "noShowGraceDescription": "노쇼 처리를 비활성화하려면 비워 두세요. 예약 시작 시간부터 허용하려면 0을 입력하세요.",
         "regenerateNotice": "수용 인원과 시간 설정 변경은 미래 예약 슬롯을 다시 생성한 후 적용됩니다.",
         "regenerate": "미래 슬롯 다시 생성"
       },

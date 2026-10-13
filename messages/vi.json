@@ -519,6 +519,8 @@
         "maximumOnlineParty": "Số khách tối đa khi đặt trực tuyến",
         "largePartyThreshold": "Ngưỡng nhóm đông",
         "cancellationCutoff": "Hạn chót hủy bàn (phút)",
+        "noShowGrace": "Thời gian chờ trước khi đánh dấu không đến (phút)",
+        "noShowGraceDescription": "Để trống để tắt tính năng. Nhập 0 để cho phép đánh dấu từ giờ đặt bàn.",
         "regenerateNotice": "Thay đổi sức chứa và thời gian chỉ áp dụng sau khi tạo lại các khung giờ tương lai.",
         "regenerate": "Tạo lại khung giờ tương lai"
       },

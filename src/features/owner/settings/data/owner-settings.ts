@@ -28,6 +28,7 @@ export type OwnerSettings = {
   maximumOnlinePartySize: number;
   largePartyThreshold: number;
   customerCancellationCutoffMinutes: number | null;
+  noShowGraceMinutes: number | null;
 };
 
 export type OwnerSettingsUpdate = Omit<

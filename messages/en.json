@@ -570,6 +570,8 @@
         "maximumOnlineParty": "Maximum online party",
         "largePartyThreshold": "Large party threshold",
         "cancellationCutoff": "Cancellation cutoff (minutes)",
+        "noShowGrace": "No-show grace period (minutes)",
+        "noShowGraceDescription": "Leave empty to disable no-show marking. Use 0 to allow it from the reservation start time.",
         "regenerateNotice": "Capacity and schedule timing changes apply when future booking slots are regenerated.",
         "regenerate": "Regenerate future slots"
       },
