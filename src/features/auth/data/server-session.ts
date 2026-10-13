@@ -7,15 +7,32 @@ export function canAccessRestaurantWorkspace(role: SessionUser["role"]) {
   return role === "OWNER" || role === "STAFF";
 }
 
-export async function requireRestaurantWorkspace() {
+export function canAccessSystemAdmin(role: SessionUser["role"]) {
+  return role === "ADMIN";
+}
+
+async function getSessionUser() {
   const cookieHeader = (await cookies()).toString();
   const response = await fetch(
     `${process.env.API_BASE_URL ?? "http://localhost:8080"}${apiEndpoints.authMe}`,
     { cache: "no-store", headers: { cookie: cookieHeader } },
   ).catch(() => null);
 
-  if (!response?.ok) redirect("/login");
+  if (!response?.ok) return null;
 
-  const user = (await response.json().catch(() => null)) as SessionUser | null;
-  if (!user || !canAccessRestaurantWorkspace(user.role)) redirect("/");
+  return (await response.json().catch(() => null)) as SessionUser | null;
+}
+
+export async function requireRestaurantWorkspace() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
+
+  if (!canAccessRestaurantWorkspace(user.role)) redirect("/");
+}
+
+export async function requireSystemAdmin() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
+
+  if (!canAccessSystemAdmin(user.role)) redirect("/");
 }

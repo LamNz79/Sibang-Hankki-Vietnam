@@ -445,6 +445,23 @@
       "modal": { "title": "Mời quản trị viên", "email": "Địa chỉ email", "role": "Vai trò quản trị", "requireMfa": "Bắt buộc MFA", "cancel": "Hủy", "invite": "Gửi lời mời" }
     }
   },
+  "SystemAdmin": {
+    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "users": "Người dùng", "restaurants": "Nhà hàng" } },
+    "users": {
+      "title": "Người dùng", "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.", "loadError": "Không thể tải danh sách người dùng.", "empty": "Không có người dùng phù hợp với bộ lọc.",
+      "filters": { "search": "Tìm userid, tên hoặc email", "role": "Lọc theo vai trò", "status": "Lọc theo trạng thái", "allRoles": "Tất cả vai trò", "allStatuses": "Tất cả trạng thái" },
+      "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo" },
+      "statuses": { "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm khóa", "CLOSED": "Đã đóng" },
+      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+    },
+    "restaurants": {
+      "title": "Nhà hàng", "description": "Kiểm tra nhà hàng ở tất cả trạng thái phê duyệt.", "loadError": "Không thể tải danh sách nhà hàng.", "empty": "Không có nhà hàng phù hợp với bộ lọc.",
+      "filters": { "search": "Tìm tên hoặc slug", "city": "Slug thành phố", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái" },
+      "table": { "restaurant": "Nhà hàng", "city": "Thành phố", "location": "Khu vực / quận", "status": "Trạng thái phê duyệt", "created": "Ngày tạo" },
+      "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
+      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Trang chủ",
