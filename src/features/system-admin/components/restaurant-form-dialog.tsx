@@ -141,7 +141,6 @@ export function RestaurantFormDialog({
             <SimpleGrid cols={{ base: 1, sm: 2 }}>
               <TextInput
                 label={t("slug")}
-                description={t("slugDescription")}
                 placeholder={t("placeholders.slug")}
                 value={input.slug ?? ""}
                 onChange={change("slug")}
@@ -225,7 +224,6 @@ export function RestaurantFormDialog({
               />
               <TextInput
                 label={t("priceRange")}
-                description={t("priceRangeDescription")}
                 placeholder={t("placeholders.priceRange")}
                 value={input.priceRange}
                 onChange={change("priceRange")}
