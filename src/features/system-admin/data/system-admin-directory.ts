@@ -32,9 +32,50 @@ export type SystemAdminRestaurant = {
   citySlug: string;
   area: string | null;
   district: string | null;
+  provinceCode: number | null;
+  provinceName: string | null;
   approvalStatus: SystemAdminRestaurantStatus;
   createdAt: string;
   updatedAt: string;
+};
+
+export type SystemAdminRestaurantDetail = SystemAdminRestaurant & {
+  description: string | null;
+  cuisineType: string | null;
+  cuisineLabel: string | null;
+  wardCode: number | null;
+  wardName: string | null;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
+  timezone: string;
+  priceRange: string | null;
+};
+
+export type SystemAdminRestaurantInput = {
+  slug?: string;
+  name: string;
+  description: string;
+  cuisineType: string;
+  cuisineLabel: string;
+  provinceCode: number | null;
+  wardCode: number | null;
+  address: string;
+  phone: string;
+  email: string;
+  timezone: string;
+  priceRange: string;
+};
+
+export type LocationProvince = {
+  code: number;
+  codename: string;
+  name: string;
+  divisionType: string;
+};
+
+export type LocationWard = LocationProvince & {
+  provinceCode: number;
 };
 
 export type SystemAdminPage<T> = {
@@ -59,6 +100,7 @@ export type SystemAdminUserParams = PageParams & {
 export type SystemAdminRestaurantParams = PageParams & {
   status?: SystemAdminRestaurantStatus;
   citySlug?: string;
+  provinceCode?: number;
 };
 
 function searchParams(params: Record<string, string | number | undefined>) {
@@ -87,6 +129,63 @@ export function getSystemAdminRestaurants(
     `${apiEndpoints.systemAdminRestaurants}?${searchParams(params)}`,
     { cache: "no-store", signal },
   );
+}
+
+export function getSystemAdminRestaurant(id: string, signal?: AbortSignal) {
+  return apiFetch<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurant(id),
+    { cache: "no-store", signal },
+  );
+}
+
+export function getLocationProvinces(signal?: AbortSignal) {
+  return apiFetch<LocationProvince[]>(apiEndpoints.locationProvinces, {
+    cache: "no-store",
+    signal,
+  });
+}
+
+export function getLocationWards(provinceCode: number, signal?: AbortSignal) {
+  return apiFetch<LocationWard[]>(apiEndpoints.locationWards(provinceCode), {
+    cache: "no-store",
+    signal,
+  });
+}
+
+async function writeRestaurant<T>(
+  path: string,
+  method: "POST" | "PUT" | "DELETE",
+  input?: SystemAdminRestaurantInput,
+) {
+  const csrf = await getCsrfToken();
+  return apiFetch<T>(path, {
+    method,
+    headers: { [csrf.headerName]: csrf.token },
+    ...(input ? { body: JSON.stringify(input) } : {}),
+  });
+}
+
+export function createSystemAdminRestaurant(input: SystemAdminRestaurantInput) {
+  return writeRestaurant<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurants,
+    "POST",
+    input,
+  );
+}
+
+export function updateSystemAdminRestaurant(
+  id: string,
+  input: SystemAdminRestaurantInput,
+) {
+  return writeRestaurant<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurant(id),
+    "PUT",
+    input,
+  );
+}
+
+export function archiveSystemAdminRestaurant(id: string) {
+  return writeRestaurant<void>(apiEndpoints.systemAdminRestaurant(id), "DELETE");
 }
 
 async function updateStatus<T>(path: string, status: string) {
