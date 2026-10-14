@@ -1,7 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  archiveSystemAdminRestaurant,
+  createSystemAdminRestaurant,
+  getSystemAdminRestaurant,
   getSystemAdminRestaurants,
   getSystemAdminUsers,
+  updateSystemAdminRestaurant,
   updateSystemAdminRestaurantStatus,
   updateSystemAdminUserStatus,
 } from "./system-admin-directory";
@@ -113,6 +117,92 @@ describe("system admin directory API", () => {
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ status: "ACTIVE" }),
       }),
+    );
+  });
+
+  it("reads, creates, updates, and archives a restaurant", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const restaurant = {
+      id: "restaurant-1",
+      slug: "new-place",
+      name: "New Place",
+      description: null,
+      cuisineType: null,
+      cuisineLabel: null,
+      citySlug: "ho-chi-minh",
+      area: null,
+      district: null,
+      address: null,
+      phone: null,
+      email: null,
+      timezone: "Asia/Ho_Chi_Minh",
+      priceRange: null,
+      approvalStatus: "DRAFT",
+      createdAt: "2026-10-14T08:00:00Z",
+      updatedAt: "2026-10-14T08:00:00Z",
+    };
+    const csrf = Response.json({
+      headerName: "X-CSRF-TOKEN",
+      parameterName: "_csrf",
+      token: "csrf-token",
+    });
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json(restaurant))
+      .mockResolvedValueOnce(csrf)
+      .mockResolvedValueOnce(Response.json(restaurant, { status: 201 }))
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({ ...restaurant, name: "Updated Place" }))
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const input = {
+      slug: "new-place",
+      name: "New Place",
+      description: "",
+      cuisineType: "",
+      cuisineLabel: "",
+      citySlug: "ho-chi-minh",
+      area: "",
+      district: "",
+      address: "",
+      phone: "",
+      email: "",
+      timezone: "Asia/Ho_Chi_Minh",
+      priceRange: "",
+    };
+
+    await getSystemAdminRestaurant("restaurant-1");
+    await createSystemAdminRestaurant(input);
+    await updateSystemAdminRestaurant("restaurant-1", { ...input, name: "Updated Place" });
+    await archiveSystemAdminRestaurant("restaurant-1");
+
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      "/api/admin/restaurants/restaurant-1",
+      expect.objectContaining({ cache: "no-store" }),
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      3,
+      "/api/admin/restaurants",
+      expect.objectContaining({ method: "POST", body: JSON.stringify(input) }),
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      5,
+      "/api/admin/restaurants/restaurant-1",
+      expect.objectContaining({ method: "PUT" }),
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      7,
+      "/api/admin/restaurants/restaurant-1",
+      expect.objectContaining({ method: "DELETE" }),
     );
   });
 });

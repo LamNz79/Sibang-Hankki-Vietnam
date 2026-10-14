@@ -37,6 +37,33 @@ export type SystemAdminRestaurant = {
   updatedAt: string;
 };
 
+export type SystemAdminRestaurantDetail = SystemAdminRestaurant & {
+  description: string | null;
+  cuisineType: string | null;
+  cuisineLabel: string | null;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
+  timezone: string;
+  priceRange: string | null;
+};
+
+export type SystemAdminRestaurantInput = {
+  slug?: string;
+  name: string;
+  description: string;
+  cuisineType: string;
+  cuisineLabel: string;
+  citySlug: string;
+  area: string;
+  district: string;
+  address: string;
+  phone: string;
+  email: string;
+  timezone: string;
+  priceRange: string;
+};
+
 export type SystemAdminPage<T> = {
   items: T[];
   page: number;
@@ -87,6 +114,49 @@ export function getSystemAdminRestaurants(
     `${apiEndpoints.systemAdminRestaurants}?${searchParams(params)}`,
     { cache: "no-store", signal },
   );
+}
+
+export function getSystemAdminRestaurant(id: string, signal?: AbortSignal) {
+  return apiFetch<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurant(id),
+    { cache: "no-store", signal },
+  );
+}
+
+async function writeRestaurant<T>(
+  path: string,
+  method: "POST" | "PUT" | "DELETE",
+  input?: SystemAdminRestaurantInput,
+) {
+  const csrf = await getCsrfToken();
+  return apiFetch<T>(path, {
+    method,
+    headers: { [csrf.headerName]: csrf.token },
+    ...(input ? { body: JSON.stringify(input) } : {}),
+  });
+}
+
+export function createSystemAdminRestaurant(input: SystemAdminRestaurantInput) {
+  return writeRestaurant<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurants,
+    "POST",
+    input,
+  );
+}
+
+export function updateSystemAdminRestaurant(
+  id: string,
+  input: SystemAdminRestaurantInput,
+) {
+  return writeRestaurant<SystemAdminRestaurantDetail>(
+    apiEndpoints.systemAdminRestaurant(id),
+    "PUT",
+    input,
+  );
+}
+
+export function archiveSystemAdminRestaurant(id: string) {
+  return writeRestaurant<void>(apiEndpoints.systemAdminRestaurant(id), "DELETE");
 }
 
 async function updateStatus<T>(path: string, status: string) {

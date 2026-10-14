@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   ActionIcon,
   Alert,
+  Button,
   Group,
   Menu,
   Select,
@@ -14,17 +15,23 @@ import {
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconDotsVertical, IconSearch } from "@tabler/icons-react";
+import { IconDotsVertical, IconPlus, IconSearch } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
+  archiveSystemAdminRestaurant,
+  createSystemAdminRestaurant,
+  getSystemAdminRestaurant,
   getSystemAdminRestaurants,
   type SystemAdminRestaurant,
+  type SystemAdminRestaurantInput,
   type SystemAdminRestaurantStatus,
+  updateSystemAdminRestaurant,
   updateSystemAdminRestaurantStatus,
 } from "@/features/system-admin/data/system-admin-directory";
+import { RestaurantFormDialog } from "@/features/system-admin/components/restaurant-form-dialog";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
 import { uiColors } from "@/theme";
 
@@ -67,6 +74,9 @@ export function SystemAdminRestaurantsScreen() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [statusAction, setStatusAction] = useState<RestaurantStatusAction | null>(null);
+  const [editor, setEditor] = useState<string | null | undefined>(undefined);
+  const [archiveTarget, setArchiveTarget] = useState<SystemAdminRestaurant | null>(null);
+  const editing = typeof editor === "string";
   const restaurantsQuery = useQuery({
     queryKey: ["system-admin-restaurants", page, pageSize, debouncedQuery, status, debouncedCity],
     queryFn: ({ signal }) => getSystemAdminRestaurants({
@@ -77,6 +87,12 @@ export function SystemAdminRestaurantsScreen() {
       citySlug: debouncedCity.trim() || undefined,
     }, signal),
     placeholderData: (previous) => previous,
+    retry: false,
+  });
+  const detailQuery = useQuery({
+    queryKey: ["system-admin-restaurant", editor],
+    queryFn: ({ signal }) => getSystemAdminRestaurant(editor as string, signal),
+    enabled: editing,
     retry: false,
   });
   const statusMutation = useMutation({
@@ -92,6 +108,38 @@ export function SystemAdminRestaurantsScreen() {
       });
     },
     onError: () => notifications.show({ color: "red", message: t("actions.error") }),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["system-admin-restaurants"] }),
+  });
+  const saveMutation = useMutation({
+    mutationFn: (input: SystemAdminRestaurantInput) =>
+      editing
+        ? updateSystemAdminRestaurant(editor, input)
+        : createSystemAdminRestaurant(input),
+    onSuccess: (restaurant) => {
+      setEditor(undefined);
+      notifications.show({
+        color: "teal",
+        message: t(editing ? "form.updated" : "form.created", {
+          name: restaurant.name,
+        }),
+      });
+    },
+    onError: () => notifications.show({ color: "red", message: t("form.saveError") }),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["system-admin-restaurants"] }),
+  });
+  const archiveMutation = useMutation({
+    mutationFn: (restaurant: SystemAdminRestaurant) =>
+      archiveSystemAdminRestaurant(restaurant.id),
+    onSuccess: (_result, restaurant) => {
+      setArchiveTarget(null);
+      notifications.show({
+        color: "teal",
+        message: t("actions.archived", { name: restaurant.name }),
+      });
+    },
+    onError: () => notifications.show({ color: "red", message: t("actions.archiveError") }),
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["system-admin-restaurants"] }),
   });
@@ -150,7 +198,6 @@ export function SystemAdminRestaurantsScreen() {
               : restaurant.approvalStatus === "SUSPENDED"
                 ? ["ACTIVE"]
                 : [];
-        if (targets.length === 0) return "-";
         return (
           <Menu position="bottom-end" withinPortal>
             <Menu.Target>
@@ -162,6 +209,9 @@ export function SystemAdminRestaurantsScreen() {
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
+              <Menu.Item onClick={() => setEditor(restaurant.id)}>
+                {t("actions.edit")}
+              </Menu.Item>
               {targets.map((target) => (
                 <Menu.Item
                   key={target}
@@ -171,6 +221,14 @@ export function SystemAdminRestaurantsScreen() {
                   {t(`actions.${actionKey({ restaurant, target })}`)}
                 </Menu.Item>
               ))}
+              {restaurant.approvalStatus === "DRAFT" ? (
+                <>
+                  <Menu.Divider />
+                  <Menu.Item color="red" onClick={() => setArchiveTarget(restaurant)}>
+                    {t("actions.archive")}
+                  </Menu.Item>
+                </>
+              ) : null}
             </Menu.Dropdown>
           </Menu>
         );
@@ -181,10 +239,15 @@ export function SystemAdminRestaurantsScreen() {
 
   return (
     <Stack gap="xl">
-      <Stack gap={3}>
-        <Title order={1}>{t("title")}</Title>
-        <Text c={uiColors.textSecondary}>{t("description")}</Text>
-      </Stack>
+      <Group justify="space-between" align="flex-end">
+        <Stack gap={3}>
+          <Title order={1}>{t("title")}</Title>
+          <Text c={uiColors.textSecondary}>{t("description")}</Text>
+        </Stack>
+        <Button leftSection={<IconPlus size={17} />} onClick={() => setEditor(null)}>
+          {t("actions.create")}
+        </Button>
+      </Group>
       <Group align="flex-end" gap="sm">
         <TextInput
           value={query}
@@ -265,6 +328,34 @@ export function SystemAdminRestaurantsScreen() {
         onConfirm={() => {
           if (statusAction) statusMutation.mutate(statusAction);
         }}
+      />
+      <StatusActionDialog
+        opened={archiveTarget !== null}
+        title={t("actions.archiveTitle", { name: archiveTarget?.name ?? "" })}
+        description={t("actions.archiveDescription")}
+        cancelLabel={t("actions.cancel")}
+        confirmLabel={t("actions.archive")}
+        danger
+        loading={archiveMutation.isPending}
+        onClose={() => {
+          if (!archiveMutation.isPending) setArchiveTarget(null);
+        }}
+        onConfirm={() => {
+          if (archiveTarget) archiveMutation.mutate(archiveTarget);
+        }}
+      />
+      <RestaurantFormDialog
+        key={`${editor ?? "create"}:${detailQuery.data?.updatedAt ?? "empty"}`}
+        opened={editor !== undefined}
+        restaurant={editing ? detailQuery.data ?? null : null}
+        editing={editing}
+        loading={editing && detailQuery.isLoading}
+        loadError={editing && detailQuery.isError}
+        saving={saveMutation.isPending}
+        onClose={() => {
+          if (!saveMutation.isPending) setEditor(undefined);
+        }}
+        onSubmit={(input) => saveMutation.mutate(input)}
       />
     </Stack>
   );

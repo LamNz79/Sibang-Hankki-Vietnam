@@ -466,7 +466,7 @@
       "table": { "restaurant": "레스토랑", "city": "도시", "location": "지역 / 구", "status": "승인 상태", "created": "생성일", "actions": "작업" },
       "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
       "actions": {
-        "openMenu": "{name} 작업 열기", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.",
+        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "edit": "정보 수정", "archive": "보관", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
         "success": { "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
         "dialog": {
           "approve": { "title": "{name}을(를) 승인할까요?", "description": "레스토랑이 공개되고 새 예약을 받을 수 있습니다." },
@@ -475,6 +475,7 @@
           "suspend": { "title": "{name}을(를) 정지할까요?", "description": "레스토랑이 공개 목록에서 숨겨지고 새 예약을 받을 수 없습니다." }
         }
       },
+      "form": { "createTitle": "레스토랑 추가", "editTitle": "레스토랑 수정", "slug": "슬러그", "name": "이름", "citySlug": "도시 슬러그", "timezone": "시간대", "cuisineType": "요리 유형", "cuisineLabel": "요리 표시명", "area": "지역", "district": "구역", "phone": "전화번호", "email": "이메일", "priceRange": "가격대", "address": "주소", "description": "설명", "cancel": "취소", "create": "레스토랑 생성", "save": "변경 사항 저장", "created": "{name}을(를) 초안으로 생성했습니다.", "updated": "{name}을(를) 업데이트했습니다.", "saveError": "레스토랑을 저장할 수 없습니다. 입력값을 확인하고 다시 시도하세요.", "loadError": "레스토랑 정보를 불러올 수 없습니다." },
       "pagination": { "rowsPerPage": "페이지당 행 수" }
     }
   },

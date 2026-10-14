@@ -518,7 +518,7 @@
       "table": { "restaurant": "Restaurant", "city": "City", "location": "Area / district", "status": "Approval status", "created": "Created", "actions": "Actions" },
       "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
       "actions": {
-        "openMenu": "Open actions for {name}", "approve": "Approve", "reactivate": "Reactivate", "requestChanges": "Request changes", "suspend": "Suspend", "cancel": "Cancel", "error": "Could not update the restaurant status.",
+        "openMenu": "Open actions for {name}", "create": "Add restaurant", "edit": "Edit details", "archive": "Archive", "approve": "Approve", "reactivate": "Reactivate", "requestChanges": "Request changes", "suspend": "Suspend", "cancel": "Cancel", "error": "Could not update the restaurant status.", "archiveTitle": "Archive {name}?", "archiveDescription": "Only a draft restaurant without linked users or reservations can be archived.", "archived": "{name} has been archived.", "archiveError": "Could not archive the restaurant.",
         "success": { "approve": "{name} has been approved.", "reactivate": "{name} has been reactivated.", "requestChanges": "Changes have been requested from {name}.", "suspend": "{name} has been suspended." },
         "dialog": {
           "approve": { "title": "Approve {name}?", "description": "The restaurant will become visible and available for new bookings." },
@@ -527,6 +527,7 @@
           "suspend": { "title": "Suspend {name}?", "description": "The restaurant will be removed from public discovery and cannot receive new bookings." }
         }
       },
+      "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug", "name": "Name", "citySlug": "City slug", "timezone": "Timezone", "cuisineType": "Cuisine type", "cuisineLabel": "Cuisine label", "area": "Area", "district": "District", "phone": "Phone", "email": "Email", "priceRange": "Price range", "address": "Address", "description": "Description", "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
       "pagination": { "rowsPerPage": "Rows per page" }
     }
   },
