@@ -7,6 +7,7 @@ import {
   Group,
   Loader,
   Modal,
+  Select,
   SimpleGrid,
   Stack,
   Textarea,
@@ -32,6 +33,14 @@ const emptyRestaurant: SystemAdminRestaurantInput = {
   email: "",
   timezone: "Asia/Ho_Chi_Minh",
   priceRange: "",
+};
+
+const cuisineLabels: Record<string, string> = {
+  vietnamese: "Vietnamese",
+  korean: "Korean",
+  chinese: "Chinese",
+  japanese: "Japanese",
+  western: "Western",
 };
 
 function toInput(restaurant: SystemAdminRestaurantDetail | null) {
@@ -80,6 +89,12 @@ export function RestaurantFormDialog({
   const change = (field: keyof SystemAdminRestaurantInput) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setInput((current) => ({ ...current, [field]: event.currentTarget.value }));
+  const changeCuisine = (value: string | null) =>
+    setInput((current) => ({
+      ...current,
+      cuisineType: value ?? "",
+      cuisineLabel: value ? cuisineLabels[value] : "",
+    }));
   const submit = (event: FormEvent) => {
     event.preventDefault();
     onSubmit(input);
@@ -131,17 +146,16 @@ export function RestaurantFormDialog({
                 required
                 maxLength={64}
               />
-              <TextInput
-                label={t("cuisineType")}
-                value={input.cuisineType}
-                onChange={change("cuisineType")}
-                maxLength={160}
-              />
-              <TextInput
-                label={t("cuisineLabel")}
-                value={input.cuisineLabel}
-                onChange={change("cuisineLabel")}
-                maxLength={160}
+              <Select
+                label={t("cuisine")}
+                placeholder={t("selectCuisine")}
+                value={input.cuisineType || null}
+                onChange={changeCuisine}
+                data={Object.keys(cuisineLabels).map((value) => ({
+                  value,
+                  label: t(`cuisines.${value}`),
+                }))}
+                clearable
               />
               <TextInput
                 label={t("area")}

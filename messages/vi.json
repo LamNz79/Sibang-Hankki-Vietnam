@@ -475,7 +475,7 @@
           "suspend": { "title": "Tạm ngưng {name}?", "description": "Nhà hàng sẽ bị ẩn khỏi khu vực công khai và không thể nhận đặt bàn mới." }
         }
       },
-      "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug", "name": "Tên nhà hàng", "citySlug": "Slug thành phố", "timezone": "Múi giờ", "cuisineType": "Mã loại ẩm thực", "cuisineLabel": "Tên loại ẩm thực", "area": "Khu vực", "district": "Quận/Huyện", "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá", "address": "Địa chỉ", "description": "Mô tả", "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
+      "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug", "name": "Tên nhà hàng", "citySlug": "Slug thành phố", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "area": "Khu vực", "district": "Quận/Huyện", "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá", "address": "Địa chỉ", "description": "Mô tả", "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     }
   },

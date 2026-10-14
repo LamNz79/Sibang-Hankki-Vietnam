@@ -527,7 +527,7 @@
           "suspend": { "title": "Suspend {name}?", "description": "The restaurant will be removed from public discovery and cannot receive new bookings." }
         }
       },
-      "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug", "name": "Name", "citySlug": "City slug", "timezone": "Timezone", "cuisineType": "Cuisine type", "cuisineLabel": "Cuisine label", "area": "Area", "district": "District", "phone": "Phone", "email": "Email", "priceRange": "Price range", "address": "Address", "description": "Description", "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
+      "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug", "name": "Name", "citySlug": "City slug", "timezone": "Timezone", "cuisine": "Cuisine", "selectCuisine": "Select a cuisine", "cuisines": { "vietnamese": "Vietnamese", "korean": "Korean", "chinese": "Chinese", "japanese": "Japanese", "western": "Western" }, "area": "Area", "district": "District", "phone": "Phone", "email": "Email", "priceRange": "Price range", "address": "Address", "description": "Description", "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
       "pagination": { "rowsPerPage": "Rows per page" }
     }
   },
