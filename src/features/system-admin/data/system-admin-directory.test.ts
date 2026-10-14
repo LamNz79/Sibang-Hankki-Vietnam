@@ -2,6 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   archiveSystemAdminRestaurant,
   createSystemAdminRestaurant,
+  getLocationProvinces,
+  getLocationWards,
   getSystemAdminRestaurant,
   getSystemAdminRestaurants,
   getSystemAdminUsers,
@@ -35,15 +37,54 @@ describe("system admin directory API", () => {
     );
   });
 
-  it("omits empty restaurant filters", async () => {
+  it("requests restaurants by province and omits empty filters", async () => {
     vi.stubEnv("API_BASE_URL", "");
     const page = { items: [], page: 0, size: 10, totalElements: 0, totalPages: 0 };
     const fetchMock = vi.fn().mockResolvedValue(Response.json(page));
     vi.stubGlobal("fetch", fetchMock);
 
-    await getSystemAdminRestaurants({ page: 0, size: 10, query: "" });
+    await getSystemAdminRestaurants({
+      page: 0,
+      size: 10,
+      query: "",
+      provinceCode: 79,
+    });
     expect(fetchMock).toHaveBeenCalledWith(
-      "/api/admin/restaurants?page=0&size=10",
+      "/api/admin/restaurants?page=0&size=10&provinceCode=79",
+      expect.objectContaining({ cache: "no-store" }),
+    );
+  });
+
+  it("loads provinces and wards from the location catalog", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const provinces = [{
+      code: 79,
+      codename: "ho_chi_minh",
+      name: "Thành phố Hồ Chí Minh",
+      divisionType: "thành phố trung ương",
+    }];
+    const wards = [{
+      code: 27169,
+      codename: "phuong_dien_hong",
+      name: "Phường Diên Hồng",
+      divisionType: "phường",
+      provinceCode: 79,
+    }];
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json(provinces))
+      .mockResolvedValueOnce(Response.json(wards));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getLocationProvinces()).resolves.toEqual(provinces);
+    await expect(getLocationWards(79)).resolves.toEqual(wards);
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      "/api/locations/provinces",
+      expect.objectContaining({ cache: "no-store" }),
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/locations/provinces/79/wards",
       expect.objectContaining({ cache: "no-store" }),
     );
   });
@@ -94,6 +135,8 @@ describe("system admin directory API", () => {
       citySlug: "ho-chi-minh",
       area: null,
       district: null,
+      provinceCode: 79,
+      provinceName: "Thành phố Hồ Chí Minh",
       approvalStatus: "ACTIVE",
       createdAt: "2026-10-01T08:00:00Z",
       updatedAt: "2026-10-13T08:00:00Z",
@@ -131,7 +174,11 @@ describe("system admin directory API", () => {
       cuisineLabel: null,
       citySlug: "ho-chi-minh",
       area: null,
-      district: null,
+      district: "Phường Diên Hồng",
+      provinceCode: 79,
+      provinceName: "Thành phố Hồ Chí Minh",
+      wardCode: 27169,
+      wardName: "Phường Diên Hồng",
       address: null,
       phone: null,
       email: null,
@@ -169,9 +216,8 @@ describe("system admin directory API", () => {
       description: "",
       cuisineType: "",
       cuisineLabel: "",
-      citySlug: "ho-chi-minh",
-      area: "",
-      district: "",
+      provinceCode: 79,
+      wardCode: 27169,
       address: "",
       phone: "",
       email: "",

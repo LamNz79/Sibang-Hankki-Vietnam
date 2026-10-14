@@ -23,6 +23,7 @@ import { StatusBadge } from "@/components/ui";
 import {
   archiveSystemAdminRestaurant,
   createSystemAdminRestaurant,
+  getLocationProvinces,
   getSystemAdminRestaurant,
   getSystemAdminRestaurants,
   type SystemAdminRestaurant,
@@ -69,8 +70,7 @@ export function SystemAdminRestaurantsScreen() {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
   const [status, setStatus] = useState<SystemAdminRestaurantStatus | "all">("all");
-  const [citySlug, setCitySlug] = useState("");
-  const [debouncedCity] = useDebouncedValue(citySlug, 350);
+  const [provinceCode, setProvinceCode] = useState<number | null>(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [statusAction, setStatusAction] = useState<RestaurantStatusAction | null>(null);
@@ -78,15 +78,21 @@ export function SystemAdminRestaurantsScreen() {
   const [archiveTarget, setArchiveTarget] = useState<SystemAdminRestaurant | null>(null);
   const editing = typeof editor === "string";
   const restaurantsQuery = useQuery({
-    queryKey: ["system-admin-restaurants", page, pageSize, debouncedQuery, status, debouncedCity],
+    queryKey: ["system-admin-restaurants", page, pageSize, debouncedQuery, status, provinceCode],
     queryFn: ({ signal }) => getSystemAdminRestaurants({
       page: page - 1,
       size: pageSize,
       query: debouncedQuery.trim() || undefined,
       status: status === "all" ? undefined : status,
-      citySlug: debouncedCity.trim() || undefined,
+      provinceCode: provinceCode ?? undefined,
     }, signal),
     placeholderData: (previous) => previous,
+    retry: false,
+  });
+  const provincesQuery = useQuery({
+    queryKey: ["location-provinces"],
+    queryFn: ({ signal }) => getLocationProvinces(signal),
+    staleTime: 24 * 60 * 60 * 1000,
     retry: false,
   });
   const detailQuery = useQuery({
@@ -159,7 +165,12 @@ export function SystemAdminRestaurantsScreen() {
         </Stack>
       ),
     },
-    { accessor: "citySlug", title: t("table.city"), width: 160 },
+    {
+      accessor: "provinceName",
+      title: t("table.city"),
+      width: 190,
+      render: (restaurant) => restaurant.provinceName ?? restaurant.citySlug,
+    },
     {
       accessor: "location",
       title: t("table.location"),
@@ -261,15 +272,22 @@ export function SystemAdminRestaurantsScreen() {
           style={{ flex: 1 }}
           miw={240}
         />
-        <TextInput
-          value={citySlug}
-          onChange={(event) => {
-            setCitySlug(event.currentTarget.value);
+        <Select
+          value={provinceCode === null ? null : String(provinceCode)}
+          onChange={(value) => {
+            setProvinceCode(value ? Number(value) : null);
             resetPage();
           }}
           placeholder={t("filters.city")}
           aria-label={t("filters.city")}
-          w={180}
+          data={(provincesQuery.data ?? []).map((province) => ({
+            value: String(province.code),
+            label: province.name,
+          }))}
+          searchable
+          clearable
+          disabled={provincesQuery.isLoading}
+          w={220}
         />
         <Select
           value={status}

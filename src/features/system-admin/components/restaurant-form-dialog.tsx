@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import {
   Alert,
   Button,
@@ -14,9 +14,12 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useTranslations } from "next-intl";
-import type {
-  SystemAdminRestaurantDetail,
-  SystemAdminRestaurantInput,
+import { useQuery } from "@tanstack/react-query";
+import {
+  getLocationProvinces,
+  getLocationWards,
+  type SystemAdminRestaurantDetail,
+  type SystemAdminRestaurantInput,
 } from "@/features/system-admin/data/system-admin-directory";
 
 const emptyRestaurant: SystemAdminRestaurantInput = {
@@ -25,9 +28,8 @@ const emptyRestaurant: SystemAdminRestaurantInput = {
   description: "",
   cuisineType: "",
   cuisineLabel: "",
-  citySlug: "",
-  area: "",
-  district: "",
+  provinceCode: null,
+  wardCode: null,
   address: "",
   phone: "",
   email: "",
@@ -51,9 +53,8 @@ function toInput(restaurant: SystemAdminRestaurantDetail | null) {
     description: restaurant.description ?? "",
     cuisineType: restaurant.cuisineType ?? "",
     cuisineLabel: restaurant.cuisineLabel ?? "",
-    citySlug: restaurant.citySlug,
-    area: restaurant.area ?? "",
-    district: restaurant.district ?? "",
+    provinceCode: restaurant.provinceCode,
+    wardCode: restaurant.wardCode,
     address: restaurant.address ?? "",
     phone: restaurant.phone ?? "",
     email: restaurant.email ?? "",
@@ -86,14 +87,34 @@ export function RestaurantFormDialog({
   const t = useTranslations("SystemAdmin.restaurants.form");
   const [input, setInput] = useState<SystemAdminRestaurantInput>(() =>
     toInput(restaurant));
+  const provincesQuery = useQuery({
+    queryKey: ["location-provinces"],
+    queryFn: ({ signal }) => getLocationProvinces(signal),
+    enabled: opened,
+    staleTime: 24 * 60 * 60 * 1000,
+    retry: false,
+  });
+  const wardsQuery = useQuery({
+    queryKey: ["location-wards", input.provinceCode],
+    queryFn: ({ signal }) => getLocationWards(input.provinceCode as number, signal),
+    enabled: opened && input.provinceCode !== null,
+    staleTime: 24 * 60 * 60 * 1000,
+    retry: false,
+  });
   const change = (field: keyof SystemAdminRestaurantInput) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setInput((current) => ({ ...current, [field]: event.currentTarget.value }));
   const changeCuisine = (value: string | null) =>
     setInput((current) => ({
       ...current,
       cuisineType: value ?? "",
       cuisineLabel: value ? cuisineLabels[value] : "",
+    }));
+  const changeProvince = (value: string | null) =>
+    setInput((current) => ({
+      ...current,
+      provinceCode: value ? Number(value) : null,
+      wardCode: null,
     }));
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -132,19 +153,36 @@ export function RestaurantFormDialog({
                 required
                 maxLength={200}
               />
-              <TextInput
-                label={t("citySlug")}
-                value={input.citySlug}
-                onChange={change("citySlug")}
+              <Select
+                label={t("province")}
+                placeholder={t("selectProvince")}
+                value={input.provinceCode === null ? null : String(input.provinceCode)}
+                onChange={changeProvince}
+                data={(provincesQuery.data ?? []).map((province) => ({
+                  value: String(province.code),
+                  label: province.name,
+                }))}
+                searchable
                 required
-                maxLength={160}
+                disabled={provincesQuery.isLoading}
               />
-              <TextInput
-                label={t("timezone")}
-                value={input.timezone}
-                onChange={change("timezone")}
+              <Select
+                label={t("ward")}
+                placeholder={input.provinceCode === null
+                  ? t("selectProvinceFirst")
+                  : t("selectWard")}
+                value={input.wardCode === null ? null : String(input.wardCode)}
+                onChange={(value) => setInput((current) => ({
+                  ...current,
+                  wardCode: value ? Number(value) : null,
+                }))}
+                data={(wardsQuery.data ?? []).map((ward) => ({
+                  value: String(ward.code),
+                  label: ward.name,
+                }))}
+                searchable
                 required
-                maxLength={64}
+                disabled={input.provinceCode === null || wardsQuery.isLoading}
               />
               <Select
                 label={t("cuisine")}
@@ -158,16 +196,11 @@ export function RestaurantFormDialog({
                 clearable
               />
               <TextInput
-                label={t("area")}
-                value={input.area}
-                onChange={change("area")}
-                maxLength={160}
-              />
-              <TextInput
-                label={t("district")}
-                value={input.district}
-                onChange={change("district")}
-                maxLength={160}
+                label={t("timezone")}
+                value={input.timezone}
+                onChange={change("timezone")}
+                required
+                maxLength={64}
               />
               <TextInput
                 label={t("phone")}
@@ -189,6 +222,9 @@ export function RestaurantFormDialog({
                 maxLength={40}
               />
             </SimpleGrid>
+            {provincesQuery.isError || wardsQuery.isError ? (
+              <Alert color="red" title={t("locationLoadError")} />
+            ) : null}
             <Textarea
               label={t("address")}
               value={input.address}

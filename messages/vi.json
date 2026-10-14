@@ -462,8 +462,8 @@
     },
     "restaurants": {
       "title": "Nhà hàng", "description": "Kiểm tra nhà hàng ở tất cả trạng thái phê duyệt.", "loadError": "Không thể tải danh sách nhà hàng.", "empty": "Không có nhà hàng phù hợp với bộ lọc.",
-      "filters": { "search": "Tìm tên hoặc slug", "city": "Slug thành phố", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái" },
-      "table": { "restaurant": "Nhà hàng", "city": "Thành phố", "location": "Khu vực / quận", "status": "Trạng thái phê duyệt", "created": "Ngày tạo", "actions": "Thao tác" },
+      "filters": { "search": "Tìm tên hoặc slug", "city": "Tỉnh/Thành phố", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái" },
+      "table": { "restaurant": "Nhà hàng", "city": "Tỉnh/Thành phố", "location": "Phường/Xã/Đặc khu", "status": "Trạng thái phê duyệt", "created": "Ngày tạo", "actions": "Thao tác" },
       "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
       "actions": {
         "openMenu": "Mở thao tác cho {name}", "create": "Thêm nhà hàng", "edit": "Sửa thông tin", "archive": "Lưu trữ", "approve": "Phê duyệt", "reactivate": "Kích hoạt lại", "requestChanges": "Yêu cầu chỉnh sửa", "suspend": "Tạm ngưng", "cancel": "Hủy", "error": "Không thể cập nhật trạng thái nhà hàng.", "archiveTitle": "Lưu trữ {name}?", "archiveDescription": "Chỉ có thể lưu trữ nhà hàng bản nháp chưa có người dùng hoặc lượt đặt bàn liên kết.", "archived": "Đã lưu trữ {name}.", "archiveError": "Không thể lưu trữ nhà hàng.",
@@ -475,7 +475,7 @@
           "suspend": { "title": "Tạm ngưng {name}?", "description": "Nhà hàng sẽ bị ẩn khỏi khu vực công khai và không thể nhận đặt bàn mới." }
         }
       },
-      "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug", "name": "Tên nhà hàng", "citySlug": "Slug thành phố", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "area": "Khu vực", "district": "Quận/Huyện", "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá", "address": "Địa chỉ", "description": "Mô tả", "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
+      "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug", "name": "Tên nhà hàng", "province": "Tỉnh/Thành phố", "selectProvince": "Chọn tỉnh hoặc thành phố", "ward": "Phường/Xã/Đặc khu", "selectWard": "Chọn phường, xã hoặc đặc khu", "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước", "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá", "address": "Địa chỉ chi tiết", "description": "Mô tả", "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     }
   },

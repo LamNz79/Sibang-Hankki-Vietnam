@@ -32,6 +32,8 @@ export type SystemAdminRestaurant = {
   citySlug: string;
   area: string | null;
   district: string | null;
+  provinceCode: number | null;
+  provinceName: string | null;
   approvalStatus: SystemAdminRestaurantStatus;
   createdAt: string;
   updatedAt: string;
@@ -41,6 +43,8 @@ export type SystemAdminRestaurantDetail = SystemAdminRestaurant & {
   description: string | null;
   cuisineType: string | null;
   cuisineLabel: string | null;
+  wardCode: number | null;
+  wardName: string | null;
   address: string | null;
   phone: string | null;
   email: string | null;
@@ -54,14 +58,24 @@ export type SystemAdminRestaurantInput = {
   description: string;
   cuisineType: string;
   cuisineLabel: string;
-  citySlug: string;
-  area: string;
-  district: string;
+  provinceCode: number | null;
+  wardCode: number | null;
   address: string;
   phone: string;
   email: string;
   timezone: string;
   priceRange: string;
+};
+
+export type LocationProvince = {
+  code: number;
+  codename: string;
+  name: string;
+  divisionType: string;
+};
+
+export type LocationWard = LocationProvince & {
+  provinceCode: number;
 };
 
 export type SystemAdminPage<T> = {
@@ -86,6 +100,7 @@ export type SystemAdminUserParams = PageParams & {
 export type SystemAdminRestaurantParams = PageParams & {
   status?: SystemAdminRestaurantStatus;
   citySlug?: string;
+  provinceCode?: number;
 };
 
 function searchParams(params: Record<string, string | number | undefined>) {
@@ -121,6 +136,20 @@ export function getSystemAdminRestaurant(id: string, signal?: AbortSignal) {
     apiEndpoints.systemAdminRestaurant(id),
     { cache: "no-store", signal },
   );
+}
+
+export function getLocationProvinces(signal?: AbortSignal) {
+  return apiFetch<LocationProvince[]>(apiEndpoints.locationProvinces, {
+    cache: "no-store",
+    signal,
+  });
+}
+
+export function getLocationWards(provinceCode: number, signal?: AbortSignal) {
+  return apiFetch<LocationWard[]>(apiEndpoints.locationWards(provinceCode), {
+    cache: "no-store",
+    signal,
+  });
 }
 
 async function writeRestaurant<T>(

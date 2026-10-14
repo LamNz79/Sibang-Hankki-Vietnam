@@ -71,6 +71,9 @@ export const apiEndpoints = {
   systemAdminRestaurants: "/api/admin/restaurants",
   systemAdminRestaurant: (id: string) =>
     `/api/admin/restaurants/${seg(id)}`,
+  locationProvinces: "/api/locations/provinces",
+  locationWards: (provinceCode: number) =>
+    `/api/locations/provinces/${provinceCode}/wards`,
   systemAdminUserStatus: (id: string) =>
     `/api/admin/users/${seg(id)}/status`,
   systemAdminRestaurantStatus: (id: string) =>
