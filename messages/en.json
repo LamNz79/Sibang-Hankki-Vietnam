@@ -548,7 +548,8 @@
       "title": "Switch workspace",
       "customer": "Customer",
       "owner": "Owner",
-      "admin": "Admin"
+      "admin": "Restaurant admin",
+      "systemAdmin": "System admin"
     }
   },
   "OwnerGuests": {

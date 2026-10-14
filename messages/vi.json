@@ -496,7 +496,8 @@
       "title": "Chuyển khu vực",
       "customer": "Khách hàng",
       "owner": "Chủ quán",
-      "admin": "Quản trị"
+      "admin": "Quản trị nhà hàng",
+      "systemAdmin": "Quản trị hệ thống"
     }
   },
   "OwnerGuests": {

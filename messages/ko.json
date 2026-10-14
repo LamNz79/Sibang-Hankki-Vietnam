@@ -496,7 +496,8 @@
       "title": "워크스페이스 전환",
       "customer": "고객",
       "owner": "사장님",
-      "admin": "관리자"
+      "admin": "레스토랑 관리",
+      "systemAdmin": "시스템 관리"
     }
   },
   "OwnerGuests": {
