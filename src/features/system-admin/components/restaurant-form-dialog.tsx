@@ -21,6 +21,7 @@ import {
   type SystemAdminRestaurantDetail,
   type SystemAdminRestaurantInput,
 } from "@/features/system-admin/data/system-admin-directory";
+import { normalizeRestaurantSlugInput } from "./restaurant-form-utils";
 
 const emptyRestaurant: SystemAdminRestaurantInput = {
   slug: "",
@@ -106,6 +107,10 @@ export function RestaurantFormDialog({
       const value = event.currentTarget.value;
       setInput((current) => ({ ...current, [field]: value }));
     };
+  const changeSlug = (event: ChangeEvent<HTMLInputElement>) => {
+    const slug = normalizeRestaurantSlugInput(event.currentTarget.value);
+    setInput((current) => ({ ...current, slug }));
+  };
   const changeCuisine = (value: string | null) =>
     setInput((current) => ({
       ...current,
@@ -143,7 +148,11 @@ export function RestaurantFormDialog({
                 label={t("slug")}
                 placeholder={t("placeholders.slug")}
                 value={input.slug ?? ""}
-                onChange={change("slug")}
+                onChange={changeSlug}
+                onBlur={() => setInput((current) => ({
+                  ...current,
+                  slug: current.slug?.replace(/-+$/, "") ?? "",
+                }))}
                 disabled={editing}
                 required
                 maxLength={160}
