@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   async rewrites() {
     const backend = process.env.API_BASE_URL ?? "http://localhost:8080";
-    return ["auth", "customer", "owner", "admin"].map((scope) => ({
+    return ["auth", "customer", "owner", "admin", "locations"].map((scope) => ({
       source: `/api/${scope}/:path*`,
       destination: `${backend}/api/${scope}/:path*`,
     }));
