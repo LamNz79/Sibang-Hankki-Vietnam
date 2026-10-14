@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api/client";
 import { apiEndpoints } from "@/lib/api/endpoints";
+import { getCsrfToken } from "@/features/auth/data/session";
 
 export type SystemAdminUserRole = "CUSTOMER" | "OWNER" | "STAFF" | "ADMIN";
 export type SystemAdminUserStatus = "ACTIVE" | "SUSPENDED" | "CLOSED";
@@ -85,5 +86,37 @@ export function getSystemAdminRestaurants(
   return apiFetch<SystemAdminPage<SystemAdminRestaurant>>(
     `${apiEndpoints.systemAdminRestaurants}?${searchParams(params)}`,
     { cache: "no-store", signal },
+  );
+}
+
+async function updateStatus<T>(path: string, status: string) {
+  const csrf = await getCsrfToken();
+  return apiFetch<T>(path, {
+    method: "PATCH",
+    headers: { [csrf.headerName]: csrf.token },
+    body: JSON.stringify({ status }),
+  });
+}
+
+export function updateSystemAdminUserStatus(
+  id: string,
+  status: Extract<SystemAdminUserStatus, "ACTIVE" | "SUSPENDED">,
+) {
+  return updateStatus<SystemAdminUser>(
+    apiEndpoints.systemAdminUserStatus(id),
+    status,
+  );
+}
+
+export function updateSystemAdminRestaurantStatus(
+  id: string,
+  status: Extract<
+    SystemAdminRestaurantStatus,
+    "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
+  >,
+) {
+  return updateStatus<SystemAdminRestaurant>(
+    apiEndpoints.systemAdminRestaurantStatus(id),
+    status,
   );
 }

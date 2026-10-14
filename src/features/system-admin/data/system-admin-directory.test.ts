@@ -2,6 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getSystemAdminRestaurants,
   getSystemAdminUsers,
+  updateSystemAdminRestaurantStatus,
+  updateSystemAdminUserStatus,
 } from "./system-admin-directory";
 
 afterEach(() => {
@@ -39,6 +41,78 @@ describe("system admin directory API", () => {
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/admin/restaurants?page=0&size=10",
       expect.objectContaining({ cache: "no-store" }),
+    );
+  });
+
+  it("updates a user status with CSRF protection", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const user = {
+      id: "user-1",
+      userid: "customer",
+      email: null,
+      name: "Customer",
+      phone: null,
+      role: "CUSTOMER",
+      status: "SUSPENDED",
+      restaurantId: null,
+      statusChangedAt: "2026-10-13T08:00:00Z",
+      createdAt: "2026-10-01T08:00:00Z",
+      updatedAt: "2026-10-13T08:00:00Z",
+    };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json(user));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(updateSystemAdminUserStatus("user-1", "SUSPENDED"))
+      .resolves.toEqual(user);
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/admin/users/user-1/status",
+      expect.objectContaining({
+        method: "PATCH",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({ status: "SUSPENDED" }),
+      }),
+    );
+  });
+
+  it("updates a restaurant status with CSRF protection", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const restaurant = {
+      id: "restaurant-1",
+      slug: "royal-pavilion",
+      name: "The Royal Pavilion",
+      citySlug: "ho-chi-minh",
+      area: null,
+      district: null,
+      approvalStatus: "ACTIVE",
+      createdAt: "2026-10-01T08:00:00Z",
+      updatedAt: "2026-10-13T08:00:00Z",
+    };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json(restaurant));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(updateSystemAdminRestaurantStatus("restaurant-1", "ACTIVE"))
+      .resolves.toEqual(restaurant);
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/admin/restaurants/restaurant-1/status",
+      expect.objectContaining({
+        method: "PATCH",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({ status: "ACTIVE" }),
+      }),
     );
   });
 });

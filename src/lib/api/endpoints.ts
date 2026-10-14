@@ -69,4 +69,8 @@ export const apiEndpoints = {
   ownerCheckIns: "/api/owner/check-ins",
   systemAdminUsers: "/api/admin/users",
   systemAdminRestaurants: "/api/admin/restaurants",
+  systemAdminUserStatus: (id: string) =>
+    `/api/admin/users/${seg(id)}/status`,
+  systemAdminRestaurantStatus: (id: string) =>
+    `/api/admin/restaurants/${seg(id)}/status`,
 } as const;

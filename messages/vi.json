@@ -450,15 +450,31 @@
     "users": {
       "title": "Người dùng", "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.", "loadError": "Không thể tải danh sách người dùng.", "empty": "Không có người dùng phù hợp với bộ lọc.",
       "filters": { "search": "Tìm userid, tên hoặc email", "role": "Lọc theo vai trò", "status": "Lọc theo trạng thái", "allRoles": "Tất cả vai trò", "allStatuses": "Tất cả trạng thái" },
-      "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo" },
+      "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo", "actions": "Thao tác" },
       "statuses": { "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm khóa", "CLOSED": "Đã đóng" },
+      "actions": {
+        "openMenu": "Mở thao tác cho {name}", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
+        "suspendTitle": "Tạm khóa {name}?", "suspendDescription": "Người dùng sẽ bị đăng xuất khỏi phiên hiện tại và không thể đăng nhập cho đến khi được kích hoạt lại.",
+        "reactivateTitle": "Kích hoạt lại {name}?", "reactivateDescription": "Người dùng sẽ có thể đăng nhập lại.",
+        "suspendedSuccess": "Đã tạm khóa {name}.", "reactivatedSuccess": "Đã kích hoạt lại {name}.", "error": "Không thể cập nhật trạng thái người dùng."
+      },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "restaurants": {
       "title": "Nhà hàng", "description": "Kiểm tra nhà hàng ở tất cả trạng thái phê duyệt.", "loadError": "Không thể tải danh sách nhà hàng.", "empty": "Không có nhà hàng phù hợp với bộ lọc.",
       "filters": { "search": "Tìm tên hoặc slug", "city": "Slug thành phố", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái" },
-      "table": { "restaurant": "Nhà hàng", "city": "Thành phố", "location": "Khu vực / quận", "status": "Trạng thái phê duyệt", "created": "Ngày tạo" },
+      "table": { "restaurant": "Nhà hàng", "city": "Thành phố", "location": "Khu vực / quận", "status": "Trạng thái phê duyệt", "created": "Ngày tạo", "actions": "Thao tác" },
       "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
+      "actions": {
+        "openMenu": "Mở thao tác cho {name}", "approve": "Phê duyệt", "reactivate": "Kích hoạt lại", "requestChanges": "Yêu cầu chỉnh sửa", "suspend": "Tạm ngưng", "cancel": "Hủy", "error": "Không thể cập nhật trạng thái nhà hàng.",
+        "success": { "approve": "Đã phê duyệt {name}.", "reactivate": "Đã kích hoạt lại {name}.", "requestChanges": "Đã yêu cầu {name} chỉnh sửa thông tin.", "suspend": "Đã tạm ngưng {name}." },
+        "dialog": {
+          "approve": { "title": "Phê duyệt {name}?", "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới." },
+          "reactivate": { "title": "Kích hoạt lại {name}?", "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới trở lại." },
+          "requestChanges": { "title": "Yêu cầu {name} chỉnh sửa?", "description": "Nhà hàng sẽ chưa hoạt động cho đến khi thông tin được sửa và gửi lại." },
+          "suspend": { "title": "Tạm ngưng {name}?", "description": "Nhà hàng sẽ bị ẩn khỏi khu vực công khai và không thể nhận đặt bàn mới." }
+        }
+      },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     }
   },

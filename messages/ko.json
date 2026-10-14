@@ -450,15 +450,31 @@
     "users": {
       "title": "사용자", "description": "시스템 계정을 검색하고 확인합니다.", "loadError": "사용자 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 사용자가 없습니다.",
       "filters": { "search": "아이디, 이름 또는 이메일 검색", "role": "역할 필터", "status": "상태 필터", "allRoles": "모든 역할", "allStatuses": "모든 상태" },
-      "table": { "user": "사용자", "contact": "연락처", "role": "역할", "status": "상태", "restaurant": "레스토랑 ID", "created": "생성일" },
+      "table": { "user": "사용자", "contact": "연락처", "role": "역할", "status": "상태", "restaurant": "레스토랑 ID", "created": "생성일", "actions": "작업" },
       "statuses": { "ACTIVE": "활성", "SUSPENDED": "정지", "CLOSED": "폐쇄" },
+      "actions": {
+        "openMenu": "{name} 작업 열기", "suspend": "정지", "reactivate": "재활성화", "cancel": "취소",
+        "suspendTitle": "{name} 계정을 정지할까요?", "suspendDescription": "현재 세션이 종료되며 재활성화될 때까지 로그인할 수 없습니다.",
+        "reactivateTitle": "{name} 계정을 재활성화할까요?", "reactivateDescription": "사용자가 다시 로그인할 수 있습니다.",
+        "suspendedSuccess": "{name} 계정을 정지했습니다.", "reactivatedSuccess": "{name} 계정을 재활성화했습니다.", "error": "사용자 상태를 변경할 수 없습니다."
+      },
       "pagination": { "rowsPerPage": "페이지당 행 수" }
     },
     "restaurants": {
       "title": "레스토랑", "description": "모든 승인 상태의 레스토랑을 확인합니다.", "loadError": "레스토랑 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 레스토랑이 없습니다.",
       "filters": { "search": "이름 또는 슬러그 검색", "city": "도시 슬러그", "status": "상태 필터", "allStatuses": "모든 상태" },
-      "table": { "restaurant": "레스토랑", "city": "도시", "location": "지역 / 구", "status": "승인 상태", "created": "생성일" },
+      "table": { "restaurant": "레스토랑", "city": "도시", "location": "지역 / 구", "status": "승인 상태", "created": "생성일", "actions": "작업" },
       "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
+      "actions": {
+        "openMenu": "{name} 작업 열기", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.",
+        "success": { "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
+        "dialog": {
+          "approve": { "title": "{name}을(를) 승인할까요?", "description": "레스토랑이 공개되고 새 예약을 받을 수 있습니다." },
+          "reactivate": { "title": "{name}을(를) 재활성화할까요?", "description": "레스토랑이 다시 공개되고 새 예약을 받을 수 있습니다." },
+          "requestChanges": { "title": "{name}에 수정을 요청할까요?", "description": "정보를 수정하고 다시 제출할 때까지 레스토랑은 비활성 상태로 유지됩니다." },
+          "suspend": { "title": "{name}을(를) 정지할까요?", "description": "레스토랑이 공개 목록에서 숨겨지고 새 예약을 받을 수 없습니다." }
+        }
+      },
       "pagination": { "rowsPerPage": "페이지당 행 수" }
     }
   },

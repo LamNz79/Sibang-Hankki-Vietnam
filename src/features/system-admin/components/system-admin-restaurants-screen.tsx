@@ -1,10 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Alert, Group, Select, Stack, Text, TextInput, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Group,
+  Menu,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { IconSearch } from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
+import { IconDotsVertical, IconSearch } from "@tabler/icons-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
@@ -12,7 +23,9 @@ import {
   getSystemAdminRestaurants,
   type SystemAdminRestaurant,
   type SystemAdminRestaurantStatus,
+  updateSystemAdminRestaurantStatus,
 } from "@/features/system-admin/data/system-admin-directory";
+import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
 import { uiColors } from "@/theme";
 
 const pageSizes = [10, 20, 50, 100];
@@ -24,9 +37,28 @@ const statusTones = {
   SUSPENDED: "error",
 } as const;
 
+type RestaurantStatusTarget = Extract<
+  SystemAdminRestaurantStatus,
+  "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
+>;
+
+type RestaurantStatusAction = {
+  restaurant: SystemAdminRestaurant;
+  target: RestaurantStatusTarget;
+};
+
+function actionKey(action: RestaurantStatusAction) {
+  if (action.target === "CHANGES_REQUESTED") return "requestChanges" as const;
+  if (action.target === "SUSPENDED") return "suspend" as const;
+  return action.restaurant.approvalStatus === "PENDING"
+    ? "approve" as const
+    : "reactivate" as const;
+}
+
 export function SystemAdminRestaurantsScreen() {
   const t = useTranslations("SystemAdmin.restaurants");
   const format = useFormatter();
+  const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
   const [status, setStatus] = useState<SystemAdminRestaurantStatus | "all">("all");
@@ -34,6 +66,7 @@ export function SystemAdminRestaurantsScreen() {
   const [debouncedCity] = useDebouncedValue(citySlug, 350);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
+  const [statusAction, setStatusAction] = useState<RestaurantStatusAction | null>(null);
   const restaurantsQuery = useQuery({
     queryKey: ["system-admin-restaurants", page, pageSize, debouncedQuery, status, debouncedCity],
     queryFn: ({ signal }) => getSystemAdminRestaurants({
@@ -45,6 +78,22 @@ export function SystemAdminRestaurantsScreen() {
     }, signal),
     placeholderData: (previous) => previous,
     retry: false,
+  });
+  const statusMutation = useMutation({
+    mutationFn: ({ restaurant, target }: RestaurantStatusAction) =>
+      updateSystemAdminRestaurantStatus(restaurant.id, target),
+    onSuccess: (_updated, action) => {
+      setStatusAction(null);
+      notifications.show({
+        color: "teal",
+        message: t(`actions.success.${actionKey(action)}`, {
+          name: action.restaurant.name,
+        }),
+      });
+    },
+    onError: () => notifications.show({ color: "red", message: t("actions.error") }),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["system-admin-restaurants"] }),
   });
   const columns: DataTableColumn<SystemAdminRestaurant>[] = [
     {
@@ -86,6 +135,46 @@ export function SystemAdminRestaurantsScreen() {
       width: 150,
       render: (restaurant) =>
         format.dateTime(new Date(restaurant.createdAt), { dateStyle: "medium" }),
+    },
+    {
+      accessor: "actions",
+      title: t("table.actions"),
+      width: 80,
+      textAlign: "right",
+      render: (restaurant) => {
+        const targets: RestaurantStatusTarget[] =
+          restaurant.approvalStatus === "PENDING"
+            ? ["ACTIVE", "CHANGES_REQUESTED"]
+            : restaurant.approvalStatus === "ACTIVE"
+              ? ["SUSPENDED"]
+              : restaurant.approvalStatus === "SUSPENDED"
+                ? ["ACTIVE"]
+                : [];
+        if (targets.length === 0) return "-";
+        return (
+          <Menu position="bottom-end" withinPortal>
+            <Menu.Target>
+              <ActionIcon
+                variant="subtle"
+                aria-label={t("actions.openMenu", { name: restaurant.name })}
+              >
+                <IconDotsVertical size={18} />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {targets.map((target) => (
+                <Menu.Item
+                  key={target}
+                  color={target === "SUSPENDED" ? "red" : undefined}
+                  onClick={() => setStatusAction({ restaurant, target })}
+                >
+                  {t(`actions.${actionKey({ restaurant, target })}`)}
+                </Menu.Item>
+              ))}
+            </Menu.Dropdown>
+          </Menu>
+        );
+      },
     },
   ];
   const resetPage = () => setPage(1);
@@ -155,6 +244,27 @@ export function SystemAdminRestaurantsScreen() {
         recordsPerPageOptions={pageSizes}
         recordsPerPageLabel={t("pagination.rowsPerPage")}
         noRecordsText={t("empty")}
+      />
+      <StatusActionDialog
+        opened={statusAction !== null}
+        title={statusAction
+          ? t(`actions.dialog.${actionKey(statusAction)}.title`, {
+              name: statusAction.restaurant.name,
+            })
+          : ""}
+        description={statusAction
+          ? t(`actions.dialog.${actionKey(statusAction)}.description`)
+          : ""}
+        cancelLabel={t("actions.cancel")}
+        confirmLabel={statusAction ? t(`actions.${actionKey(statusAction)}`) : ""}
+        danger={statusAction?.target === "SUSPENDED"}
+        loading={statusMutation.isPending}
+        onClose={() => {
+          if (!statusMutation.isPending) setStatusAction(null);
+        }}
+        onConfirm={() => {
+          if (statusAction) statusMutation.mutate(statusAction);
+        }}
       />
     </Stack>
   );

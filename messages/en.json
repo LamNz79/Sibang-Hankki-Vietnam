@@ -502,15 +502,31 @@
     "users": {
       "title": "Users", "description": "Search and review every active system account.", "loadError": "Could not load users.", "empty": "No users match these filters.",
       "filters": { "search": "Search userid, name, or email", "role": "Filter by role", "status": "Filter by status", "allRoles": "All roles", "allStatuses": "All statuses" },
-      "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created" },
+      "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created", "actions": "Actions" },
       "statuses": { "ACTIVE": "Active", "SUSPENDED": "Suspended", "CLOSED": "Closed" },
+      "actions": {
+        "openMenu": "Open actions for {name}", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
+        "suspendTitle": "Suspend {name}?", "suspendDescription": "This user will lose their current session and cannot sign in until reactivated.",
+        "reactivateTitle": "Reactivate {name}?", "reactivateDescription": "This user will be able to sign in again.",
+        "suspendedSuccess": "{name} has been suspended.", "reactivatedSuccess": "{name} has been reactivated.", "error": "Could not update the user status."
+      },
       "pagination": { "rowsPerPage": "Rows per page" }
     },
     "restaurants": {
       "title": "Restaurants", "description": "Review restaurants across every approval status.", "loadError": "Could not load restaurants.", "empty": "No restaurants match these filters.",
       "filters": { "search": "Search name or slug", "city": "City slug", "status": "Filter by status", "allStatuses": "All statuses" },
-      "table": { "restaurant": "Restaurant", "city": "City", "location": "Area / district", "status": "Approval status", "created": "Created" },
+      "table": { "restaurant": "Restaurant", "city": "City", "location": "Area / district", "status": "Approval status", "created": "Created", "actions": "Actions" },
       "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
+      "actions": {
+        "openMenu": "Open actions for {name}", "approve": "Approve", "reactivate": "Reactivate", "requestChanges": "Request changes", "suspend": "Suspend", "cancel": "Cancel", "error": "Could not update the restaurant status.",
+        "success": { "approve": "{name} has been approved.", "reactivate": "{name} has been reactivated.", "requestChanges": "Changes have been requested from {name}.", "suspend": "{name} has been suspended." },
+        "dialog": {
+          "approve": { "title": "Approve {name}?", "description": "The restaurant will become visible and available for new bookings." },
+          "reactivate": { "title": "Reactivate {name}?", "description": "The restaurant will become visible and available for new bookings again." },
+          "requestChanges": { "title": "Request changes from {name}?", "description": "The restaurant will remain unavailable until its information is corrected and submitted again." },
+          "suspend": { "title": "Suspend {name}?", "description": "The restaurant will be removed from public discovery and cannot receive new bookings." }
+        }
+      },
       "pagination": { "rowsPerPage": "Rows per page" }
     }
   },
