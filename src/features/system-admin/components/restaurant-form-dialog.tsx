@@ -102,8 +102,10 @@ export function RestaurantFormDialog({
     retry: false,
   });
   const change = (field: keyof SystemAdminRestaurantInput) =>
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setInput((current) => ({ ...current, [field]: event.currentTarget.value }));
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = event.currentTarget.value;
+      setInput((current) => ({ ...current, [field]: value }));
+    };
   const changeCuisine = (value: string | null) =>
     setInput((current) => ({
       ...current,
