@@ -141,6 +141,8 @@ export function RestaurantFormDialog({
             <SimpleGrid cols={{ base: 1, sm: 2 }}>
               <TextInput
                 label={t("slug")}
+                description={t("slugDescription")}
+                placeholder={t("placeholders.slug")}
                 value={input.slug ?? ""}
                 onChange={change("slug")}
                 disabled={editing}
@@ -150,6 +152,7 @@ export function RestaurantFormDialog({
               />
               <TextInput
                 label={t("name")}
+                placeholder={t("placeholders.name")}
                 value={input.name}
                 onChange={change("name")}
                 required
@@ -199,6 +202,7 @@ export function RestaurantFormDialog({
               />
               <TextInput
                 label={t("timezone")}
+                placeholder={t("placeholders.timezone")}
                 value={input.timezone}
                 onChange={change("timezone")}
                 required
@@ -206,6 +210,7 @@ export function RestaurantFormDialog({
               />
               <TextInput
                 label={t("phone")}
+                placeholder={t("placeholders.phone")}
                 value={input.phone}
                 onChange={change("phone")}
                 maxLength={30}
@@ -213,12 +218,15 @@ export function RestaurantFormDialog({
               <TextInput
                 label={t("email")}
                 type="email"
+                placeholder={t("placeholders.email")}
                 value={input.email}
                 onChange={change("email")}
                 maxLength={320}
               />
               <TextInput
                 label={t("priceRange")}
+                description={t("priceRangeDescription")}
+                placeholder={t("placeholders.priceRange")}
                 value={input.priceRange}
                 onChange={change("priceRange")}
                 maxLength={40}
@@ -229,6 +237,7 @@ export function RestaurantFormDialog({
             ) : null}
             <Textarea
               label={t("address")}
+              placeholder={t("placeholders.address")}
               value={input.address}
               onChange={change("address")}
               autosize
@@ -236,6 +245,7 @@ export function RestaurantFormDialog({
             />
             <Textarea
               label={t("description")}
+              placeholder={t("placeholders.description")}
               value={input.description}
               onChange={change("description")}
               autosize
