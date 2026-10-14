@@ -9,9 +9,11 @@ const workspaces = [
   { key: "customer", href: "/" },
   { key: "owner", href: "/owner" },
   { key: "admin", href: "/admin" },
+  { key: "systemAdmin", href: "/system-admin" },
 ] as const;
 
 export function getWorkspace(pathname: string) {
+  if (pathname.startsWith("/system-admin")) return "systemAdmin";
   if (pathname.startsWith("/admin")) return "admin";
   if (pathname.startsWith("/owner")) return "owner";
   return "customer";
