@@ -446,7 +446,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "assignments": "Phân quyền nhà hàng" } },
+    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "reservations": "Đặt bàn", "assignments": "Phân quyền nhà hàng" } },
     "dashboard": {
       "title": "Tổng quan hệ thống", "description": "Theo dõi nhanh người dùng, nhà hàng và các công việc cần xử lý.", "loadError": "Không thể tải đầy đủ số liệu tổng quan.", "viewAll": "Xem tất cả",
       "metrics": { "users": { "label": "Người dùng", "detail": "Tất cả tài khoản trong hệ thống" }, "restaurants": { "label": "Nhà hàng", "detail": "{count} nhà hàng đang hoạt động" }, "pending": { "label": "Chờ duyệt", "detail": "Nhà hàng cần quản trị viên xem xét" }, "assignments": { "label": "Phân quyền", "detail": "Tài khoản OWNER và STAFF đã liên kết" } },
@@ -486,6 +486,21 @@
       },
       "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug (đường dẫn)", "name": "Tên nhà hàng", "province": "Tỉnh/Thành phố", "selectProvince": "Chọn tỉnh hoặc thành phố", "ward": "Phường/Xã/Đặc khu", "selectWard": "Chọn phường, xã hoặc đặc khu", "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước", "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá trung bình/người", "address": "Địa chỉ chi tiết", "description": "Mô tả", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K/người", "address": "123 Nguyễn Huệ", "description": "Giới thiệu ngắn về phong cách ẩm thực và không gian nhà hàng" }, "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+    },
+    "reservations": {
+      "title": "Đặt bàn", "description": "Xem lượt đặt bàn của tất cả nhà hàng trong hệ thống.", "loadError": "Không thể tải danh sách đặt bàn.", "empty": "Không có lượt đặt bàn phù hợp với bộ lọc.", "details": "Chi tiết", "guests": "{count} khách",
+      "filters": { "search": "Tìm mã đặt bàn, khách hàng, số điện thoại hoặc email", "restaurant": "Lọc theo nhà hàng", "allRestaurants": "Tất cả nhà hàng", "noRestaurants": "Không tìm thấy nhà hàng", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái", "dateFrom": "Từ ngày", "dateTo": "Đến ngày" },
+      "table": { "reference": "Mã đặt bàn", "restaurant": "Nhà hàng", "customer": "Khách hàng", "schedule": "Thời gian / Số khách", "status": "Trạng thái" },
+      "statuses": { "PENDING": "Chờ xác nhận", "CONFIRMED": "Đã xác nhận", "CHECKED_IN": "Đã đến", "COMPLETED": "Hoàn tất", "CANCELLED": "Đã hủy", "DECLINED": "Đã từ chối", "NO_SHOW": "Không đến" },
+      "pagination": { "rowsPerPage": "Số dòng mỗi trang" },
+      "detail": {
+        "title": "Chi tiết đặt bàn", "back": "Quay lại danh sách", "loading": "Đang tải chi tiết đặt bàn...", "loadError": "Không thể tải chi tiết đặt bàn.", "notAvailable": "Không có",
+        "reservation": { "title": "Thông tin đặt bàn", "start": "Bắt đầu", "end": "Kết thúc", "partySize": "Số khách", "request": "Yêu cầu đặc biệt", "preOrder": "Đặt món trước" },
+        "customer": { "title": "Khách hàng", "name": "Họ tên", "phone": "Số điện thoại", "email": "Email" },
+        "restaurant": { "title": "Nhà hàng", "name": "Tên nhà hàng", "slug": "Slug", "id": "ID nhà hàng" },
+        "status": { "title": "Trạng thái hệ thống", "booking": "Đặt bàn", "visit": "Lượt đến", "created": "Ngày tạo", "updated": "Cập nhật gần nhất" },
+        "proposal": { "title": "Đề xuất thời gian khác", "time": "Thời gian đề xuất", "status": "Trạng thái", "respondBy": "Hạn phản hồi", "message": "Lời nhắn" }
+      }
     },
     "assignments": {
       "title": "Phân quyền nhà hàng", "description": "Liên kết chủ nhà hàng và nhân viên với nhà hàng họ được quản lý.", "loadError": "Không thể tải danh sách phân quyền.", "empty": "Không có phân quyền phù hợp với bộ lọc.",

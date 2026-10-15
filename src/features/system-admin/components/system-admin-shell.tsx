@@ -14,6 +14,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconBuildingStore,
+  IconCalendarEvent,
   IconLayoutDashboard,
   IconLink,
   IconUsers,
@@ -30,6 +31,11 @@ const navigation = [
     href: "/system-admin/restaurants",
     key: "restaurants",
     icon: IconBuildingStore,
+  },
+  {
+    href: "/system-admin/reservations",
+    key: "reservations",
+    icon: IconCalendarEvent,
   },
   { href: "/system-admin/assignments", key: "assignments", icon: IconLink },
 ] as const;
