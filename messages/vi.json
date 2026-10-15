@@ -453,11 +453,12 @@
       "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo", "actions": "Thao tác" },
       "statuses": { "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm khóa", "CLOSED": "Đã đóng" },
       "actions": {
-        "openMenu": "Mở thao tác cho {name}", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
+        "openMenu": "Mở thao tác cho {name}", "create": "Thêm người dùng", "edit": "Sửa thông tin", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
         "suspendTitle": "Tạm khóa {name}?", "suspendDescription": "Người dùng sẽ bị đăng xuất khỏi phiên hiện tại và không thể đăng nhập cho đến khi được kích hoạt lại.",
         "reactivateTitle": "Kích hoạt lại {name}?", "reactivateDescription": "Người dùng sẽ có thể đăng nhập lại.",
-        "suspendedSuccess": "Đã tạm khóa {name}.", "reactivatedSuccess": "Đã kích hoạt lại {name}.", "error": "Không thể cập nhật trạng thái người dùng."
+        "suspendedSuccess": "Đã tạm khóa {name}.", "reactivatedSuccess": "Đã kích hoạt lại {name}.", "error": "Không thể cập nhật trạng thái người dùng.", "created": "Đã tạo tài khoản cho {name}.", "updated": "Đã cập nhật thông tin của {name}.", "saveError": "Không thể lưu người dùng. Hãy kiểm tra thông tin hoặc userid đã tồn tại."
       },
+      "form": { "createTitle": "Thêm người dùng", "editTitle": "Sửa người dùng", "description": "Tài khoản mới được tạo với vai trò khách hàng. Gán quyền nhà hàng tại trang Phân quyền nhà hàng.", "userid": "Tên đăng nhập", "useridHint": "Từ 3 đến 30 ký tự và không thể đổi sau khi tạo.", "name": "Họ và tên", "email": "Email (không bắt buộc)", "phone": "Số điện thoại (không bắt buộc)", "password": "Mật khẩu tạm thời", "passwordHint": "Từ 8 đến 72 ký tự. Hãy gửi mật khẩu cho người dùng qua kênh an toàn.", "placeholders": { "userid": "nguyenan", "name": "Nguyễn Văn An", "email": "an@example.com", "phone": "0901 234 567", "password": "Ít nhất 8 ký tự" }, "cancel": "Hủy", "create": "Tạo người dùng", "save": "Lưu thay đổi" },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "restaurants": {

@@ -68,6 +68,7 @@ export const apiEndpoints = {
     `/api/owner/reservations/${seg(id)}/complete`,
   ownerCheckIns: "/api/owner/check-ins",
   systemAdminUsers: "/api/admin/users",
+  systemAdminUser: (id: string) => `/api/admin/users/${seg(id)}`,
   systemAdminRestaurants: "/api/admin/restaurants",
   systemAdminRestaurantAssignments: "/api/admin/restaurant-assignments",
   systemAdminRestaurantAssignment: (userId: string) =>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   ActionIcon,
   Alert,
+  Button,
   Group,
   Menu,
   Select,
@@ -14,19 +15,24 @@ import {
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconDotsVertical, IconSearch } from "@tabler/icons-react";
+import { IconDotsVertical, IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
+  createSystemAdminUser,
   getSystemAdminUsers,
   type SystemAdminUser,
+  type SystemAdminUserCreateInput,
   type SystemAdminUserRole,
   type SystemAdminUserStatus,
+  type SystemAdminUserUpdateInput,
+  updateSystemAdminUser,
   updateSystemAdminUserStatus,
 } from "@/features/system-admin/data/system-admin-directory";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
+import { SystemAdminUserDialog } from "@/features/system-admin/components/system-admin-user-dialog";
 import { uiColors } from "@/theme";
 
 const pageSizes = [10, 20, 50, 100];
@@ -51,6 +57,7 @@ export function SystemAdminUsersScreen() {
   const [status, setStatus] = useState<SystemAdminUserStatus | "all">("all");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
+  const [editor, setEditor] = useState<"create" | SystemAdminUser | null>(null);
   const [statusAction, setStatusAction] = useState<UserStatusAction | null>(null);
   const usersQuery = useQuery({
     queryKey: ["system-admin-users", page, pageSize, debouncedQuery, role, status],
@@ -77,6 +84,24 @@ export function SystemAdminUsersScreen() {
       });
     },
     onError: () => notifications.show({ color: "red", message: t("actions.error") }),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["system-admin-users"] }),
+  });
+  const saveMutation = useMutation({
+    mutationFn: (input: SystemAdminUserCreateInput | SystemAdminUserUpdateInput) =>
+      editor === "create"
+        ? createSystemAdminUser(input as SystemAdminUserCreateInput)
+        : updateSystemAdminUser(editor!.id, input as SystemAdminUserUpdateInput),
+    onSuccess: (user) => {
+      setEditor(null);
+      notifications.show({
+        color: "teal",
+        message: editor === "create"
+          ? t("actions.created", { name: user.name })
+          : t("actions.updated", { name: user.name }),
+      });
+    },
+    onError: () => notifications.show({ color: "red", message: t("actions.saveError") }),
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["system-admin-users"] }),
   });
@@ -124,7 +149,7 @@ export function SystemAdminUsersScreen() {
       accessor: "restaurantId",
       title: t("table.restaurant"),
       width: 220,
-      render: (user) => user.restaurantId ?? "-",
+      render: (user) => user.restaurantName ?? "-",
     },
     {
       accessor: "createdAt",
@@ -152,6 +177,9 @@ export function SystemAdminUsersScreen() {
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
+              <Menu.Item onClick={() => setEditor(user)}>
+                {t("actions.edit")}
+              </Menu.Item>
               <Menu.Item
                 color={target === "SUSPENDED" ? "red" : "teal"}
                 onClick={() => setStatusAction({ user, target })}
@@ -170,10 +198,19 @@ export function SystemAdminUsersScreen() {
 
   return (
     <Stack gap="xl">
-      <Stack gap={3}>
-        <Title order={1}>{t("title")}</Title>
-        <Text c={uiColors.textSecondary}>{t("description")}</Text>
-      </Stack>
+      <Group justify="space-between" align="flex-end">
+        <Stack gap={3}>
+          <Title order={1}>{t("title")}</Title>
+          <Text c={uiColors.textSecondary}>{t("description")}</Text>
+        </Stack>
+        <Button
+          leftSection={<IconUserPlus size={17} />}
+          color="warmCoral"
+          onClick={() => setEditor("create")}
+        >
+          {t("actions.create")}
+        </Button>
+      </Group>
       <Group align="flex-end" gap="sm">
         <TextInput
           value={query}
@@ -259,6 +296,17 @@ export function SystemAdminUsersScreen() {
           if (statusAction) statusMutation.mutate(statusAction);
         }}
       />
+      {editor !== null ? (
+        <SystemAdminUserDialog
+          key={editor === "create" ? "create" : editor.id}
+          user={editor === "create" ? null : editor}
+          submitting={saveMutation.isPending}
+          onClose={() => {
+            if (!saveMutation.isPending) setEditor(null);
+          }}
+          onSubmit={(input) => saveMutation.mutate(input)}
+        />
+      ) : null}
     </Stack>
   );
 }

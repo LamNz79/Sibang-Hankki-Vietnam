@@ -453,11 +453,12 @@
       "table": { "user": "사용자", "contact": "연락처", "role": "역할", "status": "상태", "restaurant": "레스토랑 ID", "created": "생성일", "actions": "작업" },
       "statuses": { "ACTIVE": "활성", "SUSPENDED": "정지", "CLOSED": "폐쇄" },
       "actions": {
-        "openMenu": "{name} 작업 열기", "suspend": "정지", "reactivate": "재활성화", "cancel": "취소",
+        "openMenu": "{name} 작업 열기", "create": "사용자 추가", "edit": "정보 수정", "suspend": "정지", "reactivate": "재활성화", "cancel": "취소",
         "suspendTitle": "{name} 계정을 정지할까요?", "suspendDescription": "현재 세션이 종료되며 재활성화될 때까지 로그인할 수 없습니다.",
         "reactivateTitle": "{name} 계정을 재활성화할까요?", "reactivateDescription": "사용자가 다시 로그인할 수 있습니다.",
-        "suspendedSuccess": "{name} 계정을 정지했습니다.", "reactivatedSuccess": "{name} 계정을 재활성화했습니다.", "error": "사용자 상태를 변경할 수 없습니다."
+        "suspendedSuccess": "{name} 계정을 정지했습니다.", "reactivatedSuccess": "{name} 계정을 재활성화했습니다.", "error": "사용자 상태를 변경할 수 없습니다.", "created": "{name}의 계정을 생성했습니다.", "updated": "{name}의 정보를 업데이트했습니다.", "saveError": "사용자를 저장할 수 없습니다. 정보 또는 아이디 중복 여부를 확인하세요."
       },
+      "form": { "createTitle": "사용자 추가", "editTitle": "사용자 수정", "description": "새 계정은 고객 역할로 생성됩니다. 레스토랑 권한 페이지에서 권한을 할당하세요.", "userid": "로그인 아이디", "useridHint": "3~30자를 사용하세요. 생성 후 변경할 수 없습니다.", "name": "이름", "email": "이메일 (선택)", "phone": "전화번호 (선택)", "password": "임시 비밀번호", "passwordHint": "8~72자를 사용하고 안전한 채널로 전달하세요.", "placeholders": { "userid": "nguyenan", "name": "Nguyen Van An", "email": "an@example.com", "phone": "0901 234 567", "password": "8자 이상" }, "cancel": "취소", "create": "사용자 생성", "save": "변경 사항 저장" },
       "pagination": { "rowsPerPage": "페이지당 행 수" }
     },
     "restaurants": {
