@@ -75,6 +75,12 @@ export const apiEndpoints = {
     `/api/admin/restaurant-assignments/${seg(userId)}`,
   systemAdminRestaurant: (id: string) =>
     `/api/admin/restaurants/${seg(id)}`,
+  systemAdminRestaurantBookingSettings: (id: string) =>
+    `/api/admin/restaurants/${seg(id)}/booking-settings`,
+  systemAdminRestaurantBusinessHours: (id: string) =>
+    `/api/admin/restaurants/${seg(id)}/business-hours`,
+  regenerateSystemAdminRestaurantSlots: (id: string) =>
+    `/api/admin/restaurants/${seg(id)}/booking-slots/regenerate`,
   systemAdminReservations: "/api/admin/reservations",
   systemAdminReservation: (id: string) =>
     `/api/admin/reservations/${seg(id)}`,
