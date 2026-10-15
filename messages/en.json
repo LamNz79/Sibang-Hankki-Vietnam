@@ -498,7 +498,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "users": "Users", "restaurants": "Restaurants" } },
+    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "users": "Users", "restaurants": "Restaurants", "assignments": "Restaurant access" } },
     "users": {
       "title": "Users", "description": "Search and review every active system account.", "loadError": "Could not load users.", "empty": "No users match these filters.",
       "filters": { "search": "Search userid, name, or email", "role": "Filter by role", "status": "Filter by status", "allRoles": "All roles", "allStatuses": "All statuses" },
@@ -528,6 +528,16 @@
         }
       },
       "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug (URL path)", "name": "Name", "province": "Province / city", "selectProvince": "Select a province or city", "ward": "Ward / commune / special zone", "selectWard": "Select a ward, commune, or special zone", "selectProvinceFirst": "Select a province or city first", "locationLoadError": "Could not load the location list. Try again.", "timezone": "Timezone", "cuisine": "Cuisine", "selectCuisine": "Select a cuisine", "cuisines": { "vietnamese": "Vietnamese", "korean": "Korean", "chinese": "Chinese", "japanese": "Japanese", "western": "Western" }, "phone": "Phone", "email": "Email", "priceRange": "Average price per guest", "address": "Detailed address", "description": "Description", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K per guest", "address": "123 Nguyen Hue Street", "description": "Briefly describe the restaurant's cuisine and atmosphere" }, "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
+      "pagination": { "rowsPerPage": "Rows per page" }
+    },
+    "assignments": {
+      "title": "Restaurant access", "description": "Link owners and staff to the restaurant they are allowed to manage.", "loadError": "Could not load restaurant access.", "empty": "No assignments match these filters.",
+      "filters": { "search": "Search user, email, or restaurant", "role": "Filter by role", "allRoles": "All roles" },
+      "table": { "user": "User", "restaurant": "Restaurant", "role": "Role", "restaurantStatus": "Restaurant status", "actions": "Actions" },
+      "roles": { "OWNER": "Owner", "STAFF": "Staff" },
+      "restaurantStatuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
+      "form": { "createTitle": "Add restaurant access", "editTitle": "Edit restaurant access", "description": "Each account can be linked to one restaurant only.", "user": "User", "userPlaceholder": "Search name, userid, or email", "restaurant": "Restaurant", "restaurantPlaceholder": "Search restaurant name or slug", "role": "Restaurant role", "noUsers": "No active customers found", "noRestaurants": "No restaurants found" },
+      "actions": { "create": "Add access", "edit": "Edit", "remove": "Remove access", "assign": "Assign", "save": "Save changes", "cancel": "Cancel", "openMenu": "Open actions for {name}", "saved": "Restaurant access updated for {name}.", "saveError": "Could not save access. Check the user and restaurant.", "removed": "Restaurant access removed for {name}.", "removeError": "Could not remove access.", "removeTitle": "Remove access for {name}?", "removeDescription": "This account will return to the customer role and will no longer manage the restaurant." },
       "pagination": { "rowsPerPage": "Rows per page" }
     }
   },

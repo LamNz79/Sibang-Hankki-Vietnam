@@ -12,7 +12,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconBuildingStore, IconUsers } from "@tabler/icons-react";
+import { IconBuildingStore, IconLink, IconUsers } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { LanguageSelect } from "@/features/i18n";
@@ -25,6 +25,7 @@ const navigation = [
     key: "restaurants",
     icon: IconBuildingStore,
   },
+  { href: "/system-admin/assignments", key: "assignments", icon: IconLink },
 ] as const;
 
 export function SystemAdminShell({ children }: { children: ReactNode }) {

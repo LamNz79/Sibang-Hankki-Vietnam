@@ -446,7 +446,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "users": "Người dùng", "restaurants": "Nhà hàng" } },
+    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "users": "Người dùng", "restaurants": "Nhà hàng", "assignments": "Phân quyền nhà hàng" } },
     "users": {
       "title": "Người dùng", "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.", "loadError": "Không thể tải danh sách người dùng.", "empty": "Không có người dùng phù hợp với bộ lọc.",
       "filters": { "search": "Tìm userid, tên hoặc email", "role": "Lọc theo vai trò", "status": "Lọc theo trạng thái", "allRoles": "Tất cả vai trò", "allStatuses": "Tất cả trạng thái" },
@@ -476,6 +476,16 @@
         }
       },
       "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug (đường dẫn)", "name": "Tên nhà hàng", "province": "Tỉnh/Thành phố", "selectProvince": "Chọn tỉnh hoặc thành phố", "ward": "Phường/Xã/Đặc khu", "selectWard": "Chọn phường, xã hoặc đặc khu", "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước", "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá trung bình/người", "address": "Địa chỉ chi tiết", "description": "Mô tả", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K/người", "address": "123 Nguyễn Huệ", "description": "Giới thiệu ngắn về phong cách ẩm thực và không gian nhà hàng" }, "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
+      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+    },
+    "assignments": {
+      "title": "Phân quyền nhà hàng", "description": "Liên kết chủ nhà hàng và nhân viên với nhà hàng họ được quản lý.", "loadError": "Không thể tải danh sách phân quyền.", "empty": "Không có phân quyền phù hợp với bộ lọc.",
+      "filters": { "search": "Tìm người dùng, email hoặc nhà hàng", "role": "Lọc theo vai trò", "allRoles": "Tất cả vai trò" },
+      "table": { "user": "Người dùng", "restaurant": "Nhà hàng", "role": "Vai trò", "restaurantStatus": "Trạng thái nhà hàng", "actions": "Thao tác" },
+      "roles": { "OWNER": "Chủ nhà hàng", "STAFF": "Nhân viên" },
+      "restaurantStatuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
+      "form": { "createTitle": "Thêm phân quyền", "editTitle": "Sửa phân quyền", "description": "Mỗi tài khoản chỉ có thể liên kết với một nhà hàng.", "user": "Người dùng", "userPlaceholder": "Tìm tên, userid hoặc email", "restaurant": "Nhà hàng", "restaurantPlaceholder": "Tìm tên hoặc slug nhà hàng", "role": "Vai trò tại nhà hàng", "noUsers": "Không tìm thấy khách hàng đang hoạt động", "noRestaurants": "Không tìm thấy nhà hàng" },
+      "actions": { "create": "Thêm phân quyền", "edit": "Sửa", "remove": "Gỡ liên kết", "assign": "Liên kết", "save": "Lưu thay đổi", "cancel": "Hủy", "openMenu": "Mở thao tác cho {name}", "saved": "Đã cập nhật phân quyền cho {name}.", "saveError": "Không thể lưu phân quyền. Hãy kiểm tra người dùng và nhà hàng.", "removed": "Đã gỡ liên kết của {name}.", "removeError": "Không thể gỡ liên kết.", "removeTitle": "Gỡ liên kết của {name}?", "removeDescription": "Tài khoản sẽ trở lại vai trò khách hàng và không còn quyền quản lý nhà hàng." },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     }
   },
