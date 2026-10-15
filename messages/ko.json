@@ -473,9 +473,11 @@
       "table": { "restaurant": "레스토랑", "city": "성/직할시", "location": "동/면/특별구", "status": "승인 상태", "created": "생성일", "actions": "작업" },
       "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
       "actions": {
-        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "edit": "정보 수정", "archive": "보관", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
-        "success": { "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
+        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "edit": "정보 수정", "archive": "보관", "submit": "검토 요청", "resubmit": "재검토 요청", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
+        "success": { "submit": "{name}을(를) 검토 요청했습니다.", "resubmit": "{name}을(를) 재검토 요청했습니다.", "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
         "dialog": {
+          "submit": { "title": "{name}을(를) 검토 요청할까요?", "description": "레스토랑이 시스템 관리자 검토 대기 상태로 변경됩니다." },
+          "resubmit": { "title": "{name}을(를) 재검토 요청할까요?", "description": "요청된 수정이 완료되었음을 확인하고 다시 제출합니다." },
           "approve": { "title": "{name}을(를) 승인할까요?", "description": "레스토랑이 공개되고 새 예약을 받을 수 있습니다." },
           "reactivate": { "title": "{name}을(를) 재활성화할까요?", "description": "레스토랑이 다시 공개되고 새 예약을 받을 수 있습니다." },
           "requestChanges": { "title": "{name}에 수정을 요청할까요?", "description": "정보를 수정하고 다시 제출할 때까지 레스토랑은 비활성 상태로 유지됩니다." },

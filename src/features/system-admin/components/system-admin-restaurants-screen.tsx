@@ -47,7 +47,7 @@ const statusTones = {
 
 type RestaurantStatusTarget = Extract<
   SystemAdminRestaurantStatus,
-  "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
+  "PENDING" | "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
 >;
 
 type RestaurantStatusAction = {
@@ -56,6 +56,11 @@ type RestaurantStatusAction = {
 };
 
 function actionKey(action: RestaurantStatusAction) {
+  if (action.target === "PENDING") {
+    return action.restaurant.approvalStatus === "DRAFT"
+      ? "submit" as const
+      : "resubmit" as const;
+  }
   if (action.target === "CHANGES_REQUESTED") return "requestChanges" as const;
   if (action.target === "SUSPENDED") return "suspend" as const;
   return action.restaurant.approvalStatus === "PENDING"
@@ -114,8 +119,10 @@ export function SystemAdminRestaurantsScreen() {
       });
     },
     onError: () => notifications.show({ color: "red", message: t("actions.error") }),
-    onSettled: () =>
+    onSettled: () => Promise.all([
       queryClient.invalidateQueries({ queryKey: ["system-admin-restaurants"] }),
+      queryClient.invalidateQueries({ queryKey: ["system-admin-dashboard"] }),
+    ]),
   });
   const saveMutation = useMutation({
     mutationFn: (input: SystemAdminRestaurantInput) =>
@@ -204,6 +211,9 @@ export function SystemAdminRestaurantsScreen() {
         const targets: RestaurantStatusTarget[] =
           restaurant.approvalStatus === "PENDING"
             ? ["ACTIVE", "CHANGES_REQUESTED"]
+            : restaurant.approvalStatus === "DRAFT" ||
+                restaurant.approvalStatus === "CHANGES_REQUESTED"
+              ? ["PENDING"]
             : restaurant.approvalStatus === "ACTIVE"
               ? ["SUSPENDED"]
               : restaurant.approvalStatus === "SUSPENDED"
