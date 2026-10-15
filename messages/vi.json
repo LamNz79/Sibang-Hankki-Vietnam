@@ -446,7 +446,13 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "users": "Người dùng", "restaurants": "Nhà hàng", "assignments": "Phân quyền nhà hàng" } },
+    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "assignments": "Phân quyền nhà hàng" } },
+    "dashboard": {
+      "title": "Tổng quan hệ thống", "description": "Theo dõi nhanh người dùng, nhà hàng và các công việc cần xử lý.", "loadError": "Không thể tải đầy đủ số liệu tổng quan.", "viewAll": "Xem tất cả",
+      "metrics": { "users": { "label": "Người dùng", "detail": "Tất cả tài khoản trong hệ thống" }, "restaurants": { "label": "Nhà hàng", "detail": "{count} nhà hàng đang hoạt động" }, "pending": { "label": "Chờ duyệt", "detail": "Nhà hàng cần quản trị viên xem xét" }, "assignments": { "label": "Phân quyền", "detail": "Tài khoản OWNER và STAFF đã liên kết" } },
+      "pending": { "title": "Nhà hàng chờ duyệt", "description": "Các hồ sơ cần được kiểm tra tiếp theo.", "status": "Chờ duyệt", "empty": "Hiện không có nhà hàng nào đang chờ duyệt." },
+      "quickActions": { "title": "Truy cập nhanh", "description": "Đi tới các khu vực quản trị chính.", "users": "Quản lý người dùng", "restaurants": "Quản lý nhà hàng", "assignments": "Quản lý phân quyền nhà hàng" }
+    },
     "users": {
       "title": "Người dùng", "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.", "loadError": "Không thể tải danh sách người dùng.", "empty": "Không có người dùng phù hợp với bộ lọc.",
       "filters": { "search": "Tìm userid, tên hoặc email", "role": "Lọc theo vai trò", "status": "Lọc theo trạng thái", "allRoles": "Tất cả vai trò", "allStatuses": "Tất cả trạng thái" },

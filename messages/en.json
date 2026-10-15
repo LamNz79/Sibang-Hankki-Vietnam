@@ -498,7 +498,13 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "users": "Users", "restaurants": "Restaurants", "assignments": "Restaurant access" } },
+    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "assignments": "Restaurant access" } },
+    "dashboard": {
+      "title": "System overview", "description": "Monitor users, restaurants, and work requiring attention.", "loadError": "Some overview data could not be loaded.", "viewAll": "View all",
+      "metrics": { "users": { "label": "Users", "detail": "All accounts across the platform" }, "restaurants": { "label": "Restaurants", "detail": "{count} active restaurants" }, "pending": { "label": "Pending review", "detail": "Restaurants requiring administrator review" }, "assignments": { "label": "Access assignments", "detail": "Linked OWNER and STAFF accounts" } },
+      "pending": { "title": "Restaurants pending review", "description": "Profiles requiring the next administrator action.", "status": "Pending", "empty": "No restaurants are currently pending review." },
+      "quickActions": { "title": "Quick access", "description": "Go to the main administration areas.", "users": "Manage users", "restaurants": "Manage restaurants", "assignments": "Manage restaurant access" }
+    },
     "users": {
       "title": "Users", "description": "Search and review every active system account.", "loadError": "Could not load users.", "empty": "No users match these filters.",
       "filters": { "search": "Search userid, name, or email", "role": "Filter by role", "status": "Filter by status", "allRoles": "All roles", "allStatuses": "All statuses" },

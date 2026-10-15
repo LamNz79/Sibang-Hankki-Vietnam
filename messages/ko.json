@@ -446,7 +446,13 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "시스템 관리", "toggleNavigation": "시스템 관리자 탐색 열기", "adminOnly": "관리자 전용", "navigation": { "users": "사용자", "restaurants": "레스토랑", "assignments": "레스토랑 권한" } },
+    "shell": { "title": "시스템 관리", "toggleNavigation": "시스템 관리자 탐색 열기", "adminOnly": "관리자 전용", "navigation": { "dashboard": "개요", "users": "사용자", "restaurants": "레스토랑", "assignments": "레스토랑 권한" } },
+    "dashboard": {
+      "title": "시스템 개요", "description": "사용자, 레스토랑 및 처리할 작업을 빠르게 확인합니다.", "loadError": "일부 개요 데이터를 불러올 수 없습니다.", "viewAll": "전체 보기",
+      "metrics": { "users": { "label": "사용자", "detail": "플랫폼의 모든 계정" }, "restaurants": { "label": "레스토랑", "detail": "활성 레스토랑 {count}개" }, "pending": { "label": "승인 대기", "detail": "관리자 검토가 필요한 레스토랑" }, "assignments": { "label": "권한 연결", "detail": "연결된 OWNER 및 STAFF 계정" } },
+      "pending": { "title": "승인 대기 레스토랑", "description": "다음 관리자 작업이 필요한 프로필입니다.", "status": "대기", "empty": "현재 승인 대기 중인 레스토랑이 없습니다." },
+      "quickActions": { "title": "빠른 이동", "description": "주요 관리 영역으로 이동합니다.", "users": "사용자 관리", "restaurants": "레스토랑 관리", "assignments": "레스토랑 권한 관리" }
+    },
     "users": {
       "title": "사용자", "description": "시스템 계정을 검색하고 확인합니다.", "loadError": "사용자 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 사용자가 없습니다.",
       "filters": { "search": "아이디, 이름 또는 이메일 검색", "role": "역할 필터", "status": "상태 필터", "allRoles": "모든 역할", "allStatuses": "모든 상태" },
