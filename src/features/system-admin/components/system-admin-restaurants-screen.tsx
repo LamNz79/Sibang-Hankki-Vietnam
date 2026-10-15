@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   ActionIcon,
@@ -230,6 +231,9 @@ export function SystemAdminRestaurantsScreen() {
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
+              <Menu.Item component={Link} href={`/system-admin/restaurants/${restaurant.id}`}>
+                {t("actions.manage")}
+              </Menu.Item>
               <Menu.Item onClick={() => setEditor(restaurant.id)}>
                 {t("actions.edit")}
               </Menu.Item>

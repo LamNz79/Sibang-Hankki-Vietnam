@@ -473,7 +473,7 @@
       "table": { "restaurant": "레스토랑", "city": "성/직할시", "location": "동/면/특별구", "status": "승인 상태", "created": "생성일", "actions": "작업" },
       "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
       "actions": {
-        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "edit": "정보 수정", "archive": "보관", "submit": "검토 요청", "resubmit": "재검토 요청", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
+        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "manage": "레스토랑 관리", "edit": "정보 수정", "archive": "보관", "submit": "검토 요청", "resubmit": "재검토 요청", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
         "success": { "submit": "{name}을(를) 검토 요청했습니다.", "resubmit": "{name}을(를) 재검토 요청했습니다.", "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
         "dialog": {
           "submit": { "title": "{name}을(를) 검토 요청할까요?", "description": "레스토랑이 시스템 관리자 검토 대기 상태로 변경됩니다." },
@@ -486,6 +486,15 @@
       },
       "form": { "createTitle": "레스토랑 추가", "editTitle": "레스토랑 수정", "slug": "슬러그(URL 경로)", "name": "이름", "province": "성/직할시", "selectProvince": "성 또는 직할시 선택", "ward": "동/면/특별구", "selectWard": "동, 면 또는 특별구 선택", "selectProvinceFirst": "먼저 성 또는 직할시를 선택하세요", "locationLoadError": "행정구역 목록을 불러올 수 없습니다. 다시 시도하세요.", "timezone": "시간대", "cuisine": "요리 종류", "selectCuisine": "요리 종류 선택", "cuisines": { "vietnamese": "베트남 요리", "korean": "한식", "chinese": "중식", "japanese": "일식", "western": "양식" }, "phone": "전화번호", "email": "이메일", "priceRange": "1인 평균 가격대", "address": "상세 주소", "description": "설명", "placeholders": { "slug": "royal-pavilion", "name": "더 로열 파빌리온", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K / 1인", "address": "123 Nguyen Hue Street", "description": "레스토랑의 요리와 분위기를 간단히 설명하세요" }, "cancel": "취소", "create": "레스토랑 생성", "save": "변경 사항 저장", "created": "{name}을(를) 초안으로 생성했습니다.", "updated": "{name}을(를) 업데이트했습니다.", "saveError": "레스토랑을 저장할 수 없습니다. 입력값을 확인하고 다시 시도하세요.", "loadError": "레스토랑 정보를 불러올 수 없습니다." },
       "pagination": { "rowsPerPage": "페이지당 행 수" }
+    },
+    "restaurantDetail": {
+      "back": "레스토랑 목록으로", "loadError": "레스토랑 정보를 불러올 수 없습니다.",
+      "tabs": { "profile": "정보", "booking": "예약 설정", "hours": "영업시간" },
+      "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
+      "profile": { "title": "레스토랑 정보", "edit": "정보 수정", "cuisine": "요리 종류", "priceRange": "가격대", "location": "지역", "timezone": "시간대", "phone": "전화번호", "email": "이메일", "address": "주소", "description": "설명" },
+      "booking": { "loadError": "예약 설정을 불러올 수 없습니다.", "notConfigured": "이 레스토랑에는 아직 예약 설정이 없습니다. 기본값을 확인한 후 저장하여 초기화하세요.", "save": "예약 설정 저장" },
+      "hours": { "loadError": "영업시간을 불러올 수 없습니다.", "saveSettingsFirst": "영업시간을 저장하거나 슬롯을 생성하기 전에 예약 설정을 저장하세요." },
+      "notifications": { "profileSaved": "레스토랑 정보를 저장했습니다.", "profileError": "레스토랑 정보를 저장할 수 없습니다.", "settingsSaved": "예약 설정을 저장했습니다.", "settingsError": "예약 설정을 저장할 수 없습니다. 값을 확인하세요.", "hoursSaved": "영업시간을 저장하고 슬롯 {count}개를 생성했습니다.", "hoursError": "영업시간을 저장할 수 없습니다.", "slotsGenerated": "슬롯 {count}개를 생성했습니다.", "regenerateError": "슬롯을 다시 생성할 수 없습니다." }
     },
     "reservations": {
       "title": "예약", "description": "시스템의 모든 레스토랑 예약을 확인합니다.", "loadError": "예약 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 예약이 없습니다.", "details": "상세", "guests": "{count}명",
