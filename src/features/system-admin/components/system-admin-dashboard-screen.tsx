@@ -32,19 +32,19 @@ export function SystemAdminDashboardScreen() {
   const t = useTranslations("SystemAdmin.dashboard");
   const usersQuery = useQuery({
     queryKey: ["system-admin-dashboard", "users"],
-    queryFn: ({ signal }) => getSystemAdminUsers({ page: 0, size: 1 }, signal),
+    queryFn: ({ signal }) => getSystemAdminUsers({ page: 0, size: 10 }, signal),
     retry: false,
   });
   const restaurantsQuery = useQuery({
     queryKey: ["system-admin-dashboard", "restaurants"],
-    queryFn: ({ signal }) => getSystemAdminRestaurants({ page: 0, size: 1 }, signal),
+    queryFn: ({ signal }) => getSystemAdminRestaurants({ page: 0, size: 10 }, signal),
     retry: false,
   });
   const activeRestaurantsQuery = useQuery({
     queryKey: ["system-admin-dashboard", "restaurants", "ACTIVE"],
     queryFn: ({ signal }) => getSystemAdminRestaurants({
       page: 0,
-      size: 1,
+      size: 10,
       status: "ACTIVE",
     }, signal),
     retry: false,
@@ -53,7 +53,7 @@ export function SystemAdminDashboardScreen() {
     queryKey: ["system-admin-dashboard", "restaurants", "PENDING"],
     queryFn: ({ signal }) => getSystemAdminRestaurants({
       page: 0,
-      size: 5,
+      size: 10,
       status: "PENDING",
     }, signal),
     retry: false,
@@ -62,7 +62,7 @@ export function SystemAdminDashboardScreen() {
     queryKey: ["system-admin-dashboard", "assignments"],
     queryFn: ({ signal }) => getSystemAdminRestaurantAssignments({
       page: 0,
-      size: 1,
+      size: 10,
     }, signal),
     retry: false,
   });
@@ -146,7 +146,7 @@ export function SystemAdminDashboardScreen() {
             </Button>
           </Group>
           <Stack gap="xs">
-            {pendingRestaurantsQuery.data?.items.map((restaurant) => (
+            {pendingRestaurantsQuery.data?.items.slice(0, 5).map((restaurant) => (
               <Group
                 key={restaurant.id}
                 justify="space-between"
