@@ -12,13 +12,19 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconBuildingStore, IconLink, IconUsers } from "@tabler/icons-react";
+import {
+  IconBuildingStore,
+  IconLayoutDashboard,
+  IconLink,
+  IconUsers,
+} from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
 const navigation = [
+  { href: "/system-admin", key: "dashboard", icon: IconLayoutDashboard },
   { href: "/system-admin/users", key: "users", icon: IconUsers },
   {
     href: "/system-admin/restaurants",
@@ -82,7 +88,9 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
         <AppShell.Section grow>
           <Stack gap={4}>
             {navigation.map(({ href, key, icon: Icon }) => {
-              const active = pathname.startsWith(href);
+              const active = href === "/system-admin"
+                ? pathname === href
+                : pathname.startsWith(href);
               return (
                 <UnstyledButton
                   key={href}

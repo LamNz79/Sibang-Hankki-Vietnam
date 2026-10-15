@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { SystemAdminDashboardScreen } from "@/features/system-admin";
 
 export default function SystemAdminPage() {
-  redirect("/system-admin/users");
+  return <SystemAdminDashboardScreen />;
 }
