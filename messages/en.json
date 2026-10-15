@@ -498,7 +498,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "assignments": "Restaurant access" } },
+    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "reservations": "Reservations", "assignments": "Restaurant access" } },
     "dashboard": {
       "title": "System overview", "description": "Monitor users, restaurants, and work requiring attention.", "loadError": "Some overview data could not be loaded.", "viewAll": "View all",
       "metrics": { "users": { "label": "Users", "detail": "All accounts across the platform" }, "restaurants": { "label": "Restaurants", "detail": "{count} active restaurants" }, "pending": { "label": "Pending review", "detail": "Restaurants requiring administrator review" }, "assignments": { "label": "Access assignments", "detail": "Linked OWNER and STAFF accounts" } },
@@ -538,6 +538,21 @@
       },
       "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug (URL path)", "name": "Name", "province": "Province / city", "selectProvince": "Select a province or city", "ward": "Ward / commune / special zone", "selectWard": "Select a ward, commune, or special zone", "selectProvinceFirst": "Select a province or city first", "locationLoadError": "Could not load the location list. Try again.", "timezone": "Timezone", "cuisine": "Cuisine", "selectCuisine": "Select a cuisine", "cuisines": { "vietnamese": "Vietnamese", "korean": "Korean", "chinese": "Chinese", "japanese": "Japanese", "western": "Western" }, "phone": "Phone", "email": "Email", "priceRange": "Average price per guest", "address": "Detailed address", "description": "Description", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K per guest", "address": "123 Nguyen Hue Street", "description": "Briefly describe the restaurant's cuisine and atmosphere" }, "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
       "pagination": { "rowsPerPage": "Rows per page" }
+    },
+    "reservations": {
+      "title": "Reservations", "description": "View reservations across every restaurant in the system.", "loadError": "Could not load reservations.", "empty": "No reservations match these filters.", "details": "Details", "guests": "{count} guests",
+      "filters": { "search": "Search reference, customer, phone, or email", "restaurant": "Filter by restaurant", "allRestaurants": "All restaurants", "noRestaurants": "No restaurants found", "status": "Filter by status", "allStatuses": "All statuses", "dateFrom": "From date", "dateTo": "To date" },
+      "table": { "reference": "Reservation ID", "restaurant": "Restaurant", "customer": "Customer", "schedule": "Date / Party", "status": "Status" },
+      "statuses": { "PENDING": "Pending", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "COMPLETED": "Completed", "CANCELLED": "Cancelled", "DECLINED": "Declined", "NO_SHOW": "No-show" },
+      "pagination": { "rowsPerPage": "Rows per page" },
+      "detail": {
+        "title": "Reservation details", "back": "Back to reservations", "loading": "Loading reservation details...", "loadError": "Could not load the reservation details.", "notAvailable": "Not available",
+        "reservation": { "title": "Reservation", "start": "Starts", "end": "Ends", "partySize": "Party size", "request": "Special request", "preOrder": "Pre-order" },
+        "customer": { "title": "Customer", "name": "Name", "phone": "Phone", "email": "Email" },
+        "restaurant": { "title": "Restaurant", "name": "Restaurant name", "slug": "Slug", "id": "Restaurant ID" },
+        "status": { "title": "System status", "booking": "Booking", "visit": "Visit", "created": "Created", "updated": "Last updated" },
+        "proposal": { "title": "Alternative proposal", "time": "Proposed time", "status": "Status", "respondBy": "Respond by", "message": "Message" }
+      }
     },
     "assignments": {
       "title": "Restaurant access", "description": "Link owners and staff to the restaurant they are allowed to manage.", "loadError": "Could not load restaurant access.", "empty": "No assignments match these filters.",
