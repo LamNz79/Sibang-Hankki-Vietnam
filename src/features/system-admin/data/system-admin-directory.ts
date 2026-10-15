@@ -52,6 +52,27 @@ export type SystemAdminRestaurantDetail = SystemAdminRestaurant & {
   priceRange: string | null;
 };
 
+export type SystemAdminRestaurantAssignmentRole = "OWNER" | "STAFF";
+
+export type SystemAdminRestaurantAssignment = {
+  userId: string;
+  userid: string;
+  name: string;
+  email: string | null;
+  userStatus: SystemAdminUserStatus;
+  role: SystemAdminRestaurantAssignmentRole;
+  restaurantId: string;
+  restaurantSlug: string;
+  restaurantName: string;
+  restaurantStatus: SystemAdminRestaurantStatus;
+};
+
+export type SystemAdminRestaurantAssignmentInput = {
+  userId: string;
+  restaurantId: string;
+  role: SystemAdminRestaurantAssignmentRole;
+};
+
 export type SystemAdminRestaurantInput = {
   slug?: string;
   name: string;
@@ -103,6 +124,11 @@ export type SystemAdminRestaurantParams = PageParams & {
   provinceCode?: number;
 };
 
+export type SystemAdminRestaurantAssignmentParams = PageParams & {
+  role?: SystemAdminRestaurantAssignmentRole;
+  restaurantId?: string;
+};
+
 function searchParams(params: Record<string, string | number | undefined>) {
   const search = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -134,6 +160,16 @@ export function getSystemAdminRestaurants(
 export function getSystemAdminRestaurant(id: string, signal?: AbortSignal) {
   return apiFetch<SystemAdminRestaurantDetail>(
     apiEndpoints.systemAdminRestaurant(id),
+    { cache: "no-store", signal },
+  );
+}
+
+export function getSystemAdminRestaurantAssignments(
+  params: SystemAdminRestaurantAssignmentParams,
+  signal?: AbortSignal,
+) {
+  return apiFetch<SystemAdminPage<SystemAdminRestaurantAssignment>>(
+    `${apiEndpoints.systemAdminRestaurantAssignments}?${searchParams(params)}`,
     { cache: "no-store", signal },
   );
 }
@@ -195,6 +231,47 @@ async function updateStatus<T>(path: string, status: string) {
     headers: { [csrf.headerName]: csrf.token },
     body: JSON.stringify({ status }),
   });
+}
+
+async function writeRestaurantAssignment<T>(
+  path: string,
+  method: "POST" | "PUT" | "DELETE",
+  input?: SystemAdminRestaurantAssignmentInput,
+) {
+  const csrf = await getCsrfToken();
+  return apiFetch<T>(path, {
+    method,
+    headers: { [csrf.headerName]: csrf.token },
+    ...(input ? { body: JSON.stringify(input) } : {}),
+  });
+}
+
+export function createSystemAdminRestaurantAssignment(
+  input: SystemAdminRestaurantAssignmentInput,
+) {
+  return writeRestaurantAssignment<SystemAdminRestaurantAssignment>(
+    apiEndpoints.systemAdminRestaurantAssignments,
+    "POST",
+    input,
+  );
+}
+
+export function updateSystemAdminRestaurantAssignment(
+  userId: string,
+  input: SystemAdminRestaurantAssignmentInput,
+) {
+  return writeRestaurantAssignment<SystemAdminRestaurantAssignment>(
+    apiEndpoints.systemAdminRestaurantAssignment(userId),
+    "PUT",
+    input,
+  );
+}
+
+export function removeSystemAdminRestaurantAssignment(userId: string) {
+  return writeRestaurantAssignment<void>(
+    apiEndpoints.systemAdminRestaurantAssignment(userId),
+    "DELETE",
+  );
 }
 
 export function updateSystemAdminUserStatus(

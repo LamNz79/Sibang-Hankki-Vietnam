@@ -69,6 +69,9 @@ export const apiEndpoints = {
   ownerCheckIns: "/api/owner/check-ins",
   systemAdminUsers: "/api/admin/users",
   systemAdminRestaurants: "/api/admin/restaurants",
+  systemAdminRestaurantAssignments: "/api/admin/restaurant-assignments",
+  systemAdminRestaurantAssignment: (userId: string) =>
+    `/api/admin/restaurant-assignments/${seg(userId)}`,
   systemAdminRestaurant: (id: string) =>
     `/api/admin/restaurants/${seg(id)}`,
   locationProvinces: "/api/locations/provinces",
