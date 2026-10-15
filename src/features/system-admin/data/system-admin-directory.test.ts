@@ -137,7 +137,7 @@ describe("system admin directory API", () => {
       district: null,
       provinceCode: 79,
       provinceName: "Thành phố Hồ Chí Minh",
-      approvalStatus: "ACTIVE",
+      approvalStatus: "PENDING",
       createdAt: "2026-10-01T08:00:00Z",
       updatedAt: "2026-10-13T08:00:00Z",
     };
@@ -150,7 +150,7 @@ describe("system admin directory API", () => {
       .mockResolvedValueOnce(Response.json(restaurant));
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(updateSystemAdminRestaurantStatus("restaurant-1", "ACTIVE"))
+    await expect(updateSystemAdminRestaurantStatus("restaurant-1", "PENDING"))
       .resolves.toEqual(restaurant);
     expect(fetchMock).toHaveBeenNthCalledWith(
       2,
@@ -158,7 +158,7 @@ describe("system admin directory API", () => {
       expect.objectContaining({
         method: "PATCH",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
-        body: JSON.stringify({ status: "ACTIVE" }),
+        body: JSON.stringify({ status: "PENDING" }),
       }),
     );
   });

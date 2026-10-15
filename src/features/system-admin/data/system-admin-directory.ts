@@ -330,7 +330,7 @@ export function updateSystemAdminRestaurantStatus(
   id: string,
   status: Extract<
     SystemAdminRestaurantStatus,
-    "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
+    "PENDING" | "ACTIVE" | "CHANGES_REQUESTED" | "SUSPENDED"
   >,
 ) {
   return updateStatus<SystemAdminRestaurant>(
