@@ -505,11 +505,12 @@
       "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created", "actions": "Actions" },
       "statuses": { "ACTIVE": "Active", "SUSPENDED": "Suspended", "CLOSED": "Closed" },
       "actions": {
-        "openMenu": "Open actions for {name}", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
+        "openMenu": "Open actions for {name}", "create": "Add user", "edit": "Edit details", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
         "suspendTitle": "Suspend {name}?", "suspendDescription": "This user will lose their current session and cannot sign in until reactivated.",
         "reactivateTitle": "Reactivate {name}?", "reactivateDescription": "This user will be able to sign in again.",
-        "suspendedSuccess": "{name} has been suspended.", "reactivatedSuccess": "{name} has been reactivated.", "error": "Could not update the user status."
+        "suspendedSuccess": "{name} has been suspended.", "reactivatedSuccess": "{name} has been reactivated.", "error": "Could not update the user status.", "created": "An account was created for {name}.", "updated": "{name}'s profile was updated.", "saveError": "Could not save the user. Check the details or whether the userid already exists."
       },
+      "form": { "createTitle": "Add user", "editTitle": "Edit user", "description": "New accounts are created as customers. Assign restaurant access from the Restaurant access page.", "userid": "Login ID", "useridHint": "Use 3 to 30 characters. It cannot be changed after creation.", "name": "Full name", "email": "Email (optional)", "phone": "Phone (optional)", "password": "Temporary password", "passwordHint": "Use 8 to 72 characters and share it through a secure channel.", "placeholders": { "userid": "nguyenan", "name": "Nguyen Van An", "email": "an@example.com", "phone": "0901 234 567", "password": "At least 8 characters" }, "cancel": "Cancel", "create": "Create user", "save": "Save changes" },
       "pagination": { "rowsPerPage": "Rows per page" }
     },
     "restaurants": {

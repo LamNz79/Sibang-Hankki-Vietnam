@@ -20,10 +20,24 @@ export type SystemAdminUser = {
   role: SystemAdminUserRole;
   status: SystemAdminUserStatus;
   restaurantId: string | null;
+  restaurantName: string | null;
   statusChangedAt: string;
   createdAt: string;
   updatedAt: string;
 };
+
+export type SystemAdminUserCreateInput = {
+  userid: string;
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+};
+
+export type SystemAdminUserUpdateInput = Omit<
+  SystemAdminUserCreateInput,
+  "userid" | "password"
+>;
 
 export type SystemAdminRestaurant = {
   id: string;
@@ -147,6 +161,13 @@ export function getSystemAdminUsers(
   );
 }
 
+export function getSystemAdminUser(id: string, signal?: AbortSignal) {
+  return apiFetch<SystemAdminUser>(apiEndpoints.systemAdminUser(id), {
+    cache: "no-store",
+    signal,
+  });
+}
+
 export function getSystemAdminRestaurants(
   params: SystemAdminRestaurantParams,
   signal?: AbortSignal,
@@ -199,6 +220,27 @@ async function writeRestaurant<T>(
     headers: { [csrf.headerName]: csrf.token },
     ...(input ? { body: JSON.stringify(input) } : {}),
   });
+}
+
+async function writeUser<T>(
+  path: string,
+  method: "POST" | "PUT",
+  input: SystemAdminUserCreateInput | SystemAdminUserUpdateInput,
+) {
+  const csrf = await getCsrfToken();
+  return apiFetch<T>(path, {
+    method,
+    headers: { [csrf.headerName]: csrf.token },
+    body: JSON.stringify(input),
+  });
+}
+
+export function createSystemAdminUser(input: SystemAdminUserCreateInput) {
+  return writeUser<SystemAdminUser>(apiEndpoints.systemAdminUsers, "POST", input);
+}
+
+export function updateSystemAdminUser(id: string, input: SystemAdminUserUpdateInput) {
+  return writeUser<SystemAdminUser>(apiEndpoints.systemAdminUser(id), "PUT", input);
 }
 
 export function createSystemAdminRestaurant(input: SystemAdminRestaurantInput) {
