@@ -14,20 +14,25 @@ import {
 } from "@/features/admin/data/owner-menu";
 import { ApiError } from "@/lib/api/client";
 
-const queryKey = ["owner-menu"] as const;
-
-export function useOwnerMenu() {
+export function useOwnerMenu(restaurantId?: string) {
   const router = useRouter();
   const client = useQueryClient();
+  const queryKey = restaurantId
+    ? ["system-admin-restaurant-menu", restaurantId] as const
+    : ["owner-menu"] as const;
   const refresh = () => client.invalidateQueries({ queryKey });
-  const query = useQuery({ queryKey, queryFn: ({ signal }) => getOwnerMenu(signal), retry: false });
+  const query = useQuery({
+    queryKey,
+    queryFn: ({ signal }) => getOwnerMenu(signal, restaurantId),
+    retry: false,
+  });
   const mutations = {
-    createCategory: useMutation({ mutationFn: createCategory, onSuccess: refresh }),
-    updateCategory: useMutation({ mutationFn: updateCategory, onSuccess: refresh }),
-    deleteCategory: useMutation({ mutationFn: deleteCategory, onSuccess: refresh }),
-    createItem: useMutation({ mutationFn: createItem, onSuccess: refresh }),
-    updateItem: useMutation({ mutationFn: updateItem, onSuccess: refresh }),
-    deleteItem: useMutation({ mutationFn: deleteItem, onSuccess: refresh }),
+    createCategory: useMutation({ mutationFn: (input: Parameters<typeof createCategory>[0]) => createCategory(input, restaurantId), onSuccess: refresh }),
+    updateCategory: useMutation({ mutationFn: (input: Parameters<typeof updateCategory>[0]) => updateCategory(input, restaurantId), onSuccess: refresh }),
+    deleteCategory: useMutation({ mutationFn: (id: string) => deleteCategory(id, restaurantId), onSuccess: refresh }),
+    createItem: useMutation({ mutationFn: (input: Parameters<typeof createItem>[0]) => createItem(input, restaurantId), onSuccess: refresh }),
+    updateItem: useMutation({ mutationFn: (input: Parameters<typeof updateItem>[0]) => updateItem(input, restaurantId), onSuccess: refresh }),
+    deleteItem: useMutation({ mutationFn: (id: string) => deleteItem(id, restaurantId), onSuccess: refresh }),
   };
   const error = query.error ?? Object.values(mutations).find((mutation) => mutation.error)?.error;
 

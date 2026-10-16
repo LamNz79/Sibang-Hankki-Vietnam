@@ -37,9 +37,15 @@ const emptyItem = {
   available: true,
 };
 
-export function AdminMenuScreen() {
+export function AdminMenuScreen({
+  restaurantId,
+  embedded = false,
+}: {
+  restaurantId?: string;
+  embedded?: boolean;
+} = {}) {
   const t = useTranslations("Admin.menu");
-  const { query, mutations, error } = useOwnerMenu();
+  const { query, mutations, error } = useOwnerMenu(restaurantId);
   const [categoryOpened, categoryModal] = useDisclosure(false);
   const [itemOpened, itemModal] = useDisclosure(false);
   const [category, setCategory] = useState({ id: "", name: "", displayOrder: 0 });
@@ -74,8 +80,8 @@ export function AdminMenuScreen() {
     itemModal.close();
   };
 
-  return (
-    <AdminShell>
+  const content = (
+    <>
       <Stack gap="xl">
         <Group justify="space-between" align="flex-end">
           <Stack gap={3}>
@@ -168,6 +174,8 @@ export function AdminMenuScreen() {
           <Button color="warmCoral" loading={pending} disabled={!item.name.trim() || !item.categoryId} onClick={() => void saveItem()}>{t("save")}</Button>
         </Stack>
       </Modal>
-    </AdminShell>
+    </>
   );
+
+  return embedded ? content : <AdminShell>{content}</AdminShell>;
 }
