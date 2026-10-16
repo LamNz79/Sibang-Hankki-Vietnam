@@ -63,6 +63,35 @@ describe("owner reservation API mapping", () => {
     });
   });
 
+  it("derives the customer response from both reservation and proposal status", () => {
+    const declinedProposal = {
+      id: "proposal-id",
+      startsAt: "2026-10-17T04:30:00Z",
+      message: null,
+      respondBy: null,
+      status: "DECLINED" as const,
+      createdAt: "2026-10-16T00:00:00Z",
+    };
+
+    expect(toOwnerReservation({
+      ...pendingRecord,
+      alternativeProposal: declinedProposal,
+    }).customerResponse).toEqual({ kind: "requested-another-time" });
+
+    expect(toOwnerReservation({
+      ...pendingRecord,
+      status: "DECLINED",
+      alternativeProposal: declinedProposal,
+    }).customerResponse).toMatchObject({ kind: "declined-alternative" });
+
+    expect(toOwnerReservation({
+      ...pendingRecord,
+      status: "CONFIRMED",
+      visitStatus: "EXPECTED",
+      alternativeProposal: declinedProposal,
+    }).customerResponse).toBeUndefined();
+  });
+
   it("requests a filtered owner reservation page", async () => {
     vi.stubEnv("API_BASE_URL", "");
     const fetchMock = vi.fn().mockResolvedValue(Response.json({

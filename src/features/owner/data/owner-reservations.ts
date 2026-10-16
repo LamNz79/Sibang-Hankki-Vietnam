@@ -119,21 +119,29 @@ export function toOwnerReservation(record: OwnerReservationRecord): OwnerReserva
     ? dayjs(record.alternativeProposal.startsAt).tz("Asia/Ho_Chi_Minh")
     : null;
   const customerResponse: OwnerReservation["customerResponse"] =
-    record.alternativeProposal?.status === "PENDING" && proposalStartsAt
+    record.status === "ALTERNATIVE_PROPOSED" &&
+    record.alternativeProposal?.status === "PENDING" &&
+    proposalStartsAt
       ? {
           kind: "awaiting-customer",
           proposedDate: proposalStartsAt.format("YYYY-MM-DD"),
           proposedTime: proposalStartsAt.format("HH:mm"),
           message: record.alternativeProposal.message ?? undefined,
         }
-      : record.alternativeProposal?.status === "ACCEPTED"
+      : record.status === "CONFIRMED" &&
+          record.alternativeProposal?.status === "ACCEPTED"
         ? { kind: "accepted-alternative" }
-        : record.alternativeProposal?.status === "DECLINED" && proposalStartsAt
+        : record.status === "DECLINED" &&
+            record.alternativeProposal?.status === "DECLINED" &&
+            proposalStartsAt
           ? {
               kind: "declined-alternative",
               proposedDate: proposalStartsAt.format("YYYY-MM-DD"),
               proposedTime: proposalStartsAt.format("HH:mm"),
             }
+          : record.status === "PENDING" &&
+              record.alternativeProposal?.status === "DECLINED"
+            ? { kind: "requested-another-time" }
           : undefined;
   return {
     id: record.id,
