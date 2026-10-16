@@ -7,6 +7,7 @@ import {
   getCustomerReservation,
   issueCustomerCheckInToken,
   mergeCustomerReservation,
+  requestAnotherTime,
   respondToAlternativeProposal,
   selectVisibleReservations,
 } from "./customer-reservations";
@@ -190,6 +191,99 @@ describe("customer reservation API", () => {
         }),
       }),
     );
+  });
+
+  it("requests another time for a guest reservation", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({
+      ...proposalRecord,
+      startsAt: "2026-10-09T12:00:00Z",
+      status: "PENDING",
+      alternativeProposal: null,
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const reservation = {
+      ...stored,
+      status: ReservationStatus.AlternativeProposed,
+      alternativeProposal: {
+        id: "proposal-id",
+        date: "2026-10-08",
+        time: "18:00",
+        proposedAt: "2026-10-06T04:00:00Z",
+      },
+    };
+    await expect(
+      requestAnotherTime(reservation, "2026-10-09", "19:00"),
+    ).resolves.toMatchObject({
+      id: "reservation-id",
+      status: ReservationStatus.Pending,
+      date: "2026-10-09",
+      time: "19:00",
+      alternativeProposal: undefined,
+    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/customer/reservations/reservation-id/proposals/proposal-id/request-another-time",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "X-Reservation-Management-Token": "management-token",
+        }),
+        body: JSON.stringify({
+          requestedDate: "2026-10-09",
+          requestedTime: "19:00",
+        }),
+      }),
+    );
+  });
+
+  it("requests another time for an account reservation with CSRF", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...proposalRecord,
+        status: "PENDING",
+        alternativeProposal: null,
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await requestAnotherTime({
+      ...stored,
+      managementToken: undefined,
+      accountLinked: true,
+      status: ReservationStatus.AlternativeProposed,
+      alternativeProposal: {
+        id: "proposal-id",
+        date: "2026-10-08",
+        time: "18:00",
+        proposedAt: "2026-10-06T04:00:00Z",
+      },
+    }, "2026-10-09", "19:00");
+
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/customer/account/reservations/reservation-id/proposals/proposal-id/request-another-time",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+      }),
+    ]);
+  });
+
+  it("ignores proposals that are no longer pending", () => {
+    expect(mergeCustomerReservation(stored, {
+      ...proposalRecord,
+      status: "PENDING",
+      alternativeProposal: {
+        ...proposalRecord.alternativeProposal,
+        status: "DECLINED",
+      },
+    }).alternativeProposal).toBeUndefined();
   });
 
   it("declines an account proposal with CSRF", async () => {

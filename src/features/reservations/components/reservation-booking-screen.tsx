@@ -61,44 +61,53 @@ function ReservationBookingContent() {
         onChange={booking.selectDate}
       />
 
-      <BookingGuestSelector
-        value={booking.selectedGuests}
-        onChange={booking.selectGuests}
-      />
+      {changeReservationId ? (
+        <Alert color="blue" title="Choose another time">
+          Your party size remains {booking.selectedGuests}. The restaurant will
+          review the new requested time.
+        </Alert>
+      ) : (
+        <>
+          <BookingGuestSelector
+            value={booking.selectedGuests}
+            onChange={booking.selectGuests}
+          />
 
-      <Stack gap="sm">
-        <Text fw={700}>Contact information</Text>
-        <TextInput
-          label="Full name"
-          value={booking.customerName}
-          onChange={(event) => booking.setCustomerName(event.currentTarget.value)}
-          autoComplete="name"
-          maxLength={120}
-          required
-        />
-        <TextInput
-          label="Phone number"
-          type="tel"
-          value={booking.customerPhone}
-          onChange={(event) => booking.setCustomerPhone(event.currentTarget.value)}
-          autoComplete="tel"
-          maxLength={30}
-          required
-        />
-        <TextInput
-          label="Email (optional)"
-          type="email"
-          value={booking.customerEmail}
-          onChange={(event) => booking.setCustomerEmail(event.currentTarget.value)}
-          autoComplete="email"
-          maxLength={320}
-          error={booking.customerEmailError}
-        />
-      </Stack>
+          <Stack gap="sm">
+            <Text fw={700}>Contact information</Text>
+            <TextInput
+              label="Full name"
+              value={booking.customerName}
+              onChange={(event) => booking.setCustomerName(event.currentTarget.value)}
+              autoComplete="name"
+              maxLength={120}
+              required
+            />
+            <TextInput
+              label="Phone number"
+              type="tel"
+              value={booking.customerPhone}
+              onChange={(event) => booking.setCustomerPhone(event.currentTarget.value)}
+              autoComplete="tel"
+              maxLength={30}
+              required
+            />
+            <TextInput
+              label="Email (optional)"
+              type="email"
+              value={booking.customerEmail}
+              onChange={(event) => booking.setCustomerEmail(event.currentTarget.value)}
+              autoComplete="email"
+              maxLength={320}
+              error={booking.customerEmailError}
+            />
+          </Stack>
+        </>
+      )}
 
-      {booking.changeReservationUnsupported ? (
-        <Alert color="yellow" title="Changing reservations is not available yet">
-          Please create a new reservation or return to your existing booking.
+      {booking.changeReservationUnavailable ? (
+        <Alert color="red" title="Unable to change this reservation">
+          The proposal is no longer active or this reservation is unavailable.
         </Alert>
       ) : null}
 

@@ -15,6 +15,10 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAvailability } from "@/features/reservations/data/availability";
 import { createReservation } from "@/features/reservations/data/create-reservation";
+import {
+  useCustomerReservation,
+  useRequestAnotherTime,
+} from "@/features/reservations/hooks/use-customer-reservations";
 
 type UseReservationBookingOptions = {
   restaurant: RestaurantRecord;
@@ -46,6 +50,9 @@ export function useReservationBooking({
     useState<CustomerReservation | null>(null);
   const [successOpened, setSuccessOpened] = useState(false);
   const idempotencyKey = useRef<string | null>(null);
+  const changingReservation = useCustomerReservation(changeReservationId ?? "");
+  const changeMutation = useRequestAnotherTime(changingReservation);
+  const partySize = changingReservation?.guests ?? selectedGuests;
 
   const selectedDateIso =
     selectedDate ?? bookingStartDate.format("YYYY-MM-DD");
@@ -53,9 +60,10 @@ export function useReservationBooking({
     ? dayjs(selectedDate).format("ddd, MMM D, YYYY")
     : "No date selected";
   const availability = useQuery({
-    queryKey: ["availability", restaurant.slug, selectedDateIso, selectedGuests],
-    queryFn: ({ signal }) => getAvailability(restaurant.slug, selectedDateIso, selectedGuests, signal),
+    queryKey: ["availability", restaurant.slug, selectedDateIso, partySize],
+    queryFn: ({ signal }) => getAvailability(restaurant.slug, selectedDateIso, partySize, signal),
     retry: false,
+    enabled: !changeReservationId || Boolean(changingReservation),
   });
   const availableTimes = availability.isFetching || availability.isError
     ? [] : availability.data?.slots ?? [];
@@ -90,19 +98,30 @@ export function useReservationBooking({
       setSuccessOpened(true);
     },
   });
-  const canSubmit = Boolean(
+  const canSubmitNewReservation = Boolean(
     selectedTime &&
       availableTimes.includes(selectedTime) &&
       customerName.trim() &&
       customerPhone.trim() &&
       validEmail &&
-      !changeReservationId &&
       !createMutation.isPending,
   );
+  const canSubmitChange = Boolean(
+    changeReservationId &&
+      changingReservation?.alternativeProposal?.id &&
+      changingReservation.restaurantSlug === restaurant.slug &&
+      selectedTime &&
+      availableTimes.includes(selectedTime) &&
+      !changeMutation.isPending,
+  );
+  const canSubmit = changeReservationId
+    ? canSubmitChange
+    : canSubmitNewReservation;
 
   const resetSubmission = () => {
     idempotencyKey.current = null;
     createMutation.reset();
+    changeMutation.reset();
   };
 
   const selectDate = (date: string | null) => {
@@ -135,6 +154,19 @@ export function useReservationBooking({
   const submit = () => {
     if (!selectedDate || !selectedTime || !canSubmit) return;
 
+    if (changeReservationId) {
+      changeMutation.mutate(
+        { date: selectedDate, time: selectedTime },
+        {
+          onSuccess: (reservation) => {
+            setSubmittedReservation(reservation);
+            setSuccessOpened(true);
+          },
+        },
+      );
+      return;
+    }
+
     idempotencyKey.current ??= createCheckInToken();
     createMutation.mutate({
       idempotencyKey: idempotencyKey.current,
@@ -154,7 +186,8 @@ export function useReservationBooking({
     selectedDate,
     selectedDateLabel,
     selectDate,
-    selectedGuests,
+    selectedGuests: partySize,
+    changingReservation,
     selectGuests,
     selectedTime,
     selectTime,
@@ -180,9 +213,12 @@ export function useReservationBooking({
     availabilityError: availability.error?.message,
     retryAvailability: () => void availability.refetch(),
     requiresRestaurantConfirmation: availability.data?.requiresRestaurantConfirmation ?? false,
-    submissionPending: createMutation.isPending,
-    submissionError: createMutation.error?.message,
-    changeReservationUnsupported: Boolean(changeReservationId),
+    submissionPending: createMutation.isPending || changeMutation.isPending,
+    submissionError:
+      createMutation.error?.message ?? changeMutation.error?.message,
+    changeReservationUnavailable: Boolean(
+      changeReservationId && !changingReservation?.alternativeProposal?.id,
+    ),
     submittedReservation,
     successOpened,
     closeSuccess: () => setSuccessOpened(false),

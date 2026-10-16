@@ -76,7 +76,9 @@ export function mergeCustomerReservation(
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
     alternativeProposal:
-      record.alternativeProposal && proposalStartsAt
+      record.status === "ALTERNATIVE_PROPOSED" &&
+      record.alternativeProposal?.status === "PENDING" &&
+      proposalStartsAt
         ? {
             id: record.alternativeProposal.id,
             date: proposalStartsAt.format("YYYY-MM-DD"),
@@ -207,6 +209,50 @@ export async function respondToAlternativeProposal(
       headers: {
         "X-Reservation-Management-Token": reservation.managementToken,
       },
+    },
+  );
+  return mergeCustomerReservation(reservation, record);
+}
+
+export async function requestAnotherTime(
+  reservation: CustomerReservation,
+  requestedDate: string,
+  requestedTime: string,
+) {
+  const proposalId = reservation.alternativeProposal?.id;
+  if (!proposalId) throw new Error("Reservation proposal is unavailable");
+
+  const body = JSON.stringify({ requestedDate, requestedTime });
+  if (reservation.accountLinked) {
+    const csrf = await getCsrfToken();
+    const record = await apiFetch<CustomerReservationRecord>(
+      apiEndpoints.requestAnotherTimeForCustomerAccountReservation(
+        reservation.id,
+        proposalId,
+      ),
+      {
+        method: "POST",
+        headers: { [csrf.headerName]: csrf.token },
+        body,
+      },
+    );
+    return mergeCustomerReservation(reservation, record);
+  }
+
+  if (!reservation.managementToken) {
+    throw new Error("Reservation management token is unavailable");
+  }
+  const record = await apiFetch<CustomerReservationRecord>(
+    apiEndpoints.requestAnotherTimeForCustomerReservation(
+      reservation.id,
+      proposalId,
+    ),
+    {
+      method: "POST",
+      headers: {
+        "X-Reservation-Management-Token": reservation.managementToken,
+      },
+      body,
     },
   );
   return mergeCustomerReservation(reservation, record);
