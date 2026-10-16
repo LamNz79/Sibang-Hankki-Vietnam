@@ -15,6 +15,8 @@ export const apiEndpoints = {
     action: "accept" | "decline",
   ) =>
     `/api/customer/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
+  requestAnotherTimeForCustomerReservation: (id: string, proposalId: string) =>
+    `/api/customer/reservations/${seg(id)}/proposals/${seg(proposalId)}/request-another-time`,
   customerReservationCheckInToken: (id: string) =>
     `/api/customer/reservations/${seg(id)}/check-in-token`,
   customerAccountReservations: "/api/customer/account/reservations",
@@ -28,6 +30,8 @@ export const apiEndpoints = {
     action: "accept" | "decline",
   ) =>
     `/api/customer/account/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
+  requestAnotherTimeForCustomerAccountReservation: (id: string, proposalId: string) =>
+    `/api/customer/account/reservations/${seg(id)}/proposals/${seg(proposalId)}/request-another-time`,
   customerAccountReservationCheckInToken: (id: string) =>
     `/api/customer/account/reservations/${seg(id)}/check-in-token`,
   authCsrf: "/api/auth/csrf",

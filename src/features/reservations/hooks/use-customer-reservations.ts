@@ -8,6 +8,7 @@ import {
   getCustomerAccountReservation,
   getCustomerReservation,
   issueCustomerCheckInToken,
+  requestAnotherTime,
   respondToAlternativeProposal,
   selectVisibleReservations,
 } from "@/features/reservations/data/customer-reservations";
@@ -16,6 +17,7 @@ import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import {
   getReservationsServerSnapshot,
   getReservationsSnapshot,
+  saveReservation,
   subscribeToReservations,
 } from "@/features/reservations/data/reservation-storage";
 import { findReservationById } from "@/features/reservations/domain/selectors";
@@ -89,6 +91,33 @@ export function useRespondToAlternativeProposal(
         ["customer-reservations", updated.id],
         updated,
       );
+      queryClient.setQueryData(
+        ["customer-account-reservations", updated.id],
+        updated,
+      );
+      queryClient.setQueryData<CustomerReservation[] | null>(
+        ["customer-account-reservations"],
+        (reservations) =>
+          reservations?.map((item) =>
+            item.id === updated.id ? updated : item,
+          ) ?? reservations,
+      );
+    },
+  });
+}
+
+export function useRequestAnotherTime(
+  reservation: CustomerReservation | undefined,
+) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ date, time }: { date: string; time: string }) => {
+      if (!reservation) throw new Error("Reservation is unavailable");
+      return requestAnotherTime(reservation, date, time);
+    },
+    onSuccess: (updated) => {
+      if (updated.managementToken) saveReservation(updated);
+      queryClient.setQueryData(["customer-reservations", updated.id], updated);
       queryClient.setQueryData(
         ["customer-account-reservations", updated.id],
         updated,

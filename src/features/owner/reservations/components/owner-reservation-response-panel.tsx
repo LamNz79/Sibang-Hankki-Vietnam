@@ -3,10 +3,12 @@
 import dayjs from "dayjs";
 import {
   Alert,
+  Box,
   Button,
   Card,
   Drawer,
   Group,
+  SimpleGrid,
   Stack,
   Text,
   Textarea,
@@ -15,6 +17,7 @@ import {
 import { notifications } from "@mantine/notifications";
 import {
   IconCalendarClock,
+  IconCheck,
   IconCircleX,
   IconPhone,
   IconSend,
@@ -81,7 +84,11 @@ function OptionButton({
   onClick: () => void;
 }) {
   return (
-    <UnstyledButton onClick={onClick} style={{ width: "100%" }}>
+    <UnstyledButton
+      onClick={onClick}
+      aria-pressed={active}
+      style={{ width: "100%" }}
+    >
       <Card
         radius="md"
         p="sm"
@@ -93,9 +100,12 @@ function OptionButton({
             : `1px solid ${uiColors.borderStrong}`,
         }}
       >
-        <Text fw={active ? 750 : 600} c={uiColors.textPrimary}>
-          {label}
-        </Text>
+        <Group justify="space-between" gap="xs" wrap="nowrap">
+          <Text fw={active ? 750 : 600} c={uiColors.textPrimary}>
+            {label}
+          </Text>
+          {active ? <IconCheck size={17} color={uiColors.brandPrimary} /> : null}
+        </Group>
       </Card>
     </UnstyledButton>
   );
@@ -169,11 +179,15 @@ export function OwnerReservationResponsePanel({
       .map((slot) => ({
         ...slot,
         id: `${slot.date}|${slot.time}`,
-        label: `${formatDate(slot.date)} · ${slot.time}`,
       }));
   const slotsLoading =
     settingsQuery.isPending ||
     availabilityQueries.some((query) => query.isFetching);
+  const openAlternative = () => {
+    setSelectedAlternative("");
+    setMessage("");
+    setAlternativeOpened(true);
+  };
 
   const sendAlternative = async () => {
     const selectedSlot = alternativeSlots.find(
@@ -263,7 +277,7 @@ export function OwnerReservationResponsePanel({
               fullWidth
               leftSection={<IconCalendarClock size={18} />}
               disabled={readOnly}
-              onClick={() => setAlternativeOpened(true)}
+              onClick={openAlternative}
             >
               {response.kind === "alternative-sent"
                 ? t("changeTime")
@@ -309,7 +323,7 @@ export function OwnerReservationResponsePanel({
         opened={alternativeOpened}
         onClose={() => setAlternativeOpened(false)}
         position="bottom"
-        size="72%"
+        size="80%"
         radius="24px 24px 0 0"
         padding="md"
         title={<Text fw={800}>{t("alternativeDrawer.title")}</Text>}
@@ -317,13 +331,36 @@ export function OwnerReservationResponsePanel({
         classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
       >
         <Stack gap="lg" pb="md">
-          <Text size="sm" c={uiColors.textSecondary}>
-            {t("alternativeDrawer.description", {
-              slot: `${formatDate(reservation.date)} · ${reservation.time}`,
-            })}
-          </Text>
+          <Card
+            radius="lg"
+            p="md"
+            style={{
+              background: uiColors.statusInfoSurface,
+              border: `1px solid ${uiColors.border}`,
+            }}
+          >
+            <Group gap="sm" wrap="nowrap" align="flex-start">
+              <IconCalendarClock
+                size={22}
+                color={uiColors.brandPrimary}
+                style={{ flexShrink: 0 }}
+              />
+              <Stack gap={3}>
+                <Text size="xs" fw={700} c={uiColors.textSecondary}>
+                  {t("alternativeDrawer.requestedTime")}
+                </Text>
+                <Text fw={800} c={uiColors.textPrimary}>
+                  {formatDate(reservation.date)} · {reservation.time}
+                </Text>
+                <Text size="xs" c={uiColors.textSecondary}>
+                  {t("alternativeDrawer.description")}
+                </Text>
+              </Stack>
+            </Group>
+          </Card>
 
-          <Stack gap="sm">
+          <Stack gap="md">
+            <Text fw={800}>{t("alternativeDrawer.availableTimes")}</Text>
             {slotsLoading ? (
               <Text size="sm" c={uiColors.textSecondary}>
                 {t("alternativeDrawer.loading")}
@@ -341,39 +378,69 @@ export function OwnerReservationResponsePanel({
                 {t("alternativeDrawer.noSlots")}
               </Text>
             ) : null}
-            {alternativeSlots.map((slot) => (
-              <OptionButton
-                key={slot.id}
-                active={selectedAlternative === slot.id}
-                label={slot.label}
-                onClick={() => setSelectedAlternative(slot.id)}
-              />
-            ))}
+            {alternativeDates.map((date) => {
+              const slots = alternativeSlots.filter((slot) => slot.date === date);
+              if (slots.length === 0) return null;
+
+              return (
+                <Stack key={date} gap="xs">
+                  <Text size="sm" fw={700} c={uiColors.textSecondary}>
+                    {formatDate(date)}
+                  </Text>
+                  <SimpleGrid cols={3} spacing="xs">
+                    {slots.map((slot) => (
+                      <OptionButton
+                        key={slot.id}
+                        active={selectedAlternative === slot.id}
+                        label={slot.time}
+                        onClick={() => setSelectedAlternative(slot.id)}
+                      />
+                    ))}
+                  </SimpleGrid>
+                </Stack>
+              );
+            })}
           </Stack>
 
-          <Textarea
-            label={t("alternativeDrawer.message")}
-            placeholder={t("alternativeDrawer.placeholder")}
-            value={message}
-            onChange={(event) => setMessage(event.currentTarget.value)}
-            autosize
-            minRows={2}
-          />
-
-          {proposeError ? (
-            <Alert color="red" title={t("alternativeDrawer.sendError")} />
-          ) : null}
-
-          <Button
-            fullWidth
-            size="md"
-            leftSection={<IconSend size={18} />}
-            disabled={!selectedAlternative || !onPropose}
-            loading={proposePending}
-            onClick={() => void sendAlternative()}
+          <Box
+            style={{
+              position: "sticky",
+              bottom: -16,
+              zIndex: 2,
+              marginInline: -16,
+              padding: 16,
+              background: uiColors.surfaceOverlay,
+              borderTop: `1px solid ${uiColors.border}`,
+              boxShadow: `0 -12px 28px ${uiColors.shadowSoft}`,
+            }}
           >
-            {t("alternativeDrawer.send")}
-          </Button>
+            <Stack gap="sm">
+              <Textarea
+                label={t("alternativeDrawer.message")}
+                placeholder={t("alternativeDrawer.placeholder")}
+                value={message}
+                onChange={(event) => setMessage(event.currentTarget.value)}
+                autosize
+                minRows={2}
+                maxRows={4}
+              />
+
+              {proposeError ? (
+                <Alert color="red" title={t("alternativeDrawer.sendError")} />
+              ) : null}
+
+              <Button
+                fullWidth
+                size="md"
+                leftSection={<IconSend size={18} />}
+                disabled={!selectedAlternative || !onPropose}
+                loading={proposePending}
+                onClick={() => void sendAlternative()}
+              >
+                {t("alternativeDrawer.send")}
+              </Button>
+            </Stack>
+          </Box>
         </Stack>
       </Drawer>
 
