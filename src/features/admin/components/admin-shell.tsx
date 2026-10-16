@@ -16,10 +16,8 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  IconAd2,
   IconBell,
   IconCalendarEvent,
-  IconChartBar,
   IconLayoutDashboard,
   IconPhoto,
   IconToolsKitchen2,
@@ -37,8 +35,6 @@ const adminNavigation = [
   { href: "/admin/customers", labelKey: "customers", icon: IconUsers },
   { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2 },
   { href: "/admin/media", labelKey: "media", icon: IconPhoto },
-  { href: "/admin/revenue", labelKey: "revenue", icon: IconChartBar },
-  { href: "/admin/campaigns", labelKey: "campaigns", icon: IconAd2 },
   { href: "/admin/settings", labelKey: "settings", icon: IconSettings },
 ] as const;
 
