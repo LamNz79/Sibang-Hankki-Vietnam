@@ -7,10 +7,10 @@ import {
   type RestaurantRecord,
 } from "@/features/restaurants/data/mock-data";
 
-export type RestaurantSummary = Omit<RestaurantRecord, "slotMatrix">;
+export type RestaurantSummary = Omit<RestaurantRecord, "slotMatrix" | "menuCategories">;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const toSummary = ({ slotMatrix, ...summary }: RestaurantRecord): RestaurantSummary =>
+const toSummary = ({ slotMatrix, menuCategories, ...summary }: RestaurantRecord): RestaurantSummary =>
   summary;
 
 export const getRestaurants = () =>
