@@ -489,7 +489,7 @@
     },
     "restaurantDetail": {
       "back": "Quay lại danh sách nhà hàng", "loadError": "Không thể tải thông tin nhà hàng.",
-      "tabs": { "profile": "Thông tin", "booking": "Cài đặt đặt bàn", "hours": "Giờ hoạt động" },
+      "tabs": { "profile": "Thông tin", "booking": "Cài đặt đặt bàn", "hours": "Giờ hoạt động", "menu": "Thực đơn" },
       "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
       "profile": { "title": "Thông tin nhà hàng", "edit": "Sửa thông tin", "cuisine": "Loại ẩm thực", "priceRange": "Khoảng giá", "location": "Khu vực", "timezone": "Múi giờ", "phone": "Số điện thoại", "email": "Email", "address": "Địa chỉ", "description": "Mô tả" },
       "booking": { "loadError": "Không thể tải cài đặt đặt bàn.", "notConfigured": "Nhà hàng chưa có cài đặt đặt bàn. Kiểm tra các giá trị mặc định rồi bấm lưu để khởi tạo.", "save": "Lưu cài đặt đặt bàn" },

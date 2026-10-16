@@ -541,7 +541,7 @@
     },
     "restaurantDetail": {
       "back": "Back to restaurants", "loadError": "Could not load the restaurant.",
-      "tabs": { "profile": "Profile", "booking": "Booking settings", "hours": "Business hours" },
+      "tabs": { "profile": "Profile", "booking": "Booking settings", "hours": "Business hours", "menu": "Menu" },
       "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
       "profile": { "title": "Restaurant profile", "edit": "Edit profile", "cuisine": "Cuisine", "priceRange": "Price range", "location": "Location", "timezone": "Timezone", "phone": "Phone", "email": "Email", "address": "Address", "description": "Description" },
       "booking": { "loadError": "Could not load booking settings.", "notConfigured": "This restaurant has no booking settings yet. Review the defaults and save to initialize them.", "save": "Save booking settings" },

@@ -17,8 +17,22 @@ export type OwnerMenu = { categories: MenuCategory[]; items: MenuItem[] };
 export type CategoryInput = Omit<MenuCategory, "id">;
 export type ItemInput = Omit<MenuItem, "id">;
 
-export const getOwnerMenu = (signal?: AbortSignal) =>
-  apiFetch<OwnerMenu>(apiEndpoints.ownerMenu, { cache: "no-store", signal });
+const menuPaths = (restaurantId?: string) => restaurantId ? {
+  menu: apiEndpoints.systemAdminRestaurantMenu(restaurantId),
+  categories: apiEndpoints.systemAdminRestaurantMenuCategories(restaurantId),
+  category: (id: string) => apiEndpoints.systemAdminRestaurantMenuCategory(restaurantId, id),
+  items: apiEndpoints.systemAdminRestaurantMenuItems(restaurantId),
+  item: (id: string) => apiEndpoints.systemAdminRestaurantMenuItem(restaurantId, id),
+} : {
+  menu: apiEndpoints.ownerMenu,
+  categories: apiEndpoints.ownerMenuCategories,
+  category: apiEndpoints.ownerMenuCategory,
+  items: apiEndpoints.ownerMenuItems,
+  item: apiEndpoints.ownerMenuItem,
+};
+
+export const getOwnerMenu = (signal?: AbortSignal, restaurantId?: string) =>
+  apiFetch<OwnerMenu>(menuPaths(restaurantId).menu, { cache: "no-store", signal });
 
 async function mutate<T>(path: string, method: "POST" | "PUT" | "DELETE", body?: unknown) {
   const csrf = await getCsrfToken();
@@ -29,15 +43,15 @@ async function mutate<T>(path: string, method: "POST" | "PUT" | "DELETE", body?:
   });
 }
 
-export const createCategory = (input: CategoryInput) =>
-  mutate<MenuCategory>(apiEndpoints.ownerMenuCategories, "POST", input);
-export const updateCategory = ({ id, ...input }: MenuCategory) =>
-  mutate<MenuCategory>(apiEndpoints.ownerMenuCategory(id), "PUT", input);
-export const deleteCategory = (id: string) =>
-  mutate<void>(apiEndpoints.ownerMenuCategory(id), "DELETE");
-export const createItem = (input: ItemInput) =>
-  mutate<MenuItem>(apiEndpoints.ownerMenuItems, "POST", input);
-export const updateItem = ({ id, ...input }: MenuItem) =>
-  mutate<MenuItem>(apiEndpoints.ownerMenuItem(id), "PUT", input);
-export const deleteItem = (id: string) =>
-  mutate<void>(apiEndpoints.ownerMenuItem(id), "DELETE");
+export const createCategory = (input: CategoryInput, restaurantId?: string) =>
+  mutate<MenuCategory>(menuPaths(restaurantId).categories, "POST", input);
+export const updateCategory = ({ id, ...input }: MenuCategory, restaurantId?: string) =>
+  mutate<MenuCategory>(menuPaths(restaurantId).category(id), "PUT", input);
+export const deleteCategory = (id: string, restaurantId?: string) =>
+  mutate<void>(menuPaths(restaurantId).category(id), "DELETE");
+export const createItem = (input: ItemInput, restaurantId?: string) =>
+  mutate<MenuItem>(menuPaths(restaurantId).items, "POST", input);
+export const updateItem = ({ id, ...input }: MenuItem, restaurantId?: string) =>
+  mutate<MenuItem>(menuPaths(restaurantId).item(id), "PUT", input);
+export const deleteItem = (id: string, restaurantId?: string) =>
+  mutate<void>(menuPaths(restaurantId).item(id), "DELETE");
