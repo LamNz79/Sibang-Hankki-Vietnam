@@ -18,7 +18,6 @@ import {
   IconHomeStats,
   IconQrcode,
   IconSettings,
-  IconSpeakerphone,
   IconUsers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
@@ -45,11 +44,6 @@ const navigation = [
     href: "/owner/guests",
     labelKey: "guests",
     icon: IconUsers
-  },
-  {
-    href: "/owner/marketing",
-    labelKey: "marketing",
-    icon: IconSpeakerphone,
   },
   {
     href: "/owner/settings",
