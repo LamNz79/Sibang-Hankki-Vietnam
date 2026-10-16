@@ -367,6 +367,7 @@
       "manageReservation": "Manage reservation",
       "loading": "Loading reservation...",
       "loadError": "Unable to load this reservation.",
+      "operations": { "confirm": "Confirm reservation", "checkIn": "Check in guest", "seat": "Mark as seated", "complete": "Complete visit", "noAction": "No further action is available for this reservation.", "error": "Unable to update the reservation. Refresh and try again." },
       "reservation": { "title": "Reservation information", "date": "Date", "time": "Time", "partySize": "Party size", "guests": "{count, plural, one {# guest} other {# guests}}", "channel": "Booking channel", "request": "Request" },
       "customer": { "title": "Customer & store", "name": "Customer", "phone": "Phone", "email": "Email", "language": "Language", "store": "Store" },
       "languages": { "en": "English", "vi": "Vietnamese", "ko": "Korean" },

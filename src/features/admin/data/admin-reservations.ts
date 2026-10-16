@@ -18,6 +18,12 @@ export type AdminReservationPeriod =
   | "last7Days"
   | "thisMonth";
 
+export type AdminReservationPrimaryAction =
+  | "confirm"
+  | "checkIn"
+  | "seat"
+  | "complete";
+
 export type AdminReservationRecord = {
   id: string;
   reference: string;
@@ -75,6 +81,21 @@ export function toAdminReservation(
     email: reservation.email ?? "",
     request: reservation.note ?? "",
   };
+}
+
+export function getAdminReservationPrimaryAction(
+  reservation: OwnerReservation,
+): AdminReservationPrimaryAction | null {
+  if (reservation.reservationStatus === ReservationStatus.Pending) {
+    return "confirm";
+  }
+  if (reservation.reservationStatus !== ReservationStatus.Confirmed) {
+    return null;
+  }
+  if (reservation.visitStatus === VisitStatus.Expected) return "checkIn";
+  if (reservation.visitStatus === VisitStatus.Arrived) return "seat";
+  if (reservation.visitStatus === VisitStatus.Seated) return "complete";
+  return null;
 }
 
 export function getAdminReservationDateRange(

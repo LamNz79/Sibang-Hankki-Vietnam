@@ -4,15 +4,29 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { Alert, Button, Card, Grid, Group, Stack, Text, Title } from "@mantine/core";
-import { IconArrowLeft } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconCheck,
+  IconCircleCheck,
+  IconSofa,
+  IconUserCheck,
+} from "@tabler/icons-react";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
+  getAdminReservationPrimaryAction,
   toAdminReservation,
   type AdminReservationStatus,
 } from "@/features/admin/data/admin-reservations";
-import { useOwnerReservation } from "@/features/owner/hooks/use-owner-reservations";
+import {
+  useOwnerManualCheckIn,
+  useOwnerReservation,
+  useOwnerReservationActions,
+} from "@/features/owner/hooks/use-owner-reservations";
+import { OwnerCustomerResponseCard } from "@/features/owner/reservations/components/owner-customer-response-card";
+import { OwnerReservationResponsePanel } from "@/features/owner/reservations/components/owner-reservation-response-panel";
 import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
+import { ReservationStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
 const statusTones: Record<
@@ -33,6 +47,8 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
   const reservationsT = useTranslations("Admin.reservations");
   const { reservation: ownerReservation, isPending, isError } =
     useOwnerReservation(id);
+  const actions = useOwnerReservationActions(id);
+  const manualCheckIn = useOwnerManualCheckIn();
   const { query: settingsQuery } = useOwnerSettings();
 
   if (isPending) {
@@ -52,6 +68,27 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
   }
 
   const reservation = toAdminReservation(ownerReservation);
+  const primaryAction = getAdminReservationPrimaryAction(ownerReservation);
+  const actionPending = actions.isPending || manualCheckIn.isPending;
+  const response = ownerReservation.customerResponse?.kind === "awaiting-customer"
+    ? {
+        kind: "alternative-sent" as const,
+        slot: `${ownerReservation.customerResponse.proposedDate} · ${ownerReservation.customerResponse.proposedTime}`,
+      }
+    : (ownerReservation.requestResponse ?? { kind: "pending" as const });
+  const runPrimaryAction = () => {
+    if (primaryAction === "confirm") actions.confirm();
+    if (primaryAction === "checkIn") manualCheckIn.mutate(id);
+    if (primaryAction === "seat") actions.seat();
+    if (primaryAction === "complete") actions.complete();
+  };
+  const actionContent = primaryAction ? {
+    confirm: { label: t("operations.confirm"), icon: IconCheck },
+    checkIn: { label: t("operations.checkIn"), icon: IconUserCheck },
+    seat: { label: t("operations.seat"), icon: IconSofa },
+    complete: { label: t("operations.complete"), icon: IconCircleCheck },
+  }[primaryAction] : null;
+  const PrimaryActionIcon = actionContent?.icon;
   const formattedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   }).format(new Date(`${reservation.date}T00:00:00`));
@@ -80,17 +117,51 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
               <StatusBadge tone={statusTones[reservation.status]}>
                 {reservationsT(`statuses.${reservation.status}`)}
               </StatusBadge>
-              <Button
-                component={Link}
-                href={`/owner/reservations/${reservation.id}`}
-                color="warmCoral"
-                radius="sm"
-              >
-                {t("manageReservation")}
-              </Button>
             </Group>
           </Group>
         </Stack>
+
+        <DetailCard title={t("manageReservation")}>
+          <Stack p="md" gap="md">
+            {(actions.isError || manualCheckIn.isError) ? (
+              <Alert color="red" title={t("operations.error")} role="alert" />
+            ) : null}
+            <OwnerCustomerResponseCard reservation={ownerReservation} />
+            {ownerReservation.reservationStatus === ReservationStatus.Pending ||
+            ownerReservation.reservationStatus === ReservationStatus.AlternativeProposed ? (
+              <OwnerReservationResponsePanel
+                reservation={ownerReservation}
+                response={response}
+                readOnly={ownerReservation.reservationStatus !== ReservationStatus.Pending}
+                onPropose={ownerReservation.reservationStatus === ReservationStatus.Pending
+                  ? actions.propose
+                  : undefined}
+                onDecline={ownerReservation.reservationStatus === ReservationStatus.Pending
+                  ? actions.decline
+                  : undefined}
+                declinePending={actions.isPending}
+                declineError={actions.isError}
+                proposePending={actions.isPending}
+                proposeError={actions.isError}
+              />
+            ) : null}
+            {actionContent && PrimaryActionIcon ? (
+              <Button
+                color="warmCoral"
+                radius="sm"
+                leftSection={<PrimaryActionIcon size={18} />}
+                loading={actionPending}
+                onClick={runPrimaryAction}
+              >
+                {actionContent.label}
+              </Button>
+            ) : (
+              <Text size="sm" c={uiColors.textSecondary}>
+                {t("operations.noAction")}
+              </Text>
+            )}
+          </Stack>
+        </DetailCard>
 
         <Grid>
           <Grid.Col span={{ base: 12, lg: 6 }}>
