@@ -25,6 +25,7 @@ import {
   IconCalendarEvent,
   IconClock,
   IconPlus,
+  IconPhoto,
   IconRefresh,
   IconTrash,
   IconToolsKitchen2,
@@ -32,7 +33,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
-import { AdminMenuScreen } from "@/features/admin";
+import { AdminMediaScreen, AdminMenuScreen } from "@/features/admin";
 import type { BusinessHour } from "@/features/owner/settings/data/business-hours";
 import type { ConfirmationMode } from "@/features/owner/settings/data/owner-settings";
 import { RestaurantFormDialog } from "@/features/system-admin/components/restaurant-form-dialog";
@@ -198,6 +199,9 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
           </Tabs.Tab>
           <Tabs.Tab value="menu" leftSection={<IconToolsKitchen2 size={16} />}>
             {t("tabs.menu")}
+          </Tabs.Tab>
+          <Tabs.Tab value="media" leftSection={<IconPhoto size={16} />}>
+            {t("tabs.media")}
           </Tabs.Tab>
         </Tabs.List>
 
@@ -373,6 +377,10 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
 
         <Tabs.Panel value="menu" pt="lg">
           <AdminMenuScreen restaurantId={id} embedded />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="media" pt="lg">
+          <AdminMediaScreen restaurantId={id} embedded />
         </Tabs.Panel>
       </Tabs>
 
