@@ -28,9 +28,15 @@ import { uiColors } from "@/theme";
 
 const emptyImage = { id: "", imageUrl: "", altText: "", sortOrder: 0 };
 
-export function AdminMediaScreen() {
+export function AdminMediaScreen({
+  restaurantId,
+  embedded = false,
+}: {
+  restaurantId?: string;
+  embedded?: boolean;
+} = {}) {
   const t = useTranslations("Admin.media");
-  const { query, mutations, error } = useOwnerMedia();
+  const { query, mutations, error } = useOwnerMedia(restaurantId);
   const [opened, modal] = useDisclosure(false);
   const [draft, setDraft] = useState(emptyImage);
   const images = query.data?.images ?? [];
@@ -56,8 +62,8 @@ export function AdminMediaScreen() {
     if (window.confirm(t("deleteConfirm"))) mutations.delete.mutate(id);
   };
 
-  return (
-    <AdminShell>
+  const content = (
+    <>
       <Stack gap="xl">
         <Group justify="space-between" align="flex-end">
           <Stack gap={3}>
@@ -113,6 +119,8 @@ export function AdminMediaScreen() {
           </Button>
         </Stack>
       </Modal>
-    </AdminShell>
+    </>
   );
+
+  return embedded ? content : <AdminShell>{content}</AdminShell>;
 }

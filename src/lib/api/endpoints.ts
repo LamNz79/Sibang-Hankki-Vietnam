@@ -91,6 +91,10 @@ export const apiEndpoints = {
     `/api/admin/restaurants/${seg(id)}/menu/items`,
   systemAdminRestaurantMenuItem: (id: string, itemId: string) =>
     `/api/admin/restaurants/${seg(id)}/menu/items/${seg(itemId)}`,
+  systemAdminRestaurantMedia: (id: string) =>
+    `/api/admin/restaurants/${seg(id)}/media`,
+  systemAdminRestaurantMediaItem: (id: string, mediaId: string) =>
+    `/api/admin/restaurants/${seg(id)}/media/${seg(mediaId)}`,
   systemAdminReservations: "/api/admin/reservations",
   systemAdminReservation: (id: string) =>
     `/api/admin/reservations/${seg(id)}`,

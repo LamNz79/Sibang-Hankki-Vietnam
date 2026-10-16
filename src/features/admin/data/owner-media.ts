@@ -10,8 +10,19 @@ export type RestaurantImage = {
 };
 export type RestaurantImageInput = Omit<RestaurantImage, "id">;
 
-export const getOwnerMedia = (signal?: AbortSignal) =>
-  apiFetch<{ images: RestaurantImage[] }>(apiEndpoints.ownerMedia, { cache: "no-store", signal });
+const mediaPaths = (restaurantId?: string) => restaurantId ? {
+  collection: apiEndpoints.systemAdminRestaurantMedia(restaurantId),
+  item: (id: string) => apiEndpoints.systemAdminRestaurantMediaItem(restaurantId, id),
+} : {
+  collection: apiEndpoints.ownerMedia,
+  item: apiEndpoints.ownerMediaItem,
+};
+
+export const getOwnerMedia = (signal?: AbortSignal, restaurantId?: string) =>
+  apiFetch<{ images: RestaurantImage[] }>(
+    mediaPaths(restaurantId).collection,
+    { cache: "no-store", signal },
+  );
 
 async function mutate<T>(path: string, method: "POST" | "PUT" | "DELETE", body?: unknown) {
   const csrf = await getCsrfToken();
@@ -22,9 +33,9 @@ async function mutate<T>(path: string, method: "POST" | "PUT" | "DELETE", body?:
   });
 }
 
-export const createRestaurantImage = (input: RestaurantImageInput) =>
-  mutate<RestaurantImage>(apiEndpoints.ownerMedia, "POST", input);
-export const updateRestaurantImage = ({ id, ...input }: RestaurantImage) =>
-  mutate<RestaurantImage>(apiEndpoints.ownerMediaItem(id), "PUT", input);
-export const deleteRestaurantImage = (id: string) =>
-  mutate<void>(apiEndpoints.ownerMediaItem(id), "DELETE");
+export const createRestaurantImage = (input: RestaurantImageInput, restaurantId?: string) =>
+  mutate<RestaurantImage>(mediaPaths(restaurantId).collection, "POST", input);
+export const updateRestaurantImage = ({ id, ...input }: RestaurantImage, restaurantId?: string) =>
+  mutate<RestaurantImage>(mediaPaths(restaurantId).item(id), "PUT", input);
+export const deleteRestaurantImage = (id: string, restaurantId?: string) =>
+  mutate<void>(mediaPaths(restaurantId).item(id), "DELETE");

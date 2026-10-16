@@ -11,17 +11,22 @@ import {
 } from "@/features/admin/data/owner-media";
 import { ApiError } from "@/lib/api/client";
 
-const queryKey = ["owner-media"] as const;
-
-export function useOwnerMedia() {
+export function useOwnerMedia(restaurantId?: string) {
   const router = useRouter();
   const client = useQueryClient();
+  const queryKey = restaurantId
+    ? ["system-admin-restaurant-media", restaurantId] as const
+    : ["owner-media"] as const;
   const refresh = () => client.invalidateQueries({ queryKey });
-  const query = useQuery({ queryKey, queryFn: ({ signal }) => getOwnerMedia(signal), retry: false });
+  const query = useQuery({
+    queryKey,
+    queryFn: ({ signal }) => getOwnerMedia(signal, restaurantId),
+    retry: false,
+  });
   const mutations = {
-    create: useMutation({ mutationFn: createRestaurantImage, onSuccess: refresh }),
-    update: useMutation({ mutationFn: updateRestaurantImage, onSuccess: refresh }),
-    delete: useMutation({ mutationFn: deleteRestaurantImage, onSuccess: refresh }),
+    create: useMutation({ mutationFn: (input: Parameters<typeof createRestaurantImage>[0]) => createRestaurantImage(input, restaurantId), onSuccess: refresh }),
+    update: useMutation({ mutationFn: (input: Parameters<typeof updateRestaurantImage>[0]) => updateRestaurantImage(input, restaurantId), onSuccess: refresh }),
+    delete: useMutation({ mutationFn: (id: string) => deleteRestaurantImage(id, restaurantId), onSuccess: refresh }),
   };
   const error = query.error ?? Object.values(mutations).find((mutation) => mutation.error)?.error;
 
