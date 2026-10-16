@@ -8,6 +8,22 @@ export type CuisineKey =
   | "western";
 export type BenefitKey = "special_deal" | "available" | "date_night" | "michelin";
 
+export type RestaurantMenuItem = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  currency: string;
+  imageUrl: string | null;
+};
+
+export type RestaurantMenuCategory = {
+  id: string;
+  name: string;
+  displayOrder: number;
+  items: RestaurantMenuItem[];
+};
+
 export type RestaurantRecord = {
   slug: string;
   name: string;
@@ -33,6 +49,7 @@ export type RestaurantRecord = {
   galleryImages?: { imageUrl: string; imageAlt: string }[];
   summary: string;
   slotMatrix: Record<string, Record<string, string[]>>;
+  menuCategories: RestaurantMenuCategory[];
 };
 
 const demoSlotPatterns = [
@@ -120,6 +137,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 5,
     summary: "Modern Vietnamese tasting menus with refined plating and a lively city-dining atmosphere.",
     slotMatrix: createDemoSlotMatrix(0),
+    menuCategories: [],
   },
   {
     slug: "royal-pavilion",
@@ -145,6 +163,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 5,
     summary: "Elegant Cantonese dining with private-table ambience and evening reservation demand.",
     slotMatrix: createDemoSlotMatrix(1),
+    menuCategories: [],
   },
   {
     slug: "refinery",
@@ -170,6 +189,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 4,
     summary: "French comfort dining in a restored colonial setting with strong dinner demand.",
     slotMatrix: createDemoSlotMatrix(2),
+    menuCategories: [],
   },
   {
     slug: "mori-teppan",
@@ -195,6 +215,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 3,
     summary: "Interactive teppan-style dinner counters that work best for small evening parties.",
     slotMatrix: createDemoSlotMatrix(3),
+    menuCategories: [],
   },
   {
     slug: "hanoi-hearth",
@@ -220,6 +241,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 4,
     summary: "Contemporary northern Vietnamese dishes in a warm dining room near the Old Quarter.",
     slotMatrix: createDemoSlotMatrix(4),
+    menuCategories: [],
   },
   {
     slug: "han-river-dining",
@@ -245,6 +267,7 @@ export const restaurantRecords: RestaurantRecord[] = [
     galleryCount: 5,
     summary: "Relaxed riverside dining focused on central Vietnamese seafood and shareable evening menus.",
     slotMatrix: createDemoSlotMatrix(5),
+    menuCategories: [],
   },
 ];
 

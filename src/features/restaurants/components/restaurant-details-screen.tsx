@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Button, Card, Group, Image, Modal, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCalendarTime, IconClock, IconMapPin, IconPhoto, IconStarFilled } from "@tabler/icons-react";
 import { MobileShell } from "@/components/layout/customer";
@@ -17,6 +17,7 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
   const galleryImages = restaurant.galleryImages?.length
     ? restaurant.galleryImages
     : [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }];
+  const menuCategories = restaurant.menuCategories ?? [];
 
   return (
     <MobileShell
@@ -121,6 +122,48 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
       </Card>
 
       <Text c={uiColors.textSecondary}>{restaurant.summary}</Text>
+
+      {menuCategories.length > 0 && (
+        <Stack gap="md">
+          <Title order={2} size="h2" c={uiColors.textPrimary}>Menu</Title>
+          {menuCategories.map((category) => (
+            <Stack key={category.id} gap="sm">
+              <Title order={3} size="h3" c={uiColors.textPrimary}>{category.name}</Title>
+              {category.items.map((item) => (
+                <Card
+                  key={item.id}
+                  radius="lg"
+                  p="md"
+                  style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}
+                >
+                  <Group wrap="nowrap" align="flex-start">
+                    {item.imageUrl && (
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.name}
+                        w={96}
+                        h={96}
+                        radius="md"
+                        fit="cover"
+                        flex="0 0 auto"
+                      />
+                    )}
+                    <Stack gap={4} style={{ flex: 1, minWidth: 0 }}>
+                      <Text fw={700} c={uiColors.textPrimary}>{item.name}</Text>
+                      {item.description && (
+                        <Text size="sm" c={uiColors.textSecondary}>{item.description}</Text>
+                      )}
+                      <Text fw={700} c={uiColors.brandPrimary} mt="auto">
+                        <NumberFormatter value={item.price} thousandSeparator suffix={` ${item.currency}`} />
+                      </Text>
+                    </Stack>
+                  </Group>
+                </Card>
+              ))}
+            </Stack>
+          ))}
+        </Stack>
+      )}
 
     </MobileShell>
   );
