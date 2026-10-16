@@ -17,6 +17,7 @@ import {
   Textarea,
   TextInput,
   ThemeIcon,
+  Title,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import {
@@ -109,7 +110,7 @@ function SectionCard({
   );
 }
 
-export function OwnerSettingsScreen() {
+export function OwnerSettingsScreen({ embedded = false }: { embedded?: boolean }) {
   const { query, mutation } = useOwnerSettings();
   const businessHours = useBusinessHours();
   const t = useTranslations("OwnerSettings.bookingSlotsModal");
@@ -172,23 +173,7 @@ export function OwnerSettingsScreen() {
       hourIndex === index ? { ...hour, [key]: value } : hour));
   };
 
-  return (
-    <OwnerShell
-      title={pageT("title")}
-      eyebrow={query.data?.slug ?? pageT("eyebrow")}
-      backHref="/owner"
-      hideMobileNavigation
-      footerAction={
-        <PrimaryActionButton
-          onClick={save}
-          loading={mutation.isPending}
-          disabled={!form || query.isLoading}
-        >
-          {pageT("saveChanges")}
-        </PrimaryActionButton>
-      }
-    >
-      {query.isLoading ? (
+  const content = query.isLoading ? (
         <Group justify="center" py="xl"><Loader /></Group>
       ) : query.isError || !form ? (
         <Alert color="red" title={pageT("unavailable.title")}>
@@ -418,7 +403,49 @@ export function OwnerSettingsScreen() {
             <Stack gap="md"><LanguageSelect /><WorkspaceSwitcher /></Stack>
           </Card>
         </Stack>
-      )}
+      );
+
+  if (embedded) {
+    return (
+      <Stack gap="xl">
+        <Group justify="space-between" align="flex-end">
+          <Stack gap={3}>
+            <Title order={1}>{pageT("title")}</Title>
+            <Text c={uiColors.textSecondary}>
+              {query.data?.slug ?? pageT("eyebrow")}
+            </Text>
+          </Stack>
+          <Button
+            color="warmCoral"
+            onClick={save}
+            loading={mutation.isPending}
+            disabled={!form || query.isLoading}
+          >
+            {pageT("saveChanges")}
+          </Button>
+        </Group>
+        {content}
+      </Stack>
+    );
+  }
+
+  return (
+    <OwnerShell
+      title={pageT("title")}
+      eyebrow={query.data?.slug ?? pageT("eyebrow")}
+      backHref="/owner"
+      hideMobileNavigation
+      footerAction={
+        <PrimaryActionButton
+          onClick={save}
+          loading={mutation.isPending}
+          disabled={!form || query.isLoading}
+        >
+          {pageT("saveChanges")}
+        </PrimaryActionButton>
+      }
+    >
+      {content}
     </OwnerShell>
   );
 }
