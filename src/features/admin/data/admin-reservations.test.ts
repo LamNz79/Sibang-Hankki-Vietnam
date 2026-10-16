@@ -5,6 +5,7 @@ import {
 } from "@/features/reservations/types";
 import type { OwnerReservation } from "@/features/owner/types";
 import {
+  getAdminReservationPrimaryAction,
   getAdminReservationDateRange,
   toAdminReservation,
 } from "@/features/admin/data/admin-reservations";
@@ -54,5 +55,25 @@ describe("admin reservation data", () => {
       dateFrom: "2026-10-01",
       dateTo: "2026-10-31",
     });
+  });
+
+  it("only offers the next valid operational action", () => {
+    expect(getAdminReservationPrimaryAction({
+      ...ownerReservation,
+      reservationStatus: ReservationStatus.Pending,
+    })).toBe("confirm");
+    expect(getAdminReservationPrimaryAction(ownerReservation)).toBe("checkIn");
+    expect(getAdminReservationPrimaryAction({
+      ...ownerReservation,
+      visitStatus: VisitStatus.Arrived,
+    })).toBe("seat");
+    expect(getAdminReservationPrimaryAction({
+      ...ownerReservation,
+      visitStatus: VisitStatus.Seated,
+    })).toBe("complete");
+    expect(getAdminReservationPrimaryAction({
+      ...ownerReservation,
+      visitStatus: VisitStatus.Completed,
+    })).toBeNull();
   });
 });

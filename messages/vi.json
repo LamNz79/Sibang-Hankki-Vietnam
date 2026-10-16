@@ -315,6 +315,7 @@
       "manageReservation": "Quản lý đặt bàn",
       "loading": "Đang tải đặt bàn...",
       "loadError": "Không thể tải đặt bàn này.",
+      "operations": { "confirm": "Xác nhận đặt bàn", "checkIn": "Check-in khách", "seat": "Xác nhận khách đã ngồi", "complete": "Hoàn tất lượt khách", "noAction": "Không còn thao tác nào cho đặt bàn này.", "error": "Không thể cập nhật đặt bàn. Hãy tải lại và thử lại." },
       "reservation": { "title": "Thông tin đặt bàn", "date": "Ngày", "time": "Giờ", "partySize": "Số khách", "guests": "{count} khách", "channel": "Kênh đặt bàn", "request": "Yêu cầu" },
       "customer": { "title": "Khách hàng & cửa hàng", "name": "Khách hàng", "phone": "Điện thoại", "email": "Email", "language": "Ngôn ngữ", "store": "Cửa hàng" },
       "languages": { "en": "Tiếng Anh", "vi": "Tiếng Việt", "ko": "Tiếng Hàn" },

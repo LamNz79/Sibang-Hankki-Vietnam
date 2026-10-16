@@ -315,6 +315,7 @@
       "manageReservation": "예약 관리",
       "loading": "예약을 불러오는 중...",
       "loadError": "이 예약을 불러올 수 없습니다.",
+      "operations": { "confirm": "예약 확정", "checkIn": "고객 체크인", "seat": "착석 처리", "complete": "방문 완료", "noAction": "이 예약에 대해 추가로 수행할 작업이 없습니다.", "error": "예약을 업데이트할 수 없습니다. 새로고침 후 다시 시도하세요." },
       "reservation": { "title": "예약 정보", "date": "날짜", "time": "시간", "partySize": "인원", "guests": "{count}명", "channel": "예약 채널", "request": "요청사항" },
       "customer": { "title": "고객 및 가게", "name": "고객", "phone": "전화번호", "email": "이메일", "language": "언어", "store": "가게" },
       "languages": { "en": "영어", "vi": "베트남어", "ko": "한국어" },
