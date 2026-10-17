@@ -98,6 +98,13 @@ export function getAdminReservationPrimaryAction(
   return null;
 }
 
+export function canAdminTerminateReservation(reservation: OwnerReservation) {
+  return (
+    reservation.reservationStatus === ReservationStatus.Confirmed &&
+    reservation.visitStatus === VisitStatus.Expected
+  );
+}
+
 export function getAdminReservationDateRange(
   period: AdminReservationPeriod,
   today = new Date(),

@@ -1,19 +1,33 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { Alert, Button, Card, Grid, Group, Stack, Text, Title } from "@mantine/core";
+import {
+  Alert,
+  Button,
+  Card,
+  Grid,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  Textarea,
+  Title,
+} from "@mantine/core";
 import {
   IconArrowLeft,
   IconCheck,
   IconCircleCheck,
   IconSofa,
   IconUserCheck,
+  IconUserX,
+  IconX,
 } from "@tabler/icons-react";
 import { StatusBadge } from "@/components/ui";
 import { AdminShell } from "@/features/admin/components/admin-shell";
 import {
+  canAdminTerminateReservation,
   getAdminReservationPrimaryAction,
   toAdminReservation,
   type AdminReservationStatus,
@@ -45,6 +59,10 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
   const locale = useLocale();
   const t = useTranslations("Admin.reservationDetail");
   const reservationsT = useTranslations("Admin.reservations");
+  const ownerT = useTranslations("OwnerReservationDetails");
+  const [cancelOpened, setCancelOpened] = useState(false);
+  const [noShowOpened, setNoShowOpened] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
   const { reservation: ownerReservation, isPending, isError } =
     useOwnerReservation(id);
   const actions = useOwnerReservationActions(id);
@@ -89,6 +107,25 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
     complete: { label: t("operations.complete"), icon: IconCircleCheck },
   }[primaryAction] : null;
   const PrimaryActionIcon = actionContent?.icon;
+  const canTerminate = canAdminTerminateReservation(ownerReservation);
+  const cancelReservation = async () => {
+    if (!cancelReason.trim()) return;
+    try {
+      await actions.cancel(cancelReason.trim());
+      setCancelOpened(false);
+      setCancelReason("");
+    } catch {
+      // Keep the dialog open so the admin can retry.
+    }
+  };
+  const markNoShow = async () => {
+    try {
+      await actions.markNoShow();
+      setNoShowOpened(false);
+    } catch {
+      // Keep the dialog open so the admin can retry after reviewing the error.
+    }
+  };
   const formattedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   }).format(new Date(`${reservation.date}T00:00:00`));
@@ -160,6 +197,34 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
                 {t("operations.noAction")}
               </Text>
             )}
+            {canTerminate ? (
+              <Group grow>
+                <Button
+                  variant="outline"
+                  color="orange"
+                  leftSection={<IconUserX size={18} />}
+                  disabled={actionPending}
+                  onClick={() => {
+                    actions.reset();
+                    setNoShowOpened(true);
+                  }}
+                >
+                  {ownerT("menu.noShow")}
+                </Button>
+                <Button
+                  variant="outline"
+                  color="red"
+                  leftSection={<IconX size={18} />}
+                  disabled={actionPending}
+                  onClick={() => {
+                    actions.reset();
+                    setCancelOpened(true);
+                  }}
+                >
+                  {ownerT("menu.cancel")}
+                </Button>
+              </Group>
+            ) : null}
           </Stack>
         </DetailCard>
 
@@ -220,6 +285,81 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
             </DetailCard>
           </Grid.Col>
         </Grid>
+
+        <Modal
+          opened={noShowOpened}
+          onClose={() => setNoShowOpened(false)}
+          title={ownerT("noShow.title", { guest: ownerReservation.guestName })}
+          centered
+        >
+          <Stack gap="md">
+            <Text size="sm" c={uiColors.textSecondary}>
+              {ownerT("noShow.description")}
+            </Text>
+            {actions.isError ? (
+              <Alert color="red" title={ownerT("noShow.error")} role="alert" />
+            ) : null}
+            <Group justify="flex-end">
+              <Button
+                variant="default"
+                disabled={actions.isPending}
+                onClick={() => setNoShowOpened(false)}
+              >
+                {ownerT("noShow.keep")}
+              </Button>
+              <Button
+                color="orange"
+                loading={actions.isPending}
+                onClick={() => void markNoShow()}
+              >
+                {ownerT("noShow.confirm")}
+              </Button>
+            </Group>
+          </Stack>
+        </Modal>
+
+        <Modal
+          opened={cancelOpened}
+          onClose={() => setCancelOpened(false)}
+          title={ownerT("cancel.title")}
+          centered
+        >
+          <Stack gap="md">
+            <Text size="sm" c={uiColors.textSecondary}>
+              {ownerT("cancel.description")}
+            </Text>
+            <Textarea
+              label={ownerT("cancel.reason")}
+              placeholder={ownerT("cancel.placeholder")}
+              value={cancelReason}
+              onChange={(event) => setCancelReason(event.currentTarget.value)}
+              maxLength={500}
+              minRows={3}
+              autosize
+              required
+            />
+            {actions.isError ? (
+              <Alert color="red" title={ownerT("cancel.error")} role="alert" />
+            ) : null}
+            <Group justify="flex-end">
+              <Button
+                variant="default"
+                disabled={actions.isPending}
+                onClick={() => setCancelOpened(false)}
+              >
+                {ownerT("cancel.keep")}
+              </Button>
+              <Button
+                color="red"
+                loading={actions.isPending}
+                disabled={!cancelReason.trim()}
+                onClick={() => void cancelReservation()}
+              >
+                {ownerT("cancel.confirm")}
+              </Button>
+            </Group>
+          </Stack>
+        </Modal>
       </Stack>
     </AdminShell>
   );

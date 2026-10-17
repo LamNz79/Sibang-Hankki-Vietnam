@@ -5,6 +5,7 @@ import {
 } from "@/features/reservations/types";
 import type { OwnerReservation } from "@/features/owner/types";
 import {
+  canAdminTerminateReservation,
   getAdminReservationPrimaryAction,
   getAdminReservationDateRange,
   toAdminReservation,
@@ -75,5 +76,17 @@ describe("admin reservation data", () => {
       ...ownerReservation,
       visitStatus: VisitStatus.Completed,
     })).toBeNull();
+  });
+
+  it("only allows cancellation and no-show before guest arrival", () => {
+    expect(canAdminTerminateReservation(ownerReservation)).toBe(true);
+    expect(canAdminTerminateReservation({
+      ...ownerReservation,
+      visitStatus: VisitStatus.Arrived,
+    })).toBe(false);
+    expect(canAdminTerminateReservation({
+      ...ownerReservation,
+      reservationStatus: ReservationStatus.Cancelled,
+    })).toBe(false);
   });
 });
