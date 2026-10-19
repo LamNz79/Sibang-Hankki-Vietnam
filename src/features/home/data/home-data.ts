@@ -18,7 +18,7 @@ export const categories = [
 export const cityTiles = [
   {
     label: "Ho Chi Minh City",
-    slug: "ho-chi-minh-city",
+    slug: "ho-chi-minh",
     badge: undefined,
     background: "linear-gradient(135deg, #6da1c3 0%, #c4d9ea 100%)",
   },

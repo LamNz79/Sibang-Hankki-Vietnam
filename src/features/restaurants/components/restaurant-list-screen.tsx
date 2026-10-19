@@ -31,6 +31,11 @@ import {
 } from "@/features/restaurants/data/mock-data";
 import type { RestaurantSummary } from "@/features/restaurants/data/api";
 import {
+  cityLabels,
+  matchesCitySlug,
+  normalizeCitySlug,
+} from "@/features/restaurants/domain/city";
+import {
   getFirstLiveTime,
   getLiveAvailabilityLabel,
   type RestaurantAvailabilityMap,
@@ -49,11 +54,6 @@ const cuisineOptions: (CuisineKey | "all")[] = ["all", "korean", "chinese", "vie
 const cuisineLabels: Record<CuisineKey | "all", string> = { all: "Cuisine", korean: "Korean", chinese: "Chinese", vietnamese: "Vietnamese", japanese: "Japanese", western: "Western" };
 const benefitOptions: BenefitKey[] = ["special_deal", "available", "date_night", "michelin"];
 const benefitLabels: Record<BenefitKey, string> = { special_deal: "Special deal", available: "Available", date_night: "Date night", michelin: "Michelin" };
-const cityLabels: Record<string, string> = {
-  "ho-chi-minh-city": "Ho Chi Minh City",
-  hanoi: "Hanoi",
-  "da-nang": "Da Nang",
-};
 const restaurantLogos: Record<string, string> = {
   "anan-saigon": "/images/restaurant-logos/anan-saigon.jpg",
   refinery: "/images/restaurant-logos/refinery.jpg",
@@ -74,7 +74,9 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const citySlug = searchParams.get("city") ?? undefined;
   const locationScope = searchParams.get("location") ?? undefined;
   const selectedCategory = categories.find((item) => item.slug === categorySlug);
-  const selectedCity = citySlug ? cityLabels[citySlug] : undefined;
+  const selectedCity = citySlug
+    ? cityLabels[normalizeCitySlug(citySlug)]
+    : undefined;
   const searchScope = selectedCity ?? locationScope ?? "Ho Chi Minh City";
   const pageTitle = selectedCategory
     ? `${selectedCategory.label} in ${searchScope}`
@@ -101,7 +103,8 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     let list = restaurants.filter((restaurant) => {
       const haystack = `${restaurant.name} ${restaurant.area} ${restaurant.cuisineLabel}`.toLowerCase();
       const matchesQuery = query.trim().length === 0 || haystack.includes(query.trim().toLowerCase());
-      const matchesCity = !citySlug || restaurant.citySlug === citySlug;
+      const matchesCity =
+        !citySlug || matchesCitySlug(restaurant.citySlug, citySlug);
       const matchesPrice = priceFilter === "all" || restaurant.priceKey === priceFilter;
       const matchesCuisine = cuisineFilter === "all" || restaurant.cuisineKey === cuisineFilter;
       const matchesBenefits = selectedBenefits.length === 0 || selectedBenefits.every((benefit) =>
@@ -166,6 +169,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
 
         {filteredRestaurants.map((restaurant) => {
           const logoUrl = restaurantLogos[restaurant.slug];
+          const cardImageUrl = logoUrl ?? restaurant.imageUrl;
           return (
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
               <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
@@ -174,13 +178,13 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
                     w={96}
                     miw={96}
                     role="img"
-                    aria-label={`${restaurant.name} logo`}
+                    aria-label={`${restaurant.name} image`}
                     style={{
                       backgroundColor: restaurant.heroAccent,
-                      backgroundImage: logoUrl ? `url("${logoUrl}")` : undefined,
+                      backgroundImage: cardImageUrl ? `url("${cardImageUrl}")` : undefined,
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
-                      backgroundSize: "contain",
+                      backgroundSize: logoUrl ? "contain" : "cover",
                       display: "grid",
                       placeItems: "center",
                       color: uiColors.textSecondary,
@@ -188,7 +192,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
                       fontWeight: 800,
                     }}
                   >
-                    {logoUrl ? null : restaurant.name.charAt(0)}
+                    {cardImageUrl ? null : restaurant.name.charAt(0)}
                   </Box>
                   <Stack gap={6} p="md" style={{ flex: 1 }}>
                     <Title order={3} size="h4" fw={700} c={uiColors.textPrimary}>{restaurant.name}</Title>
