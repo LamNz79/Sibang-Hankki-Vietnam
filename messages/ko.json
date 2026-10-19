@@ -133,7 +133,7 @@
     }
   },
   "CustomerBooking": {
-    "title": "테이블 예약", "subtitle": "예약 정보", "loadingDetails": "예약 정보를 불러오는 중...", "loading": "불러오는 중...",
+    "title": "테이블 예약", "subtitle": "예약 정보",
     "submit": { "change": "이 시간으로 요청", "reservation": "예약 요청", "selectTime": "가능한 시간 선택" },
     "date": { "title": "날짜", "selected": "선택한 날짜", "none": "날짜를 선택하지 않았습니다" },
     "guests": { "title": "인원", "remove": "인원 한 명 줄이기", "count": "인원수", "add": "인원 한 명 추가", "largePartyTitle": "단체 예약 요청", "largePartyDescription": "10명 초과 단체는 적절한 시간을 확인하기 위해 레스토랑에 직접 문의해 주세요. 온라인 예약은 지원되지 않습니다." },

@@ -133,7 +133,7 @@
     }
   },
   "CustomerBooking": {
-    "title": "Book a table", "subtitle": "Table booking", "loadingDetails": "Loading booking details...", "loading": "Loading...",
+    "title": "Book a table", "subtitle": "Table booking",
     "submit": { "change": "Request this time", "reservation": "Request reservation", "selectTime": "Select an available time" },
     "date": { "title": "Date", "selected": "Selected date", "none": "No date selected" },
     "guests": { "title": "Guests", "remove": "Remove one guest", "count": "Number of guests", "add": "Add one guest", "largePartyTitle": "Large party request", "largePartyDescription": "For groups larger than 10 guests, contact the restaurant directly to confirm a suitable time. Online booking is unavailable." },
