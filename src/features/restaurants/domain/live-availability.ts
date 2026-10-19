@@ -17,20 +17,26 @@ export function getRestaurantLocalDate(date = new Date()) {
   return `${value("year")}-${value("month")}-${value("day")}`;
 }
 
-export function getLiveAvailabilityLabel(
+export type LiveAvailabilityState =
+  | { kind: "unknown" }
+  | { kind: "contact" }
+  | { kind: "unavailable"; partySize: number }
+  | { kind: "available"; time: string; confirmationRequired: boolean };
+
+export function getLiveAvailabilityState(
   availability: RestaurantAvailability | null | undefined,
-) {
-  if (!availability) return "Check times in the booking step";
+): LiveAvailabilityState {
+  if (!availability) return { kind: "unknown" };
   if (availability.slots.length === 0) {
     return availability.requiresRestaurantConfirmation
-      ? "Contact the restaurant for this party size"
-      : `No online times for ${availability.partySize} guests today`;
+      ? { kind: "contact" }
+      : { kind: "unavailable", partySize: availability.partySize };
   }
-
-  const confirmation = availability.requiresRestaurantConfirmation
-    ? " · confirmation required"
-    : "";
-  return `Available today from ${availability.slots[0]}${confirmation}`;
+  return {
+    kind: "available",
+    time: availability.slots[0],
+    confirmationRequired: availability.requiresRestaurantConfirmation,
+  };
 }
 
 export function getFirstLiveTime(

@@ -43,6 +43,26 @@
       "duplicateMessage": "That user ID is already taken. Choose another one."
     }
   },
+  "RestaurantAvailability": {
+    "unknown": "Check times in the booking step", "contact": "Contact the restaurant for this party size", "unavailable": "No online times for {count} guests today", "available": "Available today from {time}", "availableConfirmation": "Available today from {time} · confirmation required"
+  },
+  "RestaurantDiscovery": {
+    "title": "Restaurant list", "categoryTitle": "{category} in {location}", "cityTitle": "Restaurants in {city}", "hoChiMinhCity": "Ho Chi Minh City", "subtitle": "Filtered results", "searchPlaceholder": "Search restaurant or area",
+    "availabilityTitle": "Availability is shown per restaurant", "availabilityDescription": "Browse first, then choose the exact date, time, and party size in the booking step.", "all": "All", "available": "Available", "filters": "Filters", "reset": "Reset",
+    "sort": { "recommended": "Recommended", "earliest": "Earliest available" },
+    "price": { "all": "Price", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
+    "priceOptions": { "all": "All", "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
+    "cuisine": { "all": "Cuisine", "korean": "Korean", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese", "western": "Western" },
+    "benefits": { "special_deal": "Special deal", "available": "Available", "date_night": "Date night", "michelin": "Michelin" },
+    "restaurants": "Restaurants", "categoryResults": "{category} restaurants", "imageAlt": "{name} image", "cardAvailabilityHint": "Based on 2 guests today. Choose exact details in the booking step.",
+    "priceRange": "Price range", "cuisineTitle": "Cuisine", "benefitsTitle": "Special benefits", "showResults": "Show {count} restaurants"
+  },
+  "RestaurantDetails": {
+    "title": "Restaurant details", "subtitle": "Restaurant profile", "selectDateTime": "Select date & time", "viewPhotos": "View {count, plural, one {# photo} other {# photos}}", "photosTitle": "{name} photos", "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.", "menu": "Menu"
+  },
+  "BookingTime": {
+    "title": "Time", "emptyTitle": "No online times available", "emptyDescription": "Try another date or guest count. Online availability depends on the restaurant's capacity settings."
+  },
   "PasswordManagement": {
     "change": {
       "action": "Change password", "title": "Change your password", "description": "Enter your current password and choose a new one. You will be signed out after the change.",

@@ -4,9 +4,10 @@ import Link from "next/link";
 import { Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCalendarTime, IconClock, IconMapPin, IconPhoto } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
 import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
-import { getLiveAvailabilityLabel } from "@/features/restaurants/domain/live-availability";
+import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
 import { uiColors } from "@/theme";
 
@@ -17,22 +18,32 @@ export function RestaurantDetailsScreen({
   restaurant: RestaurantRecord;
   availability: RestaurantAvailability | null;
 }) {
+  const t = useTranslations("RestaurantDetails");
+  const availabilityT = useTranslations("RestaurantAvailability");
   const [galleryOpened, gallery] = useDisclosure(false);
   const galleryImages = restaurant.galleryImages?.length
     ? restaurant.galleryImages
     : [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }];
   const menuCategories = restaurant.menuCategories ?? [];
+  const availabilityState = getLiveAvailabilityState(availability);
+  const availabilityLabel = availabilityState.kind === "available"
+    ? availabilityT(availabilityState.confirmationRequired
+      ? "availableConfirmation"
+      : "available", { time: availabilityState.time })
+    : availabilityState.kind === "unavailable"
+      ? availabilityT("unavailable", { count: availabilityState.partySize })
+      : availabilityT(availabilityState.kind);
 
   return (
     <MobileShell
-      title="Restaurant Details"
-      subtitle="Restaurant profile"
+      title={t("title")}
+      subtitle={t("subtitle")}
       backHref="/restaurants"
       bottomNav={null}
       footerContent={
         <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
           <Button fullWidth radius="md" size="lg" color="warmCoral">
-            Select date & time
+            {t("selectDateTime")}
           </Button>
         </Link>
       }
@@ -57,14 +68,14 @@ export function RestaurantDetailsScreen({
           onClick={gallery.open}
           style={{ position: "absolute", right: 16, bottom: 16 }}
         >
-          View {galleryImages.length} {galleryImages.length === 1 ? "photo" : "photos"}
+          {t("viewPhotos", { count: galleryImages.length })}
         </Button>
       </Box>
 
       <Modal
         opened={galleryOpened}
         onClose={gallery.close}
-        title={<Text fw={800}>{restaurant.name} photos</Text>}
+        title={<Text fw={800}>{t("photosTitle", { name: restaurant.name })}</Text>}
         size="xl"
         centered
       >
@@ -116,8 +127,8 @@ export function RestaurantDetailsScreen({
             <IconCalendarTime size={18} />
           </ThemeIcon>
           <Stack gap={2}>
-            <Text fw={700} c={uiColors.brandPrimary}>{getLiveAvailabilityLabel(availability)}</Text>
-            <Text size="sm" c={uiColors.textSecondary}>Availability shown for 2 guests today. Choose another date or party size in the booking step.</Text>
+            <Text fw={700} c={uiColors.brandPrimary}>{availabilityLabel}</Text>
+            <Text size="sm" c={uiColors.textSecondary}>{t("availabilityHint")}</Text>
           </Stack>
         </Group>
       </Card>
@@ -126,7 +137,7 @@ export function RestaurantDetailsScreen({
 
       {menuCategories.length > 0 && (
         <Stack gap="md">
-          <Title order={2} size="h2" c={uiColors.textPrimary}>Menu</Title>
+          <Title order={2} size="h2" c={uiColors.textPrimary}>{t("menu")}</Title>
           {menuCategories.map((category) => (
             <Stack key={category.id} gap="sm">
               <Title order={3} size="h3" c={uiColors.textPrimary}>{category.name}</Title>

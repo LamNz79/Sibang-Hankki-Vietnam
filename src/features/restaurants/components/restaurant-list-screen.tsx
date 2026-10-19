@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Box,
   Button,
@@ -37,7 +38,7 @@ import {
 } from "@/features/restaurants/domain/city";
 import {
   getFirstLiveTime,
-  getLiveAvailabilityLabel,
+  getLiveAvailabilityState,
   type RestaurantAvailabilityMap,
 } from "@/features/restaurants/domain/live-availability";
 import { uiColors } from "@/theme";
@@ -46,14 +47,9 @@ type SortKey = "recommended" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
 
 const sortOptions: SortKey[] = ["recommended", "earliest"];
-const sortLabels: Record<SortKey, string> = { recommended: "Recommended", earliest: "Earliest available" };
 const priceOptions: PriceKey[] = ["all", "under150", "under300", "over300"];
-const priceLabels: Record<PriceKey, string> = { all: "Price", under150: "< 150K", under300: "150K-300K", over300: "> 300K" };
-const priceOptionLabels: Record<PriceKey, string> = { all: "All", under150: "Under 150K", under300: "150K-300K", over300: "Over 300K" };
 const cuisineOptions: (CuisineKey | "all")[] = ["all", "korean", "chinese", "vietnamese", "japanese", "western"];
-const cuisineLabels: Record<CuisineKey | "all", string> = { all: "Cuisine", korean: "Korean", chinese: "Chinese", vietnamese: "Vietnamese", japanese: "Japanese", western: "Western" };
 const benefitOptions: BenefitKey[] = ["special_deal", "available", "date_night", "michelin"];
-const benefitLabels: Record<BenefitKey, string> = { special_deal: "Special deal", available: "Available", date_night: "Date night", michelin: "Michelin" };
 const restaurantLogos: Record<string, string> = {
   "anan-saigon": "/images/restaurant-logos/anan-saigon.jpg",
   refinery: "/images/restaurant-logos/refinery.jpg",
@@ -69,6 +65,8 @@ function isOption<T extends string>(options: readonly T[], value: string | null)
 function filterChipStyles(active: boolean) { return active ? { label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 42, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : { label: { borderRadius: 10, background: uiColors.surface, border: `1px solid ${uiColors.border}`, minHeight: 42, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } }; }
 
 function RestaurantsContent({ restaurants, availability }: { restaurants: RestaurantSummary[]; availability: RestaurantAvailabilityMap }) {
+  const t = useTranslations("RestaurantDiscovery");
+  const availabilityT = useTranslations("RestaurantAvailability");
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category") ?? undefined;
   const citySlug = searchParams.get("city") ?? undefined;
@@ -77,12 +75,12 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const selectedCity = citySlug
     ? cityLabels[normalizeCitySlug(citySlug)]
     : undefined;
-  const searchScope = selectedCity ?? locationScope ?? "Ho Chi Minh City";
+  const searchScope = selectedCity ?? locationScope ?? t("hoChiMinhCity");
   const pageTitle = selectedCategory
-    ? `${selectedCategory.label} in ${searchScope}`
+    ? t("categoryTitle", { category: selectedCategory.label, location: searchScope })
     : selectedCity
-      ? `Restaurants in ${selectedCity}`
-      : "Restaurant List";
+      ? t("cityTitle", { city: selectedCity })
+      : t("title");
   const [sortBy, setSortBy] = useState<SortKey>(() => {
     const requested = searchParams.get("sort");
     return isOption(sortOptions, requested) ? requested : "recommended";
@@ -99,7 +97,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [query, setQuery] = useState("");
 
-  const filteredRestaurants = useMemo(() => {
+  const filteredRestaurants = (() => {
     let list = restaurants.filter((restaurant) => {
       const haystack = `${restaurant.name} ${restaurant.area} ${restaurant.cuisineLabel}`.toLowerCase();
       const matchesQuery = query.trim().length === 0 || haystack.includes(query.trim().toLowerCase());
@@ -124,18 +122,30 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     });
 
     return list;
-  }, [availability, citySlug, cuisineFilter, priceFilter, query, restaurants, selectedBenefits, sortBy]);
+  })();
 
   const resetFilters = () => {
     setPriceFilter("all");
     setCuisineFilter("all");
     setSelectedBenefits([]);
   };
+  const liveAvailabilityLabel = (restaurantAvailability: RestaurantAvailabilityMap[string]) => {
+    const state = getLiveAvailabilityState(restaurantAvailability);
+    if (state.kind === "available") {
+      return availabilityT(state.confirmationRequired
+        ? "availableConfirmation"
+        : "available", { time: state.time });
+    }
+    if (state.kind === "unavailable") {
+      return availabilityT("unavailable", { count: state.partySize });
+    }
+    return availabilityT(state.kind);
+  };
 
   return (
     <>
-      <MobileShell title={pageTitle} subtitle="Filtered results" backHref="/" bottomNav={<BottomNav activePath="/restaurants" />}>
-        <TextInput radius="xl" size="md" placeholder="Search restaurant or area" value={query} onChange={(e) => setQuery(e.currentTarget.value)} leftSection={<IconSearch size={16} color={uiColors.textSecondary} />} styles={{ input: { border: `1px solid ${uiColors.border}`, background: uiColors.surface, height: 50, color: uiColors.textPrimary } }} />
+      <MobileShell title={pageTitle} subtitle={t("subtitle")} backHref="/" bottomNav={<BottomNav activePath="/restaurants" />}>
+        <TextInput radius="xl" size="md" placeholder={t("searchPlaceholder")} value={query} onChange={(e) => setQuery(e.currentTarget.value)} leftSection={<IconSearch size={16} color={uiColors.textSecondary} />} styles={{ input: { border: `1px solid ${uiColors.border}`, background: uiColors.surface, height: 50, color: uiColors.textPrimary } }} />
 
         <Card radius="lg" p="md" style={{ background: uiColors.surfaceAlt, border: `1px solid ${uiColors.border}` }}>
           <Group wrap="nowrap" align="flex-start">
@@ -143,28 +153,28 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
               <IconClock size={18} />
             </ThemeIcon>
             <Stack gap={2}>
-              <Text fw={700} c={uiColors.textPrimary}>Availability is shown per restaurant</Text>
-              <Text size="sm" c={uiColors.textSecondary}>Browse first, then choose the exact date, time, and party size in the booking step.</Text>
+              <Text fw={700} c={uiColors.textPrimary}>{t("availabilityTitle")}</Text>
+              <Text size="sm" c={uiColors.textSecondary}>{t("availabilityDescription")}</Text>
             </Stack>
           </Group>
         </Card>
 
         <Group gap="xs" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
-          <Chip radius="xl" size="sm" checked={Boolean(selectedCategory)} readOnly styles={{ label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.border}`, minHeight: 30, paddingInline: 10, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } }}>{selectedCategory?.label ?? "All"}</Chip>
-          {[searchScope, "Available"].map((item) => <Chip key={item} radius="xl" size="sm" checked readOnly styles={{ label: { borderRadius: 10, background: uiColors.surfaceMuted, border: `1px solid ${uiColors.border}`, minHeight: 30, paddingInline: 10, color: uiColors.textPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } }}>{item}</Chip>)}
+          <Chip radius="xl" size="sm" checked={Boolean(selectedCategory)} readOnly styles={{ label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.border}`, minHeight: 30, paddingInline: 10, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } }}>{selectedCategory?.label ?? t("all")}</Chip>
+          {[searchScope, t("available")].map((item) => <Chip key={item} radius="xl" size="sm" checked readOnly styles={{ label: { borderRadius: 10, background: uiColors.surfaceMuted, border: `1px solid ${uiColors.border}`, minHeight: 30, paddingInline: 10, color: uiColors.textPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } }}>{item}</Chip>)}
         </Group>
 
         <Box style={{ position: "sticky", top: 0, zIndex: 30, marginInline: -16, marginTop: -6, paddingInline: 16, paddingTop: 10, paddingBottom: 12, background: uiColors.surfaceOverlay, backdropFilter: "blur(16px)", borderTop: `1px solid ${uiColors.surface}`, borderBottom: `1px solid ${uiColors.border}`, boxShadow: `0 10px 24px ${uiColors.shadowSoft}` }}>
           <Group gap="sm" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
-            <Chip radius="xl" size="md" checked={sortBy !== "recommended"} onChange={() => setSortBy((current) => nextOption(sortOptions, current))} styles={sortBy !== "recommended" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconArrowsSort size={14} />}>{sortLabels[sortBy]}</Chip>
-            <Chip radius="xl" size="md" checked={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0} onChange={() => setFiltersOpened(true)} styles={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0 ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconAdjustmentsHorizontal size={14} />}>Filters</Chip>
-            <Chip radius="xl" size="md" checked={priceFilter !== "all"} onChange={() => setPriceFilter((current) => nextOption(priceOptions, current))} styles={priceFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{priceLabels[priceFilter]}</Chip>
-            <Chip radius="xl" size="md" checked={cuisineFilter !== "all"} onChange={() => setCuisineFilter((current) => nextOption(cuisineOptions, current))} styles={cuisineFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{cuisineLabels[cuisineFilter]}</Chip>
+            <Chip radius="xl" size="md" checked={sortBy !== "recommended"} onChange={() => setSortBy((current) => nextOption(sortOptions, current))} styles={sortBy !== "recommended" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconArrowsSort size={14} />}>{t(`sort.${sortBy}`)}</Chip>
+            <Chip radius="xl" size="md" checked={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0} onChange={() => setFiltersOpened(true)} styles={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0 ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconAdjustmentsHorizontal size={14} />}>{t("filters")}</Chip>
+            <Chip radius="xl" size="md" checked={priceFilter !== "all"} onChange={() => setPriceFilter((current) => nextOption(priceOptions, current))} styles={priceFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{t(`price.${priceFilter}`)}</Chip>
+            <Chip radius="xl" size="md" checked={cuisineFilter !== "all"} onChange={() => setCuisineFilter((current) => nextOption(cuisineOptions, current))} styles={cuisineFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{t(`cuisine.${cuisineFilter}`)}</Chip>
           </Group>
         </Box>
 
         <Group justify="space-between" align="center">
-          <Text size="sm" c={uiColors.textSecondary}>{selectedCategory ? `${selectedCategory.label} restaurants` : "Restaurants"} <Text span fw={700} c={uiColors.textPrimary}>{filteredRestaurants.length}</Text></Text>
+          <Text size="sm" c={uiColors.textSecondary}>{selectedCategory ? t("categoryResults", { category: selectedCategory.label }) : t("restaurants")} <Text span fw={700} c={uiColors.textPrimary}>{filteredRestaurants.length}</Text></Text>
         </Group>
 
         {filteredRestaurants.map((restaurant) => {
@@ -178,7 +188,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
                     w={96}
                     miw={96}
                     role="img"
-                    aria-label={`${restaurant.name} image`}
+                    aria-label={t("imageAlt", { name: restaurant.name })}
                     style={{
                       backgroundColor: restaurant.heroAccent,
                       backgroundImage: cardImageUrl ? `url("${cardImageUrl}")` : undefined,
@@ -204,8 +214,8 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
                     <Group gap={6} align="flex-start" wrap="nowrap">
                       <IconClock size={14} color={uiColors.brandPrimary} style={{ marginTop: 2, flexShrink: 0 }} />
                       <Stack gap={0}>
-                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{getLiveAvailabilityLabel(availability[restaurant.slug])}</Text>
-                        <Text size="xs" c={uiColors.textSecondary}>Based on 2 guests today. Choose exact details in the booking step.</Text>
+                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{liveAvailabilityLabel(availability[restaurant.slug])}</Text>
+                        <Text size="xs" c={uiColors.textSecondary}>{t("cardAvailabilityHint")}</Text>
                       </Stack>
                     </Group>
                   </Stack>
@@ -216,15 +226,15 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
         })}
       </MobileShell>
 
-      <Drawer opened={filtersOpened} onClose={() => setFiltersOpened(false)} position="right" size="78%" title={<Text fw={800}>Filters</Text>} classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }} styles={{ content: { width: "100%", maxWidth: 560, marginLeft: "auto", marginRight: "auto", right: "50%", transform: "translateX(50%)" }, body: { paddingBottom: 0, minHeight: "calc(100vh - 61px)", display: "flex", flexDirection: "column" }, header: { borderBottom: `1px solid ${uiColors.border}` } }}>
+      <Drawer opened={filtersOpened} onClose={() => setFiltersOpened(false)} position="right" size="78%" title={<Text fw={800}>{t("filters")}</Text>} classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }} styles={{ content: { width: "100%", maxWidth: 560, marginLeft: "auto", marginRight: "auto", right: "50%", transform: "translateX(50%)" }, body: { paddingBottom: 0, minHeight: "calc(100vh - 61px)", display: "flex", flexDirection: "column" }, header: { borderBottom: `1px solid ${uiColors.border}` } }}>
         <Stack gap="xl" style={{ flex: 1 }}>
-          <Group justify="space-between" align="center"><Text fw={700} size="xl">Filters</Text><Button variant="subtle" color="gray" onClick={resetFilters}>Reset</Button></Group>
-          <Stack gap="md"><Text fw={700} size="lg">Price range</Text><Group gap="sm">{priceOptions.map((item) => <Chip key={item} checked={priceFilter === item} onChange={() => setPriceFilter(item)} styles={filterChipStyles(priceFilter === item)}>{priceOptionLabels[item]}</Chip>)}</Group></Stack>
-          <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">Cuisine</Text><Group gap="sm">{cuisineOptions.filter((item) => item !== "all").map((item) => <Chip key={item} checked={cuisineFilter === item} onChange={() => setCuisineFilter(cuisineFilter === item ? "all" : item)} styles={filterChipStyles(cuisineFilter === item)}>{cuisineLabels[item]}</Chip>)}</Group></Stack></Box>
-          <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">Special benefits</Text><Group gap="sm">{benefitOptions.map((item) => { const active = selectedBenefits.includes(item); return <Chip key={item} checked={active} onChange={() => setSelectedBenefits((current) => active ? current.filter((value) => value !== item) : [...current, item])} styles={filterChipStyles(active)}>{benefitLabels[item]}</Chip>; })}</Group></Stack></Box>
+          <Group justify="space-between" align="center"><Text fw={700} size="xl">{t("filters")}</Text><Button variant="subtle" color="gray" onClick={resetFilters}>{t("reset")}</Button></Group>
+          <Stack gap="md"><Text fw={700} size="lg">{t("priceRange")}</Text><Group gap="sm">{priceOptions.map((item) => <Chip key={item} checked={priceFilter === item} onChange={() => setPriceFilter(item)} styles={filterChipStyles(priceFilter === item)}>{t(`priceOptions.${item}`)}</Chip>)}</Group></Stack>
+          <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">{t("cuisineTitle")}</Text><Group gap="sm">{cuisineOptions.filter((item) => item !== "all").map((item) => <Chip key={item} checked={cuisineFilter === item} onChange={() => setCuisineFilter(cuisineFilter === item ? "all" : item)} styles={filterChipStyles(cuisineFilter === item)}>{t(`cuisine.${item}`)}</Chip>)}</Group></Stack></Box>
+          <Box style={{ borderTop: `1px solid ${uiColors.border}`, paddingTop: 24 }}><Stack gap="md"><Text fw={700} size="lg">{t("benefitsTitle")}</Text><Group gap="sm">{benefitOptions.map((item) => { const active = selectedBenefits.includes(item); return <Chip key={item} checked={active} onChange={() => setSelectedBenefits((current) => active ? current.filter((value) => value !== item) : [...current, item])} styles={filterChipStyles(active)}>{t(`benefits.${item}`)}</Chip>; })}</Group></Stack></Box>
         </Stack>
         <Box style={{ position: "sticky", bottom: 0, marginTop: "auto", paddingTop: 16, paddingBottom: 16, background: uiColors.surfaceOverlay, borderTop: `1px solid ${uiColors.border}` }}>
-          <Button radius="md" fullWidth size="lg" color="warmCoral" onClick={() => setFiltersOpened(false)}>Show {filteredRestaurants.length} restaurants</Button>
+          <Button radius="md" fullWidth size="lg" color="warmCoral" onClick={() => setFiltersOpened(false)}>{t("showResults", { count: filteredRestaurants.length })}</Button>
         </Box>
       </Drawer>
     </>
