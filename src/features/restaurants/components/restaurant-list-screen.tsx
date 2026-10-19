@@ -20,8 +20,8 @@ import {
   IconAdjustmentsHorizontal,
   IconArrowsSort,
   IconClock,
+  IconMapPin,
   IconSearch,
-  IconStarFilled,
 } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { categories } from "@/features/home/data/home-data";
@@ -30,13 +30,18 @@ import {
   type CuisineKey,
 } from "@/features/restaurants/data/mock-data";
 import type { RestaurantSummary } from "@/features/restaurants/data/api";
+import {
+  getFirstLiveTime,
+  getLiveAvailabilityLabel,
+  type RestaurantAvailabilityMap,
+} from "@/features/restaurants/domain/live-availability";
 import { uiColors } from "@/theme";
 
-type SortKey = "recommended" | "rating" | "earliest";
+type SortKey = "recommended" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
 
-const sortOptions: SortKey[] = ["recommended", "rating", "earliest"];
-const sortLabels: Record<SortKey, string> = { recommended: "Recommended", rating: "Top rated", earliest: "Earliest" };
+const sortOptions: SortKey[] = ["recommended", "earliest"];
+const sortLabels: Record<SortKey, string> = { recommended: "Recommended", earliest: "Earliest available" };
 const priceOptions: PriceKey[] = ["all", "under150", "under300", "over300"];
 const priceLabels: Record<PriceKey, string> = { all: "Price", under150: "< 150K", under300: "150K-300K", over300: "> 300K" };
 const priceOptionLabels: Record<PriceKey, string> = { all: "All", under150: "Under 150K", under300: "150K-300K", over300: "Over 300K" };
@@ -63,7 +68,7 @@ function isOption<T extends string>(options: readonly T[], value: string | null)
 }
 function filterChipStyles(active: boolean) { return active ? { label: { borderRadius: 10, background: uiColors.brandPrimarySoft, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 42, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : { label: { borderRadius: 10, background: uiColors.surface, border: `1px solid ${uiColors.border}`, minHeight: 42, color: uiColors.textPrimary, fontWeight: 500 }, iconWrapper: { display: "none" } }; }
 
-function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] }) {
+function RestaurantsContent({ restaurants, availability }: { restaurants: RestaurantSummary[]; availability: RestaurantAvailabilityMap }) {
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category") ?? undefined;
   const citySlug = searchParams.get("city") ?? undefined;
@@ -99,18 +104,24 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
       const matchesCity = !citySlug || restaurant.citySlug === citySlug;
       const matchesPrice = priceFilter === "all" || restaurant.priceKey === priceFilter;
       const matchesCuisine = cuisineFilter === "all" || restaurant.cuisineKey === cuisineFilter;
-      const matchesBenefits = selectedBenefits.length === 0 || selectedBenefits.every((benefit) => restaurant.benefits.includes(benefit));
+      const matchesBenefits = selectedBenefits.length === 0 || selectedBenefits.every((benefit) =>
+        benefit === "available"
+          ? Boolean(getFirstLiveTime(availability[restaurant.slug]))
+          : restaurant.benefits.includes(benefit));
       return matchesQuery && matchesCity && matchesPrice && matchesCuisine && matchesBenefits;
     });
 
     list = [...list].sort((a, b) => {
-      if (sortBy === "rating") return b.rating - a.rating;
-      if (sortBy === "earliest") return a.availableFrom.localeCompare(b.availableFrom);
-      return b.rating - a.rating;
+      if (sortBy === "earliest") {
+        return (getFirstLiveTime(availability[a.slug]) ?? "99:99").localeCompare(
+          getFirstLiveTime(availability[b.slug]) ?? "99:99",
+        );
+      }
+      return a.name.localeCompare(b.name);
     });
 
     return list;
-  }, [citySlug, cuisineFilter, priceFilter, query, restaurants, selectedBenefits, sortBy]);
+  }, [availability, citySlug, cuisineFilter, priceFilter, query, restaurants, selectedBenefits, sortBy]);
 
   const resetFilters = () => {
     setPriceFilter("all");
@@ -183,14 +194,14 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
                     <Title order={3} size="h4" fw={700} c={uiColors.textPrimary}>{restaurant.name}</Title>
                     <Text size="sm" c={uiColors.textSecondary}>{restaurant.cuisineLabel}</Text>
                     <Group gap={6}>
-                      <IconStarFilled size={14} color={uiColors.rating} />
-                      <Text size="sm" c={uiColors.textPrimary}>{restaurant.rating.toFixed(1)}<Text span c={uiColors.textSecondary}> · {restaurant.area}</Text></Text>
+                      <IconMapPin size={14} color={uiColors.textSecondary} />
+                      <Text size="sm" c={uiColors.textSecondary}>{restaurant.area}</Text>
                     </Group>
                     <Group gap={6} align="flex-start" wrap="nowrap">
                       <IconClock size={14} color={uiColors.brandPrimary} style={{ marginTop: 2, flexShrink: 0 }} />
                       <Stack gap={0}>
-                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{restaurant.availableText}</Text>
-                        <Text size="xs" c={uiColors.textSecondary}>Choose your exact date, time, and party size in the booking step.</Text>
+                        <Text size="sm" fw={700} c={uiColors.brandPrimary}>{getLiveAvailabilityLabel(availability[restaurant.slug])}</Text>
+                        <Text size="xs" c={uiColors.textSecondary}>Based on 2 guests today. Choose exact details in the booking step.</Text>
                       </Stack>
                     </Group>
                   </Stack>
@@ -216,10 +227,10 @@ function RestaurantsContent({ restaurants }: { restaurants: RestaurantSummary[] 
   );
 }
 
-export function RestaurantListScreen({ restaurants }: { restaurants: RestaurantSummary[] }) {
+export function RestaurantListScreen({ restaurants, availability }: { restaurants: RestaurantSummary[]; availability: RestaurantAvailabilityMap }) {
   return (
     <Suspense fallback={<MobileShell title="Restaurant List" subtitle="Loading restaurants..."><Text>Loading...</Text></MobileShell>}>
-      <RestaurantsContent restaurants={restaurants} />
+      <RestaurantsContent restaurants={restaurants} availability={availability} />
     </Suspense>
   );
 }
