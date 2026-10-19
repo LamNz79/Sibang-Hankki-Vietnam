@@ -1,4 +1,5 @@
 import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 type BookingTimeSelectorProps = {
@@ -13,10 +14,11 @@ export function BookingTimeSelector({
   value,
   onChange,
 }: BookingTimeSelectorProps) {
+  const t = useTranslations("BookingTime");
   return (
     <Stack gap="sm">
       <Text fw={700} size="lg">
-        Time
+        {t("title")}
       </Text>
       {times.length > 0 ? (
         <SimpleGrid cols={3} spacing="sm">
@@ -61,11 +63,10 @@ export function BookingTimeSelector({
         >
           <Stack gap={4}>
             <Text fw={700} c={uiColors.textPrimary}>
-              No online times available
+              {t("emptyTitle")}
             </Text>
             <Text size="sm" c={uiColors.textSecondary}>
-              Try another date or guest count. The prototype currently has
-              capacity data for up to 6 guests only.
+              {t("emptyDescription")}
             </Text>
           </Stack>
         </Card>

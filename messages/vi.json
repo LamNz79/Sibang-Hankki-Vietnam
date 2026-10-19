@@ -43,6 +43,26 @@
       "duplicateMessage": "Tên đăng nhập này đã được sử dụng. Hãy chọn tên khác."
     }
   },
+  "RestaurantAvailability": {
+    "unknown": "Kiểm tra giờ ở bước đặt bàn", "contact": "Liên hệ nhà hàng cho số lượng khách này", "unavailable": "Hôm nay không còn giờ trực tuyến cho {count} khách", "available": "Hôm nay còn bàn từ {time}", "availableConfirmation": "Hôm nay còn bàn từ {time} · cần nhà hàng xác nhận"
+  },
+  "RestaurantDiscovery": {
+    "title": "Danh sách nhà hàng", "categoryTitle": "{category} tại {location}", "cityTitle": "Nhà hàng tại {city}", "hoChiMinhCity": "Thành phố Hồ Chí Minh", "subtitle": "Kết quả đã lọc", "searchPlaceholder": "Tìm nhà hàng hoặc khu vực",
+    "availabilityTitle": "Tình trạng bàn được hiển thị theo từng nhà hàng", "availabilityDescription": "Xem nhà hàng trước, sau đó chọn chính xác ngày, giờ và số khách ở bước đặt bàn.", "all": "Tất cả", "available": "Còn bàn", "filters": "Bộ lọc", "reset": "Đặt lại",
+    "sort": { "recommended": "Đề xuất", "earliest": "Giờ trống sớm nhất" },
+    "price": { "all": "Mức giá", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
+    "priceOptions": { "all": "Tất cả", "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
+    "cuisine": { "all": "Ẩm thực", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản", "western": "Âu" },
+    "benefits": { "special_deal": "Ưu đãi đặc biệt", "available": "Còn bàn", "date_night": "Hẹn hò", "michelin": "Michelin" },
+    "restaurants": "Nhà hàng", "categoryResults": "Nhà hàng {category}", "imageAlt": "Hình ảnh {name}", "cardAvailabilityHint": "Dựa trên 2 khách hôm nay. Chọn thông tin chính xác ở bước đặt bàn.",
+    "priceRange": "Khoảng giá", "cuisineTitle": "Ẩm thực", "benefitsTitle": "Ưu đãi đặc biệt", "showResults": "Hiển thị {count} nhà hàng"
+  },
+  "RestaurantDetails": {
+    "title": "Chi tiết nhà hàng", "subtitle": "Thông tin nhà hàng", "selectDateTime": "Chọn ngày và giờ", "viewPhotos": "Xem {count} ảnh", "photosTitle": "Ảnh của {name}", "availabilityHint": "Tình trạng bàn hiển thị cho 2 khách hôm nay. Chọn ngày hoặc số khách khác ở bước đặt bàn.", "menu": "Thực đơn"
+  },
+  "BookingTime": {
+    "title": "Giờ", "emptyTitle": "Không có giờ đặt bàn trực tuyến", "emptyDescription": "Hãy thử ngày hoặc số lượng khách khác. Giờ trống phụ thuộc vào sức chứa được nhà hàng thiết lập."
+  },
   "PasswordManagement": {
     "change": {
       "action": "Đổi mật khẩu", "title": "Đổi mật khẩu", "description": "Nhập mật khẩu hiện tại và chọn mật khẩu mới. Bạn sẽ được đăng xuất sau khi đổi.",

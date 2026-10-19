@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   getFirstLiveTime,
-  getLiveAvailabilityLabel,
+  getLiveAvailabilityState,
   getRestaurantLocalDate,
 } from "@/features/restaurants/domain/live-availability";
 
@@ -20,16 +20,18 @@ describe("live restaurant availability", () => {
     );
   });
 
-  it("presents the first live slot", () => {
+  it("presents the first live slot without embedding display language", () => {
     expect(getFirstLiveTime(availability)).toBe("11:30");
-    expect(getLiveAvailabilityLabel(availability)).toBe(
-      "Available today from 11:30",
-    );
+    expect(getLiveAvailabilityState(availability)).toEqual({
+      kind: "available",
+      time: "11:30",
+      confirmationRequired: false,
+    });
   });
 
   it("does not claim availability when no live slots exist", () => {
     expect(
-      getLiveAvailabilityLabel({ ...availability, slots: [] }),
-    ).toBe("No online times for 2 guests today");
+      getLiveAvailabilityState({ ...availability, slots: [] }),
+    ).toEqual({ kind: "unavailable", partySize: 2 });
   });
 });
