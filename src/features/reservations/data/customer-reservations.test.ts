@@ -119,22 +119,55 @@ describe("customer reservation API", () => {
 
   it("reads reservations linked to the signed-in customer", async () => {
     vi.stubEnv("API_BASE_URL", "");
-    const fetchMock = vi.fn().mockResolvedValue(Response.json([accountRecord]));
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json([accountRecord]))
+      .mockResolvedValueOnce(Response.json([{
+        slug: "royal-pavilion",
+        name: "The Royal Pavilion",
+        district: "Diên Hồng",
+        cuisineLabel: "Chinese",
+      }]));
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(getAccountReservations()).resolves.toEqual([
       expect.objectContaining({
         id: "reservation-id",
         restaurantName: "The Royal Pavilion",
-        district: "District 1",
+        district: "Diên Hồng",
+        cuisineLabel: "Chinese",
         accountLinked: true,
         status: ReservationStatus.Confirmed,
       }),
     ]);
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
       "/api/customer/account/reservations",
       expect.objectContaining({ cache: "no-store" }),
     );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/restaurants",
+      expect.objectContaining({ cache: "no-store" }),
+    );
+  });
+
+  it("keeps account reservations visible when restaurant metadata is unavailable", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json([accountRecord]))
+      .mockResolvedValueOnce(new Response(null, { status: 503 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getAccountReservations()).resolves.toEqual([
+      expect.objectContaining({
+        id: "reservation-id",
+        restaurantName: "The Royal Pavilion",
+        district: "",
+        cuisineLabel: "",
+      }),
+    ]);
   });
 
   it("loads an account reservation detail with its proposal", async () => {
@@ -369,10 +402,28 @@ describe("customer reservation API", () => {
   });
 
   it("shows only account reservations when signed in and token-owned guests when signed out", () => {
-    const account = { ...stored, id: "account-id", managementToken: undefined, accountLinked: true };
+    const account = {
+      ...stored,
+      id: "account-id",
+      managementToken: undefined,
+      accountLinked: true,
+      district: "",
+      cuisineLabel: "",
+    };
+    const locallyStoredAccount = {
+      ...account,
+      district: "Diên Hồng",
+      cuisineLabel: "Chinese",
+    };
     const otherAccount = { ...account, id: "other-account-id" };
 
-    expect(selectVisibleReservations([stored, otherAccount], [account])).toEqual([account]);
+    expect(selectVisibleReservations([stored, locallyStoredAccount], [account])).toEqual([
+      expect.objectContaining({
+        id: "account-id",
+        district: "Diên Hồng",
+        cuisineLabel: "Chinese",
+      }),
+    ]);
     expect(selectVisibleReservations([stored, otherAccount], null)).toEqual([stored]);
     expect(selectVisibleReservations([stored, otherAccount], undefined)).toEqual([]);
   });
