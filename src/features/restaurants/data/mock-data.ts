@@ -27,7 +27,7 @@ export type RestaurantMenuCategory = {
 export type RestaurantRecord = {
   slug: string;
   name: string;
-  citySlug: "ho-chi-minh-city" | "hanoi" | "da-nang";
+  citySlug: string;
   area: string;
   district: string;
   cuisineLabel: string;
