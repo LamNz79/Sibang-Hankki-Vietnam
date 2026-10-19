@@ -21,6 +21,7 @@ import {
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
@@ -123,9 +124,12 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
           </Stack>
         </AppShell.Section>
         <AppShell.Section pt="md" style={{ borderTop: "1px solid #4c4346" }}>
-          <Text c="#bfb6b8" size="10px">
-            {t("adminOnly")}
-          </Text>
+          <Stack gap="sm">
+            <LogoutButton />
+            <Text c="#bfb6b8" size="10px">
+              {t("adminOnly")}
+            </Text>
+          </Stack>
         </AppShell.Section>
       </AppShell.Navbar>
 

@@ -26,6 +26,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
@@ -162,12 +163,17 @@ export function AdminShell({ children }: { children: ReactNode }) {
         </AppShell.Section>
 
         <AppShell.Section pt="md" style={{ borderTop: "1px solid #4c4346" }}>
-          <Text c="#bfb6b8" size="10px" fw={700}>
-            {t("adminOnly")}
-          </Text>
-          <Text c="#bfb6b8" size="10px">
-            {t("auditNotice")}
-          </Text>
+          <Stack gap="sm">
+            <LogoutButton />
+            <Stack gap={0}>
+              <Text c="#bfb6b8" size="10px" fw={700}>
+                {t("adminOnly")}
+              </Text>
+              <Text c="#bfb6b8" size="10px">
+                {t("auditNotice")}
+              </Text>
+            </Stack>
+          </Stack>
         </AppShell.Section>
       </AppShell.Navbar>
 
