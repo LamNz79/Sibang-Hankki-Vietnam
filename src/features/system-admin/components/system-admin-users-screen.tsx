@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconDotsVertical, IconSearch, IconUserPlus } from "@tabler/icons-react";
+import { IconDotsVertical, IconKey, IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useFormatter, useTranslations } from "next-intl";
@@ -23,6 +23,7 @@ import { StatusBadge } from "@/components/ui";
 import {
   createSystemAdminUser,
   getSystemAdminUsers,
+  resetSystemAdminUserPassword,
   type SystemAdminUser,
   type SystemAdminUserCreateInput,
   type SystemAdminUserRole,
@@ -33,6 +34,7 @@ import {
 } from "@/features/system-admin/data/system-admin-directory";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
 import { SystemAdminUserDialog } from "@/features/system-admin/components/system-admin-user-dialog";
+import { ResetPasswordDialog } from "@/features/system-admin/components/reset-password-dialog";
 import { uiColors } from "@/theme";
 
 const pageSizes = [10, 20, 50, 100];
@@ -59,6 +61,7 @@ export function SystemAdminUsersScreen() {
   const [pageSize, setPageSize] = useState(20);
   const [editor, setEditor] = useState<"create" | SystemAdminUser | null>(null);
   const [statusAction, setStatusAction] = useState<UserStatusAction | null>(null);
+  const [passwordUser, setPasswordUser] = useState<SystemAdminUser | null>(null);
   const usersQuery = useQuery({
     queryKey: ["system-admin-users", page, pageSize, debouncedQuery, role, status],
     queryFn: ({ signal }) => getSystemAdminUsers({
@@ -104,6 +107,21 @@ export function SystemAdminUsersScreen() {
     onError: () => notifications.show({ color: "red", message: t("actions.saveError") }),
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["system-admin-users"] }),
+  });
+  const resetPasswordMutation = useMutation({
+    mutationFn: ({ user, newPassword }: { user: SystemAdminUser; newPassword: string }) =>
+      resetSystemAdminUserPassword(user.id, newPassword),
+    onSuccess: (_result, { user }) => {
+      setPasswordUser(null);
+      notifications.show({
+        color: "teal",
+        message: t("actions.passwordReset", { name: user.name }),
+      });
+    },
+    onError: () => notifications.show({
+      color: "red",
+      message: t("actions.passwordResetError"),
+    }),
   });
   const columns: DataTableColumn<SystemAdminUser>[] = [
     {
@@ -179,6 +197,9 @@ export function SystemAdminUsersScreen() {
             <Menu.Dropdown>
               <Menu.Item onClick={() => setEditor(user)}>
                 {t("actions.edit")}
+              </Menu.Item>
+              <Menu.Item leftSection={<IconKey size={16} />} onClick={() => setPasswordUser(user)}>
+                {t("actions.resetPassword")}
               </Menu.Item>
               <Menu.Item
                 color={target === "SUSPENDED" ? "red" : "teal"}
@@ -305,6 +326,20 @@ export function SystemAdminUsersScreen() {
             if (!saveMutation.isPending) setEditor(null);
           }}
           onSubmit={(input) => saveMutation.mutate(input)}
+        />
+      ) : null}
+      {passwordUser ? (
+        <ResetPasswordDialog
+          key={passwordUser.id}
+          user={passwordUser}
+          submitting={resetPasswordMutation.isPending}
+          onClose={() => {
+            if (!resetPasswordMutation.isPending) setPasswordUser(null);
+          }}
+          onSubmit={(newPassword) => resetPasswordMutation.mutate({
+            user: passwordUser,
+            newPassword,
+          })}
         />
       ) : null}
     </Stack>

@@ -70,3 +70,13 @@ export async function logout() {
     headers: { [csrf.headerName]: csrf.token },
   });
 }
+
+export async function changePassword(currentPassword: string, newPassword: string) {
+  const csrf = await getCsrfToken();
+
+  return apiFetch<void>(apiEndpoints.authPassword, {
+    method: "PATCH",
+    headers: { [csrf.headerName]: csrf.token },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+}

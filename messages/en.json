@@ -43,6 +43,17 @@
       "duplicateMessage": "That user ID is already taken. Choose another one."
     }
   },
+  "PasswordManagement": {
+    "change": {
+      "action": "Change password", "title": "Change your password", "description": "Enter your current password and choose a new one. You will be signed out after the change.",
+      "currentPassword": "Current password", "newPassword": "New password", "confirmPassword": "Confirm new password", "requirements": "Use 8 to 72 characters.", "mismatch": "The passwords do not match.",
+      "cancel": "Cancel", "submit": "Change password", "success": "Password changed. Log in again with your new password.", "wrongCurrent": "The current password is incorrect.", "error": "Could not change the password. Try again."
+    },
+    "reset": {
+      "title": "Reset password for {name}", "description": "Set a temporary password and share it through a secure channel. Existing sessions will be signed out.",
+      "newPassword": "Temporary password", "confirmPassword": "Confirm temporary password", "requirements": "Use 8 to 72 characters.", "mismatch": "The passwords do not match.", "cancel": "Cancel", "submit": "Reset password"
+    }
+  },
   "Account": {
     "title": "My account",
     "subtitle": "Profile and reservations",
@@ -528,7 +539,7 @@
       "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created", "actions": "Actions" },
       "statuses": { "ACTIVE": "Active", "SUSPENDED": "Suspended", "CLOSED": "Closed" },
       "actions": {
-        "openMenu": "Open actions for {name}", "create": "Add user", "edit": "Edit details", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
+        "openMenu": "Open actions for {name}", "create": "Add user", "edit": "Edit details", "resetPassword": "Reset password", "passwordReset": "Password reset for {name}.", "passwordResetError": "Could not reset the password.", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
         "suspendTitle": "Suspend {name}?", "suspendDescription": "This user will lose their current session and cannot sign in until reactivated.",
         "reactivateTitle": "Reactivate {name}?", "reactivateDescription": "This user will be able to sign in again.",
         "suspendedSuccess": "{name} has been suspended.", "reactivatedSuccess": "{name} has been reactivated.", "error": "Could not update the user status.", "created": "An account was created for {name}.", "updated": "{name}'s profile was updated.", "saveError": "Could not save the user. Check the details or whether the userid already exists."

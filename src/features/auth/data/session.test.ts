@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { login, logout, registerCustomer } from "./session";
+import { changePassword, login, logout, registerCustomer } from "./session";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -109,6 +109,38 @@ describe("session logout", () => {
           Accept: "application/json",
           "X-CSRF-TOKEN": "csrf-token",
         },
+      },
+    ]);
+  });
+});
+
+describe("password change", () => {
+  it("sends both passwords with CSRF protection", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await changePassword("OldPassword@2026!", "NewPassword@2026!");
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/auth/password",
+      {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": "csrf-token",
+        },
+        body: JSON.stringify({
+          currentPassword: "OldPassword@2026!",
+          newPassword: "NewPassword@2026!",
+        }),
       },
     ]);
   });

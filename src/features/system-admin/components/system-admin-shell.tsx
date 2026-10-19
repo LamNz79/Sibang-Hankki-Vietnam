@@ -22,6 +22,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import { ChangePasswordButton } from "@/features/auth/components/change-password-button";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getSessionUser } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
@@ -140,6 +141,7 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
         </AppShell.Section>
         <AppShell.Section pt="md" style={{ borderTop: "1px solid #4c4346" }}>
           <Stack gap="sm">
+            <ChangePasswordButton />
             <LogoutButton />
             <Text c="#bfb6b8" size="10px">
               {t("adminOnly")}

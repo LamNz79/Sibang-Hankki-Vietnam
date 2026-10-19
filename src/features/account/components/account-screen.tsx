@@ -42,6 +42,7 @@ import {
   updateCustomerProfile,
   type CustomerProfileUpdate,
 } from "@/features/account/data/customer-profile";
+import { ChangePasswordButton } from "@/features/auth/components/change-password-button";
 import { logout } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import {
@@ -320,15 +321,18 @@ export function AccountScreen() {
       </SurfaceCard>
 
       {profile ? (
-        <Button
-          variant="light"
-          color="red"
-          leftSection={<IconLogout size={18} />}
-          loading={signOut.isPending}
-          onClick={() => signOut.mutate()}
-        >
-          {t("logout")}
-        </Button>
+        <Stack gap="sm">
+          <ChangePasswordButton />
+          <Button
+            variant="light"
+            color="red"
+            leftSection={<IconLogout size={18} />}
+            loading={signOut.isPending}
+            onClick={() => signOut.mutate()}
+          >
+            {t("logout")}
+          </Button>
+        </Stack>
       ) : null}
 
       {latestCompletedVisit ? (

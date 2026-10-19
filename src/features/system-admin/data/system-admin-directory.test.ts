@@ -7,6 +7,7 @@ import {
   getSystemAdminRestaurant,
   getSystemAdminRestaurants,
   getSystemAdminUsers,
+  resetSystemAdminUserPassword,
   updateSystemAdminRestaurant,
   updateSystemAdminRestaurantStatus,
   updateSystemAdminUserStatus,
@@ -122,6 +123,29 @@ describe("system admin directory API", () => {
         method: "PATCH",
         headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
         body: JSON.stringify({ status: "SUSPENDED" }),
+      }),
+    );
+  });
+
+  it("resets a user password with CSRF protection", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await resetSystemAdminUserPassword("user-1", "TemporaryPassword@2026!");
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/admin/users/user-1/password",
+      expect.objectContaining({
+        method: "PATCH",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+        body: JSON.stringify({ newPassword: "TemporaryPassword@2026!" }),
       }),
     );
   });

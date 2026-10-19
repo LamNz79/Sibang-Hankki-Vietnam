@@ -43,6 +43,17 @@
       "duplicateMessage": "Tên đăng nhập này đã được sử dụng. Hãy chọn tên khác."
     }
   },
+  "PasswordManagement": {
+    "change": {
+      "action": "Đổi mật khẩu", "title": "Đổi mật khẩu", "description": "Nhập mật khẩu hiện tại và chọn mật khẩu mới. Bạn sẽ được đăng xuất sau khi đổi.",
+      "currentPassword": "Mật khẩu hiện tại", "newPassword": "Mật khẩu mới", "confirmPassword": "Xác nhận mật khẩu mới", "requirements": "Sử dụng từ 8 đến 72 ký tự.", "mismatch": "Mật khẩu xác nhận không khớp.",
+      "cancel": "Hủy", "submit": "Đổi mật khẩu", "success": "Đã đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.", "wrongCurrent": "Mật khẩu hiện tại không đúng.", "error": "Không thể đổi mật khẩu. Hãy thử lại."
+    },
+    "reset": {
+      "title": "Đặt lại mật khẩu cho {name}", "description": "Tạo mật khẩu tạm thời và gửi cho người dùng qua kênh an toàn. Các phiên hiện tại sẽ bị đăng xuất.",
+      "newPassword": "Mật khẩu tạm thời", "confirmPassword": "Xác nhận mật khẩu tạm thời", "requirements": "Sử dụng từ 8 đến 72 ký tự.", "mismatch": "Mật khẩu xác nhận không khớp.", "cancel": "Hủy", "submit": "Đặt lại mật khẩu"
+    }
+  },
   "Account": {
     "title": "Tài khoản của tôi",
     "subtitle": "Hồ sơ và đặt bàn",
@@ -470,7 +481,7 @@
       "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo", "actions": "Thao tác" },
       "statuses": { "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm khóa", "CLOSED": "Đã đóng" },
       "actions": {
-        "openMenu": "Mở thao tác cho {name}", "create": "Thêm người dùng", "edit": "Sửa thông tin", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
+        "openMenu": "Mở thao tác cho {name}", "create": "Thêm người dùng", "edit": "Sửa thông tin", "resetPassword": "Đặt lại mật khẩu", "passwordReset": "Đã đặt lại mật khẩu cho {name}.", "passwordResetError": "Không thể đặt lại mật khẩu.", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
         "suspendTitle": "Tạm khóa {name}?", "suspendDescription": "Người dùng sẽ bị đăng xuất khỏi phiên hiện tại và không thể đăng nhập cho đến khi được kích hoạt lại.",
         "reactivateTitle": "Kích hoạt lại {name}?", "reactivateDescription": "Người dùng sẽ có thể đăng nhập lại.",
         "suspendedSuccess": "Đã tạm khóa {name}.", "reactivatedSuccess": "Đã kích hoạt lại {name}.", "error": "Không thể cập nhật trạng thái người dùng.", "created": "Đã tạo tài khoản cho {name}.", "updated": "Đã cập nhật thông tin của {name}.", "saveError": "Không thể lưu người dùng. Hãy kiểm tra thông tin hoặc userid đã tồn tại."
