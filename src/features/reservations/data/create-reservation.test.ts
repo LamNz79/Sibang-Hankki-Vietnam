@@ -33,6 +33,8 @@ describe("create reservation API", () => {
         partySize: 2,
         customerName: "Minh Lam",
         customerPhone: "0900000000",
+        specialRequest: "Window seat",
+        preOrderNote: "Sharing set for two",
       }),
     ).resolves.toEqual(response);
 
@@ -50,6 +52,8 @@ describe("create reservation API", () => {
         partySize: 2,
         customerName: "Minh Lam",
         customerPhone: "0900000000",
+        specialRequest: "Window seat",
+        preOrderNote: "Sharing set for two",
       }),
     });
   });

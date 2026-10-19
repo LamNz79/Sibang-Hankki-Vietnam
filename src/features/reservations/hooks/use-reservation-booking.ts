@@ -47,6 +47,8 @@ export function useReservationBooking({
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [specialRequest, setSpecialRequest] = useState("");
+  const [preOrderNote, setPreOrderNote] = useState("");
   const [changeMessage, setChangeMessage] = useState("");
   const [submittedReservation, setSubmittedReservation] =
     useState<CustomerReservation | null>(null);
@@ -83,6 +85,8 @@ export function useReservationBooking({
         date: response.date,
         time: response.time,
         guests: response.partySize,
+        specialRequest: specialRequest.trim() || undefined,
+        preOrder: preOrderNote.trim() || undefined,
         status:
           response.status === "CONFIRMED"
             ? ReservationStatus.Confirmed
@@ -192,6 +196,8 @@ export function useReservationBooking({
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
       customerEmail: customerEmail.trim() || undefined,
+      specialRequest: specialRequest.trim() || undefined,
+      preOrderNote: preOrderNote.trim() || undefined,
     });
   };
 
@@ -221,6 +227,16 @@ export function useReservationBooking({
       resetSubmission();
     },
     customerEmailInvalid: !validEmail,
+    specialRequest,
+    setSpecialRequest: (value: string) => {
+      setSpecialRequest(value);
+      resetSubmission();
+    },
+    preOrderNote,
+    setPreOrderNote: (value: string) => {
+      setPreOrderNote(value);
+      resetSubmission();
+    },
     changeMessage,
     setChangeMessage: (value: string) => {
       setChangeMessage(value);
