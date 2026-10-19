@@ -25,6 +25,16 @@ function matchesCustomerReservation(
 function getCustomerResponse(
   customerReservation: CustomerReservation,
 ): OwnerReservation["customerResponse"] {
+  if (customerReservation.changeRequest?.status === "PENDING") {
+    return {
+      kind: "change-request",
+      requestId: customerReservation.changeRequest.id,
+      requestedDate: customerReservation.changeRequest.date,
+      requestedTime: customerReservation.changeRequest.time,
+      message: customerReservation.changeRequest.message,
+    };
+  }
+
   if (
     customerReservation.status === ReservationStatus.AlternativeProposed &&
     customerReservation.alternativeProposal

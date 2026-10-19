@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Alert, Button, Stack, Text, TextInput } from "@mantine/core";
+import { Alert, Button, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
 import { BookingGuestSelector } from "@/features/reservations/components/booking-guest-selector";
@@ -62,10 +62,21 @@ function ReservationBookingContent() {
       />
 
       {changeReservationId ? (
-        <Alert color="blue" title="Choose another time">
-          Your party size remains {booking.selectedGuests}. The restaurant will
-          review the new requested time.
-        </Alert>
+        <Stack gap="sm">
+          <Alert color="blue" title="Choose another time">
+            Your party size remains {booking.selectedGuests}. A confirmed booking
+            keeps its current time until the restaurant accepts your request.
+          </Alert>
+          <Textarea
+            label="Message to the restaurant (optional)"
+            placeholder="For example: Could we move our booking one hour later?"
+            value={booking.changeMessage}
+            onChange={(event) => booking.setChangeMessage(event.currentTarget.value)}
+            maxLength={1000}
+            autosize
+            minRows={2}
+          />
+        </Stack>
       ) : (
         <>
           <BookingGuestSelector
@@ -107,7 +118,7 @@ function ReservationBookingContent() {
 
       {booking.changeReservationUnavailable ? (
         <Alert color="red" title="Unable to change this reservation">
-          The proposal is no longer active or this reservation is unavailable.
+          A time-change request is already waiting for the restaurant.
         </Alert>
       ) : null}
 

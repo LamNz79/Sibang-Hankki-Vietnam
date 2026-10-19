@@ -128,13 +128,19 @@
       "change": "Change",
       "cancelRequest": "Cancel request",
       "cancel": "Cancel",
-      "changeHint": "Change flow will be added after the policy is confirmed",
+      "changeHint": "This reservation cannot be changed while another request is pending",
       "cancelHint": "This reservation cannot be cancelled online",
       "cancelTitle": "Cancel this reservation?",
       "cancelDescription": "The restaurant will release your table. This action cannot be undone.",
       "cancelError": "Unable to cancel. The cancellation cutoff may have passed.",
       "keep": "Keep reservation",
       "confirmCancel": "Cancel reservation"
+    },
+    "changeRequest": {
+      "pendingTitle": "Waiting for the restaurant",
+      "pendingDescription": "You requested {date} at {time}. Your current confirmed time remains unchanged until the restaurant accepts.",
+      "declinedTitle": "The restaurant declined the new time",
+      "declinedDescription": "Your request for {date} at {time} was declined. Your original confirmed booking remains unchanged."
     },
     "proposal": {
       "title": "New time proposal",
@@ -176,6 +182,7 @@
       "acceptedTitle": "Guest accepted the suggested time", "acceptedDescription": "Confirmed for {date} at {time}.",
       "declinedTitle": "Guest declined the suggested time", "declinedSlot": "the suggested time", "declinedDescription": "The guest declined {slot}. Suggest another slot or contact them directly.",
       "requestedTitle": "Guest requested another time", "requestedDescription": "Review the new request for {date} at {time}.",
+      "changeTitle": "Guest requested a booking change", "changeDescription": "Move this confirmed booking to {date} at {time}? The original time remains reserved until you accept.", "acceptChange": "Accept new time", "declineChange": "Keep original time", "changeError": "Unable to respond to this request",
       "waitingTitle": "Waiting for guest response", "waitingDescription": "Suggested {date} at {time}."
     },
     "response": {
@@ -561,7 +568,7 @@
         "customer": { "title": "Customer", "name": "Name", "phone": "Phone", "email": "Email" },
         "restaurant": { "title": "Restaurant", "name": "Restaurant name", "slug": "Slug", "id": "Restaurant ID" },
         "status": { "title": "System status", "booking": "Booking", "visit": "Visit", "created": "Created", "updated": "Last updated" },
-        "proposal": { "title": "Alternative proposal", "time": "Proposed time", "status": "Status", "respondBy": "Respond by", "message": "Message" }
+        "proposal": { "title": "Alternative proposal", "time": "Proposed time", "status": "Status", "initiator": "Requested by", "respondBy": "Respond by", "message": "Message" }
       }
     },
     "assignments": {

@@ -8,6 +8,7 @@ import {
   issueCustomerCheckInToken,
   mergeCustomerReservation,
   requestAnotherTime,
+  requestReservationChange,
   respondToAlternativeProposal,
   selectVisibleReservations,
 } from "./customer-reservations";
@@ -232,6 +233,48 @@ describe("customer reservation API", () => {
         body: JSON.stringify({
           requestedDate: "2026-10-09",
           requestedTime: "19:00",
+        }),
+      }),
+    );
+  });
+
+  it("requests a guest reservation change and maps the pending customer request", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({
+      ...confirmedRecord,
+      alternativeProposal: {
+        id: "change-id",
+        startsAt: "2026-10-09T12:00:00Z",
+        message: "One hour later",
+        respondBy: null,
+        status: "PENDING",
+        initiator: "CUSTOMER",
+        createdAt: "2026-10-06T04:00:00Z",
+      },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(requestReservationChange(
+      { ...stored, status: ReservationStatus.Confirmed },
+      "2026-10-09",
+      "19:00",
+      "One hour later",
+    )).resolves.toMatchObject({
+      status: ReservationStatus.Confirmed,
+      alternativeProposal: undefined,
+      changeRequest: {
+        id: "change-id",
+        date: "2026-10-09",
+        time: "19:00",
+        status: "PENDING",
+      },
+    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/customer/reservations/reservation-id/change-requests",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "X-Reservation-Management-Token": "management-token",
         }),
       }),
     );

@@ -16,6 +16,7 @@ import {
   markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
   proposeAlternativeOwnerReservation,
+  respondToOwnerReservationChangeRequest,
   seatOwnerReservation,
   type OwnerAlternativeProposalInput,
   type OwnerReservationPageParams,
@@ -105,6 +106,8 @@ export function useOwnerReservationActions(id: string) {
         | { kind: "cancel"; reason: string }
         | { kind: "no-show" }
         | { kind: "propose"; proposal: OwnerAlternativeProposalInput }
+        | { kind: "accept-change"; requestId: string }
+        | { kind: "decline-change"; requestId: string }
         | { kind: "seat" }
         | { kind: "complete" },
     ) => {
@@ -118,6 +121,13 @@ export function useOwnerReservationActions(id: string) {
       if (action.kind === "no-show") return markNoShowOwnerReservation(id);
       if (action.kind === "propose") {
         return proposeAlternativeOwnerReservation(id, action.proposal);
+      }
+      if (action.kind === "accept-change" || action.kind === "decline-change") {
+        return respondToOwnerReservationChangeRequest(
+          id,
+          action.requestId,
+          action.kind === "accept-change" ? "accept" : "decline",
+        );
       }
       return action.kind === "seat"
         ? seatOwnerReservation(id)
@@ -138,6 +148,10 @@ export function useOwnerReservationActions(id: string) {
     markNoShow: () => mutation.mutateAsync({ kind: "no-show" }),
     propose: (proposal: OwnerAlternativeProposalInput) =>
       mutation.mutateAsync({ kind: "propose", proposal }),
+    acceptChange: (requestId: string) =>
+      mutation.mutateAsync({ kind: "accept-change", requestId }),
+    declineChange: (requestId: string) =>
+      mutation.mutateAsync({ kind: "decline-change", requestId }),
     seat: () => mutation.mutate({ kind: "seat" }),
     complete: () => mutation.mutate({ kind: "complete" }),
   };

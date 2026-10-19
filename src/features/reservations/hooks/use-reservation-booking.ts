@@ -18,6 +18,7 @@ import { createReservation } from "@/features/reservations/data/create-reservati
 import {
   useCustomerReservation,
   useRequestAnotherTime,
+  useRequestReservationChange,
 } from "@/features/reservations/hooks/use-customer-reservations";
 
 type UseReservationBookingOptions = {
@@ -46,12 +47,14 @@ export function useReservationBooking({
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [changeMessage, setChangeMessage] = useState("");
   const [submittedReservation, setSubmittedReservation] =
     useState<CustomerReservation | null>(null);
   const [successOpened, setSuccessOpened] = useState(false);
   const idempotencyKey = useRef<string | null>(null);
   const changingReservation = useCustomerReservation(changeReservationId ?? "");
   const changeMutation = useRequestAnotherTime(changingReservation);
+  const directChangeMutation = useRequestReservationChange(changingReservation);
   const partySize = changingReservation?.guests ?? selectedGuests;
 
   const selectedDateIso =
@@ -108,7 +111,12 @@ export function useReservationBooking({
   );
   const canSubmitChange = Boolean(
     changeReservationId &&
-      changingReservation?.alternativeProposal?.id &&
+      changingReservation &&
+      changingReservation.changeRequest?.status !== "PENDING" &&
+      (changingReservation.status === ReservationStatus.Pending ||
+        (changingReservation.status === ReservationStatus.Confirmed &&
+          (!changingReservation.visitStatus ||
+            changingReservation.visitStatus === VisitStatus.Expected))) &&
       changingReservation.restaurantSlug === restaurant.slug &&
       selectedTime &&
       availableTimes.includes(selectedTime) &&
@@ -122,6 +130,7 @@ export function useReservationBooking({
     idempotencyKey.current = null;
     createMutation.reset();
     changeMutation.reset();
+    directChangeMutation.reset();
   };
 
   const selectDate = (date: string | null) => {
@@ -155,8 +164,17 @@ export function useReservationBooking({
     if (!selectedDate || !selectedTime || !canSubmit) return;
 
     if (changeReservationId) {
-      changeMutation.mutate(
-        { date: selectedDate, time: selectedTime },
+      const mutation = changingReservation?.alternativeProposal?.id
+        ? changeMutation
+        : directChangeMutation;
+      mutation.mutate(
+        {
+          date: selectedDate,
+          time: selectedTime,
+          ...(!changingReservation?.alternativeProposal?.id
+            ? { message: changeMessage.trim() || undefined }
+            : {}),
+        },
         {
           onSuccess: (reservation) => {
             setSubmittedReservation(reservation);
@@ -207,17 +225,28 @@ export function useReservationBooking({
       resetSubmission();
     },
     customerEmailError: validEmail ? undefined : "Enter a valid email address.",
+    changeMessage,
+    setChangeMessage: (value: string) => {
+      setChangeMessage(value);
+      resetSubmission();
+    },
     availableTimes,
     canSubmit,
     availabilityLoading: availability.isPending || availability.isFetching,
     availabilityError: availability.error?.message,
     retryAvailability: () => void availability.refetch(),
     requiresRestaurantConfirmation: availability.data?.requiresRestaurantConfirmation ?? false,
-    submissionPending: createMutation.isPending || changeMutation.isPending,
+    submissionPending:
+      createMutation.isPending ||
+      changeMutation.isPending ||
+      directChangeMutation.isPending,
     submissionError:
-      createMutation.error?.message ?? changeMutation.error?.message,
+      createMutation.error?.message ??
+      changeMutation.error?.message ??
+      directChangeMutation.error?.message,
     changeReservationUnavailable: Boolean(
-      changeReservationId && !changingReservation?.alternativeProposal?.id,
+      changeReservationId && changingReservation && !canSubmitChange &&
+      changingReservation.changeRequest?.status === "PENDING",
     ),
     submittedReservation,
     successOpened,

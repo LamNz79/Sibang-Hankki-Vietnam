@@ -96,6 +96,7 @@ export function isOwnerReservationActionRequired(
 ) {
   return (
     reservation.reservationStatus === ReservationStatus.Pending ||
+    reservation.customerResponse?.kind === "change-request" ||
     reservation.customerResponse?.kind === "declined-alternative"
   );
 }

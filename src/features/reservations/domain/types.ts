@@ -40,6 +40,15 @@ export interface CustomerAlternativeProposal {
   respondBy?: string;
 }
 
+/** Customer-requested slot waiting for the restaurant's decision. */
+export interface CustomerChangeRequest {
+  id: string;
+  date: string;
+  time: string;
+  message?: string;
+  status: "PENDING" | "DECLINED";
+}
+
 /** Customer-facing reservation record currently persisted by the prototype. */
 export interface CustomerReservation {
   id: string;
@@ -57,6 +66,7 @@ export interface CustomerReservation {
   checkInToken?: string;
   visitStatus?: VisitStatus;
   alternativeProposal?: CustomerAlternativeProposal;
+  changeRequest?: CustomerChangeRequest;
   previousDate?: string;
   previousTime?: string;
   preOrder?: string;

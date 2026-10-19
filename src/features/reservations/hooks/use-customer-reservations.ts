@@ -9,6 +9,7 @@ import {
   getCustomerReservation,
   issueCustomerCheckInToken,
   requestAnotherTime,
+  requestReservationChange,
   respondToAlternativeProposal,
   selectVisibleReservations,
 } from "@/features/reservations/data/customer-reservations";
@@ -114,6 +115,41 @@ export function useRequestAnotherTime(
     mutationFn: ({ date, time }: { date: string; time: string }) => {
       if (!reservation) throw new Error("Reservation is unavailable");
       return requestAnotherTime(reservation, date, time);
+    },
+    onSuccess: (updated) => {
+      if (updated.managementToken) saveReservation(updated);
+      queryClient.setQueryData(["customer-reservations", updated.id], updated);
+      queryClient.setQueryData(
+        ["customer-account-reservations", updated.id],
+        updated,
+      );
+      queryClient.setQueryData<CustomerReservation[] | null>(
+        ["customer-account-reservations"],
+        (reservations) =>
+          reservations?.map((item) =>
+            item.id === updated.id ? updated : item,
+          ) ?? reservations,
+      );
+    },
+  });
+}
+
+export function useRequestReservationChange(
+  reservation: CustomerReservation | undefined,
+) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      date,
+      time,
+      message,
+    }: {
+      date: string;
+      time: string;
+      message?: string;
+    }) => {
+      if (!reservation) throw new Error("Reservation is unavailable");
+      return requestReservationChange(reservation, date, time, message);
     },
     onSuccess: (updated) => {
       if (updated.managementToken) saveReservation(updated);

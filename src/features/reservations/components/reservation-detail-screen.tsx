@@ -16,6 +16,7 @@ import {
 import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
+import { CustomerChangeRequestCard } from "./customer-change-request-card";
 import { ReservationCheckInCard } from "./reservation-check-in-card";
 import { ReservationDetailActions } from "./reservation-detail-actions";
 import { ReservationInformationCard } from "./reservation-information-card";
@@ -75,6 +76,7 @@ export function ReservationDetailScreen() {
       {isAlternative ? (
         <CustomerAlternativeProposalCard reservation={reservation} />
       ) : null}
+      <CustomerChangeRequestCard reservation={reservation} />
       <ReservationReferenceCard reference={reference} />
       <ReservationRestaurantCard
         reservation={reservation}

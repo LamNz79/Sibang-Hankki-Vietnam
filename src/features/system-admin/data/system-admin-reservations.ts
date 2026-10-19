@@ -38,6 +38,7 @@ export type SystemAdminReservationDetail = SystemAdminReservation & {
     message: string | null;
     respondBy: string;
     status: string;
+    initiator: "RESTAURANT" | "CUSTOMER";
     createdAt: string;
   } | null;
 };
