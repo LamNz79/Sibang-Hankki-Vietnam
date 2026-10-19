@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import dayjs from "dayjs";
+import { useMemo, useState } from "react";
 import {
   Alert,
   Box,
@@ -10,8 +11,11 @@ import {
   Center,
   Group,
   Loader,
+  SegmentedControl,
+  Select,
   Stack,
   Text,
+  TextInput,
   ThemeIcon,
 } from "@mantine/core";
 import {
@@ -19,6 +23,7 @@ import {
   IconCalendarEvent,
   IconChevronRight,
   IconClock,
+  IconSearch,
   IconUsers,
 } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
@@ -36,6 +41,52 @@ import {
   type CustomerReservation,
 } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
+
+type ReservationScope = "upcoming" | "past" | "all";
+type ReservationStatusFilter =
+  | "all"
+  | "action"
+  | "pending"
+  | "confirmed"
+  | "checked-in"
+  | "completed"
+  | "closed";
+
+const PAGE_SIZE = 8;
+
+function matchesStatus(
+  reservation: CustomerReservation,
+  filter: ReservationStatusFilter,
+) {
+  if (filter === "all") return true;
+  if (filter === "action") {
+    return reservation.status === ReservationStatus.AlternativeProposed;
+  }
+  if (filter === "pending") {
+    return reservation.status === ReservationStatus.Pending;
+  }
+  if (filter === "confirmed") {
+    return (
+      reservation.status === ReservationStatus.Confirmed &&
+      (!reservation.visitStatus || reservation.visitStatus === VisitStatus.Expected)
+    );
+  }
+  if (filter === "checked-in") {
+    return (
+      reservation.visitStatus === VisitStatus.Arrived ||
+      reservation.visitStatus === VisitStatus.Seated
+    );
+  }
+  if (filter === "completed") {
+    return reservation.visitStatus === VisitStatus.Completed;
+  }
+  return (
+    reservation.status === ReservationStatus.Declined ||
+    reservation.status === ReservationStatus.Expired ||
+    reservation.status === ReservationStatus.Cancelled ||
+    reservation.visitStatus === VisitStatus.NoShow
+  );
+}
 
 function ReservationCards({
   reservations,
@@ -165,10 +216,43 @@ function ReservationCards({
 export function ReservationsScreen() {
   const { reservations, isLoading, isError, retry } =
     useCustomerReservationsState();
+  const [scope, setScope] = useState<ReservationScope>("upcoming");
+  const [statusFilter, setStatusFilter] =
+    useState<ReservationStatusFilter>("all");
+  const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const { upcoming, past } = partitionCustomerReservations(
     reservations,
     dayjs().format("YYYY-MM-DDTHH:mm"),
   );
+  const filteredReservations = useMemo(() => {
+    const scoped =
+      scope === "upcoming"
+        ? upcoming
+        : scope === "past"
+          ? past
+          : [...upcoming, ...past];
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return scoped.filter((reservation) => {
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        [
+          reservation.restaurantName,
+          reservation.reference,
+          reservation.district,
+        ].some((value) => value?.toLowerCase().includes(normalizedQuery));
+      return matchesQuery && matchesStatus(reservation, statusFilter);
+    });
+  }, [past, query, scope, statusFilter, upcoming]);
+  const visibleReservations = filteredReservations.slice(0, visibleCount);
+  const hasFilters = query.trim().length > 0 || statusFilter !== "all";
+
+  const clearFilters = () => {
+    setQuery("");
+    setStatusFilter("all");
+    setVisibleCount(PAGE_SIZE);
+  };
 
   return (
     <MobileShell
@@ -181,11 +265,59 @@ export function ReservationsScreen() {
           <IconCalendarCheck size={26} />
         </ThemeIcon>
         <Text fw={800} size="lg" c={uiColors.textPrimary}>
-          Upcoming reservations
+          Reservations
         </Text>
         <Text size="sm" c={uiColors.textSecondary}>
-          Track requests and confirmed dining plans.
+          Track upcoming plans and review your dining history.
         </Text>
+      </Stack>
+
+      <Stack gap="sm">
+        <SegmentedControl
+          fullWidth
+          value={scope}
+          onChange={(value) => {
+            setScope(value as ReservationScope);
+            setVisibleCount(PAGE_SIZE);
+          }}
+          data={[
+            { label: `Upcoming (${upcoming.length})`, value: "upcoming" },
+            { label: `History (${past.length})`, value: "past" },
+            { label: `All (${reservations.length})`, value: "all" },
+          ]}
+          color="warmCoral"
+          radius="md"
+        />
+        <TextInput
+          value={query}
+          onChange={(event) => {
+            setQuery(event.currentTarget.value);
+            setVisibleCount(PAGE_SIZE);
+          }}
+          leftSection={<IconSearch size={16} />}
+          placeholder="Search restaurant or booking reference"
+          aria-label="Search reservations"
+          radius="md"
+        />
+        <Select
+          value={statusFilter}
+          onChange={(value) => {
+            setStatusFilter((value ?? "all") as ReservationStatusFilter);
+            setVisibleCount(PAGE_SIZE);
+          }}
+          data={[
+            { label: "All statuses", value: "all" },
+            { label: "Action required", value: "action" },
+            { label: "Pending confirmation", value: "pending" },
+            { label: "Confirmed", value: "confirmed" },
+            { label: "Checked in or seated", value: "checked-in" },
+            { label: "Completed", value: "completed" },
+            { label: "Cancelled, declined or no-show", value: "closed" },
+          ]}
+          allowDeselect={false}
+          radius="md"
+          aria-label="Filter reservation status"
+        />
       </Stack>
 
       {isLoading ? (
@@ -201,8 +333,28 @@ export function ReservationsScreen() {
             </Button>
           </Stack>
         </Alert>
-      ) : upcoming.length > 0 ? (
-        <ReservationCards reservations={upcoming} />
+      ) : visibleReservations.length > 0 ? (
+        <Stack gap="md">
+          <Group justify="space-between">
+            <Text size="sm" c={uiColors.textSecondary}>
+              Showing {visibleReservations.length} of {filteredReservations.length}
+            </Text>
+            {hasFilters ? (
+              <Button variant="subtle" color="gray" size="compact-sm" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            ) : null}
+          </Group>
+          <ReservationCards reservations={visibleReservations} />
+          {visibleCount < filteredReservations.length ? (
+            <Button
+              variant="default"
+              onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+            >
+              Show more ({filteredReservations.length - visibleCount} remaining)
+            </Button>
+          ) : null}
+        </Stack>
       ) : (
         <Card
           radius="lg"
@@ -214,52 +366,38 @@ export function ReservationsScreen() {
         >
           <Stack align="center" gap="sm">
             <Text fw={700} c={uiColors.textPrimary}>
-              No upcoming reservations
+              {hasFilters ? "No matching reservations" : scope === "past" ? "No reservation history" : "No upcoming reservations"}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
-              Your reservation requests and confirmed bookings will appear here.
+              {hasFilters
+                ? "Try another restaurant name, booking reference, or status."
+                : scope === "past"
+                  ? "Completed, cancelled, and past reservations will appear here."
+                  : "Your reservation requests and confirmed bookings will appear here."}
             </Text>
-            <Button
-              component={Link}
-              href="/restaurants"
-              color="warmCoral"
-              radius="md"
-              size="md"
-              fullWidth
-              style={{
-                background: uiColors.brandPrimary,
-                color: uiColors.surface,
-              }}
-            >
-              Explore restaurants
-            </Button>
+            {hasFilters ? (
+              <Button variant="light" color="gray" fullWidth onClick={clearFilters}>
+                Clear filters
+              </Button>
+            ) : scope !== "past" ? (
+              <Button
+                component={Link}
+                href="/restaurants"
+                color="warmCoral"
+                radius="md"
+                size="md"
+                fullWidth
+                style={{
+                  background: uiColors.brandPrimary,
+                  color: uiColors.surface,
+                }}
+              >
+                Explore restaurants
+              </Button>
+            ) : null}
           </Stack>
         </Card>
       )}
-
-      {!isLoading && !isError ? (
-        <Stack gap="sm">
-          <Text fw={700} size="lg" c={uiColors.textPrimary}>
-            Past reservations
-          </Text>
-          {past.length > 0 ? (
-            <ReservationCards reservations={past} />
-          ) : (
-            <Card
-              radius="md"
-              p="lg"
-              style={{
-                border: `1px dashed ${uiColors.borderStrong}`,
-                background: uiColors.surface,
-              }}
-            >
-              <Text size="sm" ta="center" c={uiColors.textSecondary}>
-                Completed visits and reviews will appear here.
-              </Text>
-            </Card>
-          )}
-        </Stack>
-      ) : null}
     </MobileShell>
   );
 }
