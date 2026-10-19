@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import {
   Button,
   Card,
@@ -13,6 +12,7 @@ import {
   IconClock,
   IconUsers,
 } from "@tabler/icons-react";
+import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
@@ -36,6 +36,8 @@ export function ReservationRequestSuccessModal({
   onViewDetails,
   onExploreRestaurants,
 }: ReservationRequestSuccessModalProps) {
+  const format = useFormatter();
+  const t = useTranslations("CustomerBooking.success");
   const confirmed = reservation?.status === ReservationStatus.Confirmed;
   const displayDate = reservation?.changeRequest?.date ?? reservation?.date;
   const displayTime = reservation?.changeRequest?.time ?? reservation?.time;
@@ -64,19 +66,19 @@ export function ReservationRequestSuccessModal({
           <Stack gap={4} align="center">
             <Text fw={800} size="xl" ta="center" c={uiColors.textPrimary}>
               {isChangeRequest
-                ? "New time request sent"
+                ? t("changeTitle")
                 : confirmed
-                  ? "Reservation confirmed"
-                  : "Reservation request sent"}
+                  ? t("confirmedTitle")
+                  : t("pendingTitle")}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
               {isChangeRequest
                 ? confirmed
-                  ? "Your current booking stays confirmed until the restaurant reviews the new time."
-                  : "Your requested time was updated and still needs restaurant confirmation."
+                  ? t("confirmedChangeDescription")
+                  : t("pendingChangeDescription")
                 : confirmed
-                ? "Your table has been confirmed."
-                : "The restaurant will review your request and contact you if anything needs to change."}
+                ? t("confirmedDescription")
+                : t("pendingDescription")}
             </Text>
           </Stack>
 
@@ -95,13 +97,22 @@ export function ReservationRequestSuccessModal({
                   {reservation.restaurantName}
                 </Text>
                 <StatusBadge tone={isChangeRequest ? "warning" : confirmed ? "success" : "warning"}>
-                  {isChangeRequest ? "Change pending" : confirmed ? "Confirmed" : "Pending confirmation"}
+                  {isChangeRequest
+                    ? t("changePending")
+                    : confirmed
+                      ? t("confirmed")
+                      : t("pendingConfirmation")}
                 </StatusBadge>
               </Group>
               <Group gap="xs" wrap="nowrap">
                 <IconCalendarEvent size={17} color={uiColors.brandPrimary} />
                 <Text size="sm">
-                  {dayjs(displayDate).format("ddd, MMM D, YYYY")}
+                  {format.dateTime(new Date(`${displayDate}T00:00:00`), {
+                    weekday: "short",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
                 </Text>
               </Group>
               <Group gap="xs" wrap="nowrap">
@@ -111,7 +122,10 @@ export function ReservationRequestSuccessModal({
               <Group gap="xs" wrap="nowrap">
                 <IconUsers size={17} color={uiColors.brandPrimary} />
                 <Text size="sm">
-                  {reservation.guests} guests · {reservation.district}
+                  {t("guestLocation", {
+                    count: reservation.guests,
+                    district: reservation.district,
+                  })}
                 </Text>
               </Group>
             </Stack>
@@ -125,7 +139,7 @@ export function ReservationRequestSuccessModal({
               color="warmCoral"
               onClick={() => onViewDetails(reservation)}
             >
-              View reservation details
+              {t("viewDetails")}
             </Button>
             <Button
               fullWidth
@@ -135,7 +149,7 @@ export function ReservationRequestSuccessModal({
               color="gray"
               onClick={onExploreRestaurants}
             >
-              Explore more restaurants
+              {t("exploreRestaurants")}
             </Button>
           </Stack>
         </Stack>
