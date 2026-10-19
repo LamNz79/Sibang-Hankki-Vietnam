@@ -243,6 +243,15 @@ export function updateSystemAdminUser(id: string, input: SystemAdminUserUpdateIn
   return writeUser<SystemAdminUser>(apiEndpoints.systemAdminUser(id), "PUT", input);
 }
 
+export async function resetSystemAdminUserPassword(id: string, newPassword: string) {
+  const csrf = await getCsrfToken();
+  return apiFetch<void>(apiEndpoints.systemAdminUserPassword(id), {
+    method: "PATCH",
+    headers: { [csrf.headerName]: csrf.token },
+    body: JSON.stringify({ newPassword }),
+  });
+}
+
 export function createSystemAdminRestaurant(input: SystemAdminRestaurantInput) {
   return writeRestaurant<SystemAdminRestaurantDetail>(
     apiEndpoints.systemAdminRestaurants,

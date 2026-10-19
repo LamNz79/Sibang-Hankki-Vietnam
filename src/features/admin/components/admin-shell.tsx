@@ -23,6 +23,7 @@ import {
 } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { ChangePasswordButton } from "@/features/auth/components/change-password-button";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getSessionUser } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
@@ -152,6 +153,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
         <AppShell.Section pt="md" style={{ borderTop: "1px solid #4c4346" }}>
           <Stack gap="sm">
+            <ChangePasswordButton />
             <LogoutButton />
             <Stack gap={0}>
               <Text c="#bfb6b8" size="10px" fw={700}>

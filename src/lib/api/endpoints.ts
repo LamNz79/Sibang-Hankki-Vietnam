@@ -43,6 +43,7 @@ export const apiEndpoints = {
   authRegister: "/api/auth/register",
   authLogout: "/api/auth/logout",
   authMe: "/api/auth/me",
+  authPassword: "/api/auth/password",
   customerProfile: "/api/customer/profile",
   ownerReservations: "/api/owner/reservations",
   ownerWalkIns: "/api/owner/reservations/walk-ins",
@@ -83,6 +84,8 @@ export const apiEndpoints = {
   ownerCheckIns: "/api/owner/check-ins",
   systemAdminUsers: "/api/admin/users",
   systemAdminUser: (id: string) => `/api/admin/users/${seg(id)}`,
+  systemAdminUserPassword: (id: string) =>
+    `/api/admin/users/${seg(id)}/password`,
   systemAdminRestaurants: "/api/admin/restaurants",
   systemAdminRestaurantAssignments: "/api/admin/restaurant-assignments",
   systemAdminRestaurantAssignment: (userId: string) =>
