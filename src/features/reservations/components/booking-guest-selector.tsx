@@ -9,6 +9,7 @@ import {
   Text,
 } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { LARGE_PARTY_THRESHOLD } from "@/features/reservations/types";
 
 const guestOptions = [2, 4, 6] as const;
@@ -23,10 +24,12 @@ export function BookingGuestSelector({
   value,
   onChange,
 }: BookingGuestSelectorProps) {
+  const t = useTranslations("CustomerBooking.guests");
+
   return (
     <Stack gap="sm">
       <Text fw={700} size="lg">
-        Guests
+        {t("title")}
       </Text>
       <Group justify="center" gap="sm" wrap="nowrap">
         <ActionIcon
@@ -34,7 +37,7 @@ export function BookingGuestSelector({
           color="warmCoral"
           size="lg"
           radius="md"
-          aria-label="Remove one guest"
+          aria-label={t("remove")}
           disabled={value <= 1}
           onClick={() => onChange(value - 1)}
         >
@@ -47,7 +50,7 @@ export function BookingGuestSelector({
           allowNegative={false}
           hideControls
           inputMode="numeric"
-          aria-label="Number of guests"
+          aria-label={t("count")}
           onChange={(nextValue) => {
             if (typeof nextValue === "number") {
               onChange(Math.max(1, Math.trunc(nextValue)));
@@ -61,7 +64,7 @@ export function BookingGuestSelector({
           color="warmCoral"
           size="lg"
           radius="md"
-          aria-label="Add one guest"
+          aria-label={t("add")}
           onClick={() => onChange(value + 1)}
         >
           <IconPlus size={18} />
@@ -85,11 +88,10 @@ export function BookingGuestSelector({
         })}
       </SimpleGrid>
       {value > LARGE_PARTY_THRESHOLD ? (
-        <Alert color="yellow" radius="md" title="Large party request">
+        <Alert color="yellow" radius="md" title={t("largePartyTitle")}>
           <Stack gap="sm">
             <Text size="sm">
-              For groups larger than 10 guests, contact the restaurant directly
-              to confirm a suitable time. Online booking is unavailable.
+              {t("largePartyDescription")}
             </Text>
           </Stack>
         </Alert>

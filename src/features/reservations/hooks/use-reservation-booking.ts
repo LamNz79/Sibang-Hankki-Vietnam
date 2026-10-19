@@ -59,9 +59,6 @@ export function useReservationBooking({
 
   const selectedDateIso =
     selectedDate ?? bookingStartDate.format("YYYY-MM-DD");
-  const selectedDateLabel = selectedDate
-    ? dayjs(selectedDate).format("ddd, MMM D, YYYY")
-    : "No date selected";
   const availability = useQuery({
     queryKey: ["availability", restaurant.slug, selectedDateIso, partySize],
     queryFn: ({ signal }) => getAvailability(restaurant.slug, selectedDateIso, partySize, signal),
@@ -202,7 +199,6 @@ export function useReservationBooking({
     bookingStartDate: bookingStartDate.format("YYYY-MM-DD"),
     bookingEndDate: bookingEndDate.format("YYYY-MM-DD"),
     selectedDate,
-    selectedDateLabel,
     selectDate,
     selectedGuests: partySize,
     changingReservation,
@@ -224,7 +220,7 @@ export function useReservationBooking({
       setCustomerEmail(value);
       resetSubmission();
     },
-    customerEmailError: validEmail ? undefined : "Enter a valid email address.",
+    customerEmailInvalid: !validEmail,
     changeMessage,
     setChangeMessage: (value: string) => {
       setChangeMessage(value);

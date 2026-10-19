@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
+import "dayjs/locale/vi";
 import { Card, Stack, Text } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
+import { useLocale, useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 type BookingDateSelectorProps = {
@@ -19,10 +22,13 @@ export function BookingDateSelector({
   maxDate,
   onChange,
 }: BookingDateSelectorProps) {
+  const locale = useLocale();
+  const t = useTranslations("CustomerBooking.date");
+
   return (
     <Stack gap="sm">
       <Text fw={700} size="lg">
-        Date
+        {t("title")}
       </Text>
       <Card
         radius="lg"
@@ -37,6 +43,7 @@ export function BookingDateSelector({
             fullWidth
             value={value}
             onChange={onChange}
+            locale={locale}
             minDate={minDate}
             maxDate={maxDate}
             maxLevel="month"
@@ -79,7 +86,7 @@ export function BookingDateSelector({
             }}
           >
             <Text size="xs" c={uiColors.textSecondary}>
-              Selected date
+              {t("selected")}
             </Text>
             <Text fw={700} c={uiColors.textPrimary}>
               {label}

@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useFormatter, useTranslations } from "next-intl";
 import { Alert, Button, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
@@ -17,6 +18,8 @@ import { useReservationBooking } from "@/features/reservations/hooks/use-reserva
 
 /** Composes booking controls after Next.js URL search parameters are available. */
 function ReservationBookingContent() {
+  const format = useFormatter();
+  const t = useTranslations("CustomerBooking");
   const router = useRouter();
   const searchParams = useSearchParams();
   const slug = searchParams.get("restaurant") ?? "royal-pavilion";
@@ -26,11 +29,19 @@ function ReservationBookingContent() {
     restaurant,
     changeReservationId,
   });
+  const selectedDateLabel = booking.selectedDate
+    ? format.dateTime(new Date(`${booking.selectedDate}T00:00:00`), {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    : t("date.none");
 
   return (
     <MobileShell
-      title="Book a table"
-      subtitle="Table booking"
+      title={t("title")}
+      subtitle={t("subtitle")}
       backHref={`/restaurants/${restaurant.slug}`}
       bottomNav={null}
       footerContent={
@@ -45,9 +56,9 @@ function ReservationBookingContent() {
         >
           {booking.selectedTime
             ? changeReservationId
-              ? "Request this time"
-              : "Request reservation"
-            : "Select an available time"}
+              ? t("submit.change")
+              : t("submit.reservation")
+            : t("submit.selectTime")}
         </Button>
       }
     >
@@ -55,7 +66,7 @@ function ReservationBookingContent() {
 
       <BookingDateSelector
         value={booking.selectedDate}
-        label={booking.selectedDateLabel}
+        label={selectedDateLabel}
         minDate={booking.bookingStartDate}
         maxDate={booking.bookingEndDate}
         onChange={booking.selectDate}
@@ -63,13 +74,12 @@ function ReservationBookingContent() {
 
       {changeReservationId ? (
         <Stack gap="sm">
-          <Alert color="blue" title="Choose another time">
-            Your party size remains {booking.selectedGuests}. A confirmed booking
-            keeps its current time until the restaurant accepts your request.
+          <Alert color="blue" title={t("change.title")}>
+            {t("change.description", { count: booking.selectedGuests })}
           </Alert>
           <Textarea
-            label="Message to the restaurant (optional)"
-            placeholder="For example: Could we move our booking one hour later?"
+            label={t("change.messageLabel")}
+            placeholder={t("change.messagePlaceholder")}
             value={booking.changeMessage}
             onChange={(event) => booking.setChangeMessage(event.currentTarget.value)}
             maxLength={1000}
@@ -85,9 +95,9 @@ function ReservationBookingContent() {
           />
 
           <Stack gap="sm">
-            <Text fw={700}>Contact information</Text>
+            <Text fw={700}>{t("contact.title")}</Text>
             <TextInput
-              label="Full name"
+              label={t("contact.name")}
               value={booking.customerName}
               onChange={(event) => booking.setCustomerName(event.currentTarget.value)}
               autoComplete="name"
@@ -95,7 +105,7 @@ function ReservationBookingContent() {
               required
             />
             <TextInput
-              label="Phone number"
+              label={t("contact.phone")}
               type="tel"
               value={booking.customerPhone}
               onChange={(event) => booking.setCustomerPhone(event.currentTarget.value)}
@@ -104,41 +114,41 @@ function ReservationBookingContent() {
               required
             />
             <TextInput
-              label="Email (optional)"
+              label={t("contact.email")}
               type="email"
               value={booking.customerEmail}
               onChange={(event) => booking.setCustomerEmail(event.currentTarget.value)}
               autoComplete="email"
               maxLength={320}
-              error={booking.customerEmailError}
+              error={booking.customerEmailInvalid ? t("contact.invalidEmail") : undefined}
             />
           </Stack>
         </>
       )}
 
       {booking.changeReservationUnavailable ? (
-        <Alert color="red" title="Unable to change this reservation">
-          A time-change request is already waiting for the restaurant.
+        <Alert color="red" title={t("errors.changeTitle")}>
+          {t("errors.changeDescription")}
         </Alert>
       ) : null}
 
       {booking.submissionError ? (
-        <Alert color="red" title="Unable to send reservation" role="alert">
-          {booking.submissionError}
+        <Alert color="red" title={t("errors.submissionTitle")} role="alert">
+          {t("errors.submissionDescription")}
         </Alert>
       ) : null}
 
-      {booking.availabilityLoading ? <Text role="status">Checking available times...</Text> :
+      {booking.availabilityLoading ? <Text role="status">{t("availability.loading")}</Text> :
       booking.availabilityError ? (
-        <Alert color="red" title="Unable to check availability" role="alert">
-          <Text size="sm">{booking.availabilityError}</Text>
-          <Button variant="light" color="red" onClick={booking.retryAvailability}>Try again</Button>
+        <Alert color="red" title={t("availability.errorTitle")} role="alert">
+          <Text size="sm">{t("availability.errorDescription")}</Text>
+          <Button variant="light" color="red" onClick={booking.retryAvailability}>{t("availability.retry")}</Button>
         </Alert>
       ) : (
         <Stack gap="sm">
           {booking.requiresRestaurantConfirmation && booking.availableTimes.length > 0 ? (
-            <Alert color="yellow" title="Restaurant confirmation required">
-              Choose an available time and send your request. The reservation will remain pending until the restaurant confirms it.
+            <Alert color="yellow" title={t("availability.confirmationTitle")}>
+              {t("availability.confirmationDescription")}
             </Alert>
           ) : null}
           <BookingTimeSelector
@@ -165,15 +175,17 @@ function ReservationBookingContent() {
 
 /** Booking route screen with a Suspense boundary for URL search parameters. */
 export function ReservationBookingScreen() {
+  const t = useTranslations("CustomerBooking");
+
   return (
     <Suspense
       fallback={
         <MobileShell
-          title="Book a table"
-          subtitle="Loading booking details..."
+          title={t("title")}
+          subtitle={t("loadingDetails")}
           bottomNav={null}
         >
-          <Text>Loading...</Text>
+          <Text>{t("loading")}</Text>
         </MobileShell>
       }
     >
