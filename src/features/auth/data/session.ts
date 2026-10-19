@@ -30,6 +30,13 @@ export function getCsrfToken() {
   return apiFetch<CsrfToken>(apiEndpoints.authCsrf, { cache: "no-store" });
 }
 
+export function getSessionUser(signal?: AbortSignal) {
+  return apiFetch<SessionUser>(apiEndpoints.authMe, {
+    cache: "no-store",
+    signal,
+  });
+}
+
 export async function login(userid: string, password: string) {
   const csrf = await getCsrfToken();
 
@@ -42,7 +49,7 @@ export async function login(userid: string, password: string) {
     body: new URLSearchParams({ userid, password }),
   });
 
-  return apiFetch<SessionUser>(apiEndpoints.authMe, { cache: "no-store" });
+  return getSessionUser();
 }
 
 export async function registerCustomer(registration: CustomerRegistration) {
