@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 import {
   ActionIcon,
   Alert,
@@ -25,7 +26,6 @@ import {
   IconCalendarEvent,
   IconChevronRight,
   IconClock,
-  IconCoin,
   IconHeart,
   IconHistory,
   IconLogout,
@@ -44,7 +44,12 @@ import {
 } from "@/features/account/data/customer-profile";
 import { logout } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
+import {
+  getReservationDisplaySlot,
+  partitionCustomerReservations,
+} from "@/features/reservations/domain/selectors";
 import { useCustomerReservations } from "@/features/reservations/hooks/use-customer-reservations";
+import { VisitStatus } from "@/features/reservations/types";
 import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
 
@@ -156,6 +161,19 @@ export function AccountScreen() {
     onError: () => notifications.show({ color: "red", message: t("logoutError") }),
   });
   const profile = profileQuery.data;
+  const { upcoming, past } = partitionCustomerReservations(
+    reservations,
+    dayjs().format("YYYY-MM-DDTHH:mm"),
+  );
+  const latestCompletedVisit = [...past]
+    .filter((reservation) => reservation.visitStatus === VisitStatus.Completed)
+    .sort((left, right) => {
+      const leftSlot = getReservationDisplaySlot(left);
+      const rightSlot = getReservationDisplaySlot(right);
+      return `${rightSlot.date}T${rightSlot.time}`.localeCompare(
+        `${leftSlot.date}T${leftSlot.time}`,
+      );
+    })[0];
   const requiresLogin =
     profileQuery.error instanceof ApiError &&
     (profileQuery.error.status === 401 || profileQuery.error.status === 403);
@@ -261,62 +279,39 @@ export function AccountScreen() {
         )}
       </SurfaceCard>
 
-      <SurfaceCard tone="brand" p="md">
-        <Group gap="sm" wrap="nowrap">
-          <ThemeIcon
-            size={38}
-            radius="md"
-            color="warmCoral"
-            variant="light"
-          >
-            <IconCoin size={19} />
-          </ThemeIcon>
-          <Text size="sm" c={uiColors.textSecondary}>
-            Dining points
-          </Text>
-          <Text fw={850} size="lg" c={uiColors.brandPrimary}>
-            420
-          </Text>
-          <Box style={{ flex: 1 }} />
-          <Text size="xs" fw={700} c={uiColors.brandPrimary}>
-            History
-          </Text>
-          <IconChevronRight size={16} color={uiColors.brandPrimary} />
-        </Group>
-      </SurfaceCard>
-
       <SurfaceCard px="md" py={0}>
         <AccountMenuItem
           href="/reservations"
           icon={IconCalendarEvent}
           iconBackground={uiColors.detailDateSurface}
           iconColor={uiColors.detailDateText}
-          label="My reservations"
-          meta={`${reservations.length} upcoming`}
+          label={t("reservations")}
+          meta={t("upcomingCount", { count: upcoming.length })}
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem
           icon={IconHeart}
           iconBackground={uiColors.accentVipSurface}
           iconColor={uiColors.accentVipText}
-          label="Saved restaurants"
-          meta="8"
+          label={t("savedRestaurants")}
+          meta={t("comingSoon")}
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem
           icon={IconMap2}
           iconBackground={uiColors.detailRequestSurface}
           iconColor={uiColors.detailRequestText}
-          label="My dining map"
-          meta="12 saved"
+          label={t("diningMap")}
+          meta={t("comingSoon")}
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem
+          href="/reservations"
           icon={IconHistory}
           iconBackground={uiColors.detailPreOrderSurface}
           iconColor={uiColors.detailPreOrderText}
-          label="Visit history"
-          meta="Write a review"
+          label={t("visitHistory")}
+          meta={t("pastCount", { count: past.length })}
         />
       </SurfaceCard>
 
@@ -336,41 +331,43 @@ export function AccountScreen() {
         </Button>
       ) : null}
 
-      <Stack gap="sm">
-        <Text fw={800} size="lg" c={uiColors.textPrimary}>
-          Recent visit
-        </Text>
-        <Link
-          href="/restaurants/royal-pavilion"
-          style={{ color: "inherit", textDecoration: "none" }}
-        >
-          <SurfaceCard p="sm">
-            <Group gap="sm" wrap="nowrap">
-              <Box
-                w={68}
-                h={58}
-                style={{
-                  flexShrink: 0,
-                  borderRadius: 12,
-                  background: `repeating-linear-gradient(135deg, ${uiColors.brandPrimarySoft} 0 8px, #ffffff 8px 16px)`,
-                }}
-              />
-              <Stack gap={3} style={{ flex: 1, minWidth: 0 }}>
-                <Text fw={750} size="sm" c={uiColors.textPrimary}>
-                  The Royal Pavilion
-                </Text>
-                <Group gap={5} wrap="nowrap">
-                  <IconClock size={14} color={uiColors.textSecondary} />
-                  <Text size="xs" c={uiColors.textSecondary}>
-                    1 visit · Review available
+      {latestCompletedVisit ? (
+        <Stack gap="sm">
+          <Text fw={800} size="lg" c={uiColors.textPrimary}>
+            {t("recentVisit")}
+          </Text>
+          <Link
+            href={`/reservations/${latestCompletedVisit.id}`}
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            <SurfaceCard p="sm">
+              <Group gap="sm" wrap="nowrap">
+                <Box
+                  w={68}
+                  h={58}
+                  style={{
+                    flexShrink: 0,
+                    borderRadius: 12,
+                    background: `repeating-linear-gradient(135deg, ${uiColors.brandPrimarySoft} 0 8px, #ffffff 8px 16px)`,
+                  }}
+                />
+                <Stack gap={3} style={{ flex: 1, minWidth: 0 }}>
+                  <Text fw={750} size="sm" c={uiColors.textPrimary}>
+                    {latestCompletedVisit.restaurantName}
                   </Text>
-                </Group>
-              </Stack>
-              <IconChevronRight size={17} color={uiColors.textMuted} />
-            </Group>
-          </SurfaceCard>
-        </Link>
-      </Stack>
+                  <Group gap={5} wrap="nowrap">
+                    <IconClock size={14} color={uiColors.textSecondary} />
+                    <Text size="xs" c={uiColors.textSecondary}>
+                      {dayjs(getReservationDisplaySlot(latestCompletedVisit).date).format("DD/MM/YYYY")} · {t("completed")}
+                    </Text>
+                  </Group>
+                </Stack>
+                <IconChevronRight size={17} color={uiColors.textMuted} />
+              </Group>
+            </SurfaceCard>
+          </Link>
+        </Stack>
+      ) : null}
 
       <SurfaceCard tone="brand" p="md">
         <WorkspaceSwitcher />
