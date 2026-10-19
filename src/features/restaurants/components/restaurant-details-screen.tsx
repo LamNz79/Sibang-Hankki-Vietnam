@@ -3,16 +3,20 @@
 import Link from "next/link";
 import { Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCalendarTime, IconClock, IconMapPin, IconPhoto, IconStarFilled } from "@tabler/icons-react";
+import { IconCalendarTime, IconClock, IconMapPin, IconPhoto } from "@tabler/icons-react";
 import { MobileShell } from "@/components/layout/customer";
-import {
-  getRestaurantAvailabilitySummary,
-  type RestaurantRecord,
-} from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
+import { getLiveAvailabilityLabel } from "@/features/restaurants/domain/live-availability";
+import type { RestaurantAvailability } from "@/features/reservations/data/availability";
 import { uiColors } from "@/theme";
 
-export function RestaurantDetailsScreen({ restaurant }: { restaurant: RestaurantRecord }) {
-  const availability = getRestaurantAvailabilitySummary(restaurant);
+export function RestaurantDetailsScreen({
+  restaurant,
+  availability,
+}: {
+  restaurant: RestaurantRecord;
+  availability: RestaurantAvailability | null;
+}) {
   const [galleryOpened, gallery] = useDisclosure(false);
   const galleryImages = restaurant.galleryImages?.length
     ? restaurant.galleryImages
@@ -82,10 +86,7 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
         <Text size="sm" fw={700} c={uiColors.textSecondary}>{restaurant.cuisineLabel} · {restaurant.district}</Text>
         <Title order={1} size="h1" c={uiColors.textPrimary}>{restaurant.name}</Title>
 
-        <Group gap="xs">
-          <IconStarFilled size={16} color={uiColors.rating} />
-          <Text fw={600} c={uiColors.textPrimary}>{restaurant.rating.toFixed(1)} ({restaurant.ratingCount}) · {restaurant.priceRangeLabel}</Text>
-        </Group>
+        <Text fw={600} c={uiColors.textPrimary}>{restaurant.priceRangeLabel}</Text>
 
         <Group gap="xs">
           {restaurant.tags.map((tag) => (
@@ -115,8 +116,8 @@ export function RestaurantDetailsScreen({ restaurant }: { restaurant: Restaurant
             <IconCalendarTime size={18} />
           </ThemeIcon>
           <Stack gap={2}>
-            <Text fw={700} c={uiColors.brandPrimary}>{availability.label}</Text>
-            <Text size="sm" c={uiColors.textSecondary}>{availability.hint}</Text>
+            <Text fw={700} c={uiColors.brandPrimary}>{getLiveAvailabilityLabel(availability)}</Text>
+            <Text size="sm" c={uiColors.textSecondary}>Availability shown for 2 guests today. Choose another date or party size in the booking step.</Text>
           </Stack>
         </Group>
       </Card>
