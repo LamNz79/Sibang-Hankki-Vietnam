@@ -123,6 +123,32 @@ function ReservationBookingContent() {
               error={booking.customerEmailInvalid ? t("contact.invalidEmail") : undefined}
             />
           </Stack>
+
+          <Stack gap="sm">
+            <Text fw={700}>{t("requests.title")}</Text>
+            <Text size="sm" c="dimmed">
+              {t("requests.description")}
+            </Text>
+            <Textarea
+              label={t("requests.specialRequest")}
+              placeholder={t("requests.specialRequestPlaceholder")}
+              value={booking.specialRequest}
+              onChange={(event) => booking.setSpecialRequest(event.currentTarget.value)}
+              maxLength={1000}
+              autosize
+              minRows={2}
+            />
+            <Textarea
+              label={t("requests.preOrder")}
+              description={t("requests.preOrderDescription")}
+              placeholder={t("requests.preOrderPlaceholder")}
+              value={booking.preOrderNote}
+              onChange={(event) => booking.setPreOrderNote(event.currentTarget.value)}
+              maxLength={1000}
+              autosize
+              minRows={2}
+            />
+          </Stack>
         </>
       )}
 
