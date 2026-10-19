@@ -31,6 +31,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { LanguageSelect } from "@/features/i18n";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 import { useTranslations } from "next-intl";
 import { OwnerShell } from "@/features/owner/shared";
 import {
@@ -400,7 +401,11 @@ export function OwnerSettingsScreen({ embedded = false }: { embedded?: boolean }
               border: `1px solid ${uiColors.border}`,
             }}
           >
-            <Stack gap="md"><LanguageSelect /><WorkspaceSwitcher /></Stack>
+            <Stack gap="md">
+              <LanguageSelect />
+              <WorkspaceSwitcher />
+              {!embedded ? <LogoutButton /> : null}
+            </Stack>
           </Card>
         </Stack>
       );
