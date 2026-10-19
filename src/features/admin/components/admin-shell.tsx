@@ -4,29 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
-  ActionIcon,
   AppShell,
   Avatar,
   Burger,
   Group,
   Stack,
   Text,
-  TextInput,
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  IconBell,
   IconCalendarEvent,
   IconLayoutDashboard,
   IconPhoto,
   IconToolsKitchen2,
-  IconSearch,
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { LogoutButton } from "@/features/auth/components/logout-button";
+import { getSessionUser } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
@@ -43,6 +41,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations("Admin.shell");
   const [navigationOpened, { toggle, close }] = useDisclosure(false);
+  const session = useQuery({
+    queryKey: ["auth-session"],
+    queryFn: ({ signal }) => getSessionUser(signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
+  const userid = session.data?.userid ?? t("adminName");
 
   return (
     <AppShell
@@ -61,7 +66,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     >
       <AppShell.Header px={{ base: "md", md: 28 }}>
         <Group h="100%" justify="space-between" wrap="nowrap">
-          <Group gap="sm" wrap="nowrap" style={{ flex: 1 }}>
+          <Group gap="sm" wrap="nowrap">
             <Burger
               opened={navigationOpened}
               onClick={toggle}
@@ -69,34 +74,17 @@ export function AdminShell({ children }: { children: ReactNode }) {
               size="sm"
               aria-label={t("toggleNavigation")}
             />
-            <TextInput
-              leftSection={<IconSearch size={16} />}
-              placeholder={t("searchPlaceholder")}
-              aria-label={t("searchLabel")}
-              w="100%"
-              maw={440}
-              radius="sm"
-              visibleFrom="sm"
-            />
           </Group>
 
           <Group gap="sm" wrap="nowrap">
             <LanguageSelect compact radius="sm" />
-            <ActionIcon
-              variant="default"
-              size={36}
-              radius="sm"
-              aria-label={t("notifications")}
-            >
-              <IconBell size={18} />
-            </ActionIcon>
             <Group gap="xs" wrap="nowrap" visibleFrom="sm">
               <Avatar color="warmCoral" variant="light" size={34}>
-                AD
+                {userid.slice(0, 2).toUpperCase()}
               </Avatar>
               <Stack gap={0}>
                 <Text size="xs" fw={800}>
-                  {t("adminName")}
+                  {userid}
                 </Text>
                 <Text size="10px" c={uiColors.textSecondary}>
                   {t("adminRole")}

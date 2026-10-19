@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
-  ActionIcon,
   Box,
   Flex,
   Group,
@@ -13,7 +12,6 @@ import {
   Title,
 } from "@mantine/core";
 import {
-  IconBell,
   IconChevronLeft,
   IconHomeStats,
   IconQrcode,
@@ -172,17 +170,7 @@ export function OwnerShell({
             </Stack>
 
             <Box w={40} miw={40}>
-              {headerAction ?? (
-                <ActionIcon
-                  variant="light"
-                  color="gray"
-                  radius="xl"
-                  size={40}
-                  aria-label="Notifications"
-                >
-                  <IconBell size={20} />
-                </ActionIcon>
-              )}
+              {headerAction}
             </Box>
           </Group>
         </Box>
