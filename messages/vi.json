@@ -45,7 +45,7 @@
   },
   "Account": {
     "title": "Tài khoản của tôi",
-    "subtitle": "Hồ sơ và quyền lợi",
+    "subtitle": "Hồ sơ và đặt bàn",
     "editProfile": "Chỉnh sửa hồ sơ",
     "name": "Họ và tên",
     "email": "Email",
@@ -58,7 +58,16 @@
     "loadError": "Không thể tải hồ sơ của bạn.",
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
-    "logoutError": "Không thể đăng xuất. Hãy thử lại."
+    "logoutError": "Không thể đăng xuất. Hãy thử lại.",
+    "reservations": "Đặt bàn của tôi",
+    "upcomingCount": "{count} sắp tới",
+    "savedRestaurants": "Nhà hàng đã lưu",
+    "diningMap": "Bản đồ ẩm thực",
+    "visitHistory": "Lịch sử ghé thăm",
+    "pastCount": "{count} trước đây",
+    "comingSoon": "Sắp ra mắt",
+    "recentVisit": "Lần ghé gần đây",
+    "completed": "Đã hoàn tất"
   },
   "ReservationQr": {
     "home": {
