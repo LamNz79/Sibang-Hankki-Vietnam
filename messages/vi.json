@@ -133,7 +133,7 @@
     }
   },
   "CustomerBooking": {
-    "title": "Đặt bàn", "subtitle": "Thông tin đặt bàn", "loadingDetails": "Đang tải thông tin đặt bàn...", "loading": "Đang tải...",
+    "title": "Đặt bàn", "subtitle": "Thông tin đặt bàn",
     "submit": { "change": "Yêu cầu giờ này", "reservation": "Gửi yêu cầu đặt bàn", "selectTime": "Chọn một giờ còn trống" },
     "date": { "title": "Ngày", "selected": "Ngày đã chọn", "none": "Chưa chọn ngày" },
     "guests": { "title": "Số khách", "remove": "Giảm một khách", "count": "Số lượng khách", "add": "Thêm một khách", "largePartyTitle": "Yêu cầu nhóm đông", "largePartyDescription": "Với nhóm trên 10 khách, hãy liên hệ trực tiếp nhà hàng để xác nhận giờ phù hợp. Không hỗ trợ đặt trực tuyến." },

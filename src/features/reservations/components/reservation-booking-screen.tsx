@@ -1,7 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFormatter, useTranslations } from "next-intl";
 import { Alert, Button, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
@@ -10,21 +9,22 @@ import { BookingGuestSelector } from "@/features/reservations/components/booking
 import { BookingRestaurantSummary } from "@/features/reservations/components/booking-restaurant-summary";
 import { BookingTimeSelector } from "@/features/reservations/components/booking-time-selector";
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
-import {
-  getRestaurantBySlug,
-  restaurantRecords,
-} from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
 import { useReservationBooking } from "@/features/reservations/hooks/use-reservation-booking";
 
-/** Composes booking controls after Next.js URL search parameters are available. */
-function ReservationBookingContent() {
+type ReservationBookingScreenProps = {
+  restaurant: RestaurantRecord;
+  changeReservationId?: string;
+};
+
+/** Composes booking controls for the restaurant resolved by the server route. */
+export function ReservationBookingScreen({
+  restaurant,
+  changeReservationId,
+}: ReservationBookingScreenProps) {
   const format = useFormatter();
   const t = useTranslations("CustomerBooking");
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const slug = searchParams.get("restaurant") ?? "royal-pavilion";
-  const changeReservationId = searchParams.get("change");
-  const restaurant = getRestaurantBySlug(slug) ?? restaurantRecords[0];
   const booking = useReservationBooking({
     restaurant,
     changeReservationId,
@@ -196,26 +196,5 @@ function ReservationBookingContent() {
         onExploreRestaurants={() => router.push("/restaurants")}
       />
     </MobileShell>
-  );
-}
-
-/** Booking route screen with a Suspense boundary for URL search parameters. */
-export function ReservationBookingScreen() {
-  const t = useTranslations("CustomerBooking");
-
-  return (
-    <Suspense
-      fallback={
-        <MobileShell
-          title={t("title")}
-          subtitle={t("loadingDetails")}
-          bottomNav={null}
-        >
-          <Text>{t("loading")}</Text>
-        </MobileShell>
-      }
-    >
-      <ReservationBookingContent />
-    </Suspense>
   );
 }

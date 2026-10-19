@@ -29,4 +29,22 @@ describe("restaurant API development fallback", () => {
 
     await expect(getRestaurants()).rejects.toBeInstanceOf(ApiError);
   });
+
+  it("loads a restaurant created outside the prototype data", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const liveRestaurant = {
+      slug: "new-live-restaurant",
+      name: "New Live Restaurant",
+    };
+    const fetchMock = vi.fn().mockResolvedValue(Response.json(liveRestaurant));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getRestaurant(liveRestaurant.slug)).resolves.toEqual(
+      liveRestaurant,
+    );
+    expect(fetchMock).toHaveBeenCalledWith(
+      `/api/restaurants/${liveRestaurant.slug}`,
+      expect.objectContaining({ cache: "no-store" }),
+    );
+  });
 });
