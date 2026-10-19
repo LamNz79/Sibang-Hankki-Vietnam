@@ -132,6 +132,18 @@
       "fallbackDescription": "Staff can confirm your booking code or check you in with the QR code."
     }
   },
+  "CustomerReservations": {
+    "title": "My reservations", "subtitle": "Your upcoming dining plans.", "heading": "Reservations", "description": "Track upcoming plans and review your dining history.",
+    "scope": { "upcoming": "Upcoming ({count})", "history": "History ({count})", "all": "All ({count})" },
+    "searchPlaceholder": "Search restaurant or booking reference", "searchLabel": "Search reservations", "filterLabel": "Filter reservation status",
+    "filters": { "all": "All statuses", "action": "Action required", "pending": "Pending confirmation", "confirmed": "Confirmed", "checkedIn": "Checked in or seated", "completed": "Completed", "closed": "Cancelled, declined or no-show" },
+    "status": { "pending": "Pending confirmation", "action": "Action required", "cancelled": "Reservation cancelled", "expired": "Request expired", "declined": "Request declined", "checkedIn": "Checked in", "seated": "Seated", "completed": "Completed", "noShow": "No-show", "confirmed": "Confirmed" },
+    "suggestedTime": "Suggested {time}", "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}",
+    "loadError": { "title": "Could not load reservations", "description": "Check your connection and try again.", "retry": "Try again" },
+    "showing": "Showing {visible} of {total}", "clearFilters": "Clear filters", "showMore": "Show more ({count} remaining)",
+    "empty": { "filteredTitle": "No matching reservations", "historyTitle": "No reservation history", "upcomingTitle": "No upcoming reservations", "filteredDescription": "Try another restaurant name, booking reference, or status.", "historyDescription": "Completed, cancelled, and past reservations will appear here.", "upcomingDescription": "Your reservation requests and confirmed bookings will appear here." },
+    "exploreRestaurants": "Explore restaurants"
+  },
   "CustomerReservationDetails": {
     "title": "Reservation details",
     "notFound": {

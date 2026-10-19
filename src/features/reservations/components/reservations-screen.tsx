@@ -3,6 +3,7 @@
 import Link from "next/link";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
+import { useFormatter, useTranslations } from "next-intl";
 import {
   Alert,
   Box,
@@ -93,6 +94,9 @@ function ReservationCards({
 }: {
   reservations: CustomerReservation[];
 }) {
+  const format = useFormatter();
+  const t = useTranslations("CustomerReservations");
+
   return (
     <Stack gap="md">
       {reservations.map((reservation) => {
@@ -150,24 +154,24 @@ function ReservationCards({
                   w="fit-content"
                 >
                   {isPending
-                    ? "Pending confirmation"
+                    ? t("status.pending")
                     : isAlternative
-                      ? "Action required"
+                      ? t("status.action")
                       : isCancelled
-                        ? "Reservation cancelled"
+                        ? t("status.cancelled")
                         : isExpired
-                          ? "Request expired"
+                          ? t("status.expired")
                           : isDeclined
-                            ? "Request declined"
+                            ? t("status.declined")
                             : displayStatus === VisitStatus.Arrived
-                              ? "Checked in"
+                              ? t("status.checkedIn")
                               : displayStatus === VisitStatus.Seated
-                                ? "Seated"
+                                ? t("status.seated")
                                 : displayStatus === VisitStatus.Completed
-                                  ? "Completed"
+                                  ? t("status.completed")
                                   : displayStatus === VisitStatus.NoShow
-                                    ? "No-show"
-                                    : "Confirmed"}
+                                    ? t("status.noShow")
+                                    : t("status.confirmed")}
                 </StatusBadge>
                 <Text fw={750} c={uiColors.textPrimary}>
                   {reservation.restaurantName}
@@ -178,7 +182,11 @@ function ReservationCards({
                     color={uiColors.textSecondary}
                   />
                   <Text size="xs" c={uiColors.textSecondary}>
-                    {dayjs(displaySlot.date).format("ddd, MMM D")}
+                    {format.dateTime(new Date(`${displaySlot.date}T00:00:00`), {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                    })}
                   </Text>
                   <IconClock size={15} color={uiColors.textSecondary} />
                   <Text
@@ -191,14 +199,17 @@ function ReservationCards({
                     }
                   >
                     {displaySlot.isSuggested
-                      ? `Suggested ${displaySlot.time}`
+                      ? t("suggestedTime", { time: displaySlot.time })
                       : displaySlot.time}
                   </Text>
                 </Group>
                 <Group gap={6} wrap="nowrap">
                   <IconUsers size={15} color={uiColors.textSecondary} />
                   <Text size="xs" c={uiColors.textSecondary}>
-                    {reservation.guests} guests · {reservation.district}
+                    {t("guestLocation", {
+                      count: reservation.guests,
+                      district: reservation.district,
+                    })}
                   </Text>
                 </Group>
               </Stack>
@@ -214,6 +225,7 @@ function ReservationCards({
 
 /** Lists customer reservations with status-aware dates, times, and actions. */
 export function ReservationsScreen() {
+  const t = useTranslations("CustomerReservations");
   const { reservations, isLoading, isError, retry } =
     useCustomerReservationsState();
   const [scope, setScope] = useState<ReservationScope>("upcoming");
@@ -256,8 +268,8 @@ export function ReservationsScreen() {
 
   return (
     <MobileShell
-      title="My reservations"
-      subtitle="Your upcoming dining plans."
+      title={t("title")}
+      subtitle={t("subtitle")}
       bottomNav={<BottomNav activePath="/reservations" />}
     >
       <Stack gap={6} align="center" py="sm">
@@ -265,10 +277,10 @@ export function ReservationsScreen() {
           <IconCalendarCheck size={26} />
         </ThemeIcon>
         <Text fw={800} size="lg" c={uiColors.textPrimary}>
-          Reservations
+          {t("heading")}
         </Text>
         <Text size="sm" c={uiColors.textSecondary}>
-          Track upcoming plans and review your dining history.
+          {t("description")}
         </Text>
       </Stack>
 
@@ -281,9 +293,9 @@ export function ReservationsScreen() {
             setVisibleCount(PAGE_SIZE);
           }}
           data={[
-            { label: `Upcoming (${upcoming.length})`, value: "upcoming" },
-            { label: `History (${past.length})`, value: "past" },
-            { label: `All (${reservations.length})`, value: "all" },
+            { label: t("scope.upcoming", { count: upcoming.length }), value: "upcoming" },
+            { label: t("scope.history", { count: past.length }), value: "past" },
+            { label: t("scope.all", { count: reservations.length }), value: "all" },
           ]}
           color="warmCoral"
           radius="md"
@@ -295,8 +307,8 @@ export function ReservationsScreen() {
             setVisibleCount(PAGE_SIZE);
           }}
           leftSection={<IconSearch size={16} />}
-          placeholder="Search restaurant or booking reference"
-          aria-label="Search reservations"
+          placeholder={t("searchPlaceholder")}
+          aria-label={t("searchLabel")}
           radius="md"
         />
         <Select
@@ -306,17 +318,17 @@ export function ReservationsScreen() {
             setVisibleCount(PAGE_SIZE);
           }}
           data={[
-            { label: "All statuses", value: "all" },
-            { label: "Action required", value: "action" },
-            { label: "Pending confirmation", value: "pending" },
-            { label: "Confirmed", value: "confirmed" },
-            { label: "Checked in or seated", value: "checked-in" },
-            { label: "Completed", value: "completed" },
-            { label: "Cancelled, declined or no-show", value: "closed" },
+            { label: t("filters.all"), value: "all" },
+            { label: t("filters.action"), value: "action" },
+            { label: t("filters.pending"), value: "pending" },
+            { label: t("filters.confirmed"), value: "confirmed" },
+            { label: t("filters.checkedIn"), value: "checked-in" },
+            { label: t("filters.completed"), value: "completed" },
+            { label: t("filters.closed"), value: "closed" },
           ]}
           allowDeselect={false}
           radius="md"
-          aria-label="Filter reservation status"
+          aria-label={t("filterLabel")}
         />
       </Stack>
 
@@ -325,11 +337,11 @@ export function ReservationsScreen() {
           <Loader color="warmCoral" />
         </Center>
       ) : isError ? (
-        <Alert color="red" title="Could not load reservations">
+        <Alert color="red" title={t("loadError.title")}>
           <Stack gap="sm">
-            <Text size="sm">Check your connection and try again.</Text>
+            <Text size="sm">{t("loadError.description")}</Text>
             <Button variant="light" color="red" onClick={() => void retry()}>
-              Try again
+              {t("loadError.retry")}
             </Button>
           </Stack>
         </Alert>
@@ -337,11 +349,14 @@ export function ReservationsScreen() {
         <Stack gap="md">
           <Group justify="space-between">
             <Text size="sm" c={uiColors.textSecondary}>
-              Showing {visibleReservations.length} of {filteredReservations.length}
+              {t("showing", {
+                visible: visibleReservations.length,
+                total: filteredReservations.length,
+              })}
             </Text>
             {hasFilters ? (
               <Button variant="subtle" color="gray" size="compact-sm" onClick={clearFilters}>
-                Clear filters
+                {t("clearFilters")}
               </Button>
             ) : null}
           </Group>
@@ -351,7 +366,7 @@ export function ReservationsScreen() {
               variant="default"
               onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
             >
-              Show more ({filteredReservations.length - visibleCount} remaining)
+              {t("showMore", { count: filteredReservations.length - visibleCount })}
             </Button>
           ) : null}
         </Stack>
@@ -366,18 +381,22 @@ export function ReservationsScreen() {
         >
           <Stack align="center" gap="sm">
             <Text fw={700} c={uiColors.textPrimary}>
-              {hasFilters ? "No matching reservations" : scope === "past" ? "No reservation history" : "No upcoming reservations"}
+              {hasFilters
+                ? t("empty.filteredTitle")
+                : scope === "past"
+                  ? t("empty.historyTitle")
+                  : t("empty.upcomingTitle")}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
               {hasFilters
-                ? "Try another restaurant name, booking reference, or status."
+                ? t("empty.filteredDescription")
                 : scope === "past"
-                  ? "Completed, cancelled, and past reservations will appear here."
-                  : "Your reservation requests and confirmed bookings will appear here."}
+                  ? t("empty.historyDescription")
+                  : t("empty.upcomingDescription")}
             </Text>
             {hasFilters ? (
               <Button variant="light" color="gray" fullWidth onClick={clearFilters}>
-                Clear filters
+                {t("clearFilters")}
               </Button>
             ) : scope !== "past" ? (
               <Button
@@ -392,7 +411,7 @@ export function ReservationsScreen() {
                   color: uiColors.surface,
                 }}
               >
-                Explore restaurants
+                {t("exploreRestaurants")}
               </Button>
             ) : null}
           </Stack>

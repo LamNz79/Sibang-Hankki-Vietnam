@@ -132,6 +132,18 @@
       "fallbackDescription": "Nhân viên có thể xác nhận mã đặt bàn hoặc check-in bằng mã QR."
     }
   },
+  "CustomerReservations": {
+    "title": "Đặt bàn của tôi", "subtitle": "Các kế hoạch dùng bữa sắp tới.", "heading": "Danh sách đặt bàn", "description": "Theo dõi kế hoạch sắp tới và xem lại lịch sử dùng bữa.",
+    "scope": { "upcoming": "Sắp tới ({count})", "history": "Lịch sử ({count})", "all": "Tất cả ({count})" },
+    "searchPlaceholder": "Tìm nhà hàng hoặc mã đặt bàn", "searchLabel": "Tìm kiếm đặt bàn", "filterLabel": "Lọc theo trạng thái đặt bàn",
+    "filters": { "all": "Tất cả trạng thái", "action": "Cần phản hồi", "pending": "Chờ xác nhận", "confirmed": "Đã xác nhận", "checkedIn": "Đã check-in hoặc xếp bàn", "completed": "Đã hoàn tất", "closed": "Đã hủy, từ chối hoặc không đến" },
+    "status": { "pending": "Chờ xác nhận", "action": "Cần phản hồi", "cancelled": "Đã hủy đặt bàn", "expired": "Yêu cầu hết hạn", "declined": "Yêu cầu bị từ chối", "checkedIn": "Đã check-in", "seated": "Đã xếp bàn", "completed": "Đã hoàn tất", "noShow": "Không đến", "confirmed": "Đã xác nhận" },
+    "suggestedTime": "Đề xuất {time}", "guestLocation": "{count} khách · {district}",
+    "loadError": { "title": "Không thể tải danh sách đặt bàn", "description": "Hãy kiểm tra kết nối và thử lại.", "retry": "Thử lại" },
+    "showing": "Đang hiển thị {visible}/{total}", "clearFilters": "Xóa bộ lọc", "showMore": "Hiển thị thêm (còn {count})",
+    "empty": { "filteredTitle": "Không có đặt bàn phù hợp", "historyTitle": "Chưa có lịch sử đặt bàn", "upcomingTitle": "Không có đặt bàn sắp tới", "filteredDescription": "Hãy thử tên nhà hàng, mã đặt bàn hoặc trạng thái khác.", "historyDescription": "Các lượt đã hoàn tất, đã hủy và đã qua sẽ xuất hiện tại đây.", "upcomingDescription": "Các yêu cầu và đặt bàn đã xác nhận sẽ xuất hiện tại đây." },
+    "exploreRestaurants": "Khám phá nhà hàng"
+  },
   "CustomerReservationDetails": {
     "title": "Chi tiết đặt bàn",
     "notFound": { "title": "Không tìm thấy đặt bàn", "description": "Đặt bàn này có thể đã bị xóa hoặc không có trên thiết bị này.", "back": "Quay lại danh sách" },
