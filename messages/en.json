@@ -612,7 +612,7 @@
       "pagination": { "rowsPerPage": "Rows per page" }
     },
     "restaurantDetail": {
-      "back": "Back to restaurants", "loadError": "Could not load the restaurant.",
+      "back": "Back to restaurants", "loadError": "Could not load the restaurant.", "viewPublic": "View public page",
       "tabs": { "profile": "Profile", "booking": "Booking settings", "hours": "Business hours", "menu": "Menu", "media": "Photos" },
       "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
       "profile": { "title": "Restaurant profile", "edit": "Edit profile", "cuisine": "Cuisine", "priceRange": "Price range", "location": "Location", "timezone": "Timezone", "phone": "Phone", "email": "Email", "address": "Address", "description": "Description" },

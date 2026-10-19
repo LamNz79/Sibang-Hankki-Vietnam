@@ -554,7 +554,7 @@
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
     },
     "restaurantDetail": {
-      "back": "Quay lại danh sách nhà hàng", "loadError": "Không thể tải thông tin nhà hàng.",
+      "back": "Quay lại danh sách nhà hàng", "loadError": "Không thể tải thông tin nhà hàng.", "viewPublic": "Xem trang công khai",
       "tabs": { "profile": "Thông tin", "booking": "Cài đặt đặt bàn", "hours": "Giờ hoạt động", "menu": "Thực đơn", "media": "Hình ảnh" },
       "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
       "profile": { "title": "Thông tin nhà hàng", "edit": "Sửa thông tin", "cuisine": "Loại ẩm thực", "priceRange": "Khoảng giá", "location": "Khu vực", "timezone": "Múi giờ", "phone": "Số điện thoại", "email": "Email", "address": "Địa chỉ", "description": "Mô tả" },

@@ -24,6 +24,7 @@ import {
   IconBuildingStore,
   IconCalendarEvent,
   IconClock,
+  IconExternalLink,
   IconPlus,
   IconPhoto,
   IconRefresh,
@@ -180,9 +181,24 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
             <Title order={1}>{restaurant.name}</Title>
             <Text c={uiColors.textSecondary}>{restaurant.slug}</Text>
           </Stack>
-          <StatusBadge tone={statusTones[restaurant.approvalStatus]}>
-            {t(`statuses.${restaurant.approvalStatus}`)}
-          </StatusBadge>
+          <Group gap="sm">
+            {restaurant.approvalStatus === "ACTIVE" ? (
+              <Button
+                component={Link}
+                href={`/restaurants/${restaurant.slug}`}
+                target="_blank"
+                rel="noreferrer"
+                variant="light"
+                size="compact-sm"
+                leftSection={<IconExternalLink size={15} />}
+              >
+                {t("viewPublic")}
+              </Button>
+            ) : null}
+            <StatusBadge tone={statusTones[restaurant.approvalStatus]}>
+              {t(`statuses.${restaurant.approvalStatus}`)}
+            </StatusBadge>
+          </Group>
         </Group>
       </Stack>
 
