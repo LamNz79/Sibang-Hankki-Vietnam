@@ -56,6 +56,8 @@ export interface CustomerReservation {
   restaurantName: string;
   district: string;
   cuisineLabel: string;
+  restaurantImageUrl?: string;
+  restaurantImageAlt?: string;
   date: string;
   time: string;
   guests: number;

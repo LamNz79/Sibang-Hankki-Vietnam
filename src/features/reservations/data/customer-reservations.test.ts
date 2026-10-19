@@ -127,6 +127,8 @@ describe("customer reservation API", () => {
         name: "The Royal Pavilion",
         district: "Diên Hồng",
         cuisineLabel: "Chinese",
+        imageUrl: "https://example.com/royal-pavilion.jpg",
+        imageAlt: "Royal Pavilion dining room",
       }]));
     vi.stubGlobal("fetch", fetchMock);
 
@@ -136,6 +138,8 @@ describe("customer reservation API", () => {
         restaurantName: "The Royal Pavilion",
         district: "Diên Hồng",
         cuisineLabel: "Chinese",
+        restaurantImageUrl: "https://example.com/royal-pavilion.jpg",
+        restaurantImageAlt: "Royal Pavilion dining room",
         accountLinked: true,
         status: ReservationStatus.Confirmed,
       }),
@@ -414,6 +418,8 @@ describe("customer reservation API", () => {
       ...account,
       district: "Diên Hồng",
       cuisineLabel: "Chinese",
+      restaurantImageUrl: "https://example.com/royal-pavilion.jpg",
+      restaurantImageAlt: "Royal Pavilion dining room",
     };
     const otherAccount = { ...account, id: "other-account-id" };
 
@@ -422,6 +428,8 @@ describe("customer reservation API", () => {
         id: "account-id",
         district: "Diên Hồng",
         cuisineLabel: "Chinese",
+        restaurantImageUrl: "https://example.com/royal-pavilion.jpg",
+        restaurantImageAlt: "Royal Pavilion dining room",
       }),
     ]);
     expect(selectVisibleReservations([stored, otherAccount], null)).toEqual([stored]);

@@ -121,6 +121,8 @@ export function mapAccountReservation(
       restaurantName: record.restaurantName ?? restaurant?.name ?? "Restaurant",
       district: restaurant?.district ?? "",
       cuisineLabel: restaurant?.cuisineLabel ?? "",
+      restaurantImageUrl: restaurant?.imageUrl || undefined,
+      restaurantImageAlt: restaurant?.imageAlt || undefined,
       date: "",
       time: "",
       guests: record.partySize,
@@ -179,6 +181,10 @@ export function selectVisibleReservations(
           restaurantName: reservation.restaurantName || local.restaurantName,
           district: reservation.district || local.district,
           cuisineLabel: reservation.cuisineLabel || local.cuisineLabel,
+          restaurantImageUrl:
+            reservation.restaurantImageUrl || local.restaurantImageUrl,
+          restaurantImageAlt:
+            reservation.restaurantImageAlt || local.restaurantImageAlt,
         }
       : reservation;
   });

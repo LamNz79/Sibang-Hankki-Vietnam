@@ -82,6 +82,8 @@ export function useReservationBooking({
         restaurantName: restaurant.name,
         district: restaurant.district,
         cuisineLabel: restaurant.cuisineLabel,
+        restaurantImageUrl: restaurant.imageUrl,
+        restaurantImageAlt: restaurant.imageAlt,
         date: response.date,
         time: response.time,
         guests: response.partySize,

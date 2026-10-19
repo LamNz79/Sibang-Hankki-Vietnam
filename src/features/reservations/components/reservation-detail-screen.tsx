@@ -13,7 +13,6 @@ import {
   useCancelCustomerReservation,
   useCustomerReservation,
 } from "@/features/reservations/hooks/use-customer-reservations";
-import { getRestaurantBySlug } from "@/features/restaurants/data/mock-data";
 import { uiColors } from "@/theme";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
 import { CustomerChangeRequestCard } from "./customer-change-request-card";
@@ -62,7 +61,6 @@ export function ReservationDetailScreen() {
     );
   }
 
-  const restaurant = getRestaurantBySlug(reservation.restaurantSlug);
   const reference = getReservationReference(reservation);
   const { isAlternative } = getReservationStatusFlags(reservation);
 
@@ -78,10 +76,7 @@ export function ReservationDetailScreen() {
       ) : null}
       <CustomerChangeRequestCard reservation={reservation} />
       <ReservationReferenceCard reference={reference} />
-      <ReservationRestaurantCard
-        reservation={reservation}
-        heroAccent={restaurant?.heroAccent}
-      />
+      <ReservationRestaurantCard reservation={reservation} />
       <ReservationInformationCard reservation={reservation} />
       <ReservationCheckInCard reservation={reservation} />
       <ReservationDetailActions
