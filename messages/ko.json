@@ -132,6 +132,18 @@
       "fallbackDescription": "직원이 예약 코드를 확인하거나 QR 코드로 체크인할 수 있습니다."
     }
   },
+  "CustomerReservations": {
+    "title": "내 예약", "subtitle": "예정된 식사 일정을 확인하세요.", "heading": "예약", "description": "예정된 일정과 지난 방문 내역을 확인하세요.",
+    "scope": { "upcoming": "예정 ({count})", "history": "이력 ({count})", "all": "전체 ({count})" },
+    "searchPlaceholder": "레스토랑 또는 예약번호 검색", "searchLabel": "예약 검색", "filterLabel": "예약 상태 필터",
+    "filters": { "all": "전체 상태", "action": "응답 필요", "pending": "확인 대기", "confirmed": "예약 확정", "checkedIn": "체크인 또는 착석", "completed": "방문 완료", "closed": "취소, 거절 또는 노쇼" },
+    "status": { "pending": "확인 대기", "action": "응답 필요", "cancelled": "예약 취소", "expired": "요청 만료", "declined": "요청 거절", "checkedIn": "체크인 완료", "seated": "착석 완료", "completed": "방문 완료", "noShow": "노쇼", "confirmed": "예약 확정" },
+    "suggestedTime": "제안 {time}", "guestLocation": "{count}명 · {district}",
+    "loadError": { "title": "예약 목록을 불러올 수 없습니다", "description": "연결 상태를 확인하고 다시 시도해 주세요.", "retry": "다시 시도" },
+    "showing": "{total}개 중 {visible}개 표시", "clearFilters": "필터 초기화", "showMore": "더 보기 ({count}개 남음)",
+    "empty": { "filteredTitle": "조건에 맞는 예약이 없습니다", "historyTitle": "예약 이력이 없습니다", "upcomingTitle": "예정된 예약이 없습니다", "filteredDescription": "다른 레스토랑 이름, 예약번호 또는 상태를 입력해 보세요.", "historyDescription": "완료, 취소 및 지난 예약이 여기에 표시됩니다.", "upcomingDescription": "예약 요청과 확정된 예약이 여기에 표시됩니다." },
+    "exploreRestaurants": "레스토랑 둘러보기"
+  },
   "CustomerReservationDetails": {
     "title": "예약 상세",
     "notFound": { "title": "예약을 찾을 수 없습니다", "description": "예약이 삭제되었거나 이 기기에서 확인할 수 없습니다.", "back": "예약 목록으로" },
@@ -151,6 +163,12 @@
     "reference": { "label": "예약번호", "copy": "예약번호 복사" },
     "information": { "date": "날짜", "timeGuests": "시간 · 인원", "guestCount": "{count}명", "preOrder": "사전 주문", "noPreOrder": "추가하지 않음", "request": "요청사항", "noRequest": "특별 요청 없음" },
     "actions": { "newReservation": "새 예약하기", "changeRequest": "요청 변경", "change": "변경", "cancelRequest": "요청 취소", "cancel": "취소", "changeHint": "정책 확정 후 변경 기능이 추가됩니다", "cancelHint": "이 예약은 온라인으로 취소할 수 없습니다", "cancelTitle": "이 예약을 취소할까요?", "cancelDescription": "식당에서 테이블 보류를 해제합니다. 이 작업은 되돌릴 수 없습니다.", "cancelError": "취소할 수 없습니다. 취소 가능 시간이 지났을 수 있습니다.", "keep": "예약 유지", "confirmCancel": "예약 취소" },
+    "changeRequest": {
+      "pendingTitle": "매장 확인을 기다리고 있습니다",
+      "pendingDescription": "{date} {time}로 변경을 요청했습니다. 매장에서 수락할 때까지 기존 확정 시간이 유지됩니다.",
+      "declinedTitle": "매장에서 새 시간을 거절했습니다",
+      "declinedDescription": "{date} {time} 변경 요청이 거절되었습니다. 기존 확정 예약은 그대로 유지됩니다."
+    },
     "proposal": {
       "title": "새로운 시간 제안", "description": "매장에서 기존 요청 시간을 확정하지 못해 가능한 다른 시간을 제안했습니다.", "requested": "요청 시간", "suggested": "제안 시간", "restaurantMessage": "매장 메시지", "respondBy": "{deadline}까지 응답해 주세요", "accept": "{time} 수락", "chooseAnother": "다른 시간 선택", "declineRequest": "요청 거절", "declineTitle": "이 제안을 거절하시겠습니까?", "declineDescription": "매장에서 제안한 {time} 시간의 확보를 해제합니다. 이후 새 예약을 할 수 있습니다.", "keep": "제안 유지", "decline": "거절", "acceptedTitle": "새 시간 확정", "acceptedMessage": "{time} 수락 내용이 {restaurant}에 전달되었습니다.", "declinedTitle": "요청 거절", "declinedMessage": "{restaurant}에 전달되었습니다.", "responseError": "제안을 업데이트할 수 없습니다. 다시 시도해 주세요."
     }
