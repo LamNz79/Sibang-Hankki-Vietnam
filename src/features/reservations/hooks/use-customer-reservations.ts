@@ -22,6 +22,26 @@ import {
   subscribeToReservations,
 } from "@/features/reservations/data/reservation-storage";
 import { findReservationById } from "@/features/reservations/domain/selectors";
+import { ApiError } from "@/lib/api/client";
+
+const RESERVATION_REFRESH_MS = 15_000;
+
+function isTerminalReservation(reservation: CustomerReservation | undefined) {
+  return Boolean(
+    reservation &&
+      (reservation.status === ReservationStatus.Declined ||
+        reservation.status === ReservationStatus.Expired ||
+        reservation.status === ReservationStatus.Cancelled ||
+        reservation.visitStatus === VisitStatus.Completed ||
+        reservation.visitStatus === VisitStatus.NoShow),
+  );
+}
+
+function isUnauthorized(error: unknown) {
+  return (
+    error instanceof ApiError && (error.status === 401 || error.status === 403)
+  );
+}
 
 /**
  * Subscribes React components to the current customer reservation collection.
@@ -40,12 +60,21 @@ export function useCustomerReservationsState() {
         getCustomerReservation(reservation, signal),
       enabled: Boolean(reservation.managementToken),
       retry: false,
+      refetchInterval: (query: {
+        state: { error: unknown; data?: CustomerReservation };
+      }) =>
+        isUnauthorized(query.state.error) ||
+        isTerminalReservation(query.state.data ?? reservation)
+          ? false
+          : RESERVATION_REFRESH_MS,
     })),
   });
   const accountReservations = useQuery({
     queryKey: ["customer-account-reservations"],
     queryFn: ({ signal }) => getAccountReservations(signal),
     retry: false,
+    refetchInterval: (query) =>
+      isUnauthorized(query.state.error) ? false : RESERVATION_REFRESH_MS,
   });
   const refreshedStored = storedReservations.map(
     (reservation, index) => remoteReservations[index]?.data ?? reservation,
@@ -74,6 +103,11 @@ export function useCustomerReservation(id: string) {
     queryFn: ({ signal }) => getCustomerAccountReservation(reservation!, signal),
     enabled: Boolean(reservation?.accountLinked),
     retry: false,
+    refetchInterval: (query) =>
+      isUnauthorized(query.state.error) ||
+      isTerminalReservation(query.state.data ?? reservation)
+        ? false
+        : RESERVATION_REFRESH_MS,
   });
   return detail.data ?? reservation;
 }

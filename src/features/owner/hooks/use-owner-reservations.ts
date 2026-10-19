@@ -23,6 +23,14 @@ import {
 } from "@/features/owner/data/owner-reservations";
 import { ApiError } from "@/lib/api/client";
 
+const RESERVATION_REFRESH_MS = 15_000;
+
+function reservationRefreshInterval(error: unknown) {
+  return error instanceof ApiError && (error.status === 401 || error.status === 403)
+    ? false
+    : RESERVATION_REFRESH_MS;
+}
+
 function useLoginRedirect(error: Error | null) {
   const router = useRouter();
   useEffect(() => {
@@ -53,6 +61,7 @@ export function useOwnerReservations() {
     queryKey: ["owner-reservations"],
     queryFn: ({ signal }) => getOwnerReservations(signal),
     retry: false,
+    refetchInterval: (query) => reservationRefreshInterval(query.state.error),
   });
   useLoginRedirect(query.error);
   return { ...query, reservations: query.data ?? [] };
@@ -80,6 +89,7 @@ export function useOwnerReservationPage(params: OwnerReservationPageParams) {
     queryFn: ({ signal }) => getOwnerReservationPage(params, signal),
     placeholderData: (previousData) => previousData,
     retry: false,
+    refetchInterval: (query) => reservationRefreshInterval(query.state.error),
   });
   useLoginRedirect(query.error);
   return query;
@@ -91,6 +101,7 @@ export function useOwnerReservation(id: string) {
     queryFn: ({ signal }) => getOwnerReservation(id, signal),
     enabled: Boolean(id),
     retry: false,
+    refetchInterval: (query) => reservationRefreshInterval(query.state.error),
   });
   useLoginRedirect(query.error);
   return { ...query, reservation: query.data };
