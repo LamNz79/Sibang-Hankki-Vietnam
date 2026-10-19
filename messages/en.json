@@ -229,8 +229,7 @@
   "OwnerReservationDetails": {
     "title": "Reservation details",
     "eyebrow": "Selected guest only",
-        "notFound": "Reservation not found.",
-        "updateError": "Could not update the visit status. Refresh and try again.",
+    "notFound": "Reservation not found.",
     "notification": { "title": "Confirmation sent", "message": "{guest} was notified that the table is confirmed." },
     "footer": { "viewArrival": "View {guest}'s arrival", "checkIn": "Check in {guest}", "waiting": "Waiting for guest response", "closed": "Request closed", "confirm": "Confirm reservation" },
     "menu": { "aria": "Reservation actions", "label": "Reservation actions", "contact": "Contact guest", "noShow": "Mark as no-show", "cancel": "Cancel reservation" },
@@ -296,6 +295,7 @@
       "title": "Guest arrival",
       "eyebrow": "Live visit management",
       "notFound": "Reservation not found.",
+      "updateError": "Could not update the visit status. Refresh and try again.",
       "visitStatus": "Visit status",
       "statuses": {
         "expected": "Confirmed",
