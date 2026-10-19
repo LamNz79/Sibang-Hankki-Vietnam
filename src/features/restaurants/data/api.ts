@@ -13,11 +13,12 @@ export type RestaurantSummary = Omit<RestaurantRecord, "slotMatrix" | "menuCateg
 const toSummary = ({ slotMatrix, menuCategories, ...summary }: RestaurantRecord): RestaurantSummary =>
   summary;
 
-export const getRestaurants = () =>
+export const getRestaurants = (signal?: AbortSignal) =>
   withDevFallback(
     () =>
       apiFetch<RestaurantSummary[]>(apiEndpoints.restaurants, {
         cache: "no-store",
+        signal,
       }),
     () => restaurantRecords.map(toSummary),
   );
