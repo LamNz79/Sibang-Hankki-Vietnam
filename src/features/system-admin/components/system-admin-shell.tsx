@@ -19,9 +19,11 @@ import {
   IconLink,
   IconUsers,
 } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { LogoutButton } from "@/features/auth/components/logout-button";
+import { getSessionUser } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
@@ -45,6 +47,13 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations("SystemAdmin.shell");
   const [opened, { toggle, close }] = useDisclosure(false);
+  const session = useQuery({
+    queryKey: ["auth-session"],
+    queryFn: ({ signal }) => getSessionUser(signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
+  const userid = session.data?.userid ?? "SA";
 
   return (
     <AppShell
@@ -71,9 +80,15 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
           </Group>
           <Group gap="sm">
             <LanguageSelect compact radius="sm" />
-            <Avatar color="warmCoral" variant="light" size={34}>
-              SA
-            </Avatar>
+            <Group gap="xs" wrap="nowrap" visibleFrom="sm">
+              <Avatar color="warmCoral" variant="light" size={34}>
+                {userid.slice(0, 2).toUpperCase()}
+              </Avatar>
+              <Stack gap={0}>
+                <Text size="xs" fw={800}>{userid}</Text>
+                <Text size="10px" c={uiColors.textSecondary}>SYSTEM ADMIN</Text>
+              </Stack>
+            </Group>
           </Group>
         </Group>
       </AppShell.Header>
