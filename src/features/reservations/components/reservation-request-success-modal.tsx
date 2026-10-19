@@ -37,6 +37,8 @@ export function ReservationRequestSuccessModal({
   onExploreRestaurants,
 }: ReservationRequestSuccessModalProps) {
   const confirmed = reservation?.status === ReservationStatus.Confirmed;
+  const displayDate = reservation?.changeRequest?.date ?? reservation?.date;
+  const displayTime = reservation?.changeRequest?.time ?? reservation?.time;
 
   return (
     <Modal
@@ -68,7 +70,11 @@ export function ReservationRequestSuccessModal({
                   : "Reservation request sent"}
             </Text>
             <Text size="sm" ta="center" c={uiColors.textSecondary}>
-              {confirmed
+              {isChangeRequest
+                ? confirmed
+                  ? "Your current booking stays confirmed until the restaurant reviews the new time."
+                  : "Your requested time was updated and still needs restaurant confirmation."
+                : confirmed
                 ? "Your table has been confirmed."
                 : "The restaurant will review your request and contact you if anything needs to change."}
             </Text>
@@ -88,19 +94,19 @@ export function ReservationRequestSuccessModal({
                 <Text fw={700} c={uiColors.textPrimary}>
                   {reservation.restaurantName}
                 </Text>
-                <StatusBadge tone={confirmed ? "success" : "warning"}>
-                  {confirmed ? "Confirmed" : "Pending confirmation"}
+                <StatusBadge tone={isChangeRequest ? "warning" : confirmed ? "success" : "warning"}>
+                  {isChangeRequest ? "Change pending" : confirmed ? "Confirmed" : "Pending confirmation"}
                 </StatusBadge>
               </Group>
               <Group gap="xs" wrap="nowrap">
                 <IconCalendarEvent size={17} color={uiColors.brandPrimary} />
                 <Text size="sm">
-                  {dayjs(reservation.date).format("ddd, MMM D, YYYY")}
+                  {dayjs(displayDate).format("ddd, MMM D, YYYY")}
                 </Text>
               </Group>
               <Group gap="xs" wrap="nowrap">
                 <IconClock size={17} color={uiColors.brandPrimary} />
-                <Text size="sm">{reservation.time}</Text>
+                <Text size="sm">{displayTime}</Text>
               </Group>
               <Group gap="xs" wrap="nowrap">
                 <IconUsers size={17} color={uiColors.brandPrimary} />

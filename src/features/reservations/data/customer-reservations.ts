@@ -30,6 +30,7 @@ type CustomerReservationRecord = {
     message?: string | null;
     respondBy?: string | null;
     status: "PENDING" | "ACCEPTED" | "DECLINED";
+    initiator?: "RESTAURANT" | "CUSTOMER";
     createdAt: string;
   } | null;
 };
@@ -78,6 +79,7 @@ export function mergeCustomerReservation(
     alternativeProposal:
       record.status === "ALTERNATIVE_PROPOSED" &&
       record.alternativeProposal?.status === "PENDING" &&
+      record.alternativeProposal.initiator !== "CUSTOMER" &&
       proposalStartsAt
         ? {
             id: record.alternativeProposal.id,
@@ -86,6 +88,19 @@ export function mergeCustomerReservation(
             message: record.alternativeProposal.message ?? undefined,
             respondBy: record.alternativeProposal.respondBy ?? undefined,
             proposedAt: record.alternativeProposal.createdAt,
+          }
+        : undefined,
+    changeRequest:
+      record.alternativeProposal?.initiator === "CUSTOMER" &&
+      (record.alternativeProposal.status === "PENDING" ||
+        record.alternativeProposal.status === "DECLINED") &&
+      proposalStartsAt
+        ? {
+            id: record.alternativeProposal.id,
+            date: proposalStartsAt.format("YYYY-MM-DD"),
+            time: proposalStartsAt.format("HH:mm"),
+            message: record.alternativeProposal.message ?? undefined,
+            status: record.alternativeProposal.status,
           }
         : undefined,
   };
@@ -247,6 +262,42 @@ export async function requestAnotherTime(
       reservation.id,
       proposalId,
     ),
+    {
+      method: "POST",
+      headers: {
+        "X-Reservation-Management-Token": reservation.managementToken,
+      },
+      body,
+    },
+  );
+  return mergeCustomerReservation(reservation, record);
+}
+
+export async function requestReservationChange(
+  reservation: CustomerReservation,
+  requestedDate: string,
+  requestedTime: string,
+  message?: string,
+) {
+  const body = JSON.stringify({ requestedDate, requestedTime, message });
+  if (reservation.accountLinked) {
+    const csrf = await getCsrfToken();
+    const record = await apiFetch<CustomerReservationRecord>(
+      apiEndpoints.requestCustomerAccountReservationChange(reservation.id),
+      {
+        method: "POST",
+        headers: { [csrf.headerName]: csrf.token },
+        body,
+      },
+    );
+    return mergeCustomerReservation(reservation, record);
+  }
+
+  if (!reservation.managementToken) {
+    throw new Error("Reservation management token is unavailable");
+  }
+  const record = await apiFetch<CustomerReservationRecord>(
+    apiEndpoints.requestCustomerReservationChange(reservation.id),
     {
       method: "POST",
       headers: {

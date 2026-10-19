@@ -116,6 +116,7 @@ export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
         <DetailCard title={t("detail.proposal.title")}>
           <DetailRow label={t("detail.proposal.time")} value={dateTime(reservation.alternativeProposal.startsAt)} />
           <DetailRow label={t("detail.proposal.status")} value={reservation.alternativeProposal.status} />
+          <DetailRow label={t("detail.proposal.initiator")} value={reservation.alternativeProposal.initiator} />
           <DetailRow label={t("detail.proposal.respondBy")} value={dateTime(reservation.alternativeProposal.respondBy)} />
           <DetailRow label={t("detail.proposal.message")} value={fallback(reservation.alternativeProposal.message)} />
         </DetailCard>

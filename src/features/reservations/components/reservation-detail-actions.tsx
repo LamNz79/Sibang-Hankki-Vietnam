@@ -29,6 +29,11 @@ export function ReservationDetailActions({
     (reservation.managementToken || reservation.accountLinked) &&
       (isPending || isConfirmed),
   );
+  const canChange = Boolean(
+    (reservation.managementToken || reservation.accountLinked) &&
+      (isPending || isConfirmed) &&
+      reservation.changeRequest?.status !== "PENDING",
+  );
 
   if (isAlternative) return null;
 
@@ -49,11 +54,13 @@ export function ReservationDetailActions({
     <>
       <SimpleGrid cols={2} spacing="sm">
         <Button
+          component={Link}
+          href={`/reservation?restaurant=${reservation.restaurantSlug}&change=${reservation.id}`}
           variant="outline"
           color="gray"
           radius="md"
-          disabled
-          title={t("changeHint")}
+          disabled={!canChange}
+          title={!canChange ? t("changeHint") : undefined}
         >
           {isPending ? t("changeRequest") : t("change")}
         </Button>

@@ -34,6 +34,7 @@ type OwnerReservationRecord = {
     message?: string | null;
     respondBy?: string | null;
     status: "PENDING" | "ACCEPTED" | "DECLINED";
+    initiator?: "RESTAURANT" | "CUSTOMER";
     createdAt: string;
   } | null;
 };
@@ -115,24 +116,39 @@ function initials(name: string) {
 export function toOwnerReservation(record: OwnerReservationRecord): OwnerReservation {
   // ponytail: the owner API does not expose restaurant timezone yet; use the project default until it does.
   const startsAt = dayjs(record.startsAt).tz("Asia/Ho_Chi_Minh");
-  const proposalStartsAt = record.alternativeProposal
-    ? dayjs(record.alternativeProposal.startsAt).tz("Asia/Ho_Chi_Minh")
+  const proposal = record.alternativeProposal;
+  const proposalStartsAt = proposal
+    ? dayjs(proposal.startsAt).tz("Asia/Ho_Chi_Minh")
     : null;
+  const isCustomerProposal = proposal?.initiator === "CUSTOMER";
   const customerResponse: OwnerReservation["customerResponse"] =
-    record.status === "ALTERNATIVE_PROPOSED" &&
-    record.alternativeProposal?.status === "PENDING" &&
+    isCustomerProposal &&
+    proposal?.status === "PENDING" &&
     proposalStartsAt
+      ? {
+          kind: "change-request",
+          requestId: proposal.id,
+          requestedDate: proposalStartsAt.format("YYYY-MM-DD"),
+          requestedTime: proposalStartsAt.format("HH:mm"),
+          message: proposal.message ?? undefined,
+        }
+      : record.status === "ALTERNATIVE_PROPOSED" &&
+          proposal?.status === "PENDING" &&
+          !isCustomerProposal &&
+          proposalStartsAt
       ? {
           kind: "awaiting-customer",
           proposedDate: proposalStartsAt.format("YYYY-MM-DD"),
           proposedTime: proposalStartsAt.format("HH:mm"),
-          message: record.alternativeProposal.message ?? undefined,
+          message: proposal.message ?? undefined,
         }
       : record.status === "CONFIRMED" &&
-          record.alternativeProposal?.status === "ACCEPTED"
+          !isCustomerProposal &&
+          proposal?.status === "ACCEPTED"
         ? { kind: "accepted-alternative" }
         : record.status === "DECLINED" &&
-            record.alternativeProposal?.status === "DECLINED" &&
+            !isCustomerProposal &&
+            proposal?.status === "DECLINED" &&
             proposalStartsAt
           ? {
               kind: "declined-alternative",
@@ -140,7 +156,8 @@ export function toOwnerReservation(record: OwnerReservationRecord): OwnerReserva
               proposedTime: proposalStartsAt.format("HH:mm"),
             }
           : record.status === "PENDING" &&
-              record.alternativeProposal?.status === "DECLINED"
+              !isCustomerProposal &&
+              proposal?.status === "DECLINED"
             ? { kind: "requested-another-time" }
           : undefined;
   return {
@@ -241,6 +258,16 @@ export function proposeAlternativeOwnerReservation(
   return postOwnerReservation(
     apiEndpoints.ownerReservationProposals(id),
     proposal,
+  );
+}
+
+export function respondToOwnerReservationChangeRequest(
+  id: string,
+  requestId: string,
+  action: "accept" | "decline",
+) {
+  return postOwnerReservation(
+    apiEndpoints.respondToOwnerReservationChangeRequest(id, requestId, action),
   );
 }
 

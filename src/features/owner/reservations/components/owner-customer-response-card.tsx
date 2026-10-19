@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
+import { Alert, Button, Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarClock,
   IconCircleCheck,
@@ -68,6 +68,19 @@ function useResponseContent(
     };
   }
 
+  if (response.kind === "change-request") {
+    return {
+      title: t("changeTitle"),
+      description: t("changeDescription", {
+        date: formatDate(response.requestedDate),
+        time: response.requestedTime,
+      }),
+      color: "blue",
+      background: uiColors.statusInfoSurface,
+      icon: IconCalendarClock,
+    };
+  }
+
   return {
     title: t("waitingTitle"),
     description: t("waitingDescription", {
@@ -83,11 +96,20 @@ function useResponseContent(
 function OwnerCustomerResponseContent({
   reservation,
   response,
+  onAcceptChange,
+  onDeclineChange,
+  loading,
+  error,
 }: {
   reservation: OwnerReservation;
   response: OwnerCustomerResponse;
+  onAcceptChange?: () => void;
+  onDeclineChange?: () => void;
+  loading?: boolean;
+  error?: boolean;
 }) {
   const content = useResponseContent(response, reservation);
+  const t = useTranslations("OwnerReservationDetails.customerResponse");
   const ResponseIcon = content.icon;
 
   return (
@@ -116,6 +138,28 @@ function OwnerCustomerResponseContent({
           <Text size="xs" c={uiColors.textSecondary}>
             {content.description}
           </Text>
+          {response.kind === "change-request" && response.message ? (
+            <Text size="xs" mt={4} c={uiColors.textPrimary}>
+              {response.message}
+            </Text>
+          ) : null}
+          {response.kind === "change-request" ? (
+            <>
+              {error ? <Alert color="red" title={t("changeError")} mt="xs" /> : null}
+              <Group grow mt="sm">
+                <Button
+                  variant="default"
+                  disabled={loading}
+                  onClick={onDeclineChange}
+                >
+                  {t("declineChange")}
+                </Button>
+                <Button loading={loading} onClick={onAcceptChange}>
+                  {t("acceptChange")}
+                </Button>
+              </Group>
+            </>
+          ) : null}
         </Stack>
       </Group>
     </Card>
@@ -124,13 +168,37 @@ function OwnerCustomerResponseContent({
 
 export function OwnerCustomerResponseCard({
   reservation,
+  onAcceptChange,
+  onDeclineChange,
+  loading,
+  error,
 }: {
   reservation: OwnerReservation;
+  onAcceptChange?: (requestId: string) => void;
+  onDeclineChange?: (requestId: string) => void;
+  loading?: boolean;
+  error?: boolean;
 }) {
-  return reservation.customerResponse ? (
+  const response = reservation.customerResponse;
+  if (!response) return null;
+  const changeRequest = response.kind === "change-request" ? response : null;
+
+  return (
     <OwnerCustomerResponseContent
       reservation={reservation}
-      response={reservation.customerResponse}
+      response={response}
+      onAcceptChange={
+        changeRequest
+          ? () => onAcceptChange?.(changeRequest.requestId)
+          : undefined
+      }
+      onDeclineChange={
+        changeRequest
+          ? () => onDeclineChange?.(changeRequest.requestId)
+          : undefined
+      }
+      loading={loading}
+      error={error}
     />
-  ) : null;
+  );
 }

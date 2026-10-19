@@ -17,6 +17,8 @@ export const apiEndpoints = {
     `/api/customer/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
   requestAnotherTimeForCustomerReservation: (id: string, proposalId: string) =>
     `/api/customer/reservations/${seg(id)}/proposals/${seg(proposalId)}/request-another-time`,
+  requestCustomerReservationChange: (id: string) =>
+    `/api/customer/reservations/${seg(id)}/change-requests`,
   customerReservationCheckInToken: (id: string) =>
     `/api/customer/reservations/${seg(id)}/check-in-token`,
   customerAccountReservations: "/api/customer/account/reservations",
@@ -32,6 +34,8 @@ export const apiEndpoints = {
     `/api/customer/account/reservations/${seg(id)}/proposals/${seg(proposalId)}/${action}`,
   requestAnotherTimeForCustomerAccountReservation: (id: string, proposalId: string) =>
     `/api/customer/account/reservations/${seg(id)}/proposals/${seg(proposalId)}/request-another-time`,
+  requestCustomerAccountReservationChange: (id: string) =>
+    `/api/customer/account/reservations/${seg(id)}/change-requests`,
   customerAccountReservationCheckInToken: (id: string) =>
     `/api/customer/account/reservations/${seg(id)}/check-in-token`,
   authCsrf: "/api/auth/csrf",
@@ -56,6 +60,12 @@ export const apiEndpoints = {
   ownerReservation: (id: string) => `/api/owner/reservations/${seg(id)}`,
   ownerReservationProposals: (id: string) =>
     `/api/owner/reservations/${seg(id)}/proposals`,
+  respondToOwnerReservationChangeRequest: (
+    id: string,
+    requestId: string,
+    action: "accept" | "decline",
+  ) =>
+    `/api/owner/reservations/${seg(id)}/change-requests/${seg(requestId)}/${action}`,
   confirmOwnerReservation: (id: string) =>
     `/api/owner/reservations/${seg(id)}/confirm`,
   declineOwnerReservation: (id: string) =>

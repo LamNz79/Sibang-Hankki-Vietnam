@@ -11,6 +11,7 @@ import {
   markNoShowOwnerReservation,
   manuallyCheckInOwnerReservation,
   proposeAlternativeOwnerReservation,
+  respondToOwnerReservationChangeRequest,
   seatOwnerReservation,
   toOwnerReservation,
 } from "./owner-reservations";
@@ -90,6 +91,62 @@ describe("owner reservation API mapping", () => {
       visitStatus: "EXPECTED",
       alternativeProposal: declinedProposal,
     }).customerResponse).toBeUndefined();
+  });
+
+  it("maps and accepts a customer change request", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const changeRecord = {
+      ...pendingRecord,
+      status: "CONFIRMED" as const,
+      visitStatus: "EXPECTED" as const,
+      alternativeProposal: {
+        id: "change-id",
+        startsAt: "2026-10-17T04:30:00Z",
+        message: "Later please",
+        respondBy: null,
+        status: "PENDING" as const,
+        initiator: "CUSTOMER" as const,
+        createdAt: "2026-10-16T00:00:00Z",
+      },
+    };
+    expect(toOwnerReservation(changeRecord).customerResponse).toEqual({
+      kind: "change-request",
+      requestId: "change-id",
+      requestedDate: "2026-10-17",
+      requestedTime: "11:30",
+      message: "Later please",
+    });
+
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json({
+        ...changeRecord,
+        startsAt: changeRecord.alternativeProposal.startsAt,
+        alternativeProposal: {
+          ...changeRecord.alternativeProposal,
+          status: "ACCEPTED",
+        },
+      }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const accepted = await respondToOwnerReservationChangeRequest(
+      "reservation-id",
+      "change-id",
+      "accept",
+    );
+    expect(accepted.customerResponse).toBeUndefined();
+    expect(fetchMock.mock.calls[1]).toEqual([
+      "/api/owner/reservations/reservation-id/change-requests/change-id/accept",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({ "X-CSRF-TOKEN": "csrf-token" }),
+      }),
+    ]);
   });
 
   it("requests a filtered owner reservation page", async () => {

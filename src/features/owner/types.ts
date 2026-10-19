@@ -28,6 +28,13 @@ export type OwnerCustomerResponse =
       kind: "requested-another-time";
       previousDate?: string;
       previousTime?: string;
+    }
+  | {
+      kind: "change-request";
+      requestId: string;
+      requestedDate: string;
+      requestedTime: string;
+      message?: string;
     };
 
 /** Last operational response made by restaurant staff for a request. */

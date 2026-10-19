@@ -309,7 +309,13 @@ export function OwnerReservationDetailScreen() {
           status={isExpected ? displayStatus : reservation.visitStatus}
         />
 
-        <OwnerCustomerResponseCard reservation={reservation} />
+        <OwnerCustomerResponseCard
+          reservation={reservation}
+          onAcceptChange={(requestId) => void actions.acceptChange(requestId)}
+          onDeclineChange={(requestId) => void actions.declineChange(requestId)}
+          loading={actions.isPending}
+          error={actions.isError}
+        />
 
         <Card
           radius="lg"
