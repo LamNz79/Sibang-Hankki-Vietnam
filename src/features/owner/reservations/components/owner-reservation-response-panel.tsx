@@ -27,9 +27,6 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { StatusBadge } from "@/components/ui";
 import { getOwnerSettings } from "@/features/owner/settings/data/owner-settings";
-import {
-  reopenOwnerReservation,
-} from "@/features/owner/data/owner-reservation-storage";
 import type {
   OwnerRequestResponse,
   OwnerReservation,
@@ -306,15 +303,7 @@ export function OwnerReservationResponsePanel({
               >
                 {t("noTable")}
               </Button>
-            ) : (
-              <Button
-                variant="default"
-                disabled={readOnly}
-                onClick={() => reopenOwnerReservation(reservation.id)}
-              >
-                {t("reopen")}
-              </Button>
-            )}
+            ) : null}
           </Group>
         </Stack>
       </Card>
