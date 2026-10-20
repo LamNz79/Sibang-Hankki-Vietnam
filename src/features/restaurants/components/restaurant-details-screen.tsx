@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { ActionIcon, Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCalendarTime, IconClock, IconMapPin, IconPhoto } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
+import { IconCalendarTime, IconClock, IconHeart, IconMapPin, IconPhoto } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
 import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
+import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
 import { uiColors } from "@/theme";
 
@@ -21,6 +23,8 @@ export function RestaurantDetailsScreen({
   const t = useTranslations("RestaurantDetails");
   const availabilityT = useTranslations("RestaurantAvailability");
   const [galleryOpened, gallery] = useDisclosure(false);
+  const saved = useSavedRestaurants();
+  const isSaved = saved.isSaved(restaurant.slug);
   const galleryImages = restaurant.galleryImages?.length
     ? restaurant.galleryImages
     : [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }];
@@ -40,6 +44,26 @@ export function RestaurantDetailsScreen({
       subtitle={t("subtitle")}
       backHref="/restaurants"
       bottomNav={null}
+      headerAction={
+        <Tooltip label={t(isSaved ? "unsave" : "save")}>
+          <ActionIcon
+            variant={isSaved ? "filled" : "light"}
+            color="warmCoral"
+            radius="xl"
+            size={40}
+            aria-label={t(isSaved ? "unsave" : "save")}
+            onClick={() => {
+              saved.toggle(restaurant.slug);
+              notifications.show({
+                color: "teal",
+                message: t(isSaved ? "removed" : "saved"),
+              });
+            }}
+          >
+            <IconHeart size={20} fill={isSaved ? "currentColor" : "none"} />
+          </ActionIcon>
+        </Tooltip>
+      }
       footerContent={
         <Link href={`/reservation?restaurant=${restaurant.slug}`} style={{ textDecoration: "none" }}>
           <Button fullWidth radius="md" size="lg" color="warmCoral">
