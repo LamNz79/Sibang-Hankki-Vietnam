@@ -53,6 +53,7 @@ import { useCustomerReservations } from "@/features/reservations/hooks/use-custo
 import { VisitStatus } from "@/features/reservations/types";
 import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
+import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 
 /** Configuration accepted by a row in the customer account menu. */
 type AccountMenuItemProps = {
@@ -132,6 +133,7 @@ export function AccountScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const reservations = useCustomerReservations();
+  const savedRestaurants = useSavedRestaurants();
   const [editorOpened, editor] = useDisclosure(false);
   const [draft, setDraft] = useState<CustomerProfileUpdate>({
     name: "",
@@ -291,11 +293,12 @@ export function AccountScreen() {
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem
+          href="/saved-restaurants"
           icon={IconHeart}
           iconBackground={uiColors.accentVipSurface}
           iconColor={uiColors.accentVipText}
           label={t("savedRestaurants")}
-          meta={t("comingSoon")}
+          meta={t("savedCount", { count: savedRestaurants.slugs.length })}
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem

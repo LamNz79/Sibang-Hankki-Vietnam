@@ -70,8 +70,9 @@
     "empty": { "locationTitle": "No restaurants in this area yet", "locationDescription": "There are no active restaurants available in {location}. Choose another location to keep exploring.", "changeLocation": "Choose another location", "filtersTitle": "No matching restaurants", "filtersDescription": "Try removing your search or filters to see more restaurants.", "clearFilters": "Clear search and filters" }
   },
   "RestaurantDetails": {
-    "title": "Restaurant details", "subtitle": "Restaurant profile", "selectDateTime": "Select date & time", "viewPhotos": "View {count, plural, one {# photo} other {# photos}}", "photosTitle": "{name} photos", "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.", "menu": "Menu"
+    "title": "Restaurant details", "subtitle": "Restaurant profile", "selectDateTime": "Select date & time", "viewPhotos": "View {count, plural, one {# photo} other {# photos}}", "photosTitle": "{name} photos", "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.", "menu": "Menu", "save": "Save restaurant", "unsave": "Remove from saved", "saved": "Restaurant saved.", "removed": "Restaurant removed from saved."
   },
+  "SavedRestaurants": { "title": "Saved restaurants", "subtitle": "Your personal shortlist", "count": "{count, plural, one {# saved restaurant} other {# saved restaurants}}", "emptyTitle": "No saved restaurants yet", "emptyDescription": "Tap the heart on a restaurant page to keep it here for later.", "explore": "Explore restaurants", "viewDetails": "View details", "remove": "Remove {name} from saved" },
   "BookingTime": {
     "title": "Time", "emptyTitle": "No online times available", "emptyDescription": "Try another date or guest count. Online availability depends on the restaurant's capacity settings."
   },
@@ -105,6 +106,7 @@
     "reservations": "My reservations",
     "upcomingCount": "{count, plural, one {# upcoming} other {# upcoming}}",
     "savedRestaurants": "Saved restaurants",
+    "savedCount": "{count, plural, one {# saved} other {# saved}}",
     "diningMap": "My dining map",
     "visitHistory": "Visit history",
     "pastCount": "{count, plural, one {# past} other {# past}}",
