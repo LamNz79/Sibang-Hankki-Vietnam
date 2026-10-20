@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Button, Card, Stack, Text } from "@mantine/core";
+import { Button, Card, Center, Loader, Stack, Text } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/features/reservations/domain/selectors";
 import {
   useCancelCustomerReservation,
-  useCustomerReservation,
+  useCustomerReservationState,
 } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 import { CustomerAlternativeProposalCard } from "./customer-alternative-proposal-card";
@@ -27,8 +27,22 @@ import { ReservationStatusSummary } from "./reservation-status-summary";
 export function ReservationDetailScreen() {
   const t = useTranslations("CustomerReservationDetails");
   const params = useParams<{ id: string }>();
-  const reservation = useCustomerReservation(params.id);
+  const { reservation, isLoading } = useCustomerReservationState(params.id);
   const cancellation = useCancelCustomerReservation(reservation);
+
+  if (isLoading) {
+    return (
+      <MobileShell
+        title={t("title")}
+        backHref="/reservations"
+        bottomNav={<BottomNav activePath="/reservations" />}
+      >
+        <Center py="xl">
+          <Loader color="warmCoral" />
+        </Center>
+      </MobileShell>
+    );
+  }
 
   if (!reservation) {
     return (
