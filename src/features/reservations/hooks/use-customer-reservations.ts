@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getRestaurants } from "@/features/restaurants/data/api";
 import {
   cancelCustomerReservation,
   getAccountReservations,
@@ -76,6 +77,12 @@ export function useCustomerReservationsState() {
     refetchInterval: (query) =>
       isUnauthorized(query.state.error) ? false : RESERVATION_REFRESH_MS,
   });
+  const restaurants = useQuery({
+    queryKey: ["restaurants"],
+    queryFn: ({ signal }) => getRestaurants(signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
   const refreshedStored = storedReservations.map(
     (reservation, index) => remoteReservations[index]?.data ?? reservation,
   );
@@ -84,6 +91,7 @@ export function useCustomerReservationsState() {
     reservations: selectVisibleReservations(
       refreshedStored,
       accountReservations.data,
+      restaurants.data,
     ),
     isLoading: accountReservations.isPending,
     isError: accountReservations.isError,
