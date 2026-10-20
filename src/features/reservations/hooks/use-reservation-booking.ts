@@ -15,6 +15,7 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAvailability } from "@/features/reservations/data/availability";
 import { createReservation } from "@/features/reservations/data/create-reservation";
+import { buildPreOrderNote } from "@/features/reservations/domain/pre-order";
 import {
   useCustomerReservation,
   useRequestAnotherTime,
@@ -49,6 +50,9 @@ export function useReservationBooking({
   const [customerEmail, setCustomerEmail] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
   const [preOrderNote, setPreOrderNote] = useState("");
+  const [preOrderQuantities, setPreOrderQuantities] = useState<
+    Record<string, number>
+  >({});
   const [changeMessage, setChangeMessage] = useState("");
   const [submittedReservation, setSubmittedReservation] =
     useState<CustomerReservation | null>(null);
@@ -70,6 +74,12 @@ export function useReservationBooking({
   const availableTimes = availability.isFetching || availability.isError
     ? [] : availability.data?.slots ?? [];
   const validEmail = !customerEmail || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail);
+  const submittedPreOrderNote = buildPreOrderNote(
+    restaurant.menuCategories,
+    preOrderQuantities,
+    preOrderNote,
+  );
+  const preOrderTooLong = submittedPreOrderNote.length > 1000;
   const createMutation = useMutation({
     mutationFn: createReservation,
     onSuccess: (response) => {
@@ -88,7 +98,7 @@ export function useReservationBooking({
         time: response.time,
         guests: response.partySize,
         specialRequest: specialRequest.trim() || undefined,
-        preOrder: preOrderNote.trim() || undefined,
+        preOrder: submittedPreOrderNote || undefined,
         status:
           response.status === "CONFIRMED"
             ? ReservationStatus.Confirmed
@@ -110,6 +120,7 @@ export function useReservationBooking({
       customerName.trim() &&
       customerPhone.trim() &&
       validEmail &&
+      !preOrderTooLong &&
       !createMutation.isPending,
   );
   const canSubmitChange = Boolean(
@@ -199,7 +210,7 @@ export function useReservationBooking({
       customerPhone: customerPhone.trim(),
       customerEmail: customerEmail.trim() || undefined,
       specialRequest: specialRequest.trim() || undefined,
-      preOrderNote: preOrderNote.trim() || undefined,
+      preOrderNote: submittedPreOrderNote || undefined,
     });
   };
 
@@ -239,6 +250,17 @@ export function useReservationBooking({
       setPreOrderNote(value);
       resetSubmission();
     },
+    preOrderQuantities,
+    setPreOrderQuantity: (itemId: string, quantity: number) => {
+      setPreOrderQuantities((current) => {
+        const next = { ...current };
+        if (quantity > 0) next[itemId] = Math.min(quantity, 20);
+        else delete next[itemId];
+        return next;
+      });
+      resetSubmission();
+    },
+    preOrderTooLong,
     changeMessage,
     setChangeMessage: (value: string) => {
       setChangeMessage(value);
