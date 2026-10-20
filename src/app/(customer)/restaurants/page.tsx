@@ -3,8 +3,21 @@ import { getRestaurants } from "@/features/restaurants/data/api";
 import { getRestaurantLocalDate } from "@/features/restaurants/domain/live-availability";
 import { getAvailability } from "@/features/reservations/data/availability";
 
-export default async function CustomerRestaurantsPage() {
-  const restaurants = await getRestaurants();
+function positiveInteger(value: string | string[] | undefined) {
+  const parsed = Number(Array.isArray(value) ? value[0] : value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
+}
+
+export default async function CustomerRestaurantsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const query = await searchParams;
+  const restaurants = await getRestaurants({
+    provinceCode: positiveInteger(query.provinceCode),
+    wardCode: positiveInteger(query.wardCode),
+  });
   const today = getRestaurantLocalDate();
   const availability = Object.fromEntries(
     await Promise.all(

@@ -91,7 +91,7 @@ export function useCustomerReservationsState() {
   });
   const restaurants = useQuery({
     queryKey: ["restaurants"],
-    queryFn: ({ signal }) => getRestaurants(signal),
+    queryFn: ({ signal }) => getRestaurants({}, signal),
     retry: false,
     staleTime: 5 * 60_000,
   });

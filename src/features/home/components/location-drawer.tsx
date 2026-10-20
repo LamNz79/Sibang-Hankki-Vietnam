@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 import {
   getLocationProvinces,
   getLocationWards,
+  type LocationSelection,
 } from "@/features/locations/data/locations";
 import { uiColors } from "@/theme";
 
@@ -40,8 +41,8 @@ function normalizeSearch(value: string) {
 type LocationDrawerProps = {
   opened: boolean;
   onClose: () => void;
-  selectedLocation: string;
-  onSelectLocation: (location: string) => void;
+  selectedLocation: LocationSelection;
+  onSelectLocation: (location: LocationSelection) => void;
 };
 
 export function LocationDrawer({
@@ -154,7 +155,11 @@ export function LocationDrawer({
                     color="warmCoral"
                     radius="xl"
                     size="xs"
-                    onClick={() => onSelectLocation(activeProvince.name)}
+                    onClick={() => onSelectLocation({
+                      label: activeProvince.name,
+                      provinceCode: activeProvince.code,
+                      wardCode: null,
+                    })}
                   >
                     {t("selectWholeProvince")}
                   </Button>
@@ -184,11 +189,15 @@ export function LocationDrawer({
               >
                 <Stack gap={8} pr="xs">
                   {filteredWards.map((ward) => {
-                    const active = selectedLocation === ward.name;
+                    const active = selectedLocation.wardCode === ward.code;
                     return (
                       <UnstyledButton
                         key={ward.code}
-                        onClick={() => onSelectLocation(ward.name)}
+                        onClick={() => onSelectLocation({
+                          label: ward.name,
+                          provinceCode: ward.provinceCode,
+                          wardCode: ward.code,
+                        })}
                         style={{ display: "block", width: "100%" }}
                       >
                         <Card
