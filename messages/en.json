@@ -52,7 +52,7 @@
     "sort": { "recommended": "Recommended", "rating": "Top rated", "earliest": "Earliest available" },
     "cuisines": { "western": "Western", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese" },
     "prices": { "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
-    "location": { "title": "Choose location", "useCurrent": "Use current location", "hint": "Better restaurant suggestions by area", "popular": "Popular areas", "recent": "Recent locations", "cities": "Cities", "areas": "Areas" }
+    "location": { "title": "Choose location", "defaultLocation": "Ho Chi Minh City", "hint": "Choose a province or city, then select a ward or commune.", "provinces": "Province / city", "wards": "Ward / commune", "selectWholeProvince": "Choose all", "loadError": "Could not load the location list.", "retry": "Try again", "noWards": "No wards or communes found." }
   },
   "RestaurantAvailability": {
     "unknown": "Check times in the booking step", "contact": "Contact the restaurant for this party size", "unavailable": "No online times for {count} guests today", "available": "Available today from {time}", "availableConfirmation": "Available today from {time} · confirmation required"
