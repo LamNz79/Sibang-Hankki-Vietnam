@@ -52,7 +52,7 @@
     "sort": { "recommended": "Đề xuất", "rating": "Đánh giá cao", "earliest": "Còn chỗ sớm nhất" },
     "cuisines": { "western": "Món Âu", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản" },
     "prices": { "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
-    "location": { "title": "Chọn khu vực", "defaultLocation": "Thành phố Hồ Chí Minh", "hint": "Chọn tỉnh hoặc thành phố, sau đó chọn phường, xã hoặc đặc khu.", "provinces": "Tỉnh / Thành phố", "wards": "Phường / Xã / Đặc khu", "selectWholeProvince": "Chọn toàn bộ", "loadError": "Không thể tải danh sách địa giới.", "retry": "Thử lại", "noWards": "Không tìm thấy phường, xã hoặc đặc khu." }
+    "location": { "title": "Chọn khu vực", "defaultLocation": "Thành phố Hồ Chí Minh", "hint": "Chọn tỉnh hoặc thành phố, sau đó chọn phường, xã hoặc đặc khu.", "provinces": "Tỉnh / Thành phố", "wards": "Phường / Xã / Đặc khu", "searchProvince": "Tìm tỉnh hoặc thành phố", "searchWard": "Tìm phường, xã hoặc đặc khu", "selectWholeProvince": "Chọn toàn bộ", "loadError": "Không thể tải danh sách địa giới.", "retry": "Thử lại", "nothingFound": "Không tìm thấy khu vực phù hợp.", "noWards": "Không tìm thấy phường, xã hoặc đặc khu." }
   },
   "RestaurantAvailability": {
     "unknown": "Kiểm tra giờ ở bước đặt bàn", "contact": "Liên hệ nhà hàng cho số lượng khách này", "unavailable": "Hôm nay không còn giờ trực tuyến cho {count} khách", "available": "Hôm nay còn bàn từ {time}", "availableConfirmation": "Hôm nay còn bàn từ {time} · cần nhà hàng xác nhận"

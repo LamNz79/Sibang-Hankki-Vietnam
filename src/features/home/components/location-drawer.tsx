@@ -6,15 +6,16 @@ import {
   Card,
   Center,
   Drawer,
-  Grid,
   Group,
   Loader,
   ScrollArea,
+  Select,
   Stack,
   Text,
+  TextInput,
   UnstyledButton,
 } from "@mantine/core";
-import { IconCheck, IconRefresh } from "@tabler/icons-react";
+import { IconCheck, IconMapPin, IconRefresh, IconSearch } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -25,6 +26,16 @@ import {
 import { uiColors } from "@/theme";
 
 const HO_CHI_MINH_CITY_CODE = 79;
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .trim();
+}
 
 type LocationDrawerProps = {
   opened: boolean;
@@ -40,9 +51,10 @@ export function LocationDrawer({
   onSelectLocation,
 }: LocationDrawerProps) {
   const t = useTranslations("Home.location");
-  const [activeProvinceCode, setActiveProvinceCode] = useState<number | null>(
+  const [activeProvinceCode, setActiveProvinceCode] = useState<number>(
     HO_CHI_MINH_CITY_CODE,
   );
+  const [wardSearch, setWardSearch] = useState("");
   const provincesQuery = useQuery({
     queryKey: ["location-provinces"],
     queryFn: ({ signal }) => getLocationProvinces(signal),
@@ -52,9 +64,8 @@ export function LocationDrawer({
   });
   const wardsQuery = useQuery({
     queryKey: ["location-wards", activeProvinceCode],
-    queryFn: ({ signal }) =>
-      getLocationWards(activeProvinceCode as number, signal),
-    enabled: opened && activeProvinceCode !== null,
+    queryFn: ({ signal }) => getLocationWards(activeProvinceCode, signal),
+    enabled: opened,
     staleTime: 24 * 60 * 60 * 1000,
     retry: false,
   });
@@ -62,6 +73,14 @@ export function LocationDrawer({
   const activeProvince = provincesQuery.data?.find(
     (province) => province.code === activeProvinceCode,
   );
+  const normalizedWardSearch = normalizeSearch(wardSearch);
+  const wards = (wardsQuery.data ?? []).filter(
+    (ward) => ward.provinceCode === activeProvinceCode,
+  );
+  const filteredWards = normalizedWardSearch
+    ? wards.filter((ward) =>
+        normalizeSearch(ward.name).includes(normalizedWardSearch))
+    : wards;
 
   return (
     <Drawer
@@ -89,139 +108,147 @@ export function LocationDrawer({
         <Text size="sm" c={uiColors.textSecondary}>{t("hint")}</Text>
 
         {provincesQuery.isError ? (
-          <Alert color="red" title={t("loadError")}>
-            <Button
-              mt="sm"
-              size="xs"
-              variant="light"
-              color="red"
-              leftSection={<IconRefresh size={15} />}
-              onClick={() => provincesQuery.refetch()}
-            >
-              {t("retry")}
-            </Button>
-          </Alert>
+          <LoadError label={t("loadError")} retry={t("retry")} onRetry={() => provincesQuery.refetch()} />
         ) : provincesQuery.isLoading ? (
-          <Center h={280}><Loader /></Center>
+          <Center h={320}><Loader /></Center>
         ) : (
-          <Grid align="stretch">
-            <Grid.Col span={5} style={{ display: "flex" }}>
-              <Stack gap={8} style={{ flex: 1, minWidth: 0 }}>
-                <Text fw={700} c={uiColors.textPrimary}>{t("provinces")}</Text>
-                <ScrollArea h={360} offsetScrollbars="y" scrollbarSize={6}>
-                  <Stack gap={8} pr="xs">
-                    {(provincesQuery.data ?? []).map((province) => {
-                      const active = province.code === activeProvinceCode;
-                      return (
-                        <UnstyledButton
-                          key={province.code}
-                          onClick={() => setActiveProvinceCode(province.code)}
-                          style={{ display: "block", width: "100%" }}
+          <>
+            <Select
+              label={t("provinces")}
+              placeholder={t("searchProvince")}
+              leftSection={<IconMapPin size={17} />}
+              value={String(activeProvinceCode)}
+              data={(provincesQuery.data ?? []).map((province) => ({
+                value: String(province.code),
+                label: province.name,
+              }))}
+              onChange={(value) => {
+                if (!value) return;
+                setActiveProvinceCode(Number(value));
+                setWardSearch("");
+              }}
+              searchable
+              allowDeselect={false}
+              nothingFoundMessage={t("nothingFound")}
+              comboboxProps={{ withinPortal: true }}
+              size="md"
+              radius="md"
+            />
+
+            <Card
+              radius="lg"
+              p="md"
+              style={{
+                border: `1px solid ${uiColors.border}`,
+                background: uiColors.surfaceAlt,
+              }}
+            >
+              <Group justify="space-between" align="center" gap="sm" wrap="nowrap">
+                <Stack gap={2} style={{ minWidth: 0 }}>
+                  <Text size="xs" c={uiColors.textSecondary}>{t("wards")}</Text>
+                  <Text fw={700} truncate>{activeProvince?.name}</Text>
+                </Stack>
+                {activeProvince ? (
+                  <Button
+                    variant="light"
+                    color="warmCoral"
+                    radius="xl"
+                    size="xs"
+                    onClick={() => onSelectLocation(activeProvince.name)}
+                  >
+                    {t("selectWholeProvince")}
+                  </Button>
+                ) : null}
+              </Group>
+            </Card>
+
+            <TextInput
+              value={wardSearch}
+              onChange={(event) => setWardSearch(event.currentTarget.value)}
+              placeholder={t("searchWard")}
+              aria-label={t("searchWard")}
+              leftSection={<IconSearch size={18} />}
+              size="md"
+              radius="md"
+            />
+
+            {wardsQuery.isError ? (
+              <LoadError label={t("loadError")} retry={t("retry")} onRetry={() => wardsQuery.refetch()} />
+            ) : wardsQuery.isFetching ? (
+              <Center h={280}><Loader size="sm" /></Center>
+            ) : (
+              <ScrollArea h={300} offsetScrollbars="y" scrollbarSize={6}>
+                <Stack gap={8} pr="xs">
+                  {filteredWards.map((ward) => {
+                    const active = selectedLocation === ward.name;
+                    return (
+                      <UnstyledButton
+                        key={ward.code}
+                        onClick={() => onSelectLocation(ward.name)}
+                        style={{ display: "block", width: "100%" }}
+                      >
+                        <Card
+                          p="sm"
+                          radius="md"
+                          style={{
+                            background: active
+                              ? uiColors.brandPrimarySoft
+                              : uiColors.surface,
+                            border: active
+                              ? `1px solid ${uiColors.brandPrimary}`
+                              : `1px solid ${uiColors.borderStrong}`,
+                          }}
                         >
-                          <Card
-                            p="sm"
-                            radius="md"
-                            style={{
-                              background: active
-                                ? uiColors.brandPrimarySoft
-                                : uiColors.surfaceAlt,
-                              border: active
-                                ? `1px solid ${uiColors.brandPrimary}`
-                                : `1px solid ${uiColors.borderStrong}`,
-                            }}
-                          >
-                            <Text size="sm" fw={active ? 700 : 500}>
-                              {province.name}
-                            </Text>
-                          </Card>
-                        </UnstyledButton>
-                      );
-                    })}
-                  </Stack>
-                </ScrollArea>
-              </Stack>
-            </Grid.Col>
-
-            <Grid.Col span={7}>
-              <Stack gap={8}>
-                <Group justify="space-between" gap="xs" wrap="nowrap">
-                  <Text fw={700} c={uiColors.textPrimary}>{t("wards")}</Text>
-                  {activeProvince ? (
-                    <UnstyledButton onClick={() => onSelectLocation(activeProvince.name)}>
-                      <Text size="xs" c={uiColors.brandPrimary} fw={700}>
-                        {t("selectWholeProvince")}
-                      </Text>
-                    </UnstyledButton>
+                          <Group justify="space-between" gap="xs" wrap="nowrap">
+                            <Text size="sm" fw={active ? 700 : 500}>{ward.name}</Text>
+                            {active ? (
+                              <IconCheck
+                                size={16}
+                                color={uiColors.brandPrimary}
+                                style={{ flexShrink: 0 }}
+                              />
+                            ) : null}
+                          </Group>
+                        </Card>
+                      </UnstyledButton>
+                    );
+                  })}
+                  {!filteredWards.length ? (
+                    <Text size="sm" c={uiColors.textSecondary} ta="center" py="xl">
+                      {wardSearch ? t("nothingFound") : t("noWards")}
+                    </Text>
                   ) : null}
-                </Group>
-
-                {wardsQuery.isError ? (
-                  <Alert color="red" title={t("loadError")}>
-                    <Button
-                      mt="sm"
-                      size="xs"
-                      variant="light"
-                      color="red"
-                      leftSection={<IconRefresh size={15} />}
-                      onClick={() => wardsQuery.refetch()}
-                    >
-                      {t("retry")}
-                    </Button>
-                  </Alert>
-                ) : wardsQuery.isLoading ? (
-                  <Center h={360}><Loader size="sm" /></Center>
-                ) : (
-                  <ScrollArea h={360} offsetScrollbars="y" scrollbarSize={6}>
-                    <Stack gap={8} pr="xs">
-                      {(wardsQuery.data ?? []).map((ward) => {
-                        const active = selectedLocation === ward.name;
-                        return (
-                          <UnstyledButton
-                            key={ward.code}
-                            onClick={() => onSelectLocation(ward.name)}
-                            style={{ display: "block", width: "100%" }}
-                          >
-                            <Card
-                              p="sm"
-                              radius="md"
-                              style={{
-                                background: active
-                                  ? uiColors.brandPrimarySoft
-                                  : uiColors.surface,
-                                border: active
-                                  ? `1px solid ${uiColors.brandPrimary}`
-                                  : `1px solid ${uiColors.borderStrong}`,
-                              }}
-                            >
-                              <Group justify="space-between" gap="xs" wrap="nowrap">
-                                <Text size="sm" fw={active ? 700 : 500}>
-                                  {ward.name}
-                                </Text>
-                                {active ? (
-                                  <IconCheck
-                                    size={16}
-                                    color={uiColors.brandPrimary}
-                                    style={{ flexShrink: 0 }}
-                                  />
-                                ) : null}
-                              </Group>
-                            </Card>
-                          </UnstyledButton>
-                        );
-                      })}
-                      {!wardsQuery.data?.length ? (
-                        <Text size="sm" c={uiColors.textSecondary} ta="center" py="xl">
-                          {t("noWards")}
-                        </Text>
-                      ) : null}
-                    </Stack>
-                  </ScrollArea>
-                )}
-              </Stack>
-            </Grid.Col>
-          </Grid>
+                </Stack>
+              </ScrollArea>
+            )}
+          </>
         )}
       </Stack>
     </Drawer>
+  );
+}
+
+function LoadError({
+  label,
+  retry,
+  onRetry,
+}: {
+  label: string;
+  retry: string;
+  onRetry: () => void;
+}) {
+  return (
+    <Alert color="red" title={label}>
+      <Button
+        mt="sm"
+        size="xs"
+        variant="light"
+        color="red"
+        leftSection={<IconRefresh size={15} />}
+        onClick={onRetry}
+      >
+        {retry}
+      </Button>
+    </Alert>
   );
 }
