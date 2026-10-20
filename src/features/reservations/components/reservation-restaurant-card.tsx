@@ -4,16 +4,12 @@ import { IconChevronRight } from "@tabler/icons-react";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
-type ReservationRestaurantCardProps = {
-  reservation: CustomerReservation;
-  heroAccent?: string;
-};
-
 /** Links the reservation detail to its restaurant profile. */
 export function ReservationRestaurantCard({
   reservation,
-  heroAccent,
-}: ReservationRestaurantCardProps) {
+}: {
+  reservation: CustomerReservation;
+}) {
   return (
     <Card
       component={Link}
@@ -31,12 +27,17 @@ export function ReservationRestaurantCard({
         <Box
           w={64}
           h={64}
+          role="img"
+          aria-label={reservation.restaurantImageAlt ?? reservation.restaurantName}
           style={{
             flexShrink: 0,
             borderRadius: 12,
-            background: `repeating-linear-gradient(135deg, ${
-              heroAccent ?? uiColors.brandPrimarySoft
-            } 0 8px, #ffffff 8px 16px)`,
+            backgroundColor: uiColors.brandPrimarySoft,
+            backgroundImage: reservation.restaurantImageUrl
+              ? `url("${reservation.restaurantImageUrl}")`
+              : `repeating-linear-gradient(135deg, ${uiColors.brandPrimarySoft} 0 8px, #ffffff 8px 16px)`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
           }}
         />
         <Stack gap={2} style={{ flex: 1, minWidth: 0 }}>

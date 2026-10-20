@@ -4,10 +4,7 @@ import utc from "dayjs/plugin/utc";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus, VisitStatus } from "@/features/reservations/types";
 import { getCsrfToken } from "@/features/auth/data/session";
-import {
-  getRestaurants,
-  type RestaurantSummary,
-} from "@/features/restaurants/data/api";
+import type { RestaurantSummary } from "@/features/restaurants/data/api";
 import { ApiError, apiFetch } from "@/lib/api/client";
 import { apiEndpoints } from "@/lib/api/endpoints";
 
@@ -111,16 +108,15 @@ export function mergeCustomerReservation(
 
 export function mapAccountReservation(
   record: CustomerReservationRecord,
-  restaurant?: RestaurantSummary,
 ): CustomerReservation {
   return mergeCustomerReservation(
     {
       id: record.id,
       reference: record.reference,
       restaurantSlug: record.restaurantSlug ?? "",
-      restaurantName: record.restaurantName ?? restaurant?.name ?? "Restaurant",
-      district: restaurant?.district ?? "",
-      cuisineLabel: restaurant?.cuisineLabel ?? "",
+      restaurantName: record.restaurantName ?? "Restaurant",
+      district: "",
+      cuisineLabel: "",
       date: "",
       time: "",
       guests: record.partySize,
@@ -138,21 +134,7 @@ export async function getAccountReservations(signal?: AbortSignal) {
       apiEndpoints.customerAccountReservations,
       { cache: "no-store", signal },
     );
-    let restaurants: RestaurantSummary[] = [];
-    try {
-      restaurants = await getRestaurants(signal);
-    } catch (error) {
-      if (signal?.aborted) throw error;
-    }
-    const restaurantsBySlug = new Map(
-      restaurants.map((restaurant) => [restaurant.slug, restaurant]),
-    );
-    return records.map((record) =>
-      mapAccountReservation(
-        record,
-        restaurantsBySlug.get(record.restaurantSlug ?? ""),
-      ),
-    );
+    return records.map(mapAccountReservation);
   } catch (error) {
     if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
       return null;
@@ -164,21 +146,43 @@ export async function getAccountReservations(signal?: AbortSignal) {
 export function selectVisibleReservations(
   stored: CustomerReservation[],
   account: CustomerReservation[] | null | undefined,
+  restaurants: RestaurantSummary[] = [],
 ) {
-  if (account === null) {
-    return stored.filter((reservation) => reservation.managementToken);
-  }
-  if (!account) return [];
-
-  return account.map((reservation) => {
-    const local = stored.find(({ id }) => id === reservation.id);
-    return local
+  if (account === undefined) return [];
+  const visible = account === null
+    ? stored.filter((reservation) => reservation.managementToken)
+    : account.map((reservation) => {
+        const local = stored.find(({ id }) => id === reservation.id);
+        return local
+          ? {
+              ...local,
+              ...reservation,
+              restaurantName:
+                reservation.restaurantName || local.restaurantName,
+              district: reservation.district || local.district,
+              cuisineLabel: reservation.cuisineLabel || local.cuisineLabel,
+              restaurantImageUrl:
+                reservation.restaurantImageUrl || local.restaurantImageUrl,
+              restaurantImageAlt:
+                reservation.restaurantImageAlt || local.restaurantImageAlt,
+            }
+          : reservation;
+      });
+  const restaurantsBySlug = new Map(
+    restaurants.map((restaurant) => [restaurant.slug, restaurant]),
+  );
+  return visible.map((reservation) => {
+    const restaurant = restaurantsBySlug.get(reservation.restaurantSlug);
+    return restaurant
       ? {
-          ...local,
           ...reservation,
-          restaurantName: reservation.restaurantName || local.restaurantName,
-          district: reservation.district || local.district,
-          cuisineLabel: reservation.cuisineLabel || local.cuisineLabel,
+          restaurantName: restaurant.name || reservation.restaurantName,
+          district: restaurant.district || reservation.district,
+          cuisineLabel: restaurant.cuisineLabel || reservation.cuisineLabel,
+          restaurantImageUrl:
+            restaurant.imageUrl || reservation.restaurantImageUrl,
+          restaurantImageAlt:
+            restaurant.imageAlt || reservation.restaurantImageAlt,
         }
       : reservation;
   });

@@ -133,10 +133,17 @@ function ReservationCards({
               <Box
                 w={64}
                 h={64}
+                role="img"
+                aria-label={reservation.restaurantImageAlt ?? reservation.restaurantName}
                 style={{
                   flexShrink: 0,
                   borderRadius: 12,
-                  background: `repeating-linear-gradient(135deg, ${uiColors.brandPrimarySoft} 0 8px, #ffffff 8px 16px)`,
+                  backgroundColor: uiColors.brandPrimarySoft,
+                  backgroundImage: reservation.restaurantImageUrl
+                    ? `url("${reservation.restaurantImageUrl}")`
+                    : `repeating-linear-gradient(135deg, ${uiColors.brandPrimarySoft} 0 8px, #ffffff 8px 16px)`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
                 }}
               />
 
