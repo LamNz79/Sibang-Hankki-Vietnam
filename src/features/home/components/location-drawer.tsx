@@ -1,26 +1,41 @@
 "use client";
 
 import {
-  Badge,
-  Box,
+  Alert,
+  Button,
   Card,
+  Center,
   Drawer,
-  Grid,
   Group,
+  Loader,
   ScrollArea,
+  Select,
   Stack,
   Text,
+  TextInput,
   UnstyledButton,
 } from "@mantine/core";
-import { IconCheck, IconCurrentLocation } from "@tabler/icons-react";
+import { IconCheck, IconMapPin, IconRefresh, IconSearch } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import {
-  locationGroups,
-  popularAreas,
-  recentAreas,
-} from "@/features/home/data/home-data";
+  getLocationProvinces,
+  getLocationWards,
+} from "@/features/locations/data/locations";
 import { uiColors } from "@/theme";
+
+const HO_CHI_MINH_CITY_CODE = 79;
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .trim();
+}
 
 type LocationDrawerProps = {
   opened: boolean;
@@ -36,7 +51,36 @@ export function LocationDrawer({
   onSelectLocation,
 }: LocationDrawerProps) {
   const t = useTranslations("Home.location");
-  const [activeCity, setActiveCity] = useState<keyof typeof locationGroups>("Ho Chi Minh");
+  const [activeProvinceCode, setActiveProvinceCode] = useState<number>(
+    HO_CHI_MINH_CITY_CODE,
+  );
+  const [wardSearch, setWardSearch] = useState("");
+  const provincesQuery = useQuery({
+    queryKey: ["location-provinces"],
+    queryFn: ({ signal }) => getLocationProvinces(signal),
+    enabled: opened,
+    staleTime: 24 * 60 * 60 * 1000,
+    retry: false,
+  });
+  const wardsQuery = useQuery({
+    queryKey: ["location-wards", activeProvinceCode],
+    queryFn: ({ signal }) => getLocationWards(activeProvinceCode, signal),
+    enabled: opened,
+    staleTime: 24 * 60 * 60 * 1000,
+    retry: false,
+  });
+
+  const activeProvince = provincesQuery.data?.find(
+    (province) => province.code === activeProvinceCode,
+  );
+  const normalizedWardSearch = normalizeSearch(wardSearch);
+  const wards = (wardsQuery.data ?? []).filter(
+    (ward) => ward.provinceCode === activeProvinceCode,
+  );
+  const filteredWards = normalizedWardSearch
+    ? wards.filter((ward) =>
+        normalizeSearch(ward.name).includes(normalizedWardSearch))
+    : wards;
 
   return (
     <Drawer
@@ -60,227 +104,155 @@ export function LocationDrawer({
         },
       }}
     >
-      <Stack gap="lg">
-        <Group justify="space-between" align="center">
-          <Badge
-            leftSection={<IconCurrentLocation size={14} />}
-            radius="xl"
-            color="warmCoral"
-            variant="light"
-          >
-            {t("useCurrent")}
-          </Badge>
-          <Text size="sm" c={uiColors.textSecondary}>
-            {t("hint")}
-          </Text>
-        </Group>
+      <Stack gap="md">
+        <Text size="sm" c={uiColors.textSecondary}>{t("hint")}</Text>
 
-        <Stack gap="sm">
-          <Text fw={700} c={uiColors.textPrimary}>
-            {t("popular")}
-          </Text>
-          <Group
-            gap="md"
-            wrap="nowrap"
-            style={{
-              overflowX: "auto",
-              overflowY: "hidden",
-              paddingBottom: 4,
-              WebkitOverflowScrolling: "touch",
-            }}
-            className="hide-scrollbar"
-          >
-            {popularAreas.map((area, index) => (
-              <Stack key={area} gap={8} align="center" style={{ minWidth: 84 }}>
-                <UnstyledButton onClick={() => onSelectLocation(area)}>
-                  <Box
-                    w={84}
-                    h={84}
-                    style={{
-                      borderRadius: 999,
-                      background:
-                        index % 2 === 0
-                          ? "linear-gradient(135deg, #fce9e2 0%, #f8d1c5 100%)"
-                          : "linear-gradient(135deg, #fff7f3 0%, #f1e3dd 100%)",
-                      border:
-                        selectedLocation === area
-                          ? `2px solid ${uiColors.brandPrimary}`
-                          : `1px solid ${uiColors.border}`,
-                      boxShadow:
-                        selectedLocation === area
-                          ? `0 8px 18px ${uiColors.brandPrimaryShadow}`
-                          : "0 6px 14px rgba(80, 47, 38, 0.06)",
-                    }}
-                  />
-                </UnstyledButton>
-                <Text
-                  ta="center"
-                  fw={selectedLocation === area ? 700 : 600}
-                  size="sm"
-                  c={
-                    selectedLocation === area
-                      ? uiColors.brandPrimaryStrong
-                      : uiColors.textPrimary
-                  }
-                >
-                  {area}
-                </Text>
-              </Stack>
-            ))}
-          </Group>
-        </Stack>
+        {provincesQuery.isError ? (
+          <LoadError label={t("loadError")} retry={t("retry")} onRetry={() => provincesQuery.refetch()} />
+        ) : provincesQuery.isLoading ? (
+          <Center h={320}><Loader /></Center>
+        ) : (
+          <>
+            <Select
+              label={t("provinces")}
+              placeholder={t("searchProvince")}
+              leftSection={<IconMapPin size={17} />}
+              value={String(activeProvinceCode)}
+              data={(provincesQuery.data ?? []).map((province) => ({
+                value: String(province.code),
+                label: province.name,
+              }))}
+              onChange={(value) => {
+                if (!value) return;
+                setActiveProvinceCode(Number(value));
+                setWardSearch("");
+              }}
+              searchable
+              allowDeselect={false}
+              nothingFoundMessage={t("nothingFound")}
+              comboboxProps={{ withinPortal: true }}
+              size="md"
+              radius="md"
+            />
 
-        <Stack gap="sm">
-          <Text fw={700} c={uiColors.textPrimary}>
-            {t("recent")}
-          </Text>
-          <ScrollArea
-            offsetScrollbars="x"
-            scrollbarSize={6}
-            styles={{
-              viewport: {
-                paddingBottom: 6,
-              },
-              scrollbar: {
-                background: "transparent",
-              },
-              thumb: {
-                background: uiColors.border,
-              },
-            }}
-          >
-            <Group gap="sm" wrap="nowrap">
-              {recentAreas.map((area) => {
-                const active = selectedLocation === area;
-
-                return (
-                  <UnstyledButton
-                    key={area}
-                    onClick={() => onSelectLocation(area)}
-                    style={{ minWidth: 148 }}
+            <Card
+              radius="lg"
+              p="md"
+              style={{
+                border: `1px solid ${uiColors.border}`,
+                background: uiColors.surfaceAlt,
+              }}
+            >
+              <Group justify="space-between" align="center" gap="sm" wrap="nowrap">
+                <Stack gap={2} style={{ minWidth: 0 }}>
+                  <Text size="xs" c={uiColors.textSecondary}>{t("wards")}</Text>
+                  <Text fw={700} truncate>{activeProvince?.name}</Text>
+                </Stack>
+                {activeProvince ? (
+                  <Button
+                    variant="light"
+                    color="warmCoral"
+                    radius="xl"
+                    size="xs"
+                    onClick={() => onSelectLocation(activeProvince.name)}
                   >
-                    <Card
-                      p="sm"
-                      style={{
-                        background: active ? uiColors.brandPrimarySoft : uiColors.surfaceAlt,
-                        border: active
-                          ? `1px solid ${uiColors.brandPrimary}`
-                          : `1px solid ${uiColors.borderStrong}`,
+                    {t("selectWholeProvince")}
+                  </Button>
+                ) : null}
+              </Group>
+            </Card>
 
-                      }}
-                    >
-                      <Text fw={active ? 700 : 500} c={active ? uiColors.brandPrimary : uiColors.textPrimary}>
-                        {area}
-                      </Text>
-                    </Card>
-                  </UnstyledButton>
-                );
-              })}
-            </Group>
-          </ScrollArea>
-        </Stack>
+            <TextInput
+              value={wardSearch}
+              onChange={(event) => setWardSearch(event.currentTarget.value)}
+              placeholder={t("searchWard")}
+              aria-label={t("searchWard")}
+              leftSection={<IconSearch size={18} />}
+              size="md"
+              radius="md"
+            />
 
-        <Grid align="stretch">
-          <Grid.Col span={4} style={{ display: "flex" }}>
-            <Stack gap={8} style={{ flex: 1 }}>
-              <Text fw={700} c={uiColors.textPrimary}>
-                {t("cities")}
-              </Text>
-              <Stack
-                gap={8}
-                p="xs"
-                h={260}
-                style={{
-                  background: uiColors.surfaceMuted,
-                  borderRadius: 16,
-                  flex: 1,
-                }}
-              >
-                {Object.keys(locationGroups).map((city) => (
-                  <UnstyledButton
-                    key={city}
-                    onClick={() => setActiveCity(city as keyof typeof locationGroups)}
-                    style={{ display: "block", width: "100%" }}
-                  >
-                    <Card
-                      p="sm"
-                      radius="md"
-                      style={{
-                        width: "100%",
-                        minWidth: "100%",
-                        background: activeCity === city ? uiColors.brandPrimarySoft : uiColors.surfaceAlt,
-                        border: activeCity === city
-                          ? `1px solid ${uiColors.brandPrimary}`
-                          : `1px solid ${uiColors.borderStrong}`,
-                      }}
-                    >
-                      <Text fw={activeCity === city ? 700 : 500} c={uiColors.textPrimary}>
-                        {city}
-                      </Text>
-                    </Card>
-                  </UnstyledButton>
-                ))}
-              </Stack>
-            </Stack>
-          </Grid.Col>
-          <Grid.Col span={8}>
-            <Stack gap={8}>
-              <Text fw={700} c={uiColors.textPrimary}>
-                {t("areas")}
-              </Text>
+            {wardsQuery.isError ? (
+              <LoadError label={t("loadError")} retry={t("retry")} onRetry={() => wardsQuery.refetch()} />
+            ) : wardsQuery.isFetching ? (
+              <Center h={280}><Loader size="sm" /></Center>
+            ) : (
               <ScrollArea
-                h={260}
+                h="clamp(300px, calc(78dvh - 220px), 480px)"
                 offsetScrollbars="y"
                 scrollbarSize={6}
-                styles={{
-                  viewport: {
-                    paddingRight: 8,
-                  },
-                  scrollbar: {
-                    background: "transparent",
-                  },
-                  thumb: {
-                    background: uiColors.border,
-                  },
-                }}
               >
-                <Stack gap={8}>
-                  {locationGroups[activeCity].map((area) => {
-                    const active = selectedLocation === area;
-
+                <Stack gap={8} pr="xs">
+                  {filteredWards.map((ward) => {
+                    const active = selectedLocation === ward.name;
                     return (
                       <UnstyledButton
-                        key={area}
-                        onClick={() => onSelectLocation(area)}
+                        key={ward.code}
+                        onClick={() => onSelectLocation(ward.name)}
                         style={{ display: "block", width: "100%" }}
                       >
                         <Card
                           p="sm"
+                          radius="md"
                           style={{
-                            width: "100%",
-                            background: active ? uiColors.brandPrimarySoft : uiColors.surface,
+                            background: active
+                              ? uiColors.brandPrimarySoft
+                              : uiColors.surface,
                             border: active
                               ? `1px solid ${uiColors.brandPrimary}`
                               : `1px solid ${uiColors.borderStrong}`,
                           }}
                         >
-                          <Group justify="space-between" align="center">
-                            <Text fw={active ? 700 : 500} c={uiColors.textPrimary}>
-                              {area}
-                            </Text>
-                            {active ? <IconCheck size={16} color={uiColors.brandPrimary} /> : null}
+                          <Group justify="space-between" gap="xs" wrap="nowrap">
+                            <Text size="sm" fw={active ? 700 : 500}>{ward.name}</Text>
+                            {active ? (
+                              <IconCheck
+                                size={16}
+                                color={uiColors.brandPrimary}
+                                style={{ flexShrink: 0 }}
+                              />
+                            ) : null}
                           </Group>
                         </Card>
                       </UnstyledButton>
                     );
                   })}
+                  {!filteredWards.length ? (
+                    <Text size="sm" c={uiColors.textSecondary} ta="center" py="xl">
+                      {wardSearch ? t("nothingFound") : t("noWards")}
+                    </Text>
+                  ) : null}
                 </Stack>
               </ScrollArea>
-            </Stack>
-
-          </Grid.Col>
-        </Grid>
+            )}
+          </>
+        )}
       </Stack>
     </Drawer>
+  );
+}
+
+function LoadError({
+  label,
+  retry,
+  onRetry,
+}: {
+  label: string;
+  retry: string;
+  onRetry: () => void;
+}) {
+  return (
+    <Alert color="red" title={label}>
+      <Button
+        mt="sm"
+        size="xs"
+        variant="light"
+        color="red"
+        leftSection={<IconRefresh size={15} />}
+        onClick={onRetry}
+      >
+        {retry}
+      </Button>
+    </Alert>
   );
 }

@@ -38,12 +38,3 @@ export const cityTiles = [
 
 export const cuisines = ["Western", "Chinese", "Vietnamese", "Japanese"];
 export const priceRanges = ["Under 150K", "150K-300K", "Over 300K"];
-
-export const popularAreas = ["District 1", "District 7", "Binh Thanh", "Thu Duc", "Phu Nhuan"];
-export const recentAreas = ["District 1", "Binh Thanh", "Thu Duc"];
-
-export const locationGroups = {
-  "Ho Chi Minh": ["District 1", "District 7", "Binh Thanh", "Thu Duc", "Phu Nhuan", "Tan Binh"],
-  Hanoi: ["Hoan Kiem", "Ba Dinh", "Tay Ho", "Cau Giay", "Dong Da"],
-  "Da Nang": ["Hai Chau", "Son Tra", "Ngu Hanh Son", "Thanh Khe"],
-};

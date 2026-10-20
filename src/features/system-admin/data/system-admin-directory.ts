@@ -102,16 +102,12 @@ export type SystemAdminRestaurantInput = {
   priceRange: string;
 };
 
-export type LocationProvince = {
-  code: number;
-  codename: string;
-  name: string;
-  divisionType: string;
-};
-
-export type LocationWard = LocationProvince & {
-  provinceCode: number;
-};
+export {
+  getLocationProvinces,
+  getLocationWards,
+  type LocationProvince,
+  type LocationWard,
+} from "@/features/locations/data/locations";
 
 export type SystemAdminPage<T> = {
   items: T[];
@@ -193,20 +189,6 @@ export function getSystemAdminRestaurantAssignments(
     `${apiEndpoints.systemAdminRestaurantAssignments}?${searchParams(params)}`,
     { cache: "no-store", signal },
   );
-}
-
-export function getLocationProvinces(signal?: AbortSignal) {
-  return apiFetch<LocationProvince[]>(apiEndpoints.locationProvinces, {
-    cache: "no-store",
-    signal,
-  });
-}
-
-export function getLocationWards(provinceCode: number, signal?: AbortSignal) {
-  return apiFetch<LocationWard[]>(apiEndpoints.locationWards(provinceCode), {
-    cache: "no-store",
-    signal,
-  });
 }
 
 async function writeRestaurant<T>(

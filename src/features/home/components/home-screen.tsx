@@ -46,7 +46,7 @@ function HomeContent() {
   const homeT = useTranslations("Home");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [location, setLocation] = useState("Ho Chi Minh City");
+  const [location, setLocation] = useState(homeT("location.defaultLocation"));
   const [locationOpened, setLocationOpened] = useState(false);
   const [qrPickerOpened, setQrPickerOpened] = useState(false);
   const [pickedQrId, setPickedQrId] = useState<string | null>(null);
