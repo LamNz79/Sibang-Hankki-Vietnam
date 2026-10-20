@@ -177,7 +177,11 @@ export function LocationDrawer({
             ) : wardsQuery.isFetching ? (
               <Center h={280}><Loader size="sm" /></Center>
             ) : (
-              <ScrollArea h={300} offsetScrollbars="y" scrollbarSize={6}>
+              <ScrollArea
+                h="clamp(300px, calc(78dvh - 220px), 480px)"
+                offsetScrollbars="y"
+                scrollbarSize={6}
+              >
                 <Stack gap={8} pr="xs">
                   {filteredWards.map((ward) => {
                     const active = selectedLocation === ward.name;
