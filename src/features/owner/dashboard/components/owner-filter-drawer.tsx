@@ -1,4 +1,5 @@
 import { Button, Drawer, Group, SimpleGrid, Stack, Text } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { ChoiceButton } from "@/components/ui";
 import {
   type OwnerGuestFilter,
@@ -9,31 +10,31 @@ import { uiColors } from "@/theme";
 
 const statusFilters: Array<{
   value: OwnerReservationFilter;
-  label: string;
+  labelKey: "all" | "pending" | "waitingGuest" | "confirmed" | "declined" | "expired" | "cancelled" | "arrived" | "seated" | "completed" | "noShow";
 }> = [
-  { value: "all", label: "All" },
-  { value: ReservationStatus.Pending, label: "Pending" },
+  { value: "all", labelKey: "all" },
+  { value: ReservationStatus.Pending, labelKey: "pending" },
   {
     value: ReservationStatus.AlternativeProposed,
-    label: "Waiting guest",
+    labelKey: "waitingGuest",
   },
-  { value: ReservationStatus.Confirmed, label: "Confirmed" },
-  { value: ReservationStatus.Declined, label: "Declined" },
-  { value: ReservationStatus.Expired, label: "Expired" },
-  { value: ReservationStatus.Cancelled, label: "Cancelled" },
-  { value: VisitStatus.Arrived, label: "Arrived" },
-  { value: VisitStatus.Seated, label: "Seated" },
-  { value: VisitStatus.Completed, label: "Completed" },
-  { value: VisitStatus.NoShow, label: "No-show" },
+  { value: ReservationStatus.Confirmed, labelKey: "confirmed" },
+  { value: ReservationStatus.Declined, labelKey: "declined" },
+  { value: ReservationStatus.Expired, labelKey: "expired" },
+  { value: ReservationStatus.Cancelled, labelKey: "cancelled" },
+  { value: VisitStatus.Arrived, labelKey: "arrived" },
+  { value: VisitStatus.Seated, labelKey: "seated" },
+  { value: VisitStatus.Completed, labelKey: "completed" },
+  { value: VisitStatus.NoShow, labelKey: "noShow" },
 ];
 
 const guestFilterOptions: Array<{
   value: OwnerGuestFilter;
-  label: string;
+  labelKey: "vip" | "preOrder" | "largeParty";
 }> = [
-  { value: "vip", label: "VIP" },
-  { value: "pre-order", label: "Pre-order" },
-  { value: "large-party", label: "4+ guests" },
+  { value: "vip", labelKey: "vip" },
+  { value: "pre-order", labelKey: "preOrder" },
+  { value: "large-party", labelKey: "largeParty" },
 ];
 
 type OwnerFilterDrawerProps = {
@@ -64,6 +65,8 @@ export function OwnerFilterDrawer({
   getStatusCount,
   getGuestCount,
 }: OwnerFilterDrawerProps) {
+  const t = useTranslations("OwnerDashboard.filters");
+
   return (
     <Drawer
       opened={opened}
@@ -72,7 +75,7 @@ export function OwnerFilterDrawer({
       size="72%"
       radius="24px 24px 0 0"
       padding="md"
-      title={<Text fw={800}>Filter reservations</Text>}
+      title={<Text fw={800}>{t("title")}</Text>}
       classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
       styles={{
         content: {
@@ -92,10 +95,10 @@ export function OwnerFilterDrawer({
         <Stack gap="sm">
           <Group justify="space-between">
             <Text fw={800} c={uiColors.textPrimary}>
-              Status
+              {t("status")}
             </Text>
             <Text size="xs" c={uiColors.textSecondary}>
-              Choose one
+              {t("chooseOne")}
             </Text>
           </Group>
           <SimpleGrid cols={2} spacing="sm">
@@ -105,7 +108,7 @@ export function OwnerFilterDrawer({
                 selected={statusFilter === option.value}
                 onClick={() => onStatusChange(option.value)}
               >
-                {option.label} · {getStatusCount(option.value)}
+                {t(`statuses.${option.labelKey}`)} · {getStatusCount(option.value)}
               </ChoiceButton>
             ))}
           </SimpleGrid>
@@ -114,10 +117,10 @@ export function OwnerFilterDrawer({
         <Stack gap="sm">
           <Group justify="space-between">
             <Text fw={800} c={uiColors.textPrimary}>
-              Guest details
+              {t("guestDetails")}
             </Text>
             <Text size="xs" c={uiColors.textSecondary}>
-              Select any
+              {t("selectAny")}
             </Text>
           </Group>
           <SimpleGrid cols={2} spacing="sm">
@@ -127,7 +130,7 @@ export function OwnerFilterDrawer({
                 selected={guestFilters.includes(option.value)}
                 onClick={() => onGuestFilterToggle(option.value)}
               >
-                {option.label} · {getGuestCount(option.value)}
+                {t(`guests.${option.labelKey}`)} · {getGuestCount(option.value)}
               </ChoiceButton>
             ))}
           </SimpleGrid>
@@ -140,10 +143,10 @@ export function OwnerFilterDrawer({
             disabled={!hasActiveFilters}
             onClick={onReset}
           >
-            Reset
+            {t("reset")}
           </Button>
           <Button size="md" onClick={onClose}>
-            Show {reservationCount} reservations
+            {t("show", { count: reservationCount })}
           </Button>
         </Group>
       </Stack>

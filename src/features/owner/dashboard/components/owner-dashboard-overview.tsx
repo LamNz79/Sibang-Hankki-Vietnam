@@ -15,6 +15,7 @@ import {
   IconToolsKitchen3,
   IconUsers,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { MetricCard } from "@/components/ui";
 import type { OwnerDashboardSummary } from "@/features/owner/dashboard/hooks/use-owner-dashboard";
 import type { OwnerReservation } from "@/features/owner/types";
@@ -32,25 +33,26 @@ export function OwnerDashboardOverview({
   actionRequiredReservations,
   nextArrival,
 }: OwnerDashboardOverviewProps) {
+  const t = useTranslations("OwnerDashboard.overview");
   const metrics = [
     {
       value: String(summary.bookings),
-      label: "Bookings",
+      label: t("metrics.bookings"),
       icon: IconCalendarEvent,
     },
     {
       value: String(summary.expectedGuests),
-      label: "Expected guests",
+      label: t("metrics.expectedGuests"),
       icon: IconUsers,
     },
     {
       value: String(summary.preOrders),
-      label: "Pre-orders",
+      label: t("metrics.preOrders"),
       icon: IconToolsKitchen3,
     },
     {
       value: String(summary.vipGuests),
-      label: "VIP guests",
+      label: t("metrics.vipGuests"),
       icon: IconRosetteDiscountCheck,
     },
   ];
@@ -78,12 +80,12 @@ export function OwnerDashboardOverview({
             </ThemeIcon>
             <Stack gap={3} style={{ flex: 1 }}>
               <Text fw={800} c={uiColors.statusWarningTextStrong}>
-                Needs attention
+                {t("attention.title")}
               </Text>
               <Text size="sm" c={uiColors.statusWarningTextStrong}>
-                {actionRequiredReservations.length} reservation request
-                {actionRequiredReservations.length === 1 ? " needs" : "s need"}{" "}
-                review.
+                {t("attention.description", {
+                  count: actionRequiredReservations.length,
+                })}
               </Text>
             </Stack>
             <Link
@@ -123,15 +125,15 @@ export function OwnerDashboardOverview({
               </ThemeIcon>
               <Stack gap={1} style={{ flex: 1 }}>
                 <Text size="xs" c={uiColors.textSecondary}>
-                  Next arrival
+                  {t("nextArrival")}
                 </Text>
                 <Text fw={800} c={uiColors.textPrimary}>
                   {nextArrival.time} · {nextArrival.guestName}
                 </Text>
                 <Text size="xs" c={uiColors.textSecondary}>
-                  {nextArrival.tier === "vip" ? "VIP · " : ""}
-                  {nextArrival.partySize} guests
-                  {nextArrival.preOrder ? " · pre-order" : ""}
+                  {nextArrival.tier === "vip" ? `${t("vip")} · ` : ""}
+                  {t("guestCount", { count: nextArrival.partySize })}
+                  {nextArrival.preOrder ? ` · ${t("preOrder")}` : ""}
                 </Text>
               </Stack>
               <IconChevronRight size={18} color={uiColors.brandPrimary} />

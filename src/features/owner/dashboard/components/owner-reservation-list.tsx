@@ -1,4 +1,5 @@
 import { Box, Card, Group, Stack, Text, Title } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { OwnerReservationRow } from "@/features/owner/reservations";
 import type { OwnerReservation } from "@/features/owner/types";
 import { uiColors } from "@/theme";
@@ -13,6 +14,8 @@ export function OwnerReservationList({
   reservations,
   searchQuery,
 }: OwnerReservationListProps) {
+  const t = useTranslations("OwnerDashboard.list");
+
   return (
     <Card
       radius="lg"
@@ -26,10 +29,10 @@ export function OwnerReservationList({
     >
       <Group justify="space-between" pt="md" pb="xs" wrap="nowrap">
         <Title order={2} size="h4" c={uiColors.textPrimary}>
-          Reservations
+          {t("title")}
         </Title>
         <Text size="xs" c={uiColors.textSecondary}>
-          {reservations.length} shown
+          {t("shown", { count: reservations.length })}
         </Text>
       </Group>
 
@@ -45,12 +48,10 @@ export function OwnerReservationList({
       ) : (
         <Stack align="center" gap={4} py="xl">
           <Text fw={700} c={uiColors.textPrimary}>
-            {searchQuery ? "No reservations found" : "No reservations match"}
+            {t(searchQuery ? "searchEmptyTitle" : "filterEmptyTitle")}
           </Text>
           <Text size="sm" ta="center" c={uiColors.textSecondary}>
-            {searchQuery
-              ? "Check the guest name, booking code, or phone number."
-              : "Try another status or guest filter."}
+            {t(searchQuery ? "searchEmptyDescription" : "filterEmptyDescription")}
           </Text>
         </Stack>
       )}
