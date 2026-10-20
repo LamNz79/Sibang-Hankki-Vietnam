@@ -12,6 +12,12 @@ export type LocationWard = LocationProvince & {
   provinceCode: number;
 };
 
+export type LocationSelection = {
+  label: string;
+  provinceCode: number;
+  wardCode: number | null;
+};
+
 export function getLocationProvinces(signal?: AbortSignal) {
   return apiFetch<LocationProvince[]>(apiEndpoints.locationProvinces, {
     cache: "no-store",

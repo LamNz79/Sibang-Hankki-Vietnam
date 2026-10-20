@@ -47,4 +47,18 @@ describe("restaurant API development fallback", () => {
       expect.objectContaining({ cache: "no-store" }),
     );
   });
+
+  it("sends administrative location filters to the public catalog", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(Response.json([]));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await getRestaurants({ provinceCode: 79, wardCode: 27169 });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /\/api\/restaurants\?provinceCode=79&wardCode=27169$/,
+      ),
+      expect.objectContaining({ cache: "no-store" }),
+    );
+  });
 });

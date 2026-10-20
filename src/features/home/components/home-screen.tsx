@@ -34,6 +34,7 @@ import {
   categories,
   cityTiles,
 } from "@/features/home/data/home-data";
+import type { LocationSelection } from "@/features/locations/data/locations";
 import { getUpcomingConfirmedReservations } from "@/features/reservations/domain/selectors";
 import {
   useCustomerCheckInToken,
@@ -46,7 +47,11 @@ function HomeContent() {
   const homeT = useTranslations("Home");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [location, setLocation] = useState(homeT("location.defaultLocation"));
+  const [location, setLocation] = useState<LocationSelection>({
+    label: homeT("location.defaultLocation"),
+    provinceCode: 79,
+    wardCode: null,
+  });
   const [locationOpened, setLocationOpened] = useState(false);
   const [qrPickerOpened, setQrPickerOpened] = useState(false);
   const [pickedQrId, setPickedQrId] = useState<string | null>(null);
@@ -108,8 +113,20 @@ function HomeContent() {
     clearQrDeepLink();
   };
 
+  const restaurantParams = (values: Record<string, string>) => {
+    const params = new URLSearchParams({
+      location: location.label,
+      provinceCode: String(location.provinceCode),
+      ...values,
+    });
+    if (location.wardCode !== null) {
+      params.set("wardCode", String(location.wardCode));
+    }
+    return params;
+  };
+
   const openRestaurantList = (key: "sort" | "cuisine" | "price", value: string) => {
-    const params = new URLSearchParams({ location, [key]: value });
+    const params = restaurantParams({ [key]: value });
     router.push(`/restaurants?${params.toString()}`);
   };
 
@@ -121,10 +138,10 @@ function HomeContent() {
       bottomNav={<BottomNav activePath="/" />}
       headerContent={
         <HomeHeader
-          location={location}
+          location={location.label}
           onOpenLocation={() => setLocationOpened(true)}
           onSearch={(query) => {
-            const params = new URLSearchParams({ search: query, location });
+            const params = restaurantParams({ search: query });
             router.push(`/restaurants?${params.toString()}`);
           }}
         />
@@ -300,7 +317,7 @@ function HomeContent() {
           return (
             <Link
               key={item.label}
-              href={`/restaurants?category=${item.slug}&location=${encodeURIComponent(location)}`}
+              href={`/restaurants?${restaurantParams({ category: item.slug }).toString()}`}
               style={{ textDecoration: "none", display: "block" }}
             >
               <SpecialCategories
