@@ -45,6 +45,9 @@ export const apiEndpoints = {
   authMe: "/api/auth/me",
   authPassword: "/api/auth/password",
   customerProfile: "/api/customer/profile",
+  customerFavorites: "/api/customer/favorites",
+  customerFavorite: (slug: string) =>
+    `/api/customer/favorites/${seg(slug)}`,
   ownerReservations: "/api/owner/reservations",
   ownerWalkIns: "/api/owner/reservations/walk-ins",
   ownerReservationsPaged: "/api/owner/reservations/paged",

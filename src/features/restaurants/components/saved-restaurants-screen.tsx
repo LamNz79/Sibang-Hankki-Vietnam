@@ -3,33 +3,28 @@
 import Link from "next/link";
 import {
   ActionIcon,
+  Alert,
   Box,
   Button,
   Card,
   Group,
+  Loader,
   Stack,
   Text,
   ThemeIcon,
   Title,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { IconHeart, IconMapPin, IconTrash } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
-import type { RestaurantSummary } from "@/features/restaurants/data/api";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import { uiColors } from "@/theme";
 
-export function SavedRestaurantsScreen({
-  restaurants,
-}: {
-  restaurants: RestaurantSummary[];
-}) {
+export function SavedRestaurantsScreen() {
   const t = useTranslations("SavedRestaurants");
   const saved = useSavedRestaurants();
-  const bySlug = new Map(restaurants.map((restaurant) => [restaurant.slug, restaurant]));
-  const visible = saved.slugs
-    .map((slug) => bySlug.get(slug))
-    .filter((restaurant): restaurant is RestaurantSummary => Boolean(restaurant));
+  const visible = saved.restaurants;
 
   return (
     <MobileShell
@@ -38,7 +33,22 @@ export function SavedRestaurantsScreen({
       backHref="/my"
       bottomNav={<BottomNav activePath="/my" />}
     >
-      {visible.length === 0 ? (
+      {saved.isLoading ? (
+        <Group justify="center" py="xl"><Loader size="sm" /></Group>
+      ) : saved.requiresLogin ? (
+        <Alert color="blue" title={t("loginRequired")}>
+          <Text size="sm">{t("loginDescription")}</Text>
+          <Button component={Link} href="/login" variant="light" mt="sm">
+            {t("login")}
+          </Button>
+        </Alert>
+      ) : saved.isError ? (
+        <Alert color="red" title={t("loadError")}>
+          <Button variant="light" mt="sm" onClick={() => saved.retry()}>
+            {t("retry")}
+          </Button>
+        </Alert>
+      ) : visible.length === 0 ? (
         <Card
           radius="lg"
           p="xl"
@@ -104,8 +114,13 @@ export function SavedRestaurantsScreen({
                   variant="subtle"
                   color="red"
                   m="xs"
+                  loading={saved.isToggling}
                   aria-label={t("remove", { name: restaurant.name })}
-                  onClick={() => saved.toggle(restaurant.slug)}
+                  onClick={() => {
+                    void saved.toggle(restaurant.slug).catch(() => {
+                      notifications.show({ color: "red", message: t("removeError") });
+                    });
+                  }}
                 >
                   <IconTrash size={18} />
                 </ActionIcon>
