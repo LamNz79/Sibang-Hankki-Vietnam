@@ -43,15 +43,6 @@ export type OwnerRequestResponse =
   | { kind: "alternative-sent"; slot: string }
   | { kind: "unavailable"; reason: string };
 
-/** Persisted owner-only state layered over prototype reservation data. */
-export type OwnerReservationOverride = {
-  id: string;
-  reservationStatus?: ReservationStatus;
-  visitStatus?: VisitStatus;
-  requestResponse?: OwnerRequestResponse;
-  updatedAt: string;
-};
-
 /** Reservation shape consumed by owner operational screens. */
 export type OwnerReservation = {
   id: string;
