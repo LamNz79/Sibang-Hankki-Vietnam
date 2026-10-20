@@ -33,8 +33,6 @@ import { SpecialCategories } from "@/features/home/components/special-categories
 import {
   categories,
   cityTiles,
-  cuisines,
-  priceRanges,
 } from "@/features/home/data/home-data";
 import { getUpcomingConfirmedReservations } from "@/features/reservations/domain/selectors";
 import {
@@ -43,26 +41,9 @@ import {
 } from "@/features/reservations/hooks/use-customer-reservations";
 import { uiColors } from "@/theme";
 
-const quickSortOptions = ["Recommended", "Top rated", "Earliest available"];
-const sortQueryValues: Record<string, string> = {
-  Recommended: "recommended",
-  "Top rated": "rating",
-  "Earliest available": "earliest",
-};
-const cuisineQueryValues: Record<string, string> = {
-  Western: "western",
-  Chinese: "chinese",
-  Vietnamese: "vietnamese",
-  Japanese: "japanese",
-};
-const priceQueryValues: Record<string, string> = {
-  "Under 150K": "under150",
-  "150K-300K": "under300",
-  "Over 300K": "over300",
-};
-
 function HomeContent() {
   const t = useTranslations("ReservationQr");
+  const homeT = useTranslations("Home");
   const router = useRouter();
   const searchParams = useSearchParams();
   const [location, setLocation] = useState("Ho Chi Minh City");
@@ -82,6 +63,22 @@ function HomeContent() {
     (reservation) => reservation.id === selectedQrId,
   );
   const checkInToken = useCustomerCheckInToken(selectedReservation);
+  const sortOptions = {
+    [homeT("sort.recommended")]: "recommended",
+    [homeT("sort.rating")]: "rating",
+    [homeT("sort.earliest")]: "earliest",
+  };
+  const cuisineOptions = {
+    [homeT("cuisines.western")]: "western",
+    [homeT("cuisines.chinese")]: "chinese",
+    [homeT("cuisines.vietnamese")]: "vietnamese",
+    [homeT("cuisines.japanese")]: "japanese",
+  };
+  const priceOptions = {
+    [homeT("prices.under150")]: "under150",
+    [homeT("prices.under300")]: "under300",
+    [homeT("prices.over300")]: "over300",
+  };
 
   const openQr = () => {
     setPickedQrId(
@@ -119,13 +116,17 @@ function HomeContent() {
   return (
     <MobileShell
       title="Sibang Hankki"
-      subtitle="Find a table fast and book with confidence."
+      subtitle={homeT("subtitle")}
       withHeaderBorder={false}
       bottomNav={<BottomNav activePath="/" />}
       headerContent={
         <HomeHeader
           location={location}
           onOpenLocation={() => setLocationOpened(true)}
+          onSearch={(query) => {
+            const params = new URLSearchParams({ search: query, location });
+            router.push(`/restaurants?${params.toString()}`);
+          }}
         />
       }
     >
@@ -288,9 +289,9 @@ function HomeContent() {
       <HeroBanner />
 
       <Group justify="space-between" align="flex-end">
-        <SectionTitle title="Special categories" />
+        <SectionTitle title={homeT("sections.specialCategories")} />
         <Text size="sm" c={uiColors.textMuted} mb={4}>
-          Up to 5
+          {homeT("sections.upToFive")}
         </Text>
       </Group>
 
@@ -302,41 +303,46 @@ function HomeContent() {
               href={`/restaurants?category=${item.slug}&location=${encodeURIComponent(location)}`}
               style={{ textDecoration: "none", display: "block" }}
             >
-              <SpecialCategories item={item} />
+              <SpecialCategories
+                item={{
+                  ...item,
+                  label: homeT(`categories.${item.slug}`),
+                }}
+              />
             </Link>
           );
         })}
       </SimpleGrid>
 
       <Group justify="space-between" align="flex-end">
-        <SectionTitle title="Explore by city" />
+        <SectionTitle title={homeT("sections.exploreCity")} />
         <Text size="sm" c={uiColors.textSecondary} mb={4}>
-          View all
+          {homeT("sections.viewAll")}
         </Text>
       </Group>
       <CityTileGrid items={cityTiles} />
 
       <Box>
-        <SectionTitle title="Sort by" />
+        <SectionTitle title={homeT("sections.sortBy")} />
         <ChipRow
-          items={quickSortOptions}
-          onChange={(value) => openRestaurantList("sort", sortQueryValues[value])}
+          items={Object.keys(sortOptions)}
+          onChange={(value) => openRestaurantList("sort", sortOptions[value])}
         />
       </Box>
 
       <Box>
-        <SectionTitle title="Cuisine" />
+        <SectionTitle title={homeT("sections.cuisine")} />
         <ChipRow
-          items={cuisines}
-          onChange={(value) => openRestaurantList("cuisine", cuisineQueryValues[value])}
+          items={Object.keys(cuisineOptions)}
+          onChange={(value) => openRestaurantList("cuisine", cuisineOptions[value])}
         />
       </Box>
 
       <Box>
-        <SectionTitle title="Price range" />
+        <SectionTitle title={homeT("sections.priceRange")} />
         <ChipRow
-          items={priceRanges}
-          onChange={(value) => openRestaurantList("price", priceQueryValues[value])}
+          items={Object.keys(priceOptions)}
+          onChange={(value) => openRestaurantList("price", priceOptions[value])}
           compact
         />
       </Box>
@@ -345,15 +351,16 @@ function HomeContent() {
 }
 
 export function HomeScreen() {
+  const t = useTranslations("Home");
   return (
     <Suspense
       fallback={
         <MobileShell
           title="Sibang Hankki"
-          subtitle="Loading reservations..."
+          subtitle={t("loadingReservations")}
           bottomNav={<BottomNav activePath="/" />}
         >
-          <Text>Loading...</Text>
+          <Text>{t("loading")}</Text>
         </MobileShell>
       }
     >

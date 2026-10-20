@@ -43,13 +43,24 @@
       "duplicateMessage": "That user ID is already taken. Choose another one."
     }
   },
+  "Home": {
+    "subtitle": "Find a table fast and book with confidence.", "loadingReservations": "Loading reservations...", "loading": "Loading...",
+    "header": { "notifications": "Notifications", "currentLocation": "Current location", "searchPlaceholder": "Search restaurants or cities", "searchLabel": "Search restaurants or cities" },
+    "banner": { "eyebrow": "Main banner", "title": "Today's dining benefits", "description": "Discover current restaurant offers." },
+    "sections": { "specialCategories": "Special categories", "upToFive": "Up to 5", "exploreCity": "Explore by city", "viewAll": "View all", "sortBy": "Sort by", "cuisine": "Cuisine", "priceRange": "Price range" },
+    "categories": { "michelin": "Michelin", "buffet": "Buffet", "special-deal": "Special deal", "date-night": "Date night", "trending": "Trending" },
+    "sort": { "recommended": "Recommended", "rating": "Top rated", "earliest": "Earliest available" },
+    "cuisines": { "western": "Western", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese" },
+    "prices": { "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
+    "location": { "title": "Choose location", "useCurrent": "Use current location", "hint": "Better restaurant suggestions by area", "popular": "Popular areas", "recent": "Recent locations", "cities": "Cities", "areas": "Areas" }
+  },
   "RestaurantAvailability": {
     "unknown": "Check times in the booking step", "contact": "Contact the restaurant for this party size", "unavailable": "No online times for {count} guests today", "available": "Available today from {time}", "availableConfirmation": "Available today from {time} · confirmation required"
   },
   "RestaurantDiscovery": {
     "title": "Restaurant list", "categoryTitle": "{category} in {location}", "cityTitle": "Restaurants in {city}", "hoChiMinhCity": "Ho Chi Minh City", "subtitle": "Filtered results", "searchPlaceholder": "Search restaurant or area",
     "availabilityTitle": "Availability is shown per restaurant", "availabilityDescription": "Browse first, then choose the exact date, time, and party size in the booking step.", "all": "All", "available": "Available", "filters": "Filters", "reset": "Reset",
-    "sort": { "recommended": "Recommended", "earliest": "Earliest available" },
+    "sort": { "recommended": "Recommended", "rating": "Top rated", "earliest": "Earliest available" }, "loading": "Loading restaurants...",
     "price": { "all": "Price", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
     "priceOptions": { "all": "All", "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
     "cuisine": { "all": "Cuisine", "korean": "Korean", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese", "western": "Western" },

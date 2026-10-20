@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { IconCheck, IconCurrentLocation } from "@tabler/icons-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   locationGroups,
   popularAreas,
@@ -34,6 +35,7 @@ export function LocationDrawer({
   selectedLocation,
   onSelectLocation,
 }: LocationDrawerProps) {
+  const t = useTranslations("Home.location");
   const [activeCity, setActiveCity] = useState<keyof typeof locationGroups>("Ho Chi Minh");
 
   return (
@@ -44,7 +46,7 @@ export function LocationDrawer({
       size="78%"
       radius="24px 24px 0 0"
       padding="md"
-      title={<Text fw={800}>Choose location</Text>}
+      title={<Text fw={800}>{t("title")}</Text>}
       classNames={{ content: "hide-scrollbar", body: "hide-scrollbar" }}
       mx="auto"
       styles={{
@@ -66,16 +68,16 @@ export function LocationDrawer({
             color="warmCoral"
             variant="light"
           >
-            Use current location
+            {t("useCurrent")}
           </Badge>
           <Text size="sm" c={uiColors.textSecondary}>
-            Better restaurant suggestions by area
+            {t("hint")}
           </Text>
         </Group>
 
         <Stack gap="sm">
           <Text fw={700} c={uiColors.textPrimary}>
-            Popular areas
+            {t("popular")}
           </Text>
           <Group
             gap="md"
@@ -130,7 +132,7 @@ export function LocationDrawer({
 
         <Stack gap="sm">
           <Text fw={700} c={uiColors.textPrimary}>
-            Recent locations
+            {t("recent")}
           </Text>
           <ScrollArea
             offsetScrollbars="x"
@@ -182,7 +184,7 @@ export function LocationDrawer({
           <Grid.Col span={4} style={{ display: "flex" }}>
             <Stack gap={8} style={{ flex: 1 }}>
               <Text fw={700} c={uiColors.textPrimary}>
-                Cities
+                {t("cities")}
               </Text>
               <Stack
                 gap={8}
@@ -224,7 +226,7 @@ export function LocationDrawer({
           <Grid.Col span={8}>
             <Stack gap={8}>
               <Text fw={700} c={uiColors.textPrimary}>
-                Areas
+                {t("areas")}
               </Text>
               <ScrollArea
                 h={260}
