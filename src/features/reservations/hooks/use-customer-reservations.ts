@@ -44,6 +44,15 @@ function isUnauthorized(error: unknown) {
   );
 }
 
+export function getAccountReservationsRefreshInterval(
+  data: CustomerReservation[] | null | undefined,
+  error: unknown,
+) {
+  return data === null || isUnauthorized(error)
+    ? false
+    : RESERVATION_REFRESH_MS;
+}
+
 /**
  * Subscribes React components to the current customer reservation collection.
  * This hook is the UI boundary that can later switch from local storage to API data.
@@ -75,7 +84,10 @@ export function useCustomerReservationsState() {
     queryFn: ({ signal }) => getAccountReservations(signal),
     retry: false,
     refetchInterval: (query) =>
-      isUnauthorized(query.state.error) ? false : RESERVATION_REFRESH_MS,
+      getAccountReservationsRefreshInterval(
+        query.state.data,
+        query.state.error,
+      ),
   });
   const restaurants = useQuery({
     queryKey: ["restaurants"],
@@ -105,7 +117,12 @@ export function useCustomerReservations() {
 
 /** Returns the customer reservation matching `id`, if one exists. */
 export function useCustomerReservation(id: string) {
-  const reservation = findReservationById(useCustomerReservations(), id);
+  return useCustomerReservationState(id).reservation;
+}
+
+export function useCustomerReservationState(id: string) {
+  const collection = useCustomerReservationsState();
+  const reservation = findReservationById(collection.reservations, id);
   const detail = useQuery({
     queryKey: ["customer-account-reservations", id],
     queryFn: ({ signal }) => getCustomerAccountReservation(reservation!, signal),
@@ -117,7 +134,10 @@ export function useCustomerReservation(id: string) {
         ? false
         : RESERVATION_REFRESH_MS,
   });
-  return detail.data ?? reservation;
+  return {
+    reservation: detail.data ?? reservation,
+    isLoading: !reservation && collection.isLoading,
+  };
 }
 
 export function useRespondToAlternativeProposal(
