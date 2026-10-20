@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ActionIcon, Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -11,6 +12,7 @@ import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
+import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
 
 export function RestaurantDetailsScreen({
@@ -21,6 +23,7 @@ export function RestaurantDetailsScreen({
   availability: RestaurantAvailability | null;
 }) {
   const t = useTranslations("RestaurantDetails");
+  const router = useRouter();
   const availabilityT = useTranslations("RestaurantAvailability");
   const [galleryOpened, gallery] = useDisclosure(false);
   const saved = useSavedRestaurants();
@@ -51,13 +54,30 @@ export function RestaurantDetailsScreen({
             color="warmCoral"
             radius="xl"
             size={40}
+            loading={saved.isToggling}
+            disabled={saved.isLoading}
             aria-label={t(isSaved ? "unsave" : "save")}
-            onClick={() => {
-              saved.toggle(restaurant.slug);
-              notifications.show({
-                color: "teal",
-                message: t(isSaved ? "removed" : "saved"),
-              });
+            onClick={async () => {
+              if (saved.requiresLogin) {
+                router.push("/login");
+                return;
+              }
+              try {
+                const nowSaved = await saved.toggle(restaurant.slug);
+                notifications.show({
+                  color: "teal",
+                  message: t(nowSaved ? "saved" : "removed"),
+                });
+              } catch (error) {
+                if (
+                  error instanceof ApiError &&
+                  (error.status === 401 || error.status === 403)
+                ) {
+                  router.push("/login");
+                  return;
+                }
+                notifications.show({ color: "red", message: t("saveError") });
+              }
             }}
           >
             <IconHeart size={20} fill={isSaved ? "currentColor" : "none"} />

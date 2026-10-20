@@ -1,65 +1,46 @@
 "use client";
 
-import { useCallback, useMemo, useSyncExternalStore } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getCustomerFavorites,
+  removeCustomerFavorite,
+  saveCustomerFavorite,
+} from "@/features/restaurants/data/customer-favorites";
+import { ApiError } from "@/lib/api/client";
 
-const STORAGE_KEY = "sibang-hankki:saved-restaurants";
-const CHANGE_EVENT = "sibang-hankki:saved-restaurants-change";
-const EMPTY_SNAPSHOT = "[]";
-
-export function parseSavedRestaurantSlugs(raw: string | null): string[] {
-  if (!raw) return [];
-  try {
-    const value: unknown = JSON.parse(raw);
-    if (!Array.isArray(value)) return [];
-    return [...new Set(value.filter((slug): slug is string =>
-      typeof slug === "string" && slug.trim().length > 0))];
-  } catch {
-    return [];
-  }
-}
-
-export function nextSavedRestaurantSlugs(current: string[], slug: string) {
-  return current.includes(slug)
-    ? current.filter((value) => value !== slug)
-    : [...current, slug];
-}
-
-function snapshot() {
-  return window.localStorage.getItem(STORAGE_KEY) ?? EMPTY_SNAPSHOT;
-}
-
-function serverSnapshot() {
-  return EMPTY_SNAPSHOT;
-}
-
-function subscribe(listener: () => void) {
-  const onStorage = (event: StorageEvent) => {
-    if (event.key === STORAGE_KEY) listener();
-  };
-  window.addEventListener("storage", onStorage);
-  window.addEventListener(CHANGE_EVENT, listener);
-  return () => {
-    window.removeEventListener("storage", onStorage);
-    window.removeEventListener(CHANGE_EVENT, listener);
-  };
-}
+const QUERY_KEY = ["customer-favorites"] as const;
 
 export function useSavedRestaurants() {
-  const raw = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
-  const slugs = useMemo(() => parseSavedRestaurantSlugs(raw), [raw]);
-  const saved = useMemo(() => new Set(slugs), [slugs]);
-  const toggle = useCallback((slug: string) => {
-    const current = parseSavedRestaurantSlugs(snapshot());
-    window.localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(nextSavedRestaurantSlugs(current, slug)),
-    );
-    window.dispatchEvent(new Event(CHANGE_EVENT));
-  }, []);
+  const queryClient = useQueryClient();
+  const query = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: ({ signal }) => getCustomerFavorites(signal),
+    retry: false,
+  });
+  const slugs = new Set(query.data?.map(({ slug }) => slug) ?? []);
+  const mutation = useMutation({
+    mutationFn: async (slug: string) => {
+      const wasSaved = slugs.has(slug);
+      await (wasSaved
+        ? removeCustomerFavorite(slug)
+        : saveCustomerFavorite(slug));
+      return !wasSaved;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  });
+  const requiresLogin =
+    query.error instanceof ApiError &&
+    (query.error.status === 401 || query.error.status === 403);
 
   return {
-    slugs,
-    isSaved: (slug: string) => saved.has(slug),
-    toggle,
+    restaurants: query.data ?? [],
+    slugs: [...slugs],
+    isSaved: (slug: string) => slugs.has(slug),
+    toggle: mutation.mutateAsync,
+    isToggling: mutation.isPending,
+    isLoading: query.isPending,
+    isError: query.isError && !requiresLogin,
+    requiresLogin,
+    retry: query.refetch,
   };
 }
