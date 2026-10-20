@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Suspense, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   Box,
@@ -22,7 +22,9 @@ import {
   IconArrowsSort,
   IconClock,
   IconMapPin,
+  IconMapPinOff,
   IconSearch,
+  IconSearchOff,
 } from "@tabler/icons-react";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { categories } from "@/features/home/data/home-data";
@@ -67,6 +69,7 @@ function filterChipStyles(active: boolean) { return active ? { label: { borderRa
 function RestaurantsContent({ restaurants, availability }: { restaurants: RestaurantSummary[]; availability: RestaurantAvailabilityMap }) {
   const t = useTranslations("RestaurantDiscovery");
   const availabilityT = useTranslations("RestaurantAvailability");
+  const router = useRouter();
   const searchParams = useSearchParams();
   const categorySlug = searchParams.get("category") ?? undefined;
   const citySlug = searchParams.get("city") ?? undefined;
@@ -130,6 +133,19 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     setCuisineFilter("all");
     setSelectedBenefits([]);
   };
+  const clearDiscoveryFilters = () => {
+    resetFilters();
+    setQuery("");
+    setSortBy("recommended");
+
+    const locationParams = new URLSearchParams();
+    ["location", "provinceCode", "wardCode"].forEach((key) => {
+      const value = searchParams.get(key);
+      if (value) locationParams.set(key, value);
+    });
+    const nextQuery = locationParams.toString();
+    router.replace(nextQuery ? `/restaurants?${nextQuery}` : "/restaurants");
+  };
   const liveAvailabilityLabel = (restaurantAvailability: RestaurantAvailabilityMap[string]) => {
     const state = getLiveAvailabilityState(restaurantAvailability);
     if (state.kind === "available") {
@@ -178,7 +194,48 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
           <Text size="sm" c={uiColors.textSecondary}>{selectedCategory ? t("categoryResults", { category: selectedCategory.label }) : t("restaurants")} <Text span fw={700} c={uiColors.textPrimary}>{filteredRestaurants.length}</Text></Text>
         </Group>
 
-        {filteredRestaurants.map((restaurant) => {
+        {filteredRestaurants.length === 0 ? (
+          <Card
+            radius="lg"
+            p="xl"
+            style={{
+              border: `1px solid ${uiColors.border}`,
+              background: uiColors.surfaceAlt,
+            }}
+          >
+            <Stack align="center" gap="sm" ta="center">
+              <ThemeIcon
+                size={52}
+                radius="xl"
+                variant="light"
+                color="warmCoral"
+              >
+                {restaurants.length === 0
+                  ? <IconMapPinOff size={25} />
+                  : <IconSearchOff size={25} />}
+              </ThemeIcon>
+              <Text fw={800} size="lg">
+                {t(restaurants.length === 0
+                  ? "empty.locationTitle"
+                  : "empty.filtersTitle")}
+              </Text>
+              <Text size="sm" c={uiColors.textSecondary} maw={360}>
+                {restaurants.length === 0
+                  ? t("empty.locationDescription", { location: searchScope })
+                  : t("empty.filtersDescription")}
+              </Text>
+              {restaurants.length === 0 ? (
+                <Button component={Link} href="/" color="warmCoral" mt="xs">
+                  {t("empty.changeLocation")}
+                </Button>
+              ) : (
+                <Button color="warmCoral" mt="xs" onClick={clearDiscoveryFilters}>
+                  {t("empty.clearFilters")}
+                </Button>
+              )}
+            </Stack>
+          </Card>
+        ) : filteredRestaurants.map((restaurant) => {
           const logoUrl = restaurantLogos[restaurant.slug];
           const cardImageUrl = logoUrl ?? restaurant.imageUrl;
           return (

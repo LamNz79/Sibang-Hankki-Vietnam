@@ -66,7 +66,8 @@
     "cuisine": { "all": "Ẩm thực", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản", "western": "Âu" },
     "benefits": { "special_deal": "Ưu đãi đặc biệt", "available": "Còn bàn", "date_night": "Hẹn hò", "michelin": "Michelin" },
     "restaurants": "Nhà hàng", "categoryResults": "Nhà hàng {category}", "imageAlt": "Hình ảnh {name}", "cardAvailabilityHint": "Dựa trên 2 khách hôm nay. Chọn thông tin chính xác ở bước đặt bàn.",
-    "priceRange": "Khoảng giá", "cuisineTitle": "Ẩm thực", "benefitsTitle": "Ưu đãi đặc biệt", "showResults": "Hiển thị {count} nhà hàng"
+    "priceRange": "Khoảng giá", "cuisineTitle": "Ẩm thực", "benefitsTitle": "Ưu đãi đặc biệt", "showResults": "Hiển thị {count} nhà hàng",
+    "empty": { "locationTitle": "Khu vực này chưa có nhà hàng", "locationDescription": "Hiện chưa có nhà hàng đang hoạt động tại {location}. Hãy chọn khu vực khác để tiếp tục khám phá.", "changeLocation": "Chọn khu vực khác", "filtersTitle": "Không tìm thấy nhà hàng phù hợp", "filtersDescription": "Hãy xóa từ khóa hoặc bộ lọc để xem thêm nhà hàng.", "clearFilters": "Xóa tìm kiếm và bộ lọc" }
   },
   "RestaurantDetails": {
     "title": "Chi tiết nhà hàng", "subtitle": "Thông tin nhà hàng", "selectDateTime": "Chọn ngày và giờ", "viewPhotos": "Xem {count} ảnh", "photosTitle": "Ảnh của {name}", "availabilityHint": "Tình trạng bàn hiển thị cho 2 khách hôm nay. Chọn ngày hoặc số khách khác ở bước đặt bàn.", "menu": "Thực đơn"
