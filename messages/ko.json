@@ -66,7 +66,8 @@
     "cuisine": { "all": "요리", "korean": "한식", "chinese": "중식", "vietnamese": "베트남식", "japanese": "일식", "western": "양식" },
     "benefits": { "special_deal": "특별 혜택", "available": "예약 가능", "date_night": "데이트", "michelin": "미쉐린" },
     "restaurants": "레스토랑", "categoryResults": "{category} 레스토랑", "imageAlt": "{name} 이미지", "cardAvailabilityHint": "오늘 2명 기준입니다. 예약 단계에서 정확한 정보를 선택하세요.",
-    "priceRange": "가격대", "cuisineTitle": "요리", "benefitsTitle": "특별 혜택", "showResults": "레스토랑 {count}개 보기"
+    "priceRange": "가격대", "cuisineTitle": "요리", "benefitsTitle": "특별 혜택", "showResults": "레스토랑 {count}개 보기",
+    "empty": { "locationTitle": "아직 이 지역에 레스토랑이 없습니다", "locationDescription": "현재 {location}에 이용 가능한 레스토랑이 없습니다. 다른 지역을 선택해 보세요.", "changeLocation": "다른 지역 선택", "filtersTitle": "조건에 맞는 레스토랑이 없습니다", "filtersDescription": "검색어나 필터를 지우고 더 많은 레스토랑을 확인해 보세요.", "clearFilters": "검색 및 필터 지우기" }
   },
   "RestaurantDetails": {
     "title": "레스토랑 상세", "subtitle": "레스토랑 정보", "selectDateTime": "날짜 및 시간 선택", "viewPhotos": "사진 {count}장 보기", "photosTitle": "{name} 사진", "availabilityHint": "오늘 2명 기준 예약 가능 시간입니다. 예약 단계에서 다른 날짜나 인원수를 선택할 수 있습니다.", "menu": "메뉴"
