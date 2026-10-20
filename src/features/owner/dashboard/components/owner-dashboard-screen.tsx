@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Alert, Button, Loader, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
+import { useFormatter, useTranslations } from "next-intl";
 import { PrimaryActionButton } from "@/components/ui";
 import { OwnerDashboardOverview } from "@/features/owner/dashboard/components/owner-dashboard-overview";
 import { OwnerDashboardToolbar } from "@/features/owner/dashboard/components/owner-dashboard-toolbar";
@@ -10,31 +11,43 @@ import { OwnerFilterDrawer } from "@/features/owner/dashboard/components/owner-f
 import { OwnerReservationList } from "@/features/owner/dashboard/components/owner-reservation-list";
 import { OwnerWalkInModal } from "@/features/owner/dashboard/components/owner-walk-in-modal";
 import { useOwnerDashboard } from "@/features/owner/dashboard/hooks/use-owner-dashboard";
+import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
 import { OwnerShell } from "@/features/owner/shared";
 
 /** Coordinates the owner daily-operations dashboard presentation components. */
 export function OwnerDashboardScreen() {
+  const t = useTranslations("OwnerDashboard");
+  const format = useFormatter();
   const dashboard = useOwnerDashboard();
+  const settings = useOwnerSettings();
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
+  const formattedDate = format.dateTime(dashboard.selectedDate, {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
+  const dateLabel = dashboard.isToday
+    ? t("toolbar.today", { date: formattedDate })
+    : formattedDate;
 
   return (
     <>
       <OwnerShell
-        title="The Royal Pavilion"
-        eyebrow="Today · Service overview"
+        title={settings.query.data?.name ?? t("restaurantFallback")}
+        eyebrow={t("eyebrow")}
         footerAction={
           <PrimaryActionButton
             leftSection={<IconPlus size={20} />}
             onClick={() => setWalkInOpened(true)}
           >
-            Add walk-in
+            {t("addWalkIn")}
           </PrimaryActionButton>
         }
       >
         <Stack gap="lg">
           <OwnerDashboardToolbar
-            dateLabel={dashboard.dateLabel}
+            dateLabel={dateLabel}
             isToday={dashboard.isToday}
             searchQuery={dashboard.searchQuery}
             hasActiveFilters={dashboard.hasActiveFilters}
@@ -48,7 +61,7 @@ export function OwnerDashboardScreen() {
 
           {dashboard.reservationsLoading ? <Loader mx="auto" /> : null}
           {dashboard.reservationsError ? (
-            <Alert color="red" title="Unable to load reservations">
+            <Alert color="red" title={t("loadError.title")}>
               <Button
                 mt="sm"
                 size="xs"
@@ -56,7 +69,7 @@ export function OwnerDashboardScreen() {
                 color="red"
                 onClick={dashboard.retryReservations}
               >
-                Try again
+                {t("loadError.retry")}
               </Button>
             </Alert>
           ) : null}

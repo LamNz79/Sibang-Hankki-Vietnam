@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Box, Group, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import {
   getOwnerReservationDisplayStatus,
 } from "@/features/owner/selectors/owner-reservation-selectors";
@@ -19,6 +20,7 @@ export function OwnerReservationRow({
   reservation: OwnerReservation;
   compact?: boolean;
 }) {
+  const t = useTranslations("OwnerDashboard");
   const displayStatus = getOwnerReservationDisplayStatus(reservation);
 
   return (
@@ -53,7 +55,7 @@ export function OwnerReservationRow({
             />
           </Group>
           <Text size="xs" c={uiColors.textSecondary} lineClamp={1}>
-            {reservation.partySize} guests
+            {t("guestCount", { count: reservation.partySize })}
             {reservation.note ? ` · ${reservation.note}` : ""}
           </Text>
           <Box hiddenFrom="sm">

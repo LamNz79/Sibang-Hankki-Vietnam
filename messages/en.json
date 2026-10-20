@@ -227,6 +227,15 @@
       "responseError": "Unable to update the proposal. Please try again."
     }
   },
+  "OwnerDashboard": {
+    "restaurantFallback": "Restaurant", "eyebrow": "Service overview", "addWalkIn": "Add walk-in", "guestCount": "{count, plural, one {# guest} other {# guests}}",
+    "loadError": { "title": "Unable to load reservations", "retry": "Try again" },
+    "toolbar": { "today": "Today · {date}", "previousDay": "Previous day", "nextDay": "Next day", "returnToday": "Return to today", "searchPlaceholder": "Guest name or booking code", "searchLabel": "Search reservations by guest name, booking code, or phone", "clearSearch": "Clear reservation search", "filter": "Filter reservations" },
+    "overview": { "metrics": { "bookings": "Bookings", "expectedGuests": "Expected guests", "preOrders": "Pre-orders", "vipGuests": "VIP guests" }, "attention": { "title": "Needs attention", "description": "{count, plural, one {# reservation request needs review.} other {# reservation requests need review.}}" }, "nextArrival": "Next arrival", "vip": "VIP", "preOrder": "pre-order", "guestCount": "{count, plural, one {# guest} other {# guests}}" },
+    "list": { "title": "Reservations", "shown": "{count} shown", "searchEmptyTitle": "No reservations found", "filterEmptyTitle": "No reservations match", "searchEmptyDescription": "Check the guest name, booking code, or phone number.", "filterEmptyDescription": "Try another status or guest filter." },
+    "filters": { "title": "Filter reservations", "status": "Status", "chooseOne": "Choose one", "guestDetails": "Guest details", "selectAny": "Select any", "reset": "Reset", "show": "Show {count} reservations", "statuses": { "all": "All", "pending": "Pending", "waitingGuest": "Waiting guest", "confirmed": "Confirmed", "declined": "Declined", "expired": "Expired", "cancelled": "Cancelled", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "noShow": "No-show" }, "guests": { "vip": "VIP", "preOrder": "Pre-order", "largeParty": "4+ guests" } },
+    "walkIn": { "title": "Add walk-in", "description": "Add a guest who arrived without an online reservation. Capacity is taken from the current service slot.", "errorTitle": "Unable to add walk-in", "capacityError": "There is not enough capacity in the current service slot.", "genericError": "The walk-in could not be added. Please try again.", "name": "Guest name", "namePlaceholder": "Enter guest name", "nameRequired": "Guest name is required.", "phone": "Phone", "phonePlaceholder": "Enter phone number", "phoneRequired": "Phone number is required.", "partySize": "Party size", "notes": "Notes", "notesPlaceholder": "Seating or allergy notes", "cancel": "Cancel", "submit": "Add guest", "added": "Walk-in guest added." }
+  },
   "OwnerReservationDetails": {
     "title": "Reservation details",
     "eyebrow": "Selected guest only",

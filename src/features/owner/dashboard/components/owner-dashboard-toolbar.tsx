@@ -16,6 +16,7 @@ import {
   IconSearch,
   IconX,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 type OwnerDashboardToolbarProps = {
@@ -44,6 +45,8 @@ export function OwnerDashboardToolbar({
   onSearchChange,
   onOpenFilters,
 }: OwnerDashboardToolbarProps) {
+  const t = useTranslations("OwnerDashboard.toolbar");
+
   return (
     <Box
       style={{
@@ -69,7 +72,7 @@ export function OwnerDashboardToolbar({
               variant="light"
               color="gray"
               radius="md"
-              aria-label="Previous day"
+              aria-label={t("previousDay")}
               onClick={onPreviousDay}
             >
               <IconChevronLeft size={18} />
@@ -85,7 +88,7 @@ export function OwnerDashboardToolbar({
                   size="compact-xs"
                   onClick={onReturnToToday}
                 >
-                  Return to today
+                  {t("returnToday")}
                 </Button>
               ) : null}
             </Stack>
@@ -93,7 +96,7 @@ export function OwnerDashboardToolbar({
               variant="light"
               color="gray"
               radius="md"
-              aria-label="Next day"
+              aria-label={t("nextDay")}
               onClick={onNextDay}
             >
               <IconChevronRight size={18} />
@@ -105,8 +108,8 @@ export function OwnerDashboardToolbar({
           <TextInput
             value={searchQuery}
             onChange={(event) => onSearchChange(event.currentTarget.value)}
-            placeholder="Guest name or booking code"
-            aria-label="Search reservations by guest name, booking code, or phone"
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchLabel")}
             size="md"
             radius="lg"
             leftSection={<IconSearch size={18} />}
@@ -116,7 +119,7 @@ export function OwnerDashboardToolbar({
                   variant="subtle"
                   color="gray"
                   radius="xl"
-                  aria-label="Clear reservation search"
+                  aria-label={t("clearSearch")}
                   onClick={() => onSearchChange("")}
                 >
                   <IconX size={16} />
@@ -146,7 +149,7 @@ export function OwnerDashboardToolbar({
               radius="lg"
               variant={hasActiveFilters ? "light" : "default"}
               color="warmCoral"
-              aria-label="Filter reservations"
+              aria-label={t("filter")}
               onClick={onOpenFilters}
               style={{
                 border: `1px solid ${

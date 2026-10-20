@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { useTranslations } from "next-intl";
 import { useState, type FormEvent } from "react";
 import { useOwnerWalkIn } from "@/features/owner/hooks/use-owner-reservations";
 import { ApiError } from "@/lib/api/client";
@@ -20,23 +21,18 @@ type OwnerWalkInModalProps = {
   onClose: () => void;
 };
 
-function errorMessage(error: Error | null) {
+function errorMessageKey(error: Error | null) {
   if (error instanceof ApiError && error.status === 409) {
-    const message =
-      error.body && typeof error.body === "object" && "message" in error.body
-        ? (error.body as { message?: unknown }).message
-        : null;
-    return typeof message === "string"
-      ? message
-      : "There is not enough capacity in the current service slot.";
+    return "capacityError";
   }
-  return "The walk-in could not be added. Please try again.";
+  return "genericError";
 }
 
 export function OwnerWalkInModal({
   opened,
   onClose,
 }: OwnerWalkInModalProps) {
+  const t = useTranslations("OwnerDashboard.walkIn");
   const mutation = useOwnerWalkIn();
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -44,6 +40,7 @@ export function OwnerWalkInModal({
   const [specialRequest, setSpecialRequest] = useState("");
   const [nameError, setNameError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const mutationErrorKey = errorMessageKey(mutation.error);
 
   const close = () => {
     if (mutation.isPending) return;
@@ -57,8 +54,8 @@ export function OwnerWalkInModal({
     event.preventDefault();
     const name = customerName.trim();
     const phone = customerPhone.trim();
-    setNameError(name ? null : "Guest name is required.");
-    setPhoneError(phone ? null : "Phone number is required.");
+    setNameError(name ? null : t("nameRequired"));
+    setPhoneError(phone ? null : t("phoneRequired"));
     if (!name || !phone || typeof partySize !== "number" || partySize < 1) return;
 
     try {
@@ -68,7 +65,7 @@ export function OwnerWalkInModal({
         partySize,
         specialRequest: specialRequest.trim() || undefined,
       });
-      notifications.show({ color: "teal", message: "Walk-in guest added." });
+      notifications.show({ color: "teal", message: t("added") });
       setCustomerName("");
       setCustomerPhone("");
       setPartySize(2);
@@ -83,7 +80,7 @@ export function OwnerWalkInModal({
     <Modal
       opened={opened}
       onClose={close}
-      title={<Text fw={800}>Add walk-in</Text>}
+      title={<Text fw={800}>{t("title")}</Text>}
       centered
       radius="lg"
       closeOnClickOutside={!mutation.isPending}
@@ -92,17 +89,16 @@ export function OwnerWalkInModal({
       <form onSubmit={submit}>
         <Stack gap="md">
           <Text size="sm" c={uiColors.textSecondary}>
-          Add a guest who has arrived without an online reservation. Capacity
-          is taken from the current service slot.
+            {t("description")}
           </Text>
           {mutation.isError ? (
-            <Alert color="red" title="Unable to add walk-in">
-              {errorMessage(mutation.error)}
+            <Alert color="red" title={t("errorTitle")}>
+              {t(mutationErrorKey)}
             </Alert>
           ) : null}
           <TextInput
-            label="Guest name"
-            placeholder="Enter guest name"
+            label={t("name")}
+            placeholder={t("namePlaceholder")}
             required
             maxLength={120}
             value={customerName}
@@ -113,8 +109,8 @@ export function OwnerWalkInModal({
             }}
           />
           <TextInput
-            label="Phone"
-            placeholder="Enter phone number"
+            label={t("phone")}
+            placeholder={t("phonePlaceholder")}
             required
             maxLength={30}
             value={customerPhone}
@@ -125,23 +121,23 @@ export function OwnerWalkInModal({
             }}
           />
           <NumberInput
-            label="Party size"
+            label={t("partySize")}
             min={1}
             required
             value={partySize}
             onChange={setPartySize}
           />
           <Textarea
-            label="Notes"
-            placeholder="Seating or allergy notes"
+            label={t("notes")}
+            placeholder={t("notesPlaceholder")}
             value={specialRequest}
             onChange={(event) => setSpecialRequest(event.currentTarget.value)}
           />
           <Group grow>
             <Button variant="default" onClick={close} disabled={mutation.isPending}>
-              Cancel
+              {t("cancel")}
             </Button>
-            <Button type="submit" loading={mutation.isPending}>Add guest</Button>
+            <Button type="submit" loading={mutation.isPending}>{t("submit")}</Button>
           </Group>
         </Stack>
       </form>

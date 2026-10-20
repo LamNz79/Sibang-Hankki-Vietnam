@@ -105,9 +105,6 @@ export function useOwnerDashboard() {
   };
 
   const isToday = selectedDate.isSame(dayjs(), "day");
-  const dateLabel = isToday
-    ? `Today · ${selectedDate.format("dddd, MMM D")}`
-    : selectedDate.format("dddd, MMM D");
   const hasActiveFilters = statusFilter !== "all" || guestFilters.length > 0;
   const activeFilterCount =
     (statusFilter === "all" ? 0 : 1) + guestFilters.length;
@@ -130,7 +127,7 @@ export function useOwnerDashboard() {
     reservationsLoading: ownerReservationQuery.isPending,
     reservationsError: ownerReservationQuery.isError,
     retryReservations: () => void ownerReservationQuery.refetch(),
-    dateLabel,
+    selectedDate: selectedDate.toDate(),
     isToday,
     selectPreviousDay: () =>
       setSelectedDate((current) => current.subtract(1, "day")),
