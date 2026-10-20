@@ -1,15 +1,25 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { ActionIcon, Badge, Box, Group, Stack, Text, TextInput, UnstyledButton } from "@mantine/core";
 import { IconBell, IconChevronDown, IconMapPinFilled, IconSearch } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 export type HomeHeaderProps = {
   location: string;
   onOpenLocation: () => void;
+  onSearch: (query: string) => void;
 };
 
-export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
+export function HomeHeader({ location, onOpenLocation, onSearch }: HomeHeaderProps) {
+  const t = useTranslations("Home.header");
+  const [query, setQuery] = useState("");
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (query.trim()) onSearch(query.trim());
+  };
+
   return (
     <Stack gap={16}>
       <Box
@@ -29,6 +39,7 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
           color="gray"
           radius="xl"
           size="xl"
+          aria-label={t("notifications")}
           style={{
             background: uiColors.surfaceMuted,
             color: uiColors.textSecondary,
@@ -60,26 +71,31 @@ export function HomeHeader({ location, onOpenLocation }: HomeHeaderProps) {
             },
           }}
         >
-          Current location
+          {t("currentLocation")}
         </Badge>
       </Group>
 
-      <TextInput
-        radius="md"
-        size="md"
-        placeholder="Search restaurants or cities"
-        leftSection={<IconSearch size={16} />}
-        styles={{
-          input: {
-            border: `1px solid ${uiColors.border}`,
-            background: uiColors.surface,
-            height: 52,
-            color: uiColors.textPrimary,
-            boxShadow: "none",
-          },
-          section: { color: uiColors.textMuted },
-        }}
-      />
+      <form onSubmit={submit}>
+        <TextInput
+          radius="md"
+          size="md"
+          value={query}
+          onChange={(event) => setQuery(event.currentTarget.value)}
+          placeholder={t("searchPlaceholder")}
+          aria-label={t("searchLabel")}
+          leftSection={<IconSearch size={16} />}
+          styles={{
+            input: {
+              border: `1px solid ${uiColors.border}`,
+              background: uiColors.surface,
+              height: 52,
+              color: uiColors.textPrimary,
+              boxShadow: "none",
+            },
+            section: { color: uiColors.textMuted },
+          }}
+        />
+      </form>
     </Stack>
   );
 }

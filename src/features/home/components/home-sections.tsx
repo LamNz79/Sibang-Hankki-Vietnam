@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Box, Card, Group, Stack, Text, Title } from "@mantine/core";
 import { SelectionChip } from "@/components/ui";
+import { useTranslations } from "next-intl";
 import { uiColors } from "@/theme";
 
 export function HeroBanner() {
+  const t = useTranslations("Home.banner");
   return (
     <Card
       radius="md"
@@ -17,13 +19,13 @@ export function HeroBanner() {
     >
       <Stack gap={10}>
         <Text size="sm" fw={700} c={uiColors.brandPrimaryMuted} tt="uppercase">
-          Main banner
+          {t("eyebrow")}
         </Text>
         <Title order={2} size="h2" c={uiColors.textPrimary}>
-          Today&apos;s dining benefits
+          {t("title")}
         </Title>
         <Text size="sm" c={uiColors.textSecondary}>
-          Banner area
+          {t("description")}
         </Text>
       </Stack>
     </Card>

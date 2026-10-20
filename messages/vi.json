@@ -43,13 +43,24 @@
       "duplicateMessage": "Tên đăng nhập này đã được sử dụng. Hãy chọn tên khác."
     }
   },
+  "Home": {
+    "subtitle": "Tìm bàn nhanh và đặt chỗ dễ dàng.", "loadingReservations": "Đang tải đặt bàn...", "loading": "Đang tải...",
+    "header": { "notifications": "Thông báo", "currentLocation": "Vị trí hiện tại", "searchPlaceholder": "Tìm nhà hàng hoặc thành phố", "searchLabel": "Tìm nhà hàng hoặc thành phố" },
+    "banner": { "eyebrow": "Nổi bật", "title": "Ưu đãi ẩm thực hôm nay", "description": "Khám phá các ưu đãi hiện có từ nhà hàng." },
+    "sections": { "specialCategories": "Danh mục nổi bật", "upToFive": "Tối đa 5", "exploreCity": "Khám phá theo thành phố", "viewAll": "Xem tất cả", "sortBy": "Sắp xếp", "cuisine": "Ẩm thực", "priceRange": "Khoảng giá" },
+    "categories": { "michelin": "Michelin", "buffet": "Buffet", "special-deal": "Ưu đãi", "date-night": "Hẹn hò", "trending": "Thịnh hành" },
+    "sort": { "recommended": "Đề xuất", "rating": "Đánh giá cao", "earliest": "Còn chỗ sớm nhất" },
+    "cuisines": { "western": "Món Âu", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản" },
+    "prices": { "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
+    "location": { "title": "Chọn khu vực", "useCurrent": "Dùng vị trí hiện tại", "hint": "Gợi ý nhà hàng phù hợp hơn theo khu vực", "popular": "Khu vực phổ biến", "recent": "Vị trí gần đây", "cities": "Thành phố", "areas": "Khu vực" }
+  },
   "RestaurantAvailability": {
     "unknown": "Kiểm tra giờ ở bước đặt bàn", "contact": "Liên hệ nhà hàng cho số lượng khách này", "unavailable": "Hôm nay không còn giờ trực tuyến cho {count} khách", "available": "Hôm nay còn bàn từ {time}", "availableConfirmation": "Hôm nay còn bàn từ {time} · cần nhà hàng xác nhận"
   },
   "RestaurantDiscovery": {
     "title": "Danh sách nhà hàng", "categoryTitle": "{category} tại {location}", "cityTitle": "Nhà hàng tại {city}", "hoChiMinhCity": "Thành phố Hồ Chí Minh", "subtitle": "Kết quả đã lọc", "searchPlaceholder": "Tìm nhà hàng hoặc khu vực",
     "availabilityTitle": "Tình trạng bàn được hiển thị theo từng nhà hàng", "availabilityDescription": "Xem nhà hàng trước, sau đó chọn chính xác ngày, giờ và số khách ở bước đặt bàn.", "all": "Tất cả", "available": "Còn bàn", "filters": "Bộ lọc", "reset": "Đặt lại",
-    "sort": { "recommended": "Đề xuất", "earliest": "Giờ trống sớm nhất" },
+    "sort": { "recommended": "Đề xuất", "rating": "Đánh giá cao", "earliest": "Giờ trống sớm nhất" }, "loading": "Đang tải nhà hàng...",
     "price": { "all": "Mức giá", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
     "priceOptions": { "all": "Tất cả", "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
     "cuisine": { "all": "Ẩm thực", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản", "western": "Âu" },
