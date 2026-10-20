@@ -6,6 +6,7 @@ import { Alert, Button, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
 import { BookingGuestSelector } from "@/features/reservations/components/booking-guest-selector";
+import { BookingMenuSelector } from "@/features/reservations/components/booking-menu-selector";
 import { BookingRestaurantSummary } from "@/features/reservations/components/booking-restaurant-summary";
 import { BookingTimeSelector } from "@/features/reservations/components/booking-time-selector";
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
@@ -138,6 +139,13 @@ export function ReservationBookingScreen({
               autosize
               minRows={2}
             />
+            {restaurant.menuCategories.length > 0 ? (
+              <BookingMenuSelector
+                categories={restaurant.menuCategories}
+                quantities={booking.preOrderQuantities}
+                onChange={booking.setPreOrderQuantity}
+              />
+            ) : null}
             <Textarea
               label={t("requests.preOrder")}
               description={t("requests.preOrderDescription")}
@@ -148,6 +156,9 @@ export function ReservationBookingScreen({
               autosize
               minRows={2}
             />
+            {booking.preOrderTooLong ? (
+              <Alert color="red">{t("requests.preOrderTooLong")}</Alert>
+            ) : null}
           </Stack>
         </>
       )}
