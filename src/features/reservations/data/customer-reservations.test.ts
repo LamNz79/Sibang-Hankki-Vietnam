@@ -56,11 +56,19 @@ const accountRecord = {
 const liveRestaurant = {
   slug: "royal-pavilion",
   name: "The Royal Pavilion",
-  district: "Diên Hồng",
+  citySlug: "ho-chi-minh-city",
+  area: "Diên Hồng",
   cuisineLabel: "Chinese",
+  cuisineKey: "chinese",
+  rating: 0,
+  heroAccent: "#f3f4f6",
   imageUrl: "https://example.com/royal-pavilion.jpg",
   imageAlt: "Royal Pavilion dining room",
-} as RestaurantSummary;
+  availableText: null,
+  availableFrom: null,
+  priceKey: "over300",
+  benefits: [],
+} satisfies RestaurantSummary;
 
 const proposalRecord = {
   ...accountRecord,

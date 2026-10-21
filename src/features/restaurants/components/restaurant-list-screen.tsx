@@ -31,7 +31,7 @@ import { categories } from "@/features/home/data/home-data";
 import {
   type BenefitKey,
   type CuisineKey,
-} from "@/features/restaurants/data/mock-data";
+} from "@/features/restaurants/data/types";
 import type { RestaurantSummary } from "@/features/restaurants/data/api";
 import {
   cityLabels,

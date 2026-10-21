@@ -177,7 +177,7 @@ export function selectVisibleReservations(
       ? {
           ...reservation,
           restaurantName: restaurant.name || reservation.restaurantName,
-          district: restaurant.district || reservation.district,
+          district: restaurant.area || reservation.district,
           cuisineLabel: restaurant.cuisineLabel || reservation.cuisineLabel,
           restaurantImageUrl:
             restaurant.imageUrl || reservation.restaurantImageUrl,

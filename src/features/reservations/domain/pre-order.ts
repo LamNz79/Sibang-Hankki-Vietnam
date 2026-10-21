@@ -1,4 +1,4 @@
-import type { RestaurantMenuCategory } from "@/features/restaurants/data/mock-data";
+import type { RestaurantMenuCategory } from "@/features/restaurants/data/types";
 
 export function buildPreOrderNote(
   categories: RestaurantMenuCategory[],

@@ -13,7 +13,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import type { RestaurantMenuCategory } from "@/features/restaurants/data/mock-data";
+import type { RestaurantMenuCategory } from "@/features/restaurants/data/types";
 import { uiColors } from "@/theme";
 
 type BookingMenuSelectorProps = {

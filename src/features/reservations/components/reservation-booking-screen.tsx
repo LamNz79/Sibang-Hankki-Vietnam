@@ -10,7 +10,7 @@ import { BookingMenuSelector } from "@/features/reservations/components/booking-
 import { BookingRestaurantSummary } from "@/features/reservations/components/booking-restaurant-summary";
 import { BookingTimeSelector } from "@/features/reservations/components/booking-time-selector";
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
-import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { useReservationBooking } from "@/features/reservations/hooks/use-reservation-booking";
 
 type ReservationBookingScreenProps = {
