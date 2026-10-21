@@ -16,7 +16,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAvailability } from "@/features/reservations/data/availability";
 import { createReservation } from "@/features/reservations/data/create-reservation";
 import { buildPreOrderNote } from "@/features/reservations/domain/pre-order";
-import { resolveBookingPolicy } from "@/features/reservations/domain/booking-policy";
+import {
+  getBookingWindowEndDate,
+  resolveBookingPolicy,
+} from "@/features/reservations/domain/booking-policy";
 import {
   useCustomerReservation,
   useRequestAnotherTime,
@@ -39,7 +42,7 @@ export function useReservationBooking({
   const bookingPolicy = resolveBookingPolicy(restaurant.bookingPolicy);
   const bookingStartDate = useMemo(() => dayjs().startOf("day"), []);
   const bookingEndDate = useMemo(
-    () => bookingStartDate.add(bookingPolicy.bookingWindowDays, "day"),
+    () => getBookingWindowEndDate(bookingStartDate, bookingPolicy.bookingWindowDays),
     [bookingPolicy.bookingWindowDays, bookingStartDate],
   );
   const defaultDate = bookingStartDate.format("YYYY-MM-DD");

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { resolveBookingPolicy } from "./booking-policy";
+import dayjs from "dayjs";
+import {
+  getBookingWindowEndDate,
+  resolveBookingPolicy,
+} from "./booking-policy";
 
 describe("resolveBookingPolicy", () => {
   it("uses the restaurant booking policy when the API provides it", () => {
@@ -20,5 +24,13 @@ describe("resolveBookingPolicy", () => {
       maximumOnlinePartySize: 10,
       largePartyThreshold: 11,
     });
+  });
+});
+
+describe("getBookingWindowEndDate", () => {
+  it("counts the first day as part of the booking window", () => {
+    expect(
+      getBookingWindowEndDate(dayjs("2026-10-21"), 30).format("YYYY-MM-DD"),
+    ).toBe("2026-11-19");
   });
 });
