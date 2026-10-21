@@ -10,21 +10,29 @@ import {
 } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { LARGE_PARTY_THRESHOLD } from "@/features/reservations/types";
 
 const guestOptions = [2, 4, 6] as const;
 
 type BookingGuestSelectorProps = {
   value: number;
+  minimum: number;
+  maximum: number;
+  largePartyThreshold: number;
   onChange: (guests: number) => void;
 };
 
 /** Editable party size with quick presets for common reservation sizes. */
 export function BookingGuestSelector({
   value,
+  minimum,
+  maximum,
+  largePartyThreshold,
   onChange,
 }: BookingGuestSelectorProps) {
   const t = useTranslations("CustomerBooking.guests");
+  const visibleGuestOptions = guestOptions.filter(
+    (count) => count >= minimum && count <= maximum,
+  );
 
   return (
     <Stack gap="sm">
@@ -38,14 +46,15 @@ export function BookingGuestSelector({
           size="lg"
           radius="md"
           aria-label={t("remove")}
-          disabled={value <= 1}
+          disabled={value <= minimum}
           onClick={() => onChange(value - 1)}
         >
           <IconMinus size={18} />
         </ActionIcon>
         <NumberInput
           value={value}
-          min={1}
+          min={minimum}
+          max={maximum}
           allowDecimal={false}
           allowNegative={false}
           hideControls
@@ -53,7 +62,9 @@ export function BookingGuestSelector({
           aria-label={t("count")}
           onChange={(nextValue) => {
             if (typeof nextValue === "number") {
-              onChange(Math.max(1, Math.trunc(nextValue)));
+              onChange(
+                Math.min(maximum, Math.max(minimum, Math.trunc(nextValue))),
+              );
             }
           }}
           styles={{ input: { textAlign: "center", fontWeight: 700 } }}
@@ -65,13 +76,15 @@ export function BookingGuestSelector({
           size="lg"
           radius="md"
           aria-label={t("add")}
+          disabled={value >= maximum}
           onClick={() => onChange(value + 1)}
         >
           <IconPlus size={18} />
         </ActionIcon>
       </Group>
-      <SimpleGrid cols={3} spacing="sm">
-        {guestOptions.map((count) => {
+      {visibleGuestOptions.length > 0 ? (
+        <SimpleGrid cols={3} spacing="sm">
+        {visibleGuestOptions.map((count) => {
           const active = value === count;
 
           return (
@@ -86,8 +99,9 @@ export function BookingGuestSelector({
             </Button>
           );
         })}
-      </SimpleGrid>
-      {value > LARGE_PARTY_THRESHOLD ? (
+        </SimpleGrid>
+      ) : null}
+      {value >= largePartyThreshold ? (
         <Alert color="yellow" radius="md" title={t("largePartyTitle")}>
           <Stack gap="sm">
             <Text size="sm">

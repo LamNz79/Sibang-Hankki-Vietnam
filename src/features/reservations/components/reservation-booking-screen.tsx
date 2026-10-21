@@ -92,6 +92,9 @@ export function ReservationBookingScreen({
         <>
           <BookingGuestSelector
             value={booking.selectedGuests}
+            minimum={booking.bookingPolicy.minimumPartySize}
+            maximum={booking.bookingPolicy.maximumOnlinePartySize}
+            largePartyThreshold={booking.bookingPolicy.largePartyThreshold}
             onChange={booking.selectGuests}
           />
 
