@@ -27,6 +27,13 @@ export type RestaurantMenuCategory = {
   items: RestaurantMenuItem[];
 };
 
+export type RestaurantBookingPolicy = {
+  bookingWindowDays: number;
+  minimumPartySize: number;
+  maximumOnlinePartySize: number;
+  largePartyThreshold: number;
+};
+
 export type RestaurantSummary = {
   slug: string;
   name: string;
@@ -56,4 +63,5 @@ export type RestaurantRecord = RestaurantSummary & {
   summary: string;
   slotMatrix: Record<string, Record<string, string[]>>;
   menuCategories: RestaurantMenuCategory[];
+  bookingPolicy?: RestaurantBookingPolicy;
 };

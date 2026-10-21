@@ -1,4 +1,4 @@
-/** Temporary prototype threshold until restaurants can configure party sizes. */
+// shortcut: owner reservation responses do not expose the restaurant threshold yet.
 export const LARGE_PARTY_THRESHOLD = 10;
 
 /** Lifecycle of a reservation request before the guest arrives. */

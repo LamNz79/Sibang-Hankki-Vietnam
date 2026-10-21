@@ -16,6 +16,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAvailability } from "@/features/reservations/data/availability";
 import { createReservation } from "@/features/reservations/data/create-reservation";
 import { buildPreOrderNote } from "@/features/reservations/domain/pre-order";
+import { resolveBookingPolicy } from "@/features/reservations/domain/booking-policy";
 import {
   useCustomerReservation,
   useRequestAnotherTime,
@@ -35,15 +36,18 @@ export function useReservationBooking({
   restaurant,
   changeReservationId,
 }: UseReservationBookingOptions) {
+  const bookingPolicy = resolveBookingPolicy(restaurant.bookingPolicy);
   const bookingStartDate = useMemo(() => dayjs().startOf("day"), []);
   const bookingEndDate = useMemo(
-    () => bookingStartDate.add(30, "day"),
-    [bookingStartDate],
+    () => bookingStartDate.add(bookingPolicy.bookingWindowDays, "day"),
+    [bookingPolicy.bookingWindowDays, bookingStartDate],
   );
   const defaultDate = bookingStartDate.format("YYYY-MM-DD");
 
   const [selectedDate, setSelectedDate] = useState<string | null>(defaultDate);
-  const [selectedGuests, setSelectedGuests] = useState(2);
+  const [selectedGuests, setSelectedGuests] = useState(
+    bookingPolicy.minimumPartySize,
+  );
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -220,6 +224,7 @@ export function useReservationBooking({
     selectedDate,
     selectDate,
     selectedGuests: partySize,
+    bookingPolicy,
     changingReservation,
     selectGuests,
     selectedTime,

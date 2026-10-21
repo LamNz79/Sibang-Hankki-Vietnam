@@ -1,13 +1,14 @@
 import { ReservationBookingScreen } from "@/features/reservations";
 import { getRestaurant } from "@/features/restaurants/data/api";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function CustomerReservationPage({
   searchParams,
 }: {
   searchParams: Promise<{ restaurant?: string; change?: string }>;
 }) {
-  const { restaurant: slug = "royal-pavilion", change } = await searchParams;
+  const { restaurant: slug, change } = await searchParams;
+  if (!slug) redirect("/restaurants");
   const restaurant = await getRestaurant(slug);
 
   if (!restaurant) notFound();
