@@ -70,7 +70,6 @@ function HomeContent() {
   const checkInToken = useCustomerCheckInToken(selectedReservation);
   const sortOptions = {
     [homeT("sort.recommended")]: "recommended",
-    [homeT("sort.rating")]: "rating",
     [homeT("sort.earliest")]: "earliest",
   };
   const cuisineOptions = {
