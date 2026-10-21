@@ -8,7 +8,7 @@ import { notifications } from "@mantine/notifications";
 import { IconCalendarTime, IconClock, IconHeart, IconMapPin, IconPhoto } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
-import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
@@ -28,9 +28,11 @@ export function RestaurantDetailsScreen({
   const [galleryOpened, gallery] = useDisclosure(false);
   const saved = useSavedRestaurants();
   const isSaved = saved.isSaved(restaurant.slug);
-  const galleryImages = restaurant.galleryImages?.length
+  const galleryImages = restaurant.galleryImages.length
     ? restaurant.galleryImages
-    : [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }];
+    : restaurant.imageUrl
+      ? [{ imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt }]
+      : [];
   const menuCategories = restaurant.menuCategories ?? [];
   const availabilityState = getLiveAvailabilityState(availability);
   const availabilityLabel = availabilityState.kind === "available"
@@ -95,25 +97,29 @@ export function RestaurantDetailsScreen({
       <Box
         h={280}
         role="group"
-        aria-label={restaurant.imageAlt}
+        aria-label={restaurant.imageAlt ?? restaurant.name}
         style={{
           position: "relative",
           borderRadius: 24,
           backgroundColor: restaurant.heroAccent,
-          backgroundImage: `url("${restaurant.imageUrl}")`,
+          backgroundImage: restaurant.imageUrl
+            ? `url("${restaurant.imageUrl}")`
+            : undefined,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
       >
-        <Button
-          variant="white"
-          color="dark"
-          leftSection={<IconPhoto size={16} />}
-          onClick={gallery.open}
-          style={{ position: "absolute", right: 16, bottom: 16 }}
-        >
-          {t("viewPhotos", { count: galleryImages.length })}
-        </Button>
+        {galleryImages.length > 0 ? (
+          <Button
+            variant="white"
+            color="dark"
+            leftSection={<IconPhoto size={16} />}
+            onClick={gallery.open}
+            style={{ position: "absolute", right: 16, bottom: 16 }}
+          >
+            {t("viewPhotos", { count: galleryImages.length })}
+          </Button>
+        ) : null}
       </Box>
 
       <Modal
@@ -128,7 +134,7 @@ export function RestaurantDetailsScreen({
             <Image
               key={`${image.imageUrl}-${index}`}
               src={image.imageUrl}
-              alt={image.imageAlt}
+              alt={image.imageAlt ?? restaurant.name}
               h={260}
               radius="md"
               fit="cover"

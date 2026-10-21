@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import dayjs from "dayjs";
-import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import {
   createCheckInToken,
   saveReservation,
@@ -92,8 +92,8 @@ export function useReservationBooking({
         restaurantName: restaurant.name,
         district: restaurant.district,
         cuisineLabel: restaurant.cuisineLabel,
-        restaurantImageUrl: restaurant.imageUrl,
-        restaurantImageAlt: restaurant.imageAlt,
+        restaurantImageUrl: restaurant.imageUrl ?? undefined,
+        restaurantImageAlt: restaurant.imageAlt ?? undefined,
         date: response.date,
         time: response.time,
         guests: response.partySize,

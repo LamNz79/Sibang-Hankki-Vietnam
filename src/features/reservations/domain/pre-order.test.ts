@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { RestaurantMenuCategory } from "@/features/restaurants/data/mock-data";
+import type { RestaurantMenuCategory } from "@/features/restaurants/data/types";
 import { buildPreOrderNote } from "./pre-order";
 
 const categories: RestaurantMenuCategory[] = [

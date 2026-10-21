@@ -1,5 +1,5 @@
 import { Box, Card, Group, Stack, Text } from "@mantine/core";
-import type { RestaurantRecord } from "@/features/restaurants/data/mock-data";
+import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { uiColors } from "@/theme";
 
 type BookingRestaurantSummaryProps = {
