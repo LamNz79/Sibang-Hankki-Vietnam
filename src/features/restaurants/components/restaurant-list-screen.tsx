@@ -45,10 +45,10 @@ import {
 } from "@/features/restaurants/domain/live-availability";
 import { uiColors } from "@/theme";
 
-type SortKey = "recommended" | "rating" | "earliest";
+type SortKey = "recommended" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
 
-const sortOptions: SortKey[] = ["recommended", "rating", "earliest"];
+const sortOptions: SortKey[] = ["recommended", "earliest"];
 const priceOptions: PriceKey[] = ["all", "under150", "under300", "over300"];
 const cuisineOptions: (CuisineKey | "all")[] = ["all", "korean", "chinese", "vietnamese", "japanese", "western"];
 const benefitOptions: BenefitKey[] = ["special_deal", "available", "date_night", "michelin"];
@@ -121,7 +121,6 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
           getFirstLiveTime(availability[b.slug]) ?? "99:99",
         );
       }
-      if (sortBy === "rating") return b.rating - a.rating;
       return a.name.localeCompare(b.name);
     });
 
