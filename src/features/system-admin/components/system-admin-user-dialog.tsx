@@ -92,7 +92,7 @@ export function SystemAdminUserDialog({ user, submitting, onClose, onSubmit }: P
             <Button variant="default" onClick={onClose} disabled={submitting}>
               {t("cancel")}
             </Button>
-            <Button color="warmCoral" type="submit" loading={submitting}>
+            <Button type="submit" loading={submitting}>
               {user ? t("save") : t("create")}
             </Button>
           </Group>

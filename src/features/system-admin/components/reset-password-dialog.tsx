@@ -56,7 +56,7 @@ export function ResetPasswordDialog({ user, submitting, onClose, onSubmit }: Pro
           />
           <Group justify="flex-end">
             <Button variant="default" disabled={submitting} onClick={onClose}>{t("cancel")}</Button>
-            <Button color="warmCoral" type="submit" loading={submitting} disabled={!valid}>
+            <Button type="submit" loading={submitting} disabled={!valid}>
               {t("submit")}
             </Button>
           </Group>

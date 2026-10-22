@@ -169,7 +169,6 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
           component={Link}
           href="/system-admin/restaurants"
           variant="subtle"
-          color="warmCoral"
           size="compact-sm"
           leftSection={<IconArrowLeft size={16} />}
           w="fit-content"

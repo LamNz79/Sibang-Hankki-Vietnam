@@ -9,6 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
+import {
+  formatPreferenceDate,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import { getSystemAdminRestaurants } from "@/features/system-admin/data/system-admin-directory";
 import {
   getSystemAdminReservationDisplayStatus,
@@ -41,6 +45,7 @@ const statusTones = {
 export function SystemAdminReservationsScreen() {
   const t = useTranslations("SystemAdmin.reservations");
   const format = useFormatter();
+  const preferences = useAccountPreferences();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
   const [restaurantId, setRestaurantId] = useState<string | null>(null);
@@ -50,7 +55,7 @@ export function SystemAdminReservationsScreen() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState<number>(preferences.tablePageSize);
   const reservationsQuery = useQuery({
     queryKey: [
       "system-admin-reservations",
@@ -132,7 +137,7 @@ export function SystemAdminReservationsScreen() {
       render: (reservation) => (
         <Stack gap={1}>
           <Text size="sm">
-            {format.dateTime(new Date(reservation.startsAt), { dateStyle: "medium" })}
+            {formatPreferenceDate(new Date(reservation.startsAt), preferences)}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
             {format.dateTime(new Date(reservation.startsAt), { timeStyle: "short" })}
@@ -164,7 +169,6 @@ export function SystemAdminReservationsScreen() {
           component={Link}
           href={`/system-admin/reservations/${reservation.id}`}
           variant="subtle"
-          color="warmCoral"
           size="compact-sm"
         >
           {t("details")}

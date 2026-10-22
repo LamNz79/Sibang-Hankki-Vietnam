@@ -19,7 +19,7 @@ import { notifications } from "@mantine/notifications";
 import { IconDotsVertical, IconPlus, IconSearch } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
   archiveSystemAdminRestaurant,
@@ -35,6 +35,10 @@ import {
 } from "@/features/system-admin/data/system-admin-directory";
 import { RestaurantFormDialog } from "@/features/system-admin/components/restaurant-form-dialog";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
+import {
+  formatPreferenceDate,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import { uiColors } from "@/theme";
 
 const pageSizes = [10, 20, 50, 100];
@@ -71,14 +75,14 @@ function actionKey(action: RestaurantStatusAction) {
 
 export function SystemAdminRestaurantsScreen() {
   const t = useTranslations("SystemAdmin.restaurants");
-  const format = useFormatter();
+  const preferences = useAccountPreferences();
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
   const [status, setStatus] = useState<SystemAdminRestaurantStatus | "all">("all");
   const [provinceCode, setProvinceCode] = useState<number | null>(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState<number>(preferences.tablePageSize);
   const [statusAction, setStatusAction] = useState<RestaurantStatusAction | null>(null);
   const [editor, setEditor] = useState<string | null | undefined>(undefined);
   const [archiveTarget, setArchiveTarget] = useState<SystemAdminRestaurant | null>(null);
@@ -201,7 +205,7 @@ export function SystemAdminRestaurantsScreen() {
       title: t("table.created"),
       width: 150,
       render: (restaurant) =>
-        format.dateTime(new Date(restaurant.createdAt), { dateStyle: "medium" }),
+        formatPreferenceDate(new Date(restaurant.createdAt), preferences),
     },
     {
       accessor: "actions",

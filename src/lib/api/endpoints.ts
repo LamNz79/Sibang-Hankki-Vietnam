@@ -44,6 +44,7 @@ export const apiEndpoints = {
   authLogout: "/api/auth/logout",
   authMe: "/api/auth/me",
   authPassword: "/api/auth/password",
+  accountPreferences: "/api/account/preferences",
   customerProfile: "/api/customer/profile",
   customerFavorites: "/api/customer/favorites",
   customerFavorite: (slug: string) =>
