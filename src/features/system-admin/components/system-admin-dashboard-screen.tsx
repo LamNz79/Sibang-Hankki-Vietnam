@@ -141,7 +141,12 @@ export function SystemAdminDashboardScreen() {
               <Text fw={800}>{t("pending.title")}</Text>
               <Text size="xs" c={uiColors.textSecondary}>{t("pending.description")}</Text>
             </Stack>
-            <Button component={Link} href="/system-admin/restaurants" variant="subtle">
+            <Button
+              component={Link}
+              href="/system-admin/restaurants"
+              variant="subtle"
+              color={uiColors.brandPrimary}
+            >
               {t("viewAll")}
             </Button>
           </Group>

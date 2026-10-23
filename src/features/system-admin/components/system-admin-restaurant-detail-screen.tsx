@@ -169,6 +169,7 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
           component={Link}
           href="/system-admin/restaurants"
           variant="subtle"
+          color={uiColors.brandPrimary}
           size="compact-sm"
           leftSection={<IconArrowLeft size={16} />}
           w="fit-content"
@@ -346,6 +347,7 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
                         <Button
                           size="compact-xs"
                           variant="subtle"
+                          color={uiColors.brandPrimary}
                           leftSection={<IconPlus size={14} />}
                           onClick={() => setHoursDraft([...hours, {
                             dayOfWeek: dayNumber,

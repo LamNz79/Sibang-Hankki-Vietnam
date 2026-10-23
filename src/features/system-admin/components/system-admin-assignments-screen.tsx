@@ -168,7 +168,11 @@ export function SystemAdminAssignmentsScreen() {
       render: (assignment) => (
         <Menu position="bottom-end" withinPortal>
           <Menu.Target>
-            <ActionIcon variant="subtle" aria-label={t("actions.openMenu", { name: assignment.name })}>
+            <ActionIcon
+              variant="subtle"
+              color={uiColors.brandPrimary}
+              aria-label={t("actions.openMenu", { name: assignment.name })}
+            >
               <IconDotsVertical size={18} />
             </ActionIcon>
           </Menu.Target>
