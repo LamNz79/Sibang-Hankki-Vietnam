@@ -4,6 +4,7 @@ import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconCalendarClock, IconX } from "@tabler/icons-react";
 import { useFormatter, useTranslations } from "next-intl";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 export function CustomerChangeRequestCard({
@@ -17,7 +18,7 @@ export function CustomerChangeRequestCard({
   if (!request) return null;
 
   const pending = request.status === "PENDING";
-  const date = format.dateTime(new Date(`${request.date}T00:00:00`), {
+  const date = format.dateTime(toRestaurantDate(request.date), {
     weekday: "short",
     month: "short",
     day: "numeric",

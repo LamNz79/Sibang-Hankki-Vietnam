@@ -41,6 +41,7 @@ import {
   VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type ReservationScope = "upcoming" | "past" | "all";
@@ -189,7 +190,7 @@ function ReservationCards({
                     color={uiColors.textSecondary}
                   />
                   <Text size="xs" c={uiColors.textSecondary}>
-                    {format.dateTime(new Date(`${displaySlot.date}T00:00:00`), {
+                    {format.dateTime(toRestaurantDate(displaySlot.date), {
                       weekday: "short",
                       month: "short",
                       day: "numeric",

@@ -6,7 +6,7 @@ import {
 
 describe("account preference display helpers", () => {
   it("uses the selected date order", () => {
-    const date = new Date("2026-10-22T00:00:00Z");
+    const date = new Date("2026-10-21T18:00:00Z");
     expect(formatPreferenceDate(date, { dateFormat: "DD_MM_YYYY", locale: "vi" }))
       .toBe("22/10/2026");
     expect(formatPreferenceDate(date, { dateFormat: "MM_DD_YYYY", locale: "en" }))

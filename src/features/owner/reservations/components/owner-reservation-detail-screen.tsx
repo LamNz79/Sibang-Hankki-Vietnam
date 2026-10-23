@@ -39,6 +39,7 @@ import type {
   OwnerRequestResponse,
   OwnerReservation,
 } from "@/features/owner/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 import { OwnerCustomerResponseCard } from "./owner-customer-response-card";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
@@ -129,7 +130,7 @@ export function OwnerReservationDetailScreen() {
   const [noShowOpened, setNoShowOpened] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const formatDate = (date: string) =>
-    format.dateTime(new Date(`${date}T00:00:00`), {
+    format.dateTime(toRestaurantDate(date), {
       weekday: "long",
       month: "short",
       day: "numeric",

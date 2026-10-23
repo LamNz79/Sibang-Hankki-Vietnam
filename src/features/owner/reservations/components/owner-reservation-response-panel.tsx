@@ -32,6 +32,7 @@ import type {
   OwnerReservation,
 } from "@/features/owner/types";
 import { getAvailability } from "@/features/reservations/data/availability";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type OwnerReservationResponsePanelProps = {
@@ -132,7 +133,7 @@ export function OwnerReservationResponsePanel({
     retry: false,
   });
   const formatDate = (date: string) =>
-    format.dateTime(new Date(`${date}T00:00:00`), {
+    format.dateTime(toRestaurantDate(date), {
       weekday: "short",
       month: "short",
       day: "numeric",

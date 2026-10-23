@@ -6,6 +6,7 @@ import {
   defaultAccountPreferences,
   type AccountPreferences,
 } from "@/features/system-admin/data/account-preferences";
+import { restaurantTimeZone } from "@/lib/date-time";
 
 const AccountPreferencesContext = createContext(defaultAccountPreferences);
 
@@ -21,7 +22,12 @@ export function formatPreferenceDate(
 ) {
   return new Intl.DateTimeFormat(
     preferences.dateFormat === "DD_MM_YYYY" ? "en-GB" : "en-US",
-    { day: "2-digit", month: "2-digit", year: "numeric" },
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: restaurantTimeZone,
+    },
   ).format(value);
 }
 

@@ -25,6 +25,7 @@ import { useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { useRespondToAlternativeProposal } from "@/features/reservations/hooks/use-customer-reservations";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 /** Compares the originally requested slot with the restaurant suggestion. */
@@ -135,7 +136,7 @@ export function CustomerAlternativeProposalCard({
       })
     : null;
   const formatShortDate = (date: string) =>
-    format.dateTime(new Date(`${date}T00:00:00`), {
+    format.dateTime(toRestaurantDate(date), {
       weekday: "short",
       month: "short",
       day: "numeric",
