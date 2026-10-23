@@ -12,6 +12,7 @@ import { BookingTimeSelector } from "@/features/reservations/components/booking-
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
 import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { useReservationBooking } from "@/features/reservations/hooks/use-reservation-booking";
+import { toRestaurantDate } from "@/lib/date-time";
 
 type ReservationBookingScreenProps = {
   restaurant: RestaurantRecord;
@@ -31,7 +32,7 @@ export function ReservationBookingScreen({
     changeReservationId,
   });
   const selectedDateLabel = booking.selectedDate
-    ? format.dateTime(new Date(`${booking.selectedDate}T00:00:00`), {
+    ? format.dateTime(toRestaurantDate(booking.selectedDate), {
         weekday: "short",
         year: "numeric",
         month: "short",

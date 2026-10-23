@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import {
   Alert,
   Button,
@@ -128,7 +129,8 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
   };
   const formattedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
-  }).format(new Date(`${reservation.date}T00:00:00`));
+    timeZone: restaurantTimeZone,
+  }).format(toRestaurantDate(reservation.date));
 
   return (
     <AdminShell>

@@ -16,6 +16,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type ReservationRequestSuccessModalProps = {
@@ -39,8 +40,12 @@ export function ReservationRequestSuccessModal({
   const format = useFormatter();
   const t = useTranslations("CustomerBooking.success");
   const confirmed = reservation?.status === ReservationStatus.Confirmed;
-  const displayDate = reservation?.changeRequest?.date ?? reservation?.date;
-  const displayTime = reservation?.changeRequest?.time ?? reservation?.time;
+  const displayDate = reservation
+    ? reservation.changeRequest?.date ?? reservation.date
+    : "";
+  const displayTime = reservation
+    ? reservation.changeRequest?.time ?? reservation.time
+    : "";
 
   return (
     <Modal
@@ -107,7 +112,7 @@ export function ReservationRequestSuccessModal({
               <Group gap="xs" wrap="nowrap">
                 <IconCalendarEvent size={17} color={uiColors.brandPrimary} />
                 <Text size="sm">
-                  {format.dateTime(new Date(`${displayDate}T00:00:00`), {
+                  {format.dateTime(toRestaurantDate(displayDate), {
                     weekday: "short",
                     year: "numeric",
                     month: "short",

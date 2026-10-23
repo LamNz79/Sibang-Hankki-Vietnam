@@ -12,6 +12,7 @@ import type {
   OwnerCustomerResponse,
   OwnerReservation,
 } from "@/features/owner/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 function useResponseContent(
@@ -21,7 +22,7 @@ function useResponseContent(
   const format = useFormatter();
   const t = useTranslations("OwnerReservationDetails.customerResponse");
   const formatDate = (date: string) =>
-    format.dateTime(new Date(`${date}T00:00:00`), {
+    format.dateTime(toRestaurantDate(date), {
       weekday: "short",
       month: "short",
       day: "numeric",

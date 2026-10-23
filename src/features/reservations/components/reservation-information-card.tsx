@@ -9,6 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { useFormatter, useTranslations } from "next-intl";
 import type { CustomerReservation } from "@/features/reservations/types";
+import { toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type DetailRowProps = {
@@ -77,7 +78,7 @@ export function ReservationInformationCard({
       <DetailRow
         icon={IconCalendarEvent}
         label={t("date")}
-        value={format.dateTime(new Date(`${reservation.date}T00:00:00`), {
+        value={format.dateTime(toRestaurantDate(reservation.date), {
           weekday: "long",
           year: "numeric",
           month: "short",
