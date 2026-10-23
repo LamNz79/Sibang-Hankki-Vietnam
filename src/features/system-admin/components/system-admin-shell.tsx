@@ -31,6 +31,7 @@ import { getSessionUser } from "@/features/auth/data/session";
 import { setLocale } from "@/i18n/actions";
 import {
   AccountPreferencesProvider,
+  accountAccentColor,
   accountAccentPalette,
 } from "@/features/system-admin/components/account-preferences-context";
 import {
@@ -75,6 +76,7 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
     staleTime: 5 * 60_000,
   });
   const preferences = preferencesQuery.data ?? defaultAccountPreferences;
+  const accentColor = accountAccentColor(preferences.themeColor);
   useEffect(() => {
     if (preferencesQuery.data && preferences.locale !== locale) {
       void setLocale(preferences.locale).then(() => router.refresh());
@@ -176,7 +178,7 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
                   style={{
                     borderRadius: 4,
                     color: active ? "white" : "#d8d1d3",
-                    background: active ? preferences.themeColor : "transparent",
+                    background: active ? accentColor : "transparent",
                   }}
                 >
                   <Group gap="sm">
