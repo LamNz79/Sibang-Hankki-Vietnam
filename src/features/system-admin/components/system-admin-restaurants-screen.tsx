@@ -229,6 +229,7 @@ export function SystemAdminRestaurantsScreen() {
             <Menu.Target>
               <ActionIcon
                 variant="subtle"
+                color={uiColors.brandPrimary}
                 aria-label={t("actions.openMenu", { name: restaurant.name })}
               >
                 <IconDotsVertical size={18} />

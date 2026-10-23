@@ -193,6 +193,7 @@ export function SystemAdminUsersScreen() {
             <Menu.Target>
               <ActionIcon
                 variant="subtle"
+                color={uiColors.brandPrimary}
                 aria-label={t("actions.openMenu", { name: user.name })}
               >
                 <IconDotsVertical size={18} />

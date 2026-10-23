@@ -59,6 +59,7 @@ export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
           component={Link}
           href="/system-admin/reservations"
           variant="subtle"
+          color={uiColors.brandPrimary}
           size="compact-sm"
           leftSection={<IconArrowLeft size={16} />}
           w="fit-content"
