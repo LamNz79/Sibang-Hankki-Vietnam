@@ -18,7 +18,7 @@ import { notifications } from "@mantine/notifications";
 import { IconDotsVertical, IconKey, IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
   createSystemAdminUser,
@@ -35,6 +35,10 @@ import {
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
 import { SystemAdminUserDialog } from "@/features/system-admin/components/system-admin-user-dialog";
 import { ResetPasswordDialog } from "@/features/system-admin/components/reset-password-dialog";
+import {
+  formatPreferenceDate,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import { uiColors } from "@/theme";
 
 const pageSizes = [10, 20, 50, 100];
@@ -51,14 +55,14 @@ type UserStatusAction = {
 
 export function SystemAdminUsersScreen() {
   const t = useTranslations("SystemAdmin.users");
-  const format = useFormatter();
+  const preferences = useAccountPreferences();
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
   const [role, setRole] = useState<SystemAdminUserRole | "all">("all");
   const [status, setStatus] = useState<SystemAdminUserStatus | "all">("all");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState<number>(preferences.tablePageSize);
   const [editor, setEditor] = useState<"create" | SystemAdminUser | null>(null);
   const [statusAction, setStatusAction] = useState<UserStatusAction | null>(null);
   const [passwordUser, setPasswordUser] = useState<SystemAdminUser | null>(null);
@@ -174,7 +178,7 @@ export function SystemAdminUsersScreen() {
       title: t("table.created"),
       width: 150,
       render: (user) =>
-        format.dateTime(new Date(user.createdAt), { dateStyle: "medium" }),
+        formatPreferenceDate(new Date(user.createdAt), preferences),
     },
     {
       accessor: "actions",
@@ -226,7 +230,6 @@ export function SystemAdminUsersScreen() {
         </Stack>
         <Button
           leftSection={<IconUserPlus size={17} />}
-          color="warmCoral"
           onClick={() => setEditor("create")}
         >
           {t("actions.create")}

@@ -8,6 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import {
+  formatPreferenceDate,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
+import {
   getSystemAdminReservation,
   getSystemAdminReservationDisplayStatus,
 } from "@/features/system-admin/data/system-admin-reservations";
@@ -26,6 +30,7 @@ const statusTones = {
 export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
   const t = useTranslations("SystemAdmin.reservations");
   const format = useFormatter();
+  const preferences = useAccountPreferences();
   const reservationQuery = useQuery({
     queryKey: ["system-admin-reservation", id],
     queryFn: ({ signal }) => getSystemAdminReservation(id, signal),
@@ -39,10 +44,12 @@ export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
 
   const reservation = reservationQuery.data;
   const displayStatus = getSystemAdminReservationDisplayStatus(reservation);
-  const dateTime = (value: string) => format.dateTime(new Date(value), {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  const dateTime = (value: string) => {
+    const date = new Date(value);
+    return `${formatPreferenceDate(date, preferences)} ${format.dateTime(date, {
+      timeStyle: "short",
+    })}`;
+  };
   const fallback = (value: string | null) => value || t("detail.notAvailable");
 
   return (
@@ -52,7 +59,6 @@ export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
           component={Link}
           href="/system-admin/reservations"
           variant="subtle"
-          color="warmCoral"
           size="compact-sm"
           leftSection={<IconArrowLeft size={16} />}
           w="fit-content"

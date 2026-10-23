@@ -593,7 +593,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "reservations": "Reservations", "assignments": "Restaurant access" } },
+    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "reservations": "Reservations", "assignments": "Restaurant access", "preferences": "Personal settings" } },
     "dashboard": {
       "title": "System overview", "description": "Monitor users, restaurants, and work requiring attention.", "loadError": "Some overview data could not be loaded.", "viewAll": "View all",
       "metrics": { "users": { "label": "Users", "detail": "All accounts across the platform" }, "restaurants": { "label": "Restaurants", "detail": "{count} active restaurants" }, "pending": { "label": "Pending review", "detail": "Restaurants requiring administrator review" }, "assignments": { "label": "Access assignments", "detail": "Linked OWNER and STAFF accounts" } },
@@ -667,6 +667,12 @@
       "form": { "createTitle": "Add restaurant access", "editTitle": "Edit restaurant access", "description": "Each account can be linked to one restaurant only.", "user": "User", "userPlaceholder": "Search name, userid, or email", "restaurant": "Restaurant", "restaurantPlaceholder": "Search restaurant name or slug", "role": "Restaurant role", "noUsers": "No active customers found", "noRestaurants": "No restaurants found" },
       "actions": { "create": "Add access", "edit": "Edit", "remove": "Remove access", "assign": "Assign", "save": "Save changes", "cancel": "Cancel", "openMenu": "Open actions for {name}", "saved": "Restaurant access updated for {name}.", "saveError": "Could not save access. Check the user and restaurant.", "removed": "Restaurant access removed for {name}.", "removeError": "Could not remove access.", "removeTitle": "Remove access for {name}?", "removeDescription": "This account will return to the customer role and will no longer manage the restaurant." },
       "pagination": { "rowsPerPage": "Rows per page" }
+    },
+    "preferences": {
+      "title": "Personal settings", "description": "Customize how the system administration workspace looks and displays data.",
+      "appearance": { "title": "Appearance", "description": "These choices apply only to your account.", "themeColor": "Theme color", "themeColorHint": "Choose a preset or enter a six-digit HEX color.", "invalidColor": "Use the #RRGGBB format.", "preview": "Preview", "previewText": "System administration", "previewButton": "Primary action", "density": "Display density", "comfortable": "Comfortable", "compact": "Compact" },
+      "display": { "title": "Data and language", "description": "Choose the defaults used in administration lists and dates.", "pageSize": "Default rows per page", "dateFormat": "Date format", "language": "Language", "vietnamese": "Vietnamese", "english": "English" },
+      "save": "Save settings", "reset": "Restore defaults", "saved": "Personal settings saved.", "saveError": "Could not save personal settings.", "resetDone": "Default settings restored.", "resetError": "Could not restore default settings.", "errorHint": "Your previous settings are still active. Try again."
     }
   },
   "Navigation": {

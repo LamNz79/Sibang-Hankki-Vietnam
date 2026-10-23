@@ -535,7 +535,7 @@
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "reservations": "Đặt bàn", "assignments": "Phân quyền nhà hàng" } },
+    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "reservations": "Đặt bàn", "assignments": "Phân quyền nhà hàng", "preferences": "Cài đặt cá nhân" } },
     "dashboard": {
       "title": "Tổng quan hệ thống", "description": "Theo dõi nhanh người dùng, nhà hàng và các công việc cần xử lý.", "loadError": "Không thể tải đầy đủ số liệu tổng quan.", "viewAll": "Xem tất cả",
       "metrics": { "users": { "label": "Người dùng", "detail": "Tất cả tài khoản trong hệ thống" }, "restaurants": { "label": "Nhà hàng", "detail": "{count} nhà hàng đang hoạt động" }, "pending": { "label": "Chờ duyệt", "detail": "Nhà hàng cần quản trị viên xem xét" }, "assignments": { "label": "Phân quyền", "detail": "Tài khoản OWNER và STAFF đã liên kết" } },
@@ -609,6 +609,12 @@
       "form": { "createTitle": "Thêm phân quyền", "editTitle": "Sửa phân quyền", "description": "Mỗi tài khoản chỉ có thể liên kết với một nhà hàng.", "user": "Người dùng", "userPlaceholder": "Tìm tên, userid hoặc email", "restaurant": "Nhà hàng", "restaurantPlaceholder": "Tìm tên hoặc slug nhà hàng", "role": "Vai trò tại nhà hàng", "noUsers": "Không tìm thấy khách hàng đang hoạt động", "noRestaurants": "Không tìm thấy nhà hàng" },
       "actions": { "create": "Thêm phân quyền", "edit": "Sửa", "remove": "Gỡ liên kết", "assign": "Liên kết", "save": "Lưu thay đổi", "cancel": "Hủy", "openMenu": "Mở thao tác cho {name}", "saved": "Đã cập nhật phân quyền cho {name}.", "saveError": "Không thể lưu phân quyền. Hãy kiểm tra người dùng và nhà hàng.", "removed": "Đã gỡ liên kết của {name}.", "removeError": "Không thể gỡ liên kết.", "removeTitle": "Gỡ liên kết của {name}?", "removeDescription": "Tài khoản sẽ trở lại vai trò khách hàng và không còn quyền quản lý nhà hàng." },
       "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+    },
+    "preferences": {
+      "title": "Cài đặt cá nhân", "description": "Tùy chỉnh giao diện và cách hiển thị dữ liệu trong khu vực quản trị hệ thống.",
+      "appearance": { "title": "Giao diện", "description": "Các lựa chọn này chỉ áp dụng cho tài khoản của bạn.", "themeColor": "Màu chủ đề", "themeColorHint": "Chọn màu gợi ý hoặc nhập mã HEX gồm sáu chữ số.", "invalidColor": "Hãy nhập theo định dạng #RRGGBB.", "preview": "Xem trước", "previewText": "Quản trị hệ thống", "previewButton": "Thao tác chính", "density": "Mật độ hiển thị", "comfortable": "Thoải mái", "compact": "Thu gọn" },
+      "display": { "title": "Dữ liệu và ngôn ngữ", "description": "Chọn mặc định cho danh sách và ngày tháng trong trang quản trị.", "pageSize": "Số dòng mặc định mỗi trang", "dateFormat": "Định dạng ngày", "language": "Ngôn ngữ", "vietnamese": "Tiếng Việt", "english": "Tiếng Anh" },
+      "save": "Lưu cài đặt", "reset": "Khôi phục mặc định", "saved": "Đã lưu cài đặt cá nhân.", "saveError": "Không thể lưu cài đặt cá nhân.", "resetDone": "Đã khôi phục cài đặt mặc định.", "resetError": "Không thể khôi phục cài đặt mặc định.", "errorHint": "Cài đặt cũ vẫn đang được giữ. Hãy thử lại."
     }
   },
   "Navigation": {

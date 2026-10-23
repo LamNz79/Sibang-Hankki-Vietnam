@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AppShell,
   Avatar,
   Burger,
   Group,
+  MantineProvider,
   Stack,
   Text,
   UnstyledButton,
+  createTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -17,16 +19,25 @@ import {
   IconCalendarEvent,
   IconLayoutDashboard,
   IconLink,
+  IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useMemo, type CSSProperties, type ReactNode } from "react";
 import { ChangePasswordButton } from "@/features/auth/components/change-password-button";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getSessionUser } from "@/features/auth/data/session";
-import { LanguageSelect } from "@/features/i18n";
-import { uiColors } from "@/theme";
+import { setLocale } from "@/i18n/actions";
+import {
+  AccountPreferencesProvider,
+  accountAccentPalette,
+} from "@/features/system-admin/components/account-preferences-context";
+import {
+  defaultAccountPreferences,
+  getAccountPreferences,
+} from "@/features/system-admin/data/account-preferences";
+import { appTheme, uiColors } from "@/theme";
 
 const navigation = [
   { href: "/system-admin", key: "dashboard", icon: IconLayoutDashboard },
@@ -42,10 +53,13 @@ const navigation = [
     icon: IconCalendarEvent,
   },
   { href: "/system-admin/assignments", key: "assignments", icon: IconLink },
+  { href: "/system-admin/preferences", key: "preferences", icon: IconSettings },
 ] as const;
 
 export function SystemAdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations("SystemAdmin.shell");
   const [opened, { toggle, close }] = useDisclosure(false);
   const session = useQuery({
@@ -54,9 +68,45 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
     retry: false,
     staleTime: 5 * 60_000,
   });
+  const preferencesQuery = useQuery({
+    queryKey: ["account-preferences"],
+    queryFn: ({ signal }) => getAccountPreferences(signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
+  const preferences = preferencesQuery.data ?? defaultAccountPreferences;
+  useEffect(() => {
+    if (preferencesQuery.data && preferences.locale !== locale) {
+      void setLocale(preferences.locale).then(() => router.refresh());
+    }
+  }, [locale, preferences.locale, preferencesQuery.data, router]);
+  const accountTheme = useMemo(() => createTheme({
+    ...appTheme,
+    primaryColor: "accountAccent",
+    autoContrast: true,
+    colors: {
+      ...appTheme.colors,
+      accountAccent: accountAccentPalette(preferences.themeColor),
+    },
+  }), [preferences.themeColor]);
   const userid = session.data?.userid ?? "SA";
 
   return (
+    <AccountPreferencesProvider value={preferences}>
+    <MantineProvider
+      theme={accountTheme}
+      cssVariablesSelector="#system-admin-theme"
+      withGlobalClasses={false}
+    >
+    <div
+      id="system-admin-theme"
+      data-density={preferences.displayDensity.toLowerCase()}
+      style={preferences.displayDensity === "COMPACT" ? {
+        "--mantine-spacing-xl": "1rem",
+        "--mantine-spacing-lg": "0.75rem",
+        "--mantine-spacing-md": "0.625rem",
+      } as CSSProperties : undefined}
+    >
     <AppShell
       header={{ height: 56 }}
       navbar={{
@@ -64,7 +114,9 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
         breakpoint: "md",
         collapsed: { mobile: !opened },
       }}
-      padding={{ base: "md", md: 28 }}
+      padding={preferences.displayDensity === "COMPACT"
+        ? { base: "sm", md: "md" }
+        : { base: "md", md: 28 }}
       styles={{ main: { minHeight: "100dvh", background: uiColors.appBackground } }}
     >
       <AppShell.Header px={{ base: "md", md: 28 }}>
@@ -80,9 +132,8 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
             <Text fw={850}>{t("title")}</Text>
           </Group>
           <Group gap="sm">
-            <LanguageSelect compact radius="sm" />
             <Group gap="xs" wrap="nowrap" visibleFrom="sm">
-              <Avatar color="warmCoral" variant="light" size={34}>
+              <Avatar variant="light" size={34}>
                 {userid.slice(0, 2).toUpperCase()}
               </Avatar>
               <Stack gap={0}>
@@ -125,7 +176,7 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
                   style={{
                     borderRadius: 4,
                     color: active ? "white" : "#d8d1d3",
-                    background: active ? "#b85664" : "transparent",
+                    background: active ? preferences.themeColor : "transparent",
                   }}
                 >
                   <Group gap="sm">
@@ -150,7 +201,12 @@ export function SystemAdminShell({ children }: { children: ReactNode }) {
         </AppShell.Section>
       </AppShell.Navbar>
 
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main key={`${pathname}-${Object.values(preferences).join("-")}`}>
+        {children}
+      </AppShell.Main>
     </AppShell>
+    </div>
+    </MantineProvider>
+    </AccountPreferencesProvider>
   );
 }

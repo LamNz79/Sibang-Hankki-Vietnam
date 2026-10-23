@@ -6,3 +6,4 @@ export { SystemAdminDashboardScreen } from "@/features/system-admin/components/s
 export { SystemAdminReservationsScreen } from "@/features/system-admin/components/system-admin-reservations-screen";
 export { SystemAdminReservationDetailScreen } from "@/features/system-admin/components/system-admin-reservation-detail-screen";
 export { SystemAdminRestaurantDetailScreen } from "@/features/system-admin/components/system-admin-restaurant-detail-screen";
+export { SystemAdminPreferencesScreen } from "@/features/system-admin/components/system-admin-preferences-screen";

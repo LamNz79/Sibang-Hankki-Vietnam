@@ -122,7 +122,6 @@ export function RestaurantAssignmentDialog({
             {t("actions.cancel")}
           </Button>
           <Button
-            color="warmCoral"
             loading={submitting}
             disabled={!userId || !restaurantId}
             onClick={() => {

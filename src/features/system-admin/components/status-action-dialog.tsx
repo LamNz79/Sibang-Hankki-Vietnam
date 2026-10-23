@@ -34,7 +34,7 @@ export function StatusActionDialog({
             {cancelLabel}
           </Button>
           <Button
-            color={danger ? "red" : "warmCoral"}
+            color={danger ? "red" : undefined}
             onClick={onConfirm}
             loading={loading}
           >

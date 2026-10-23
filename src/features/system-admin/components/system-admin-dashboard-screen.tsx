@@ -126,7 +126,7 @@ export function SystemAdminDashboardScreen() {
                 <Title order={2}>{loading || value === undefined ? "—" : value}</Title>
                 <Text size="xs" c={uiColors.textSecondary}>{detail}</Text>
               </Stack>
-              <ThemeIcon color="warmCoral" variant="light" size={40} radius="md">
+              <ThemeIcon variant="light" size={40} radius="md">
                 <Icon size={20} />
               </ThemeIcon>
             </Group>
@@ -141,7 +141,7 @@ export function SystemAdminDashboardScreen() {
               <Text fw={800}>{t("pending.title")}</Text>
               <Text size="xs" c={uiColors.textSecondary}>{t("pending.description")}</Text>
             </Stack>
-            <Button component={Link} href="/system-admin/restaurants" variant="subtle" color="warmCoral">
+            <Button component={Link} href="/system-admin/restaurants" variant="subtle">
               {t("viewAll")}
             </Button>
           </Group>
