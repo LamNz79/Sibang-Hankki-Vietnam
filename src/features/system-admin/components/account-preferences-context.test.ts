@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  accountAccentColor,
   accountAccentPalette,
   formatPreferenceDate,
 } from "./account-preferences-context";
@@ -16,5 +17,10 @@ describe("account preference display helpers", () => {
   it("keeps the selected HEX as the primary shade and falls back for invalid data", () => {
     expect(accountAccentPalette("#2563eb")[7]).toBe("#2563EB");
     expect(accountAccentPalette("not-a-color")[7]).toBe("#B84A2F");
+  });
+
+  it("darkens light account colors so actions remain readable", () => {
+    expect(accountAccentColor("#FFFFFF")).toBe("#737373");
+    expect(accountAccentPalette("#FFFFFF")[6]).toBe("#737373");
   });
 });

@@ -18,7 +18,10 @@ import { notifications } from "@mantine/notifications";
 import { IconDeviceFloppy, IconRestore } from "@tabler/icons-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useAccountPreferences } from "@/features/system-admin/components/account-preferences-context";
+import {
+  accountAccentColor,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import {
   defaultAccountPreferences,
   resetAccountPreferences,
@@ -123,7 +126,9 @@ export function SystemAdminPreferencesScreen() {
                 <Text size="sm" fw={700}>{t("appearance.previewText")}</Text>
                 <Button
                   size="compact-sm"
-                  color={validColor ? form.themeColor : defaultAccountPreferences.themeColor}
+                  color={accountAccentColor(
+                    validColor ? form.themeColor : defaultAccountPreferences.themeColor,
+                  )}
                   autoContrast
                 >
                   {t("appearance.previewButton")}

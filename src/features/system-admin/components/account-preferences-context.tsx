@@ -37,10 +37,22 @@ function mix(hex: string, target: number, amount: number) {
     .toString(16).padStart(2, "0")).join("")}`;
 }
 
-export function accountAccentPalette(value: string): MantineColorsTuple {
+export function accountAccentColor(value: string) {
   const color = /^#[0-9A-Fa-f]{6}$/.test(value)
     ? value.toUpperCase()
     : defaultAccountPreferences.themeColor;
+  const channels = [1, 3, 5].map((start) => {
+    const channel = Number.parseInt(color.slice(start, start + 2), 16) / 255;
+    return channel <= 0.03928
+      ? channel / 12.92
+      : ((channel + 0.055) / 1.055) ** 2.4;
+  });
+  const luminance = 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  return 1.05 / (luminance + 0.05) >= 4.5 ? color : mix(color, 0, 0.55);
+}
+
+export function accountAccentPalette(value: string): MantineColorsTuple {
+  const color = accountAccentColor(value);
   return [
     mix(color, 255, 0.94),
     mix(color, 255, 0.84),
@@ -48,7 +60,7 @@ export function accountAccentPalette(value: string): MantineColorsTuple {
     mix(color, 255, 0.52),
     mix(color, 255, 0.34),
     mix(color, 255, 0.18),
-    mix(color, 255, 0.08),
+    color,
     color,
     mix(color, 0, 0.14),
     mix(color, 0, 0.28),
