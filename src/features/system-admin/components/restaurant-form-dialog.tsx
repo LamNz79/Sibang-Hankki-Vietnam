@@ -22,6 +22,7 @@ import {
   type SystemAdminRestaurantInput,
 } from "@/features/system-admin/data/system-admin-directory";
 import { normalizeRestaurantSlugInput } from "./restaurant-form-utils";
+import { accountAccentColor, useAccountPreferences } from "./account-preferences-context";
 
 const emptyRestaurant: SystemAdminRestaurantInput = {
   slug: "",
@@ -86,6 +87,8 @@ export function RestaurantFormDialog({
   onSubmit,
 }: Props) {
   const t = useTranslations("SystemAdmin.restaurants.form");
+  const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const [input, setInput] = useState<SystemAdminRestaurantInput>(() =>
     toInput(restaurant));
   const provincesQuery = useQuery({
@@ -259,10 +262,15 @@ export function RestaurantFormDialog({
               minRows={3}
             />
             <Group justify="flex-end">
-              <Button variant="default" onClick={onClose} disabled={saving}>
+              <Button
+                variant="default" onClick={onClose} disabled={saving}>
                 {t("cancel")}
               </Button>
-              <Button type="submit" loading={saving}>
+              <Button
+                color={accentColor}
+                autoContrast
+                type="submit"
+                loading={saving}>
                 {editing ? t("save") : t("create")}
               </Button>
             </Group>

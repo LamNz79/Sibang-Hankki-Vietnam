@@ -47,6 +47,7 @@ export function RestaurantAssignmentDialog({
 }: Props) {
   const t = useTranslations("SystemAdmin.assignments");
   const preferences = useAccountPreferences();
+
   const accentColor = accountAccentColor(preferences.themeColor);
   const [userId, setUserId] = useState<string | null>(assignment?.userId ?? null);
   const [restaurantId, setRestaurantId] = useState<string | null>(assignment?.restaurantId ?? null);
