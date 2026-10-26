@@ -44,47 +44,196 @@
     }
   },
   "Home": {
-    "subtitle": "Tìm bàn nhanh và đặt chỗ dễ dàng.", "loadingReservations": "Đang tải đặt bàn...", "loading": "Đang tải...",
-    "header": { "notifications": "Thông báo", "currentLocation": "Vị trí hiện tại", "searchPlaceholder": "Tìm nhà hàng hoặc thành phố", "searchLabel": "Tìm nhà hàng hoặc thành phố" },
-    "banner": { "eyebrow": "Nổi bật", "title": "Ưu đãi ẩm thực hôm nay", "description": "Khám phá các ưu đãi hiện có từ nhà hàng." },
-    "sections": { "specialCategories": "Danh mục nổi bật", "upToFive": "Tối đa 5", "exploreCity": "Khám phá theo thành phố", "viewAll": "Xem tất cả", "sortBy": "Sắp xếp", "cuisine": "Ẩm thực", "priceRange": "Khoảng giá" },
-    "categories": { "michelin": "Michelin", "buffet": "Buffet", "special-deal": "Ưu đãi", "date-night": "Hẹn hò", "trending": "Thịnh hành" },
-    "sort": { "recommended": "Đề xuất", "rating": "Đánh giá cao", "earliest": "Còn chỗ sớm nhất" },
-    "cuisines": { "western": "Món Âu", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản" },
-    "prices": { "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
-    "location": { "title": "Chọn khu vực", "defaultLocation": "Thành phố Hồ Chí Minh", "hint": "Chọn tỉnh hoặc thành phố, sau đó chọn phường, xã hoặc đặc khu.", "provinces": "Tỉnh / Thành phố", "wards": "Phường / Xã / Đặc khu", "searchProvince": "Tìm tỉnh hoặc thành phố", "searchWard": "Tìm phường, xã hoặc đặc khu", "selectWholeProvince": "Chọn toàn bộ", "loadError": "Không thể tải danh sách địa giới.", "retry": "Thử lại", "nothingFound": "Không tìm thấy khu vực phù hợp.", "noWards": "Không tìm thấy phường, xã hoặc đặc khu." }
+    "subtitle": "Tìm bàn nhanh và đặt chỗ dễ dàng.",
+    "loadingReservations": "Đang tải đặt bàn...",
+    "loading": "Đang tải...",
+    "header": {
+      "notifications": "Thông báo",
+      "currentLocation": "Vị trí hiện tại",
+      "searchPlaceholder": "Tìm nhà hàng hoặc thành phố",
+      "searchLabel": "Tìm nhà hàng hoặc thành phố"
+    },
+    "banner": {
+      "eyebrow": "Nổi bật",
+      "title": "Ưu đãi ẩm thực hôm nay",
+      "description": "Khám phá các ưu đãi hiện có từ nhà hàng."
+    },
+    "sections": {
+      "specialCategories": "Danh mục nổi bật",
+      "upToFive": "Tối đa 5",
+      "exploreCity": "Khám phá theo thành phố",
+      "viewAll": "Xem tất cả",
+      "sortBy": "Sắp xếp",
+      "cuisine": "Ẩm thực",
+      "priceRange": "Khoảng giá"
+    },
+    "categories": {
+      "michelin": "Michelin",
+      "buffet": "Buffet",
+      "special-deal": "Ưu đãi",
+      "date-night": "Hẹn hò",
+      "trending": "Thịnh hành"
+    },
+    "sort": {
+      "recommended": "Đề xuất",
+      "rating": "Đánh giá cao",
+      "earliest": "Còn chỗ sớm nhất"
+    },
+    "cuisines": {
+      "western": "Món Âu",
+      "chinese": "Trung Hoa",
+      "vietnamese": "Việt Nam",
+      "japanese": "Nhật Bản"
+    },
+    "prices": {
+      "under150": "Dưới 150K",
+      "under300": "150K–300K",
+      "over300": "Trên 300K"
+    },
+    "location": {
+      "title": "Chọn khu vực",
+      "defaultLocation": "Thành phố Hồ Chí Minh",
+      "hint": "Chọn tỉnh hoặc thành phố, sau đó chọn phường, xã hoặc đặc khu.",
+      "provinces": "Tỉnh / Thành phố",
+      "wards": "Phường / Xã / Đặc khu",
+      "searchProvince": "Tìm tỉnh hoặc thành phố",
+      "searchWard": "Tìm phường, xã hoặc đặc khu",
+      "selectWholeProvince": "Chọn toàn bộ",
+      "loadError": "Không thể tải danh sách địa giới.",
+      "retry": "Thử lại",
+      "nothingFound": "Không tìm thấy khu vực phù hợp.",
+      "noWards": "Không tìm thấy phường, xã hoặc đặc khu."
+    }
   },
   "RestaurantAvailability": {
-    "unknown": "Kiểm tra giờ ở bước đặt bàn", "contact": "Liên hệ nhà hàng cho số lượng khách này", "unavailable": "Hôm nay không còn giờ trực tuyến cho {count} khách", "available": "Hôm nay còn bàn từ {time}", "availableConfirmation": "Hôm nay còn bàn từ {time} · cần nhà hàng xác nhận"
+    "unknown": "Kiểm tra giờ ở bước đặt bàn",
+    "contact": "Liên hệ nhà hàng cho số lượng khách này",
+    "unavailable": "Hôm nay không còn giờ trực tuyến cho {count} khách",
+    "available": "Hôm nay còn bàn từ {time}",
+    "availableConfirmation": "Hôm nay còn bàn từ {time} · cần nhà hàng xác nhận"
   },
   "RestaurantDiscovery": {
-    "title": "Danh sách nhà hàng", "categoryTitle": "{category} tại {location}", "cityTitle": "Nhà hàng tại {city}", "hoChiMinhCity": "Thành phố Hồ Chí Minh", "subtitle": "Kết quả đã lọc", "searchPlaceholder": "Tìm nhà hàng hoặc khu vực",
-    "availabilityTitle": "Tình trạng bàn được hiển thị theo từng nhà hàng", "availabilityDescription": "Xem nhà hàng trước, sau đó chọn chính xác ngày, giờ và số khách ở bước đặt bàn.", "all": "Tất cả", "available": "Còn bàn", "filters": "Bộ lọc", "reset": "Đặt lại",
-    "sort": { "recommended": "Đề xuất", "rating": "Đánh giá cao", "earliest": "Giờ trống sớm nhất" }, "loading": "Đang tải nhà hàng...",
-    "price": { "all": "Mức giá", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
-    "priceOptions": { "all": "Tất cả", "under150": "Dưới 150K", "under300": "150K–300K", "over300": "Trên 300K" },
-    "cuisine": { "all": "Ẩm thực", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "vietnamese": "Việt Nam", "japanese": "Nhật Bản", "western": "Âu" },
-    "benefits": { "special_deal": "Ưu đãi đặc biệt", "available": "Còn bàn", "date_night": "Hẹn hò", "michelin": "Michelin" },
-    "restaurants": "Nhà hàng", "categoryResults": "Nhà hàng {category}", "imageAlt": "Hình ảnh {name}", "cardAvailabilityHint": "Dựa trên 2 khách hôm nay. Chọn thông tin chính xác ở bước đặt bàn.",
-    "priceRange": "Khoảng giá", "cuisineTitle": "Ẩm thực", "benefitsTitle": "Ưu đãi đặc biệt", "showResults": "Hiển thị {count} nhà hàng",
-    "empty": { "locationTitle": "Khu vực này chưa có nhà hàng", "locationDescription": "Hiện chưa có nhà hàng đang hoạt động tại {location}. Hãy chọn khu vực khác để tiếp tục khám phá.", "changeLocation": "Chọn khu vực khác", "filtersTitle": "Không tìm thấy nhà hàng phù hợp", "filtersDescription": "Hãy xóa từ khóa hoặc bộ lọc để xem thêm nhà hàng.", "clearFilters": "Xóa tìm kiếm và bộ lọc" }
+    "title": "Danh sách nhà hàng",
+    "categoryTitle": "{category} tại {location}",
+    "cityTitle": "Nhà hàng tại {city}",
+    "hoChiMinhCity": "Thành phố Hồ Chí Minh",
+    "subtitle": "Kết quả đã lọc",
+    "searchPlaceholder": "Tìm nhà hàng hoặc khu vực",
+    "availabilityTitle": "Tình trạng bàn được hiển thị theo từng nhà hàng",
+    "availabilityDescription": "Xem nhà hàng trước, sau đó chọn chính xác ngày, giờ và số khách ở bước đặt bàn.",
+    "all": "Tất cả",
+    "available": "Còn bàn",
+    "filters": "Bộ lọc",
+    "reset": "Đặt lại",
+    "sort": {
+      "recommended": "Đề xuất",
+      "rating": "Đánh giá cao",
+      "earliest": "Giờ trống sớm nhất"
+    },
+    "loading": "Đang tải nhà hàng...",
+    "price": {
+      "all": "Mức giá",
+      "under150": "< 150K",
+      "under300": "150K–300K",
+      "over300": "> 300K"
+    },
+    "priceOptions": {
+      "all": "Tất cả",
+      "under150": "Dưới 150K",
+      "under300": "150K–300K",
+      "over300": "Trên 300K"
+    },
+    "cuisine": {
+      "all": "Ẩm thực",
+      "korean": "Hàn Quốc",
+      "chinese": "Trung Hoa",
+      "vietnamese": "Việt Nam",
+      "japanese": "Nhật Bản",
+      "western": "Âu"
+    },
+    "benefits": {
+      "special_deal": "Ưu đãi đặc biệt",
+      "available": "Còn bàn",
+      "date_night": "Hẹn hò",
+      "michelin": "Michelin"
+    },
+    "restaurants": "Nhà hàng",
+    "categoryResults": "Nhà hàng {category}",
+    "imageAlt": "Hình ảnh {name}",
+    "cardAvailabilityHint": "Dựa trên 2 khách hôm nay. Chọn thông tin chính xác ở bước đặt bàn.",
+    "priceRange": "Khoảng giá",
+    "cuisineTitle": "Ẩm thực",
+    "benefitsTitle": "Ưu đãi đặc biệt",
+    "showResults": "Hiển thị {count} nhà hàng",
+    "empty": {
+      "locationTitle": "Khu vực này chưa có nhà hàng",
+      "locationDescription": "Hiện chưa có nhà hàng đang hoạt động tại {location}. Hãy chọn khu vực khác để tiếp tục khám phá.",
+      "changeLocation": "Chọn khu vực khác",
+      "filtersTitle": "Không tìm thấy nhà hàng phù hợp",
+      "filtersDescription": "Hãy xóa từ khóa hoặc bộ lọc để xem thêm nhà hàng.",
+      "clearFilters": "Xóa tìm kiếm và bộ lọc"
+    }
   },
   "RestaurantDetails": {
-    "title": "Chi tiết nhà hàng", "subtitle": "Thông tin nhà hàng", "selectDateTime": "Chọn ngày và giờ", "viewPhotos": "Xem {count} ảnh", "photosTitle": "Ảnh của {name}", "availabilityHint": "Tình trạng bàn hiển thị cho 2 khách hôm nay. Chọn ngày hoặc số khách khác ở bước đặt bàn.", "menu": "Thực đơn", "save": "Lưu nhà hàng", "unsave": "Bỏ khỏi danh sách đã lưu", "saved": "Đã lưu nhà hàng.", "removed": "Đã bỏ nhà hàng khỏi danh sách đã lưu.", "saveError": "Không thể cập nhật danh sách đã lưu. Hãy thử lại."
+    "title": "Chi tiết nhà hàng",
+    "subtitle": "Thông tin nhà hàng",
+    "selectDateTime": "Chọn ngày và giờ",
+    "viewPhotos": "Xem {count} ảnh",
+    "photosTitle": "Ảnh của {name}",
+    "availabilityHint": "Tình trạng bàn hiển thị cho 2 khách hôm nay. Chọn ngày hoặc số khách khác ở bước đặt bàn.",
+    "menu": "Thực đơn",
+    "save": "Lưu nhà hàng",
+    "unsave": "Bỏ khỏi danh sách đã lưu",
+    "saved": "Đã lưu nhà hàng.",
+    "removed": "Đã bỏ nhà hàng khỏi danh sách đã lưu.",
+    "saveError": "Không thể cập nhật danh sách đã lưu. Hãy thử lại."
   },
-  "SavedRestaurants": { "title": "Nhà hàng đã lưu", "subtitle": "Danh sách yêu thích của bạn", "count": "Đã lưu {count} nhà hàng", "emptyTitle": "Chưa có nhà hàng đã lưu", "emptyDescription": "Nhấn biểu tượng trái tim ở trang nhà hàng để lưu lại và xem sau.", "explore": "Khám phá nhà hàng", "viewDetails": "Xem chi tiết", "remove": "Bỏ lưu {name}", "removeError": "Không thể bỏ lưu nhà hàng. Hãy thử lại.", "loginRequired": "Cần đăng nhập", "loginDescription": "Đăng nhập bằng tài khoản khách hàng để xem nhà hàng đã lưu trên các thiết bị.", "login": "Đăng nhập", "loadError": "Không thể tải nhà hàng đã lưu", "retry": "Thử lại" },
+  "SavedRestaurants": {
+    "title": "Nhà hàng đã lưu",
+    "subtitle": "Danh sách yêu thích của bạn",
+    "count": "Đã lưu {count} nhà hàng",
+    "emptyTitle": "Chưa có nhà hàng đã lưu",
+    "emptyDescription": "Nhấn biểu tượng trái tim ở trang nhà hàng để lưu lại và xem sau.",
+    "explore": "Khám phá nhà hàng",
+    "viewDetails": "Xem chi tiết",
+    "remove": "Bỏ lưu {name}",
+    "removeError": "Không thể bỏ lưu nhà hàng. Hãy thử lại.",
+    "loginRequired": "Cần đăng nhập",
+    "loginDescription": "Đăng nhập bằng tài khoản khách hàng để xem nhà hàng đã lưu trên các thiết bị.",
+    "login": "Đăng nhập",
+    "loadError": "Không thể tải nhà hàng đã lưu",
+    "retry": "Thử lại"
+  },
   "BookingTime": {
-    "title": "Giờ", "emptyTitle": "Không có giờ đặt bàn trực tuyến", "emptyDescription": "Hãy thử ngày hoặc số lượng khách khác. Giờ trống phụ thuộc vào sức chứa được nhà hàng thiết lập."
+    "title": "Giờ",
+    "emptyTitle": "Không có giờ đặt bàn trực tuyến",
+    "emptyDescription": "Hãy thử ngày hoặc số lượng khách khác. Giờ trống phụ thuộc vào sức chứa được nhà hàng thiết lập."
   },
   "PasswordManagement": {
     "change": {
-      "action": "Đổi mật khẩu", "title": "Đổi mật khẩu", "description": "Nhập mật khẩu hiện tại và chọn mật khẩu mới. Bạn sẽ được đăng xuất sau khi đổi.",
-      "currentPassword": "Mật khẩu hiện tại", "newPassword": "Mật khẩu mới", "confirmPassword": "Xác nhận mật khẩu mới", "requirements": "Sử dụng từ 8 đến 72 ký tự.", "mismatch": "Mật khẩu xác nhận không khớp.",
-      "cancel": "Hủy", "submit": "Đổi mật khẩu", "success": "Đã đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.", "wrongCurrent": "Mật khẩu hiện tại không đúng.", "error": "Không thể đổi mật khẩu. Hãy thử lại."
+      "action": "Đổi mật khẩu",
+      "title": "Đổi mật khẩu",
+      "description": "Nhập mật khẩu hiện tại và chọn mật khẩu mới. Bạn sẽ được đăng xuất sau khi đổi.",
+      "currentPassword": "Mật khẩu hiện tại",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu mới",
+      "requirements": "Sử dụng từ 8 đến 72 ký tự.",
+      "mismatch": "Mật khẩu xác nhận không khớp.",
+      "cancel": "Hủy",
+      "submit": "Đổi mật khẩu",
+      "success": "Đã đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.",
+      "wrongCurrent": "Mật khẩu hiện tại không đúng.",
+      "error": "Không thể đổi mật khẩu. Hãy thử lại."
     },
     "reset": {
-      "title": "Đặt lại mật khẩu cho {name}", "description": "Tạo mật khẩu tạm thời và gửi cho người dùng qua kênh an toàn. Các phiên hiện tại sẽ bị đăng xuất.",
-      "newPassword": "Mật khẩu tạm thời", "confirmPassword": "Xác nhận mật khẩu tạm thời", "requirements": "Sử dụng từ 8 đến 72 ký tự.", "mismatch": "Mật khẩu xác nhận không khớp.", "cancel": "Hủy", "submit": "Đặt lại mật khẩu"
+      "title": "Đặt lại mật khẩu cho {name}",
+      "description": "Tạo mật khẩu tạm thời và gửi cho người dùng qua kênh an toàn. Các phiên hiện tại sẽ bị đăng xuất.",
+      "newPassword": "Mật khẩu tạm thời",
+      "confirmPassword": "Xác nhận mật khẩu tạm thời",
+      "requirements": "Sử dụng từ 8 đến 72 ký tự.",
+      "mismatch": "Mật khẩu xác nhận không khớp.",
+      "cancel": "Hủy",
+      "submit": "Đặt lại mật khẩu"
     }
   },
   "Account": {
@@ -147,80 +296,482 @@
     }
   },
   "CustomerBooking": {
-    "title": "Đặt bàn", "subtitle": "Thông tin đặt bàn",
-    "submit": { "change": "Yêu cầu giờ này", "reservation": "Gửi yêu cầu đặt bàn", "selectTime": "Chọn một giờ còn trống" },
-    "date": { "title": "Ngày", "selected": "Ngày đã chọn", "none": "Chưa chọn ngày" },
-    "guests": { "title": "Số khách", "remove": "Giảm một khách", "count": "Số lượng khách", "add": "Thêm một khách", "largePartyTitle": "Yêu cầu nhóm đông", "largePartyDescription": "Với nhóm trên 10 khách, hãy liên hệ trực tiếp nhà hàng để xác nhận giờ phù hợp. Không hỗ trợ đặt trực tuyến." },
-    "change": { "title": "Chọn giờ khác", "description": "Số khách vẫn là {count}. Đặt bàn đã xác nhận sẽ giữ giờ hiện tại cho đến khi nhà hàng chấp nhận yêu cầu.", "messageLabel": "Lời nhắn cho nhà hàng (không bắt buộc)", "messagePlaceholder": "Ví dụ: Chúng tôi có thể chuyển giờ đặt bàn muộn hơn một tiếng không?" },
-    "contact": { "title": "Thông tin liên hệ", "name": "Họ và tên", "phone": "Số điện thoại", "email": "Email (không bắt buộc)", "invalidEmail": "Hãy nhập địa chỉ email hợp lệ." },
-    "requests": { "title": "Yêu cầu và đặt món trước", "description": "Thông tin không bắt buộc để nhà hàng chuẩn bị trước khi bạn đến.", "specialRequest": "Yêu cầu đặc biệt (không bắt buộc)", "specialRequestPlaceholder": "Ví dụ: bàn gần cửa sổ, ghế trẻ em hoặc thông tin dị ứng", "menu": { "title": "Chọn món (không bắt buộc)", "description": "Chọn món và số lượng muốn gửi trong yêu cầu đặt trước.", "choose": "Chọn món", "edit": "Thay đổi", "selectedCount": "Đã chọn {count} món", "done": "Xong ({count})", "add": "Thêm {item}", "remove": "Giảm một phần {item}", "quantity": "{item}: đã chọn {quantity}" }, "preOrder": "Ghi chú thêm cho món đặt trước (không bắt buộc)", "preOrderDescription": "Các món đã chọn và ghi chú này là yêu cầu gửi nhà hàng, chưa phải đơn món ăn đã được xác nhận.", "preOrderPlaceholder": "Ví dụ: không đậu phộng hoặc để riêng nước sốt", "preOrderTooLong": "Danh sách món và ghi chú quá dài. Hãy bớt món hoặc rút gọn ghi chú." },
-    "errors": { "changeTitle": "Không thể đổi đặt bàn này", "changeDescription": "Một yêu cầu đổi giờ đang chờ nhà hàng xử lý.", "submissionTitle": "Không thể gửi yêu cầu đặt bàn", "submissionDescription": "Hãy kiểm tra thông tin và thử lại." },
-    "availability": { "loading": "Đang kiểm tra giờ còn trống...", "errorTitle": "Không thể kiểm tra giờ trống", "errorDescription": "Không thể tải các giờ còn trống.", "retry": "Thử lại", "confirmationTitle": "Cần nhà hàng xác nhận", "confirmationDescription": "Chọn một giờ còn trống và gửi yêu cầu. Đặt bàn sẽ ở trạng thái chờ cho đến khi nhà hàng xác nhận." },
-    "success": { "changeTitle": "Đã gửi yêu cầu giờ mới", "confirmedTitle": "Đã xác nhận đặt bàn", "pendingTitle": "Đã gửi yêu cầu đặt bàn", "confirmedChangeDescription": "Đặt bàn hiện tại vẫn được xác nhận cho đến khi nhà hàng xem xét giờ mới.", "pendingChangeDescription": "Giờ yêu cầu đã được cập nhật và vẫn cần nhà hàng xác nhận.", "confirmedDescription": "Bàn của bạn đã được xác nhận.", "pendingDescription": "Nhà hàng sẽ xem xét yêu cầu và liên hệ nếu cần thay đổi.", "changePending": "Đang chờ đổi giờ", "confirmed": "Đã xác nhận", "pendingConfirmation": "Chờ xác nhận", "guestLocation": "{count} khách · {district}", "viewDetails": "Xem chi tiết đặt bàn", "exploreRestaurants": "Khám phá thêm nhà hàng" }
+    "title": "Đặt bàn",
+    "subtitle": "Thông tin đặt bàn",
+    "submit": {
+      "change": "Yêu cầu giờ này",
+      "reservation": "Gửi yêu cầu đặt bàn",
+      "selectTime": "Chọn một giờ còn trống"
+    },
+    "date": {
+      "title": "Ngày",
+      "selected": "Ngày đã chọn",
+      "none": "Chưa chọn ngày"
+    },
+    "guests": {
+      "title": "Số khách",
+      "remove": "Giảm một khách",
+      "count": "Số lượng khách",
+      "add": "Thêm một khách",
+      "largePartyTitle": "Yêu cầu nhóm đông",
+      "largePartyDescription": "Với nhóm trên 10 khách, hãy liên hệ trực tiếp nhà hàng để xác nhận giờ phù hợp. Không hỗ trợ đặt trực tuyến."
+    },
+    "change": {
+      "title": "Chọn giờ khác",
+      "description": "Số khách vẫn là {count}. Đặt bàn đã xác nhận sẽ giữ giờ hiện tại cho đến khi nhà hàng chấp nhận yêu cầu.",
+      "messageLabel": "Lời nhắn cho nhà hàng (không bắt buộc)",
+      "messagePlaceholder": "Ví dụ: Chúng tôi có thể chuyển giờ đặt bàn muộn hơn một tiếng không?"
+    },
+    "contact": {
+      "title": "Thông tin liên hệ",
+      "name": "Họ và tên",
+      "phone": "Số điện thoại",
+      "email": "Email (không bắt buộc)",
+      "invalidEmail": "Hãy nhập địa chỉ email hợp lệ."
+    },
+    "requests": {
+      "title": "Yêu cầu và đặt món trước",
+      "description": "Thông tin không bắt buộc để nhà hàng chuẩn bị trước khi bạn đến.",
+      "specialRequest": "Yêu cầu đặc biệt (không bắt buộc)",
+      "specialRequestPlaceholder": "Ví dụ: bàn gần cửa sổ, ghế trẻ em hoặc thông tin dị ứng",
+      "menu": {
+        "title": "Chọn món (không bắt buộc)",
+        "description": "Chọn món và số lượng muốn gửi trong yêu cầu đặt trước.",
+        "choose": "Chọn món",
+        "edit": "Thay đổi",
+        "selectedCount": "Đã chọn {count} món",
+        "done": "Xong ({count})",
+        "add": "Thêm {item}",
+        "remove": "Giảm một phần {item}",
+        "quantity": "{item}: đã chọn {quantity}"
+      },
+      "preOrder": "Ghi chú thêm cho món đặt trước (không bắt buộc)",
+      "preOrderDescription": "Các món đã chọn và ghi chú này là yêu cầu gửi nhà hàng, chưa phải đơn món ăn đã được xác nhận.",
+      "preOrderPlaceholder": "Ví dụ: không đậu phộng hoặc để riêng nước sốt",
+      "preOrderTooLong": "Danh sách món và ghi chú quá dài. Hãy bớt món hoặc rút gọn ghi chú."
+    },
+    "errors": {
+      "changeTitle": "Không thể đổi đặt bàn này",
+      "changeDescription": "Một yêu cầu đổi giờ đang chờ nhà hàng xử lý.",
+      "submissionTitle": "Không thể gửi yêu cầu đặt bàn",
+      "submissionDescription": "Hãy kiểm tra thông tin và thử lại."
+    },
+    "availability": {
+      "loading": "Đang kiểm tra giờ còn trống...",
+      "errorTitle": "Không thể kiểm tra giờ trống",
+      "errorDescription": "Không thể tải các giờ còn trống.",
+      "retry": "Thử lại",
+      "confirmationTitle": "Cần nhà hàng xác nhận",
+      "confirmationDescription": "Chọn một giờ còn trống và gửi yêu cầu. Đặt bàn sẽ ở trạng thái chờ cho đến khi nhà hàng xác nhận."
+    },
+    "success": {
+      "changeTitle": "Đã gửi yêu cầu giờ mới",
+      "confirmedTitle": "Đã xác nhận đặt bàn",
+      "pendingTitle": "Đã gửi yêu cầu đặt bàn",
+      "confirmedChangeDescription": "Đặt bàn hiện tại vẫn được xác nhận cho đến khi nhà hàng xem xét giờ mới.",
+      "pendingChangeDescription": "Giờ yêu cầu đã được cập nhật và vẫn cần nhà hàng xác nhận.",
+      "confirmedDescription": "Bàn của bạn đã được xác nhận.",
+      "pendingDescription": "Nhà hàng sẽ xem xét yêu cầu và liên hệ nếu cần thay đổi.",
+      "changePending": "Đang chờ đổi giờ",
+      "confirmed": "Đã xác nhận",
+      "pendingConfirmation": "Chờ xác nhận",
+      "guestLocation": "{count} khách · {district}",
+      "viewDetails": "Xem chi tiết đặt bàn",
+      "exploreRestaurants": "Khám phá thêm nhà hàng"
+    }
   },
   "CustomerReservations": {
-    "title": "Đặt bàn của tôi", "subtitle": "Các kế hoạch dùng bữa sắp tới.", "heading": "Danh sách đặt bàn", "description": "Theo dõi kế hoạch sắp tới và xem lại lịch sử dùng bữa.",
-    "scope": { "upcoming": "Sắp tới ({count})", "history": "Lịch sử ({count})", "all": "Tất cả ({count})" },
-    "searchPlaceholder": "Tìm nhà hàng hoặc mã đặt bàn", "searchLabel": "Tìm kiếm đặt bàn", "filterLabel": "Lọc theo trạng thái đặt bàn",
-    "filters": { "all": "Tất cả trạng thái", "action": "Cần phản hồi", "pending": "Chờ xác nhận", "confirmed": "Đã xác nhận", "checkedIn": "Đã check-in hoặc xếp bàn", "completed": "Đã hoàn tất", "closed": "Đã hủy, từ chối hoặc không đến" },
-    "status": { "pending": "Chờ xác nhận", "action": "Cần phản hồi", "cancelled": "Đã hủy đặt bàn", "expired": "Yêu cầu hết hạn", "declined": "Yêu cầu bị từ chối", "checkedIn": "Đã check-in", "seated": "Đã xếp bàn", "completed": "Đã hoàn tất", "noShow": "Không đến", "confirmed": "Đã xác nhận" },
-    "suggestedTime": "Đề xuất {time}", "guestLocation": "{count} khách · {district}",
-    "loadError": { "title": "Không thể tải danh sách đặt bàn", "description": "Hãy kiểm tra kết nối và thử lại.", "retry": "Thử lại" },
-    "showing": "Đang hiển thị {visible}/{total}", "clearFilters": "Xóa bộ lọc", "showMore": "Hiển thị thêm (còn {count})",
-    "empty": { "filteredTitle": "Không có đặt bàn phù hợp", "historyTitle": "Chưa có lịch sử đặt bàn", "upcomingTitle": "Không có đặt bàn sắp tới", "filteredDescription": "Hãy thử tên nhà hàng, mã đặt bàn hoặc trạng thái khác.", "historyDescription": "Các lượt đã hoàn tất, đã hủy và đã qua sẽ xuất hiện tại đây.", "upcomingDescription": "Các yêu cầu và đặt bàn đã xác nhận sẽ xuất hiện tại đây." },
+    "title": "Đặt bàn của tôi",
+    "subtitle": "Các kế hoạch dùng bữa sắp tới.",
+    "heading": "Danh sách đặt bàn",
+    "description": "Theo dõi kế hoạch sắp tới và xem lại lịch sử dùng bữa.",
+    "scope": {
+      "upcoming": "Sắp tới ({count})",
+      "history": "Lịch sử ({count})",
+      "all": "Tất cả ({count})"
+    },
+    "searchPlaceholder": "Tìm nhà hàng hoặc mã đặt bàn",
+    "searchLabel": "Tìm kiếm đặt bàn",
+    "filterLabel": "Lọc theo trạng thái đặt bàn",
+    "filters": {
+      "all": "Tất cả trạng thái",
+      "action": "Cần phản hồi",
+      "pending": "Chờ xác nhận",
+      "confirmed": "Đã xác nhận",
+      "checkedIn": "Đã check-in hoặc xếp bàn",
+      "completed": "Đã hoàn tất",
+      "closed": "Đã hủy, từ chối hoặc không đến"
+    },
+    "status": {
+      "pending": "Chờ xác nhận",
+      "action": "Cần phản hồi",
+      "cancelled": "Đã hủy đặt bàn",
+      "expired": "Yêu cầu hết hạn",
+      "declined": "Yêu cầu bị từ chối",
+      "checkedIn": "Đã check-in",
+      "seated": "Đã xếp bàn",
+      "completed": "Đã hoàn tất",
+      "noShow": "Không đến",
+      "confirmed": "Đã xác nhận"
+    },
+    "suggestedTime": "Đề xuất {time}",
+    "guestLocation": "{count} khách · {district}",
+    "loadError": {
+      "title": "Không thể tải danh sách đặt bàn",
+      "description": "Hãy kiểm tra kết nối và thử lại.",
+      "retry": "Thử lại"
+    },
+    "showing": "Đang hiển thị {visible}/{total}",
+    "clearFilters": "Xóa bộ lọc",
+    "showMore": "Hiển thị thêm (còn {count})",
+    "empty": {
+      "filteredTitle": "Không có đặt bàn phù hợp",
+      "historyTitle": "Chưa có lịch sử đặt bàn",
+      "upcomingTitle": "Không có đặt bàn sắp tới",
+      "filteredDescription": "Hãy thử tên nhà hàng, mã đặt bàn hoặc trạng thái khác.",
+      "historyDescription": "Các lượt đã hoàn tất, đã hủy và đã qua sẽ xuất hiện tại đây.",
+      "upcomingDescription": "Các yêu cầu và đặt bàn đã xác nhận sẽ xuất hiện tại đây."
+    },
     "exploreRestaurants": "Khám phá nhà hàng"
   },
   "CustomerReservationDetails": {
     "title": "Chi tiết đặt bàn",
-    "notFound": { "title": "Không tìm thấy đặt bàn", "description": "Đặt bàn này có thể đã bị xóa hoặc không có trên thiết bị này.", "back": "Quay lại danh sách" },
+    "notFound": {
+      "title": "Không tìm thấy đặt bàn",
+      "description": "Đặt bàn này có thể đã bị xóa hoặc không có trên thiết bị này.",
+      "back": "Quay lại danh sách"
+    },
     "status": {
-      "pending": { "badge": "Chờ xác nhận", "title": "Đang chờ nhà hàng", "description": "Nhà hàng sẽ xác nhận yêu cầu hoặc liên hệ nếu cần thay đổi." },
-      "alternative": { "badge": "Cần phản hồi", "title": "Nhà hàng đề xuất giờ mới", "description": "Hãy xem giờ được đề xuất bên dưới. Bàn chỉ được xác nhận sau khi bạn chấp nhận." },
-      "declined": { "badge": "Yêu cầu bị từ chối", "restaurantTitle": "Nhà hàng không thể xác nhận yêu cầu này", "restaurantDescription": "Hiện không có bàn được giữ. Hãy chọn giờ khác khi bạn sẵn sàng.", "customerTitle": "Yêu cầu này đã đóng", "customerDescription": "Nhà hàng đã được thông báo rằng bạn từ chối giờ đề xuất." },
-      "confirmed": { "badge": "Đã xác nhận đặt bàn", "title": "Bàn của bạn đã được xác nhận", "description": "Đặt bàn đã sẵn sàng. Hãy đưa mã đặt bàn khi bạn đến." },
-      "cancelled": { "badge": "Đã hủy đặt bàn", "title": "Đặt bàn này đã được hủy", "description": "Bàn không còn được giữ. Bạn có thể tạo đặt bàn mới bất cứ lúc nào." },
+      "pending": {
+        "badge": "Chờ xác nhận",
+        "title": "Đang chờ nhà hàng",
+        "description": "Nhà hàng sẽ xác nhận yêu cầu hoặc liên hệ nếu cần thay đổi."
+      },
+      "alternative": {
+        "badge": "Cần phản hồi",
+        "title": "Nhà hàng đề xuất giờ mới",
+        "description": "Hãy xem giờ được đề xuất bên dưới. Bàn chỉ được xác nhận sau khi bạn chấp nhận."
+      },
+      "declined": {
+        "badge": "Yêu cầu bị từ chối",
+        "restaurantTitle": "Nhà hàng không thể xác nhận yêu cầu này",
+        "restaurantDescription": "Hiện không có bàn được giữ. Hãy chọn giờ khác khi bạn sẵn sàng.",
+        "customerTitle": "Yêu cầu này đã đóng",
+        "customerDescription": "Nhà hàng đã được thông báo rằng bạn từ chối giờ đề xuất."
+      },
+      "confirmed": {
+        "badge": "Đã xác nhận đặt bàn",
+        "title": "Bàn của bạn đã được xác nhận",
+        "description": "Đặt bàn đã sẵn sàng. Hãy đưa mã đặt bàn khi bạn đến."
+      },
+      "cancelled": {
+        "badge": "Đã hủy đặt bàn",
+        "title": "Đặt bàn này đã được hủy",
+        "description": "Bàn không còn được giữ. Bạn có thể tạo đặt bàn mới bất cứ lúc nào."
+      },
       "visit": {
-        "arrived": { "badge": "Đã check-in", "title": "Nhà hàng đã ghi nhận bạn đến", "description": "Nhân viên đã nhận được thông tin check-in của bạn." },
-        "seated": { "badge": "Đã xếp bàn", "title": "Bàn của bạn đã sẵn sàng", "description": "Nhà hàng đã xếp bàn cho nhóm của bạn." },
-        "completed": { "badge": "Đã hoàn tất", "title": "Cảm ơn bạn đã dùng bữa", "description": "Lượt dùng bữa này đã hoàn tất." },
-        "noShow": { "badge": "Không đến", "title": "Nhà hàng ghi nhận bạn không đến", "description": "Hãy liên hệ nhà hàng nếu thông tin này không chính xác." }
+        "arrived": {
+          "badge": "Đã check-in",
+          "title": "Nhà hàng đã ghi nhận bạn đến",
+          "description": "Nhân viên đã nhận được thông tin check-in của bạn."
+        },
+        "seated": {
+          "badge": "Đã xếp bàn",
+          "title": "Bàn của bạn đã sẵn sàng",
+          "description": "Nhà hàng đã xếp bàn cho nhóm của bạn."
+        },
+        "completed": {
+          "badge": "Đã hoàn tất",
+          "title": "Cảm ơn bạn đã dùng bữa",
+          "description": "Lượt dùng bữa này đã hoàn tất."
+        },
+        "noShow": {
+          "badge": "Không đến",
+          "title": "Nhà hàng ghi nhận bạn không đến",
+          "description": "Hãy liên hệ nhà hàng nếu thông tin này không chính xác."
+        }
       }
     },
-    "reference": { "label": "Mã đặt bàn", "copy": "Sao chép mã đặt bàn" },
-    "information": { "date": "Ngày", "timeGuests": "Giờ · số khách", "guestCount": "{count} khách", "preOrder": "Đặt món trước", "noPreOrder": "Chưa thêm", "request": "Yêu cầu", "noRequest": "Không có yêu cầu đặc biệt" },
-    "actions": { "newReservation": "Đặt bàn mới", "changeRequest": "Đổi yêu cầu", "change": "Thay đổi", "cancelRequest": "Hủy yêu cầu", "cancel": "Hủy", "changeHint": "Không thể đổi khi một yêu cầu khác đang chờ xử lý", "cancelHint": "Đặt bàn này không thể hủy trực tuyến", "cancelTitle": "Hủy đặt bàn này?", "cancelDescription": "Nhà hàng sẽ ngừng giữ bàn. Thao tác này không thể hoàn tác.", "cancelError": "Không thể hủy. Thời hạn cho phép hủy có thể đã qua.", "keep": "Giữ đặt bàn", "confirmCancel": "Hủy đặt bàn" },
-    "changeRequest": { "pendingTitle": "Đang chờ nhà hàng", "pendingDescription": "Bạn đã yêu cầu {date} lúc {time}. Giờ đã xác nhận hiện tại vẫn được giữ cho đến khi nhà hàng chấp nhận.", "declinedTitle": "Nhà hàng đã từ chối giờ mới", "declinedDescription": "Yêu cầu {date} lúc {time} đã bị từ chối. Đặt bàn đã xác nhận ban đầu vẫn được giữ nguyên." },
+    "reference": {
+      "label": "Mã đặt bàn",
+      "copy": "Sao chép mã đặt bàn"
+    },
+    "information": {
+      "date": "Ngày",
+      "timeGuests": "Giờ · số khách",
+      "guestCount": "{count} khách",
+      "preOrder": "Đặt món trước",
+      "noPreOrder": "Chưa thêm",
+      "request": "Yêu cầu",
+      "noRequest": "Không có yêu cầu đặc biệt"
+    },
+    "actions": {
+      "newReservation": "Đặt bàn mới",
+      "changeRequest": "Đổi yêu cầu",
+      "change": "Thay đổi",
+      "cancelRequest": "Hủy yêu cầu",
+      "cancel": "Hủy",
+      "changeHint": "Không thể đổi khi một yêu cầu khác đang chờ xử lý",
+      "cancelHint": "Đặt bàn này không thể hủy trực tuyến",
+      "cancelTitle": "Hủy đặt bàn này?",
+      "cancelDescription": "Nhà hàng sẽ ngừng giữ bàn. Thao tác này không thể hoàn tác.",
+      "cancelError": "Không thể hủy. Thời hạn cho phép hủy có thể đã qua.",
+      "keep": "Giữ đặt bàn",
+      "confirmCancel": "Hủy đặt bàn"
+    },
+    "changeRequest": {
+      "pendingTitle": "Đang chờ nhà hàng",
+      "pendingDescription": "Bạn đã yêu cầu {date} lúc {time}. Giờ đã xác nhận hiện tại vẫn được giữ cho đến khi nhà hàng chấp nhận.",
+      "declinedTitle": "Nhà hàng đã từ chối giờ mới",
+      "declinedDescription": "Yêu cầu {date} lúc {time} đã bị từ chối. Đặt bàn đã xác nhận ban đầu vẫn được giữ nguyên."
+    },
     "proposal": {
-      "title": "Đề xuất giờ mới", "description": "Nhà hàng không thể xác nhận giờ ban đầu và đã đề xuất một khung giờ còn trống.", "requested": "Đã yêu cầu", "suggested": "Đề xuất", "restaurantMessage": "Lời nhắn từ nhà hàng", "respondBy": "Vui lòng phản hồi trước {deadline}", "accept": "Chấp nhận {time}", "chooseAnother": "Chọn giờ khác", "declineRequest": "Từ chối yêu cầu", "declineTitle": "Từ chối đề xuất này?", "declineDescription": "Nhà hàng sẽ hủy giữ khung giờ {time}. Sau đó bạn vẫn có thể đặt bàn mới.", "keep": "Giữ đề xuất", "decline": "Từ chối", "acceptedTitle": "Đã xác nhận giờ mới", "acceptedMessage": "Đã thông báo cho {restaurant} rằng bạn chấp nhận {time}.", "declinedTitle": "Đã từ chối yêu cầu", "declinedMessage": "Đã thông báo cho {restaurant}.", "responseError": "Không thể cập nhật đề xuất. Vui lòng thử lại."
+      "title": "Đề xuất giờ mới",
+      "description": "Nhà hàng không thể xác nhận giờ ban đầu và đã đề xuất một khung giờ còn trống.",
+      "requested": "Đã yêu cầu",
+      "suggested": "Đề xuất",
+      "restaurantMessage": "Lời nhắn từ nhà hàng",
+      "respondBy": "Vui lòng phản hồi trước {deadline}",
+      "accept": "Chấp nhận {time}",
+      "chooseAnother": "Chọn giờ khác",
+      "declineRequest": "Từ chối yêu cầu",
+      "declineTitle": "Từ chối đề xuất này?",
+      "declineDescription": "Nhà hàng sẽ hủy giữ khung giờ {time}. Sau đó bạn vẫn có thể đặt bàn mới.",
+      "keep": "Giữ đề xuất",
+      "decline": "Từ chối",
+      "acceptedTitle": "Đã xác nhận giờ mới",
+      "acceptedMessage": "Đã thông báo cho {restaurant} rằng bạn chấp nhận {time}.",
+      "declinedTitle": "Đã từ chối yêu cầu",
+      "declinedMessage": "Đã thông báo cho {restaurant}.",
+      "responseError": "Không thể cập nhật đề xuất. Vui lòng thử lại."
     }
   },
   "OwnerDashboard": {
-    "restaurantFallback": "Nhà hàng", "eyebrow": "Tổng quan phục vụ", "addWalkIn": "Thêm khách vãng lai", "guestCount": "{count} khách",
-    "loadError": { "title": "Không thể tải danh sách đặt bàn", "retry": "Thử lại" },
-    "toolbar": { "today": "Hôm nay · {date}", "previousDay": "Ngày trước", "nextDay": "Ngày sau", "returnToday": "Về hôm nay", "searchPlaceholder": "Tên khách hoặc mã đặt bàn", "searchLabel": "Tìm đặt bàn theo tên khách, mã đặt bàn hoặc số điện thoại", "clearSearch": "Xóa tìm kiếm đặt bàn", "filter": "Lọc đặt bàn" },
-    "overview": { "metrics": { "bookings": "Đặt bàn", "expectedGuests": "Khách dự kiến", "preOrders": "Đặt món trước", "vipGuests": "Khách VIP" }, "attention": { "title": "Cần xử lý", "description": "Có {count} yêu cầu đặt bàn cần xem xét." }, "nextArrival": "Khách sắp đến", "vip": "VIP", "preOrder": "đặt món trước", "guestCount": "{count} khách" },
-    "list": { "title": "Đặt bàn", "shown": "Đang hiện {count}", "searchEmptyTitle": "Không tìm thấy đặt bàn", "filterEmptyTitle": "Không có đặt bàn phù hợp", "searchEmptyDescription": "Kiểm tra tên khách, mã đặt bàn hoặc số điện thoại.", "filterEmptyDescription": "Thử trạng thái hoặc bộ lọc khách khác." },
-    "filters": { "title": "Lọc đặt bàn", "status": "Trạng thái", "chooseOne": "Chọn một", "guestDetails": "Thông tin khách", "selectAny": "Có thể chọn nhiều", "reset": "Đặt lại", "show": "Hiện {count} đặt bàn", "statuses": { "all": "Tất cả", "pending": "Đang chờ", "waitingGuest": "Chờ khách", "confirmed": "Đã xác nhận", "declined": "Đã từ chối", "expired": "Đã hết hạn", "cancelled": "Đã hủy", "arrived": "Đã đến", "seated": "Đã xếp bàn", "completed": "Hoàn tất", "noShow": "Không đến" }, "guests": { "vip": "VIP", "preOrder": "Đặt món trước", "largeParty": "Từ 4 khách" } },
-    "walkIn": { "title": "Thêm khách vãng lai", "description": "Thêm khách đến nhà hàng mà không đặt bàn trực tuyến. Sức chứa được tính vào khung giờ phục vụ hiện tại.", "errorTitle": "Không thể thêm khách vãng lai", "capacityError": "Khung giờ phục vụ hiện tại không còn đủ sức chứa.", "genericError": "Không thể thêm khách vãng lai. Hãy thử lại.", "name": "Tên khách", "namePlaceholder": "Nhập tên khách", "nameRequired": "Tên khách là bắt buộc.", "phone": "Số điện thoại", "phonePlaceholder": "Nhập số điện thoại", "phoneRequired": "Số điện thoại là bắt buộc.", "partySize": "Số khách", "notes": "Ghi chú", "notesPlaceholder": "Ghi chú chỗ ngồi hoặc dị ứng", "cancel": "Hủy", "submit": "Thêm khách", "added": "Đã thêm khách vãng lai." }
+    "restaurantFallback": "Nhà hàng",
+    "eyebrow": "Tổng quan phục vụ",
+    "addWalkIn": "Thêm khách vãng lai",
+    "guestCount": "{count} khách",
+    "loadError": {
+      "title": "Không thể tải danh sách đặt bàn",
+      "retry": "Thử lại"
+    },
+    "toolbar": {
+      "today": "Hôm nay · {date}",
+      "previousDay": "Ngày trước",
+      "nextDay": "Ngày sau",
+      "returnToday": "Về hôm nay",
+      "searchPlaceholder": "Tên khách hoặc mã đặt bàn",
+      "searchLabel": "Tìm đặt bàn theo tên khách, mã đặt bàn hoặc số điện thoại",
+      "clearSearch": "Xóa tìm kiếm đặt bàn",
+      "filter": "Lọc đặt bàn"
+    },
+    "overview": {
+      "metrics": {
+        "bookings": "Đặt bàn",
+        "expectedGuests": "Khách dự kiến",
+        "preOrders": "Đặt món trước",
+        "vipGuests": "Khách VIP"
+      },
+      "attention": {
+        "title": "Cần xử lý",
+        "description": "Có {count} yêu cầu đặt bàn cần xem xét."
+      },
+      "nextArrival": "Khách sắp đến",
+      "vip": "VIP",
+      "preOrder": "đặt món trước",
+      "guestCount": "{count} khách"
+    },
+    "list": {
+      "title": "Đặt bàn",
+      "shown": "Đang hiện {count}",
+      "searchEmptyTitle": "Không tìm thấy đặt bàn",
+      "filterEmptyTitle": "Không có đặt bàn phù hợp",
+      "searchEmptyDescription": "Kiểm tra tên khách, mã đặt bàn hoặc số điện thoại.",
+      "filterEmptyDescription": "Thử trạng thái hoặc bộ lọc khách khác."
+    },
+    "filters": {
+      "title": "Lọc đặt bàn",
+      "status": "Trạng thái",
+      "chooseOne": "Chọn một",
+      "guestDetails": "Thông tin khách",
+      "selectAny": "Có thể chọn nhiều",
+      "reset": "Đặt lại",
+      "show": "Hiện {count} đặt bàn",
+      "statuses": {
+        "all": "Tất cả",
+        "pending": "Đang chờ",
+        "waitingGuest": "Chờ khách",
+        "confirmed": "Đã xác nhận",
+        "declined": "Đã từ chối",
+        "expired": "Đã hết hạn",
+        "cancelled": "Đã hủy",
+        "arrived": "Đã đến",
+        "seated": "Đã xếp bàn",
+        "completed": "Hoàn tất",
+        "noShow": "Không đến"
+      },
+      "guests": {
+        "vip": "VIP",
+        "preOrder": "Đặt món trước",
+        "largeParty": "Từ 4 khách"
+      }
+    },
+    "walkIn": {
+      "title": "Thêm khách vãng lai",
+      "description": "Thêm khách đến nhà hàng mà không đặt bàn trực tuyến. Sức chứa được tính vào khung giờ phục vụ hiện tại.",
+      "errorTitle": "Không thể thêm khách vãng lai",
+      "capacityError": "Khung giờ phục vụ hiện tại không còn đủ sức chứa.",
+      "genericError": "Không thể thêm khách vãng lai. Hãy thử lại.",
+      "name": "Tên khách",
+      "namePlaceholder": "Nhập tên khách",
+      "nameRequired": "Tên khách là bắt buộc.",
+      "phone": "Số điện thoại",
+      "phonePlaceholder": "Nhập số điện thoại",
+      "phoneRequired": "Số điện thoại là bắt buộc.",
+      "partySize": "Số khách",
+      "notes": "Ghi chú",
+      "notesPlaceholder": "Ghi chú chỗ ngồi hoặc dị ứng",
+      "cancel": "Hủy",
+      "submit": "Thêm khách",
+      "added": "Đã thêm khách vãng lai."
+    }
   },
   "OwnerReservationDetails": {
-    "title": "Chi tiết đặt bàn", "eyebrow": "Thông tin khách đã chọn", "notFound": "Không tìm thấy đặt bàn.",
-    "notification": { "title": "Đã gửi xác nhận", "message": "Đã thông báo cho {guest} rằng bàn đã được xác nhận." },
-    "footer": { "viewArrival": "Xem trạng thái đến của {guest}", "checkIn": "Check-in {guest}", "waiting": "Đang chờ khách phản hồi", "closed": "Yêu cầu đã đóng", "confirm": "Xác nhận đặt bàn" },
-    "menu": { "aria": "Thao tác đặt bàn", "label": "Thao tác đặt bàn", "contact": "Liên hệ khách", "noShow": "Đánh dấu không đến", "cancel": "Hủy đặt bàn" },
-    "noShow": { "title": "Đánh dấu {guest} không đến?", "description": "Chỉ dùng sau thời gian chờ khách đến. Thao tác này không thể hoàn tác và không hoàn lại sức chứa của khung giờ.", "keep": "Tiếp tục chờ khách", "confirm": "Đánh dấu không đến", "error": "Không thể đánh dấu đặt bàn này là không đến. Thời gian chờ có thể chưa kết thúc." },
-    "cancel": { "title": "Hủy đặt bàn này?", "description": "Bàn sẽ được giải phóng và thao tác này không thể hoàn tác.", "reason": "Lý do hủy", "placeholder": "Cho khách biết lý do nhà hàng hủy đặt bàn", "keep": "Giữ đặt bàn", "confirm": "Hủy đặt bàn", "error": "Không thể hủy đặt bàn. Hãy tải lại trang và thử lại." },
-    "information": { "title": "Thông tin đặt bàn", "date": "Ngày", "largeParty": "Nhóm đông", "guests": "Số khách", "guestCount": "{count} khách", "table": "Bàn", "notAssigned": "Chưa xếp bàn", "preOrder": "Đặt món trước", "noPreOrder": "Chưa đặt món trước" },
-    "confirmation": { "title": "Xác nhận với khách", "description": "Gửi xác nhận đặt bàn trong ứng dụng. Chỉ gọi khi khách cần được hỗ trợ gấp hoặc đặc biệt.", "notify": "Thông báo khách", "call": "Gọi khách" },
-    "summary": { "meta": "{time} · {count} khách · Mã {reference}" },
-    "badges": { "pending": "Đang chờ", "alternative-proposed": "Đã đề xuất giờ khác", "confirmed": "Đã xác nhận", "declined": "Đã từ chối", "expired": "Đã hết hạn", "cancelled": "Đã hủy", "expected": "Chờ khách", "arrived": "Đã đến", "seated": "Đã xếp bàn", "completed": "Hoàn tất", "no-show": "Không đến", "vip": "VIP", "regular": "Thường xuyên", "new": "Mới", "preOrder": "Đặt món trước" },
-    "notes": { "title": "Ghi chú phục vụ", "empty": "Không có ghi chú phục vụ" },
-    "customerResponse": { "acceptedTitle": "Khách đã chấp nhận giờ đề xuất", "acceptedDescription": "Đã xác nhận vào {date} lúc {time}.", "declinedTitle": "Khách đã từ chối giờ đề xuất", "declinedSlot": "giờ được đề xuất", "declinedDescription": "Khách đã từ chối {slot}. Hãy đề xuất giờ khác hoặc liên hệ trực tiếp.", "requestedTitle": "Khách yêu cầu giờ khác", "requestedDescription": "Hãy xem yêu cầu mới vào {date} lúc {time}.", "changeTitle": "Khách yêu cầu đổi lịch", "changeDescription": "Chuyển đặt bàn đã xác nhận sang {date} lúc {time}? Giờ ban đầu vẫn được giữ cho đến khi bạn chấp nhận.", "acceptChange": "Chấp nhận giờ mới", "declineChange": "Giữ giờ ban đầu", "changeError": "Không thể phản hồi yêu cầu này", "waitingTitle": "Đang chờ khách phản hồi", "waitingDescription": "Đã đề xuất {date} lúc {time}." },
+    "title": "Chi tiết đặt bàn",
+    "eyebrow": "Thông tin khách đã chọn",
+    "notFound": "Không tìm thấy đặt bàn.",
+    "notification": {
+      "title": "Đã gửi xác nhận",
+      "message": "Đã thông báo cho {guest} rằng bàn đã được xác nhận."
+    },
+    "footer": {
+      "viewArrival": "Xem trạng thái đến của {guest}",
+      "checkIn": "Check-in {guest}",
+      "waiting": "Đang chờ khách phản hồi",
+      "closed": "Yêu cầu đã đóng",
+      "confirm": "Xác nhận đặt bàn"
+    },
+    "menu": {
+      "aria": "Thao tác đặt bàn",
+      "label": "Thao tác đặt bàn",
+      "contact": "Liên hệ khách",
+      "noShow": "Đánh dấu không đến",
+      "cancel": "Hủy đặt bàn"
+    },
+    "noShow": {
+      "title": "Đánh dấu {guest} không đến?",
+      "description": "Chỉ dùng sau thời gian chờ khách đến. Thao tác này không thể hoàn tác và không hoàn lại sức chứa của khung giờ.",
+      "keep": "Tiếp tục chờ khách",
+      "confirm": "Đánh dấu không đến",
+      "error": "Không thể đánh dấu đặt bàn này là không đến. Thời gian chờ có thể chưa kết thúc."
+    },
+    "cancel": {
+      "title": "Hủy đặt bàn này?",
+      "description": "Bàn sẽ được giải phóng và thao tác này không thể hoàn tác.",
+      "reason": "Lý do hủy",
+      "placeholder": "Cho khách biết lý do nhà hàng hủy đặt bàn",
+      "keep": "Giữ đặt bàn",
+      "confirm": "Hủy đặt bàn",
+      "error": "Không thể hủy đặt bàn. Hãy tải lại trang và thử lại."
+    },
+    "information": {
+      "title": "Thông tin đặt bàn",
+      "date": "Ngày",
+      "largeParty": "Nhóm đông",
+      "guests": "Số khách",
+      "guestCount": "{count} khách",
+      "table": "Bàn",
+      "notAssigned": "Chưa xếp bàn",
+      "preOrder": "Đặt món trước",
+      "noPreOrder": "Chưa đặt món trước"
+    },
+    "confirmation": {
+      "title": "Xác nhận với khách",
+      "description": "Gửi xác nhận đặt bàn trong ứng dụng. Chỉ gọi khi khách cần được hỗ trợ gấp hoặc đặc biệt.",
+      "notify": "Thông báo khách",
+      "call": "Gọi khách"
+    },
+    "summary": {
+      "meta": "{time} · {count} khách · Mã {reference}"
+    },
+    "badges": {
+      "pending": "Đang chờ",
+      "alternative-proposed": "Đã đề xuất giờ khác",
+      "confirmed": "Đã xác nhận",
+      "declined": "Đã từ chối",
+      "expired": "Đã hết hạn",
+      "cancelled": "Đã hủy",
+      "expected": "Chờ khách",
+      "arrived": "Đã đến",
+      "seated": "Đã xếp bàn",
+      "completed": "Hoàn tất",
+      "no-show": "Không đến",
+      "vip": "VIP",
+      "regular": "Thường xuyên",
+      "new": "Mới",
+      "preOrder": "Đặt món trước"
+    },
+    "notes": {
+      "title": "Ghi chú phục vụ",
+      "empty": "Không có ghi chú phục vụ"
+    },
+    "customerResponse": {
+      "acceptedTitle": "Khách đã chấp nhận giờ đề xuất",
+      "acceptedDescription": "Đã xác nhận vào {date} lúc {time}.",
+      "declinedTitle": "Khách đã từ chối giờ đề xuất",
+      "declinedSlot": "giờ được đề xuất",
+      "declinedDescription": "Khách đã từ chối {slot}. Hãy đề xuất giờ khác hoặc liên hệ trực tiếp.",
+      "requestedTitle": "Khách yêu cầu giờ khác",
+      "requestedDescription": "Hãy xem yêu cầu mới vào {date} lúc {time}.",
+      "changeTitle": "Khách yêu cầu đổi lịch",
+      "changeDescription": "Chuyển đặt bàn đã xác nhận sang {date} lúc {time}? Giờ ban đầu vẫn được giữ cho đến khi bạn chấp nhận.",
+      "acceptChange": "Chấp nhận giờ mới",
+      "declineChange": "Giữ giờ ban đầu",
+      "changeError": "Không thể phản hồi yêu cầu này",
+      "waitingTitle": "Đang chờ khách phản hồi",
+      "waitingDescription": "Đã đề xuất {date} lúc {time}."
+    },
     "response": {
-      "title": "Phản hồi yêu cầu", "alternativeSent": "Đã gửi giờ khác", "unable": "Không thể phục vụ", "awaiting": "Chờ phản hồi", "waiting": "Đang chờ khách phản hồi cho {slot}.", "notified": "Đã thông báo cho khách: {reason}.", "instructions": "Xác nhận giờ yêu cầu, đề xuất giờ khác hoặc báo cho khách biết nhà hàng đã hết bàn.", "updates": "Hãy gọi khi yêu cầu trong ngày hoặc yêu cầu đặc biệt cần phản hồi nhanh.", "changeTime": "Đổi giờ đề xuất", "suggestTime": "Đề xuất giờ khác", "call": "Gọi khách", "noTable": "Không còn bàn",
-      "alternativeDrawer": { "title": "Đề xuất giờ khác", "requestedTime": "Giờ khách đã yêu cầu", "availableTimes": "Các giờ khác còn trống", "description": "Chọn một giờ còn trống để gửi cho khách.", "loading": "Đang tải các giờ còn trống...", "noSlots": "Không còn giờ trực tuyến nào khác trong hai ngày này.", "loadError": "Không thể tải các giờ còn trống", "message": "Lời nhắn (không bắt buộc)", "placeholder": "Ví dụ: Chúng tôi có thể giữ bàn gần cửa sổ vào giờ này.", "send": "Gửi giờ đề xuất", "sendError": "Không thể gửi giờ đề xuất", "sentTitle": "Đã gửi giờ đề xuất", "sentMessage": "{guest} sẽ nhận thông báo trong ứng dụng và có thể chấp nhận hoặc từ chối." },
-      "unavailableDrawer": { "title": "Không thể phục vụ", "description": "Chọn lý do rõ ràng để lưu cùng quyết định xử lý đặt bàn.", "notify": "Từ chối yêu cầu", "notifiedTitle": "Đã từ chối yêu cầu", "notifiedMessage": "Yêu cầu bị từ chối vì: {reason}." },
-      "reasons": { "fullyBooked": "Đã hết bàn", "partySize": "Không thể phục vụ số khách này", "closed": "Nhà hàng đã đóng cửa", "other": "Lý do khác" }
+      "title": "Phản hồi yêu cầu",
+      "alternativeSent": "Đã gửi giờ khác",
+      "unable": "Không thể phục vụ",
+      "awaiting": "Chờ phản hồi",
+      "waiting": "Đang chờ khách phản hồi cho {slot}.",
+      "notified": "Đã thông báo cho khách: {reason}.",
+      "instructions": "Xác nhận giờ yêu cầu, đề xuất giờ khác hoặc báo cho khách biết nhà hàng đã hết bàn.",
+      "updates": "Hãy gọi khi yêu cầu trong ngày hoặc yêu cầu đặc biệt cần phản hồi nhanh.",
+      "changeTime": "Đổi giờ đề xuất",
+      "suggestTime": "Đề xuất giờ khác",
+      "call": "Gọi khách",
+      "noTable": "Không còn bàn",
+      "alternativeDrawer": {
+        "title": "Đề xuất giờ khác",
+        "requestedTime": "Giờ khách đã yêu cầu",
+        "availableTimes": "Các giờ khác còn trống",
+        "description": "Chọn một giờ còn trống để gửi cho khách.",
+        "loading": "Đang tải các giờ còn trống...",
+        "noSlots": "Không còn giờ trực tuyến nào khác trong hai ngày này.",
+        "loadError": "Không thể tải các giờ còn trống",
+        "message": "Lời nhắn (không bắt buộc)",
+        "placeholder": "Ví dụ: Chúng tôi có thể giữ bàn gần cửa sổ vào giờ này.",
+        "send": "Gửi giờ đề xuất",
+        "sendError": "Không thể gửi giờ đề xuất",
+        "sentTitle": "Đã gửi giờ đề xuất",
+        "sentMessage": "{guest} sẽ nhận thông báo trong ứng dụng và có thể chấp nhận hoặc từ chối."
+      },
+      "unavailableDrawer": {
+        "title": "Không thể phục vụ",
+        "description": "Chọn lý do rõ ràng để lưu cùng quyết định xử lý đặt bàn.",
+        "notify": "Từ chối yêu cầu",
+        "notifiedTitle": "Đã từ chối yêu cầu",
+        "notifiedMessage": "Yêu cầu bị từ chối vì: {reason}."
+      },
+      "reasons": {
+        "fullyBooked": "Đã hết bàn",
+        "partySize": "Không thể phục vụ số khách này",
+        "closed": "Nhà hàng đã đóng cửa",
+        "other": "Lý do khác"
+      }
     }
   },
   "OwnerCheckIn": {
@@ -260,8 +811,8 @@
     "arrival": {
       "title": "Khách đến",
       "eyebrow": "Quản lý lượt phục vụ",
-        "notFound": "Không tìm thấy đặt bàn.",
-        "updateError": "Không thể cập nhật trạng thái lượt phục vụ. Hãy tải lại và thử lại.",
+      "notFound": "Không tìm thấy đặt bàn.",
+      "updateError": "Không thể cập nhật trạng thái lượt phục vụ. Hãy tải lại và thử lại.",
       "visitStatus": "Trạng thái lượt phục vụ",
       "statuses": {
         "expected": "Đã xác nhận",
@@ -350,34 +901,70 @@
       "description": "Theo dõi đặt bàn hôm nay và các yêu cầu khách đang chờ xử lý.",
       "refresh": "Làm mới",
       "metrics": {
-        "bookings": { "label": "Đặt bàn hôm nay", "detail": "Tất cả trạng thái" },
-        "checkedIn": { "label": "Đã check-in", "detail": "Đã đến, đã xếp bàn hoặc hoàn tất" },
-        "pending": { "label": "Chờ xử lý hôm nay", "detail": "Đang chờ nhà hàng phản hồi" },
-        "noShow": { "label": "No-show hôm nay", "detail": "Đã đánh dấu không đến" }
+        "bookings": {
+          "label": "Đặt bàn hôm nay",
+          "detail": "Tất cả trạng thái"
+        },
+        "checkedIn": {
+          "label": "Đã check-in",
+          "detail": "Đã đến, đã xếp bàn hoặc hoàn tất"
+        },
+        "pending": {
+          "label": "Chờ xử lý hôm nay",
+          "detail": "Đang chờ nhà hàng phản hồi"
+        },
+        "noShow": {
+          "label": "No-show hôm nay",
+          "detail": "Đã đánh dấu không đến"
+        }
       },
       "trend": {
         "title": "Đặt bàn theo ngày phục vụ",
         "period": "7 ngày gần nhất"
       },
-      "pending": { "title": "Yêu cầu đang chờ", "total": "Tổng {count}", "review": "Xử lý", "empty": "Không có yêu cầu đang chờ" },
+      "pending": {
+        "title": "Yêu cầu đang chờ",
+        "total": "Tổng {count}",
+        "review": "Xử lý",
+        "empty": "Không có yêu cầu đang chờ"
+      },
       "loadError": "Không thể tải dữ liệu vận hành. Hãy tải lại hoặc đăng nhập lại."
     },
     "reservations": {
       "title": "Đặt bàn",
       "description": "Quản lý đặt bàn, check-in, hủy và các trường hợp no-show tại một nơi.",
       "metrics": {
-        "confirmed": { "label": "Đã xác nhận", "detail": "Tất cả dữ liệu" },
-        "checkedIn": { "label": "Đã check-in", "detail": "Tất cả dữ liệu" },
-        "cancelled": { "label": "Đã hủy", "detail": "Tất cả dữ liệu" },
-        "noShow": { "label": "Không đến", "detail": "Tất cả dữ liệu" }
+        "confirmed": {
+          "label": "Đã xác nhận",
+          "detail": "Tất cả dữ liệu"
+        },
+        "checkedIn": {
+          "label": "Đã check-in",
+          "detail": "Tất cả dữ liệu"
+        },
+        "cancelled": {
+          "label": "Đã hủy",
+          "detail": "Tất cả dữ liệu"
+        },
+        "noShow": {
+          "label": "Không đến",
+          "detail": "Tất cả dữ liệu"
+        }
       },
       "filters": {
         "searchPlaceholder": "Tìm mã, khách hàng, điện thoại hoặc email",
         "searchLabel": "Tìm kiếm đặt bàn",
         "periodLabel": "Khoảng thời gian đặt bàn",
         "statusLabel": "Trạng thái đặt bàn",
-        "period": { "all": "Tất cả đặt bàn", "today": "Hôm nay", "last7Days": "7 ngày gần nhất", "thisMonth": "Tháng này" },
-        "status": { "all": "Tất cả trạng thái" }
+        "period": {
+          "all": "Tất cả đặt bàn",
+          "today": "Hôm nay",
+          "last7Days": "7 ngày gần nhất",
+          "thisMonth": "Tháng này"
+        },
+        "status": {
+          "all": "Tất cả trạng thái"
+        }
       },
       "table": {
         "id": "Mã đặt bàn",
@@ -388,14 +975,30 @@
         "status": "Trạng thái",
         "slot": "{date} · {time} · {count} khách"
       },
-      "channels": { "app": "Đặt qua ứng dụng", "web": "Đặt qua web" },
-      "checkIn": { "complete": "Hoàn tất", "pending": "Đang chờ", "none": "-" },
-      "statuses": { "pending": "Đang chờ", "confirmed": "Đã xác nhận", "checkedIn": "Đã check-in", "cancelled": "Đã hủy", "declined": "Đã từ chối", "noShow": "Không đến" },
+      "channels": {
+        "app": "Đặt qua ứng dụng",
+        "web": "Đặt qua web"
+      },
+      "checkIn": {
+        "complete": "Hoàn tất",
+        "pending": "Đang chờ",
+        "none": "-"
+      },
+      "statuses": {
+        "pending": "Đang chờ",
+        "confirmed": "Đã xác nhận",
+        "checkedIn": "Đã check-in",
+        "cancelled": "Đã hủy",
+        "declined": "Đã từ chối",
+        "noShow": "Không đến"
+      },
       "details": "Chi tiết",
       "resolve": "Xử lý",
       "empty": "Không có đặt bàn phù hợp với bộ lọc.",
-    "loadError": "Không thể tải danh sách đặt bàn. Hãy tải lại hoặc đăng nhập lại.",
-    "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+      "loadError": "Không thể tải danh sách đặt bàn. Hãy tải lại hoặc đăng nhập lại.",
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      }
     },
     "reservationDetail": {
       "title": "Chi tiết đặt bàn",
@@ -403,14 +1006,57 @@
       "manageReservation": "Quản lý đặt bàn",
       "loading": "Đang tải đặt bàn...",
       "loadError": "Không thể tải đặt bàn này.",
-      "operations": { "confirm": "Xác nhận đặt bàn", "checkIn": "Check-in khách", "seat": "Xác nhận khách đã ngồi", "complete": "Hoàn tất lượt khách", "noAction": "Không còn thao tác nào cho đặt bàn này.", "error": "Không thể cập nhật đặt bàn. Hãy tải lại và thử lại." },
-      "reservation": { "title": "Thông tin đặt bàn", "date": "Ngày", "time": "Giờ", "partySize": "Số khách", "guests": "{count} khách", "channel": "Kênh đặt bàn", "request": "Yêu cầu" },
-      "customer": { "title": "Khách hàng & cửa hàng", "name": "Khách hàng", "phone": "Điện thoại", "email": "Email", "language": "Ngôn ngữ", "store": "Cửa hàng" },
-      "languages": { "en": "Tiếng Anh", "vi": "Tiếng Việt", "ko": "Tiếng Hàn" },
-      "checkIn": { "title": "Check-in", "status": "Trạng thái", "method": "Phương thức", "qr": "Mã QR" },
-      "history": { "title": "Lịch sử thay đổi", "created": "Đã tạo đặt bàn", "currentStatus": "Trạng thái hiện tại" },
+      "operations": {
+        "confirm": "Xác nhận đặt bàn",
+        "checkIn": "Check-in khách",
+        "seat": "Xác nhận khách đã ngồi",
+        "complete": "Hoàn tất lượt khách",
+        "noAction": "Không còn thao tác nào cho đặt bàn này.",
+        "error": "Không thể cập nhật đặt bàn. Hãy tải lại và thử lại."
+      },
+      "reservation": {
+        "title": "Thông tin đặt bàn",
+        "date": "Ngày",
+        "time": "Giờ",
+        "partySize": "Số khách",
+        "guests": "{count} khách",
+        "channel": "Kênh đặt bàn",
+        "request": "Yêu cầu"
+      },
+      "customer": {
+        "title": "Khách hàng & cửa hàng",
+        "name": "Khách hàng",
+        "phone": "Điện thoại",
+        "email": "Email",
+        "language": "Ngôn ngữ",
+        "store": "Cửa hàng"
+      },
+      "languages": {
+        "en": "Tiếng Anh",
+        "vi": "Tiếng Việt",
+        "ko": "Tiếng Hàn"
+      },
+      "checkIn": {
+        "title": "Check-in",
+        "status": "Trạng thái",
+        "method": "Phương thức",
+        "qr": "Mã QR"
+      },
+      "history": {
+        "title": "Lịch sử thay đổi",
+        "created": "Đã tạo đặt bàn",
+        "currentStatus": "Trạng thái hiện tại"
+      },
       "notAvailable": "Chưa có",
-      "modal": { "title": "Đổi trạng thái đặt bàn", "status": "Trạng thái mới", "reason": "Lý do", "reasonRequired": "Bắt buộc nhập lý do khi hủy hoặc chuyển sang kiểm tra no-show.", "prototypeNotice": "Bản prototype không lưu thay đổi sau khi rời trang.", "cancel": "Hủy", "save": "Lưu" }
+      "modal": {
+        "title": "Đổi trạng thái đặt bàn",
+        "status": "Trạng thái mới",
+        "reason": "Lý do",
+        "reasonRequired": "Bắt buộc nhập lý do khi hủy hoặc chuyển sang kiểm tra no-show.",
+        "prototypeNotice": "Bản prototype không lưu thay đổi sau khi rời trang.",
+        "cancel": "Hủy",
+        "save": "Lưu"
+      }
     },
     "customers": {
       "title": "Khách hàng",
@@ -428,25 +1074,43 @@
       },
       "empty": "Không có khách phù hợp với tìm kiếm.",
       "loadError": "Không thể tải danh sách khách. Hãy tải lại hoặc đăng nhập lại.",
-      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      }
     },
     "stores": {
       "title": "Cửa hàng",
       "description": "Quản lý xét duyệt đăng ký, hồ sơ, trạng thái hoạt động và hợp đồng.",
       "addStore": "Thêm cửa hàng",
       "metrics": {
-        "active": { "label": "Đang hoạt động", "detail": "+42 trong tháng này" },
-        "pending": { "label": "Chờ phê duyệt", "detail": "2 yêu cầu quá 48 giờ" },
-        "suspended": { "label": "Tạm ngừng", "detail": "3 trường hợp do admin" },
-        "rating": { "label": "Đánh giá trung bình", "detail": "36.208 lượt đánh giá" }
+        "active": {
+          "label": "Đang hoạt động",
+          "detail": "+42 trong tháng này"
+        },
+        "pending": {
+          "label": "Chờ phê duyệt",
+          "detail": "2 yêu cầu quá 48 giờ"
+        },
+        "suspended": {
+          "label": "Tạm ngừng",
+          "detail": "3 trường hợp do admin"
+        },
+        "rating": {
+          "label": "Đánh giá trung bình",
+          "detail": "36.208 lượt đánh giá"
+        }
       },
       "filters": {
         "searchPlaceholder": "Tìm cửa hàng, mã cửa hàng hoặc quản lý",
         "searchLabel": "Tìm kiếm cửa hàng",
         "statusLabel": "Trạng thái đăng ký",
         "regionLabel": "Khu vực cửa hàng",
-        "status": { "all": "Tất cả trạng thái đăng ký" },
-        "region": { "all": "Tất cả khu vực" }
+        "status": {
+          "all": "Tất cả trạng thái đăng ký"
+        },
+        "region": {
+          "all": "Tất cả khu vực"
+        }
       },
       "table": {
         "store": "Cửa hàng",
@@ -456,9 +1120,23 @@
         "commission": "Hoa hồng",
         "status": "Trạng thái"
       },
-      "statuses": { "draft": "Bản nháp", "pending": "Chờ phê duyệt", "changesRequested": "Yêu cầu bổ sung", "active": "Hoạt động", "suspended": "Tạm ngừng" },
-      "regions": { "hoChiMinh": "TP. Hồ Chí Minh", "hanoi": "Hà Nội", "daNang": "Đà Nẵng" },
-      "categories": { "vietnamese": "Món Việt", "korean": "Món Hàn", "fusion": "Fusion" },
+      "statuses": {
+        "draft": "Bản nháp",
+        "pending": "Chờ phê duyệt",
+        "changesRequested": "Yêu cầu bổ sung",
+        "active": "Hoạt động",
+        "suspended": "Tạm ngừng"
+      },
+      "regions": {
+        "hoChiMinh": "TP. Hồ Chí Minh",
+        "hanoi": "Hà Nội",
+        "daNang": "Đà Nẵng"
+      },
+      "categories": {
+        "vietnamese": "Món Việt",
+        "korean": "Món Hàn",
+        "fusion": "Fusion"
+      },
       "underReview": "Đang xem xét",
       "details": "Chi tiết",
       "review": "Xem xét",
@@ -470,20 +1148,44 @@
       "thisMonth": "Tháng này",
       "download": "Tải xuống",
       "metrics": {
-        "gmv": { "label": "Tổng GMV", "detail": "+10,8% so với tháng trước" },
-        "commission": { "label": "Doanh thu hoa hồng", "detail": "Hoa hồng trung bình 4,7%" },
-        "advertising": { "label": "Doanh thu quảng cáo", "detail": "+18,2% so với tháng trước" },
-        "settlement": { "label": "Chờ quyết toán", "detail": "6 mục cần xem xét" }
+        "gmv": {
+          "label": "Tổng GMV",
+          "detail": "+10,8% so với tháng trước"
+        },
+        "commission": {
+          "label": "Doanh thu hoa hồng",
+          "detail": "Hoa hồng trung bình 4,7%"
+        },
+        "advertising": {
+          "label": "Doanh thu quảng cáo",
+          "detail": "+18,2% so với tháng trước"
+        },
+        "settlement": {
+          "label": "Chờ quyết toán",
+          "detail": "6 mục cần xem xét"
+        }
       },
       "trend": {
         "title": "GMV và doanh thu nền tảng",
         "period": "6 tháng gần nhất",
-        "months": { "mar": "T3", "apr": "T4", "may": "T5", "jun": "T6", "jul": "T7", "aug": "T8" }
+        "months": {
+          "mar": "T3",
+          "apr": "T4",
+          "may": "T5",
+          "jun": "T6",
+          "jul": "T7",
+          "aug": "T8"
+        }
       },
       "mix": {
         "title": "Cơ cấu doanh thu",
         "period": "Tháng 8",
-        "items": { "commission": "Hoa hồng đặt bàn", "advertising": "Quảng cáo", "promotions": "Khuyến mãi", "other": "Khác" }
+        "items": {
+          "commission": "Hoa hồng đặt bàn",
+          "advertising": "Quảng cáo",
+          "promotions": "Khuyến mãi",
+          "other": "Khác"
+        }
       }
     },
     "campaigns": {
@@ -494,18 +1196,68 @@
         "placementLabel": "Vị trí chiến dịch",
         "statusLabel": "Trạng thái chiến dịch",
         "periodLabel": "Thời gian chiến dịch",
-        "placement": { "all": "Tất cả vị trí" },
-        "status": { "all": "Tất cả trạng thái" },
-        "period": { "all": "Tất cả thời gian", "last30Days": "30 ngày qua", "next30Days": "30 ngày tới" }
+        "placement": {
+          "all": "Tất cả vị trí"
+        },
+        "status": {
+          "all": "Tất cả trạng thái"
+        },
+        "period": {
+          "all": "Tất cả thời gian",
+          "last30Days": "30 ngày qua",
+          "next30Days": "30 ngày tới"
+        }
       },
-      "placements": { "homeMain": "Trang chủ chính", "searchTop": "Đầu kết quả tìm kiếm", "regionalHome": "Trang chủ khu vực", "storeDetail": "Chi tiết cửa hàng" },
-      "statuses": { "live": "Đang chạy", "scheduled": "Đã lên lịch", "ended": "Đã kết thúc" },
+      "placements": {
+        "homeMain": "Trang chủ chính",
+        "searchTop": "Đầu kết quả tìm kiếm",
+        "regionalHome": "Trang chủ khu vực",
+        "storeDetail": "Chi tiết cửa hàng"
+      },
+      "statuses": {
+        "live": "Đang chạy",
+        "scheduled": "Đã lên lịch",
+        "ended": "Đã kết thúc"
+      },
       "items": {
-        "weekendDining": { "headline": "Ẩm thực cuối tuần", "subtitle": "Khám phá các nhà hàng nổi bật cuối tuần", "name": "Banner chính Ẩm thực cuối tuần", "schedule": "1–14 tháng 9", "metric1": "Lượt hiển thị", "metric2": "Lượt nhấp", "metric3": "CTR" },
-        "hanoiNewOpen": { "headline": "Hà Nội mới khai trương", "subtitle": "Khám phá các nhà hàng mới mở", "name": "Quảng bá cửa hàng mới Hà Nội", "schedule": "10–30 tháng 9", "metric1": "Hiển thị dự kiến", "metric2": "Mục tiêu", "metric3": "Cửa hàng" },
-        "chefsChoice": { "headline": "Lựa chọn của đầu bếp", "subtitle": "Các nhà hàng cao cấp do biên tập viên chọn", "name": "Tuyển chọn của đầu bếp", "schedule": "15–31 tháng 8", "metric1": "Lượt hiển thị", "metric2": "Lượt nhấp", "metric3": "CTR" }
+        "weekendDining": {
+          "headline": "Ẩm thực cuối tuần",
+          "subtitle": "Khám phá các nhà hàng nổi bật cuối tuần",
+          "name": "Banner chính Ẩm thực cuối tuần",
+          "schedule": "1–14 tháng 9",
+          "metric1": "Lượt hiển thị",
+          "metric2": "Lượt nhấp",
+          "metric3": "CTR"
+        },
+        "hanoiNewOpen": {
+          "headline": "Hà Nội mới khai trương",
+          "subtitle": "Khám phá các nhà hàng mới mở",
+          "name": "Quảng bá cửa hàng mới Hà Nội",
+          "schedule": "10–30 tháng 9",
+          "metric1": "Hiển thị dự kiến",
+          "metric2": "Mục tiêu",
+          "metric3": "Cửa hàng"
+        },
+        "chefsChoice": {
+          "headline": "Lựa chọn của đầu bếp",
+          "subtitle": "Các nhà hàng cao cấp do biên tập viên chọn",
+          "name": "Tuyển chọn của đầu bếp",
+          "schedule": "15–31 tháng 8",
+          "metric1": "Lượt hiển thị",
+          "metric2": "Lượt nhấp",
+          "metric3": "CTR"
+        }
       },
-      "modal": { "title": "Tạo chiến dịch", "name": "Tên chiến dịch", "description": "Mô tả", "placement": "Vị trí hiển thị", "startDate": "Ngày bắt đầu", "endDate": "Ngày kết thúc", "cancel": "Hủy", "create": "Tạo" },
+      "modal": {
+        "title": "Tạo chiến dịch",
+        "name": "Tên chiến dịch",
+        "description": "Mô tả",
+        "placement": "Vị trí hiển thị",
+        "startDate": "Ngày bắt đầu",
+        "endDate": "Ngày kết thúc",
+        "cancel": "Hủy",
+        "create": "Tạo"
+      },
       "empty": "Không có chiến dịch phù hợp với bộ lọc."
     },
     "settings": {
@@ -516,105 +1268,527 @@
         "title": "Cài đặt vận hành",
         "scope": "Toàn nền tảng",
         "items": {
-          "storeRegistration": { "title": "Cảnh báo đăng ký cửa hàng", "description": "Thông báo cho người phụ trách khi có yêu cầu xét duyệt mới." },
-          "noShowRestriction": { "title": "Tự động hạn chế no-show", "description": "Hạn chế đặt bàn sau 3 lần no-show trong 30 ngày." },
-          "bannerEndAlert": { "title": "Cảnh báo banner kết thúc", "description": "Thông báo cho chủ chiến dịch trước khi kết thúc 48 giờ." }
+          "storeRegistration": {
+            "title": "Cảnh báo đăng ký cửa hàng",
+            "description": "Thông báo cho người phụ trách khi có yêu cầu xét duyệt mới."
+          },
+          "noShowRestriction": {
+            "title": "Tự động hạn chế no-show",
+            "description": "Hạn chế đặt bàn sau 3 lần no-show trong 30 ngày."
+          },
+          "bannerEndAlert": {
+            "title": "Cảnh báo banner kết thúc",
+            "description": "Thông báo cho chủ chiến dịch trước khi kết thúc 48 giờ."
+          }
         }
       },
       "roles": {
         "title": "Vai trò quản trị",
         "manage": "Quản lý vai trò",
         "items": {
-          "superAdmin": { "title": "Super Admin", "description": "Tất cả tính năng · {users} người dùng", "badge": "Toàn quyền" },
-          "operations": { "title": "Vận hành", "description": "Khách hàng, cửa hàng, đặt bàn · {users} người dùng", "badge": "Vận hành" },
-          "marketing": { "title": "Marketing", "description": "Quảng cáo, banner, báo cáo · {users} người dùng", "badge": "Marketing" },
-          "finance": { "title": "Tài chính", "description": "Doanh thu, quyết toán · {users} người dùng", "badge": "Tài chính" }
+          "superAdmin": {
+            "title": "Super Admin",
+            "description": "Tất cả tính năng · {users} người dùng",
+            "badge": "Toàn quyền"
+          },
+          "operations": {
+            "title": "Vận hành",
+            "description": "Khách hàng, cửa hàng, đặt bàn · {users} người dùng",
+            "badge": "Vận hành"
+          },
+          "marketing": {
+            "title": "Marketing",
+            "description": "Quảng cáo, banner, báo cáo · {users} người dùng",
+            "badge": "Marketing"
+          },
+          "finance": {
+            "title": "Tài chính",
+            "description": "Doanh thu, quyết toán · {users} người dùng",
+            "badge": "Tài chính"
+          }
         }
       },
-      "modal": { "title": "Mời quản trị viên", "email": "Địa chỉ email", "role": "Vai trò quản trị", "requireMfa": "Bắt buộc MFA", "cancel": "Hủy", "invite": "Gửi lời mời" }
+      "modal": {
+        "title": "Mời quản trị viên",
+        "email": "Địa chỉ email",
+        "role": "Vai trò quản trị",
+        "requireMfa": "Bắt buộc MFA",
+        "cancel": "Hủy",
+        "invite": "Gửi lời mời"
+      }
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "Quản trị hệ thống", "toggleNavigation": "Mở điều hướng quản trị hệ thống", "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN", "navigation": { "dashboard": "Tổng quan", "users": "Người dùng", "restaurants": "Nhà hàng", "reservations": "Đặt bàn", "assignments": "Phân quyền nhà hàng", "preferences": "Cài đặt cá nhân" } },
+    "shell": {
+      "title": "Quản trị hệ thống",
+      "toggleNavigation": "Mở điều hướng quản trị hệ thống",
+      "adminOnly": "CHỈ DÀNH CHO QUẢN TRỊ VIÊN",
+      "navigation": {
+        "dashboard": "Tổng quan",
+        "users": "Người dùng",
+        "restaurants": "Nhà hàng",
+        "reservations": "Đặt bàn",
+        "assignments": "Phân quyền nhà hàng",
+        "preferences": "Cài đặt cá nhân"
+      }
+    },
     "dashboard": {
-      "title": "Tổng quan hệ thống", "description": "Theo dõi nhanh người dùng, nhà hàng và các công việc cần xử lý.", "loadError": "Không thể tải đầy đủ số liệu tổng quan.", "viewAll": "Xem tất cả",
-      "metrics": { "users": { "label": "Người dùng", "detail": "Tất cả tài khoản trong hệ thống" }, "restaurants": { "label": "Nhà hàng", "detail": "{count} nhà hàng đang hoạt động" }, "pending": { "label": "Chờ duyệt", "detail": "Nhà hàng cần quản trị viên xem xét" }, "assignments": { "label": "Phân quyền", "detail": "Tài khoản OWNER và STAFF đã liên kết" } },
-      "pending": { "title": "Nhà hàng chờ duyệt", "description": "Các hồ sơ cần được kiểm tra tiếp theo.", "status": "Chờ duyệt", "empty": "Hiện không có nhà hàng nào đang chờ duyệt." },
-      "quickActions": { "title": "Truy cập nhanh", "description": "Đi tới các khu vực quản trị chính.", "users": "Quản lý người dùng", "restaurants": "Quản lý nhà hàng", "assignments": "Quản lý phân quyền nhà hàng" }
-    },
-    "users": {
-      "title": "Người dùng", "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.", "loadError": "Không thể tải danh sách người dùng.", "empty": "Không có người dùng phù hợp với bộ lọc.",
-      "filters": { "search": "Tìm userid, tên hoặc email", "role": "Lọc theo vai trò", "status": "Lọc theo trạng thái", "allRoles": "Tất cả vai trò", "allStatuses": "Tất cả trạng thái" },
-      "table": { "user": "Người dùng", "contact": "Liên hệ", "role": "Vai trò", "status": "Trạng thái", "restaurant": "ID nhà hàng", "created": "Ngày tạo", "actions": "Thao tác" },
-      "statuses": { "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm khóa", "CLOSED": "Đã đóng" },
-      "actions": {
-        "openMenu": "Mở thao tác cho {name}", "create": "Thêm người dùng", "edit": "Sửa thông tin", "resetPassword": "Đặt lại mật khẩu", "passwordReset": "Đã đặt lại mật khẩu cho {name}.", "passwordResetError": "Không thể đặt lại mật khẩu.", "suspend": "Tạm khóa", "reactivate": "Kích hoạt lại", "cancel": "Hủy",
-        "suspendTitle": "Tạm khóa {name}?", "suspendDescription": "Người dùng sẽ bị đăng xuất khỏi phiên hiện tại và không thể đăng nhập cho đến khi được kích hoạt lại.",
-        "reactivateTitle": "Kích hoạt lại {name}?", "reactivateDescription": "Người dùng sẽ có thể đăng nhập lại.",
-        "suspendedSuccess": "Đã tạm khóa {name}.", "reactivatedSuccess": "Đã kích hoạt lại {name}.", "error": "Không thể cập nhật trạng thái người dùng.", "created": "Đã tạo tài khoản cho {name}.", "updated": "Đã cập nhật thông tin của {name}.", "saveError": "Không thể lưu người dùng. Hãy kiểm tra thông tin hoặc userid đã tồn tại."
-      },
-      "form": { "createTitle": "Thêm người dùng", "editTitle": "Sửa người dùng", "description": "Tài khoản mới được tạo với vai trò khách hàng. Gán quyền nhà hàng tại trang Phân quyền nhà hàng.", "userid": "Tên đăng nhập", "useridHint": "Từ 3 đến 30 ký tự và không thể đổi sau khi tạo.", "name": "Họ và tên", "email": "Email (không bắt buộc)", "phone": "Số điện thoại (không bắt buộc)", "password": "Mật khẩu tạm thời", "passwordHint": "Từ 8 đến 72 ký tự. Hãy gửi mật khẩu cho người dùng qua kênh an toàn.", "placeholders": { "userid": "nguyenan", "name": "Nguyễn Văn An", "email": "an@example.com", "phone": "0901 234 567", "password": "Ít nhất 8 ký tự" }, "cancel": "Hủy", "create": "Tạo người dùng", "save": "Lưu thay đổi" },
-      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
-    },
-    "restaurants": {
-      "title": "Nhà hàng", "description": "Kiểm tra nhà hàng ở tất cả trạng thái phê duyệt.", "loadError": "Không thể tải danh sách nhà hàng.", "empty": "Không có nhà hàng phù hợp với bộ lọc.",
-      "filters": { "search": "Tìm tên hoặc slug", "city": "Tỉnh/Thành phố", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái" },
-      "table": { "restaurant": "Nhà hàng", "city": "Tỉnh/Thành phố", "location": "Phường/Xã/Đặc khu", "status": "Trạng thái phê duyệt", "created": "Ngày tạo", "actions": "Thao tác" },
-      "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
-      "actions": {
-        "openMenu": "Mở thao tác cho {name}", "create": "Thêm nhà hàng", "manage": "Quản lý nhà hàng", "edit": "Sửa thông tin", "archive": "Lưu trữ", "submit": "Gửi duyệt", "resubmit": "Gửi duyệt lại", "approve": "Phê duyệt", "reactivate": "Kích hoạt lại", "requestChanges": "Yêu cầu chỉnh sửa", "suspend": "Tạm ngưng", "cancel": "Hủy", "error": "Không thể cập nhật trạng thái nhà hàng.", "archiveTitle": "Lưu trữ {name}?", "archiveDescription": "Chỉ có thể lưu trữ nhà hàng bản nháp chưa có người dùng hoặc lượt đặt bàn liên kết.", "archived": "Đã lưu trữ {name}.", "archiveError": "Không thể lưu trữ nhà hàng.",
-        "success": { "submit": "Đã gửi {name} để duyệt.", "resubmit": "Đã gửi lại {name} để duyệt.", "approve": "Đã phê duyệt {name}.", "reactivate": "Đã kích hoạt lại {name}.", "requestChanges": "Đã yêu cầu {name} chỉnh sửa thông tin.", "suspend": "Đã tạm ngưng {name}." },
-        "dialog": {
-          "submit": { "title": "Gửi {name} để duyệt?", "description": "Nhà hàng sẽ chuyển sang trạng thái chờ quản trị viên xem xét." },
-          "resubmit": { "title": "Gửi lại {name} để duyệt?", "description": "Xác nhận thông tin đã được chỉnh sửa và gửi lại để xem xét." },
-          "approve": { "title": "Phê duyệt {name}?", "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới." },
-          "reactivate": { "title": "Kích hoạt lại {name}?", "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới trở lại." },
-          "requestChanges": { "title": "Yêu cầu {name} chỉnh sửa?", "description": "Nhà hàng sẽ chưa hoạt động cho đến khi thông tin được sửa và gửi lại." },
-          "suspend": { "title": "Tạm ngưng {name}?", "description": "Nhà hàng sẽ bị ẩn khỏi khu vực công khai và không thể nhận đặt bàn mới." }
+      "title": "Tổng quan hệ thống",
+      "description": "Theo dõi nhanh người dùng, nhà hàng và các công việc cần xử lý.",
+      "loadError": "Không thể tải đầy đủ số liệu tổng quan.",
+      "viewAll": "Xem tất cả",
+      "metrics": {
+        "users": {
+          "label": "Người dùng",
+          "detail": "Tất cả tài khoản trong hệ thống"
+        },
+        "restaurants": {
+          "label": "Nhà hàng",
+          "detail": "{count} nhà hàng đang hoạt động"
+        },
+        "pending": {
+          "label": "Chờ duyệt",
+          "detail": "Nhà hàng cần quản trị viên xem xét"
+        },
+        "assignments": {
+          "label": "Phân quyền",
+          "detail": "Tài khoản OWNER và STAFF đã liên kết"
         }
       },
-      "form": { "createTitle": "Thêm nhà hàng", "editTitle": "Sửa nhà hàng", "slug": "Slug (đường dẫn)", "name": "Tên nhà hàng", "province": "Tỉnh/Thành phố", "selectProvince": "Chọn tỉnh hoặc thành phố", "ward": "Phường/Xã/Đặc khu", "selectWard": "Chọn phường, xã hoặc đặc khu", "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước", "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.", "timezone": "Múi giờ", "cuisine": "Loại ẩm thực", "selectCuisine": "Chọn loại ẩm thực", "cuisines": { "vietnamese": "Việt Nam", "korean": "Hàn Quốc", "chinese": "Trung Hoa", "japanese": "Nhật Bản", "western": "Món Âu" }, "phone": "Số điện thoại", "email": "Email", "priceRange": "Khoảng giá trung bình/người", "address": "Địa chỉ chi tiết", "description": "Mô tả", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K/người", "address": "123 Nguyễn Huệ", "description": "Giới thiệu ngắn về phong cách ẩm thực và không gian nhà hàng" }, "cancel": "Hủy", "create": "Tạo nhà hàng", "save": "Lưu thay đổi", "created": "Đã tạo {name} ở trạng thái bản nháp.", "updated": "Đã cập nhật {name}.", "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.", "loadError": "Không thể tải thông tin nhà hàng." },
-      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+      "pending": {
+        "title": "Nhà hàng chờ duyệt",
+        "description": "Các hồ sơ cần được kiểm tra tiếp theo.",
+        "status": "Chờ duyệt",
+        "empty": "Hiện không có nhà hàng nào đang chờ duyệt."
+      },
+      "quickActions": {
+        "title": "Truy cập nhanh",
+        "description": "Đi tới các khu vực quản trị chính.",
+        "users": "Quản lý người dùng",
+        "restaurants": "Quản lý nhà hàng",
+        "assignments": "Quản lý phân quyền nhà hàng"
+      }
+    },
+    "users": {
+      "title": "Người dùng",
+      "description": "Tìm kiếm và kiểm tra các tài khoản trong hệ thống.",
+      "loadError": "Không thể tải danh sách người dùng.",
+      "empty": "Không có người dùng phù hợp với bộ lọc.",
+      "filters": {
+        "search": "Tìm userid, tên hoặc email",
+        "role": "Lọc theo vai trò",
+        "status": "Lọc theo trạng thái",
+        "allRoles": "Tất cả vai trò",
+        "allStatuses": "Tất cả trạng thái"
+      },
+      "table": {
+        "user": "Người dùng",
+        "contact": "Liên hệ",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "restaurant": "ID nhà hàng",
+        "created": "Ngày tạo",
+        "actions": "Thao tác"
+      },
+      "statuses": {
+        "ACTIVE": "Đang hoạt động",
+        "SUSPENDED": "Tạm khóa",
+        "CLOSED": "Đã đóng"
+      },
+      "actions": {
+        "openMenu": "Mở thao tác cho {name}",
+        "create": "Thêm người dùng",
+        "edit": "Sửa thông tin",
+        "resetPassword": "Đặt lại mật khẩu",
+        "passwordReset": "Đã đặt lại mật khẩu cho {name}.",
+        "passwordResetError": "Không thể đặt lại mật khẩu.",
+        "suspend": "Tạm khóa",
+        "reactivate": "Kích hoạt lại",
+        "cancel": "Hủy",
+        "suspendTitle": "Tạm khóa {name}?",
+        "suspendDescription": "Người dùng sẽ bị đăng xuất khỏi phiên hiện tại và không thể đăng nhập cho đến khi được kích hoạt lại.",
+        "reactivateTitle": "Kích hoạt lại {name}?",
+        "reactivateDescription": "Người dùng sẽ có thể đăng nhập lại.",
+        "suspendedSuccess": "Đã tạm khóa {name}.",
+        "reactivatedSuccess": "Đã kích hoạt lại {name}.",
+        "error": "Không thể cập nhật trạng thái người dùng.",
+        "created": "Đã tạo tài khoản cho {name}.",
+        "updated": "Đã cập nhật thông tin của {name}.",
+        "saveError": "Không thể lưu người dùng. Hãy kiểm tra thông tin hoặc userid đã tồn tại."
+      },
+      "form": {
+        "createTitle": "Thêm người dùng",
+        "editTitle": "Sửa người dùng",
+        "description": "Tài khoản mới được tạo với vai trò khách hàng. Gán quyền nhà hàng tại trang Phân quyền nhà hàng.",
+        "userid": "Tên đăng nhập",
+        "useridHint": "Từ 3 đến 30 ký tự và không thể đổi sau khi tạo.",
+        "name": "Họ và tên",
+        "email": "Email (không bắt buộc)",
+        "phone": "Số điện thoại (không bắt buộc)",
+        "password": "Mật khẩu tạm thời",
+        "passwordHint": "Từ 8 đến 72 ký tự. Hãy gửi mật khẩu cho người dùng qua kênh an toàn.",
+        "placeholders": {
+          "userid": "nguyenan",
+          "name": "Nguyễn Văn An",
+          "email": "an@example.com",
+          "phone": "0901 234 567",
+          "password": "Ít nhất 8 ký tự"
+        },
+        "cancel": "Hủy",
+        "create": "Tạo người dùng",
+        "save": "Lưu thay đổi"
+      },
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      }
+    },
+    "restaurants": {
+      "title": "Nhà hàng",
+      "description": "Kiểm tra nhà hàng ở tất cả trạng thái phê duyệt.",
+      "loadError": "Không thể tải danh sách nhà hàng.",
+      "empty": "Không có nhà hàng phù hợp với bộ lọc.",
+      "filters": {
+        "search": "Tìm tên hoặc slug",
+        "city": "Tỉnh/Thành phố",
+        "status": "Lọc theo trạng thái",
+        "allStatuses": "Tất cả trạng thái"
+      },
+      "table": {
+        "restaurant": "Nhà hàng",
+        "city": "Tỉnh/Thành phố",
+        "location": "Phường/Xã/Đặc khu",
+        "status": "Trạng thái phê duyệt",
+        "created": "Ngày tạo",
+        "actions": "Thao tác"
+      },
+      "statuses": {
+        "DRAFT": "Bản nháp",
+        "PENDING": "Chờ duyệt",
+        "CHANGES_REQUESTED": "Cần chỉnh sửa",
+        "ACTIVE": "Đang hoạt động",
+        "SUSPENDED": "Tạm ngưng"
+      },
+      "actions": {
+        "openMenu": "Mở thao tác cho {name}",
+        "create": "Thêm nhà hàng",
+        "manage": "Quản lý nhà hàng",
+        "edit": "Sửa thông tin",
+        "archive": "Lưu trữ",
+        "submit": "Gửi duyệt",
+        "resubmit": "Gửi duyệt lại",
+        "approve": "Phê duyệt",
+        "reactivate": "Kích hoạt lại",
+        "requestChanges": "Yêu cầu chỉnh sửa",
+        "suspend": "Tạm ngưng",
+        "cancel": "Hủy",
+        "error": "Không thể cập nhật trạng thái nhà hàng.",
+        "archiveTitle": "Lưu trữ {name}?",
+        "archiveDescription": "Chỉ có thể lưu trữ nhà hàng bản nháp chưa có người dùng hoặc lượt đặt bàn liên kết.",
+        "archived": "Đã lưu trữ {name}.",
+        "archiveError": "Không thể lưu trữ nhà hàng.",
+        "success": {
+          "submit": "Đã gửi {name} để duyệt.",
+          "resubmit": "Đã gửi lại {name} để duyệt.",
+          "approve": "Đã phê duyệt {name}.",
+          "reactivate": "Đã kích hoạt lại {name}.",
+          "requestChanges": "Đã yêu cầu {name} chỉnh sửa thông tin.",
+          "suspend": "Đã tạm ngưng {name}."
+        },
+        "dialog": {
+          "submit": {
+            "title": "Gửi {name} để duyệt?",
+            "description": "Nhà hàng sẽ chuyển sang trạng thái chờ quản trị viên xem xét."
+          },
+          "resubmit": {
+            "title": "Gửi lại {name} để duyệt?",
+            "description": "Xác nhận thông tin đã được chỉnh sửa và gửi lại để xem xét."
+          },
+          "approve": {
+            "title": "Phê duyệt {name}?",
+            "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới."
+          },
+          "reactivate": {
+            "title": "Kích hoạt lại {name}?",
+            "description": "Nhà hàng sẽ xuất hiện công khai và có thể nhận đặt bàn mới trở lại."
+          },
+          "requestChanges": {
+            "title": "Yêu cầu {name} chỉnh sửa?",
+            "description": "Nhà hàng sẽ chưa hoạt động cho đến khi thông tin được sửa và gửi lại."
+          },
+          "suspend": {
+            "title": "Tạm ngưng {name}?",
+            "description": "Nhà hàng sẽ bị ẩn khỏi khu vực công khai và không thể nhận đặt bàn mới."
+          }
+        }
+      },
+      "form": {
+        "createTitle": "Thêm nhà hàng",
+        "editTitle": "Sửa nhà hàng",
+        "slug": "Slug (đường dẫn)",
+        "name": "Tên nhà hàng",
+        "province": "Tỉnh/Thành phố",
+        "selectProvince": "Chọn tỉnh hoặc thành phố",
+        "ward": "Phường/Xã/Đặc khu",
+        "selectWard": "Chọn phường, xã hoặc đặc khu",
+        "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước",
+        "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.",
+        "timezone": "Múi giờ",
+        "cuisine": "Loại ẩm thực",
+        "selectCuisine": "Chọn loại ẩm thực",
+        "cuisines": {
+          "vietnamese": "Việt Nam",
+          "korean": "Hàn Quốc",
+          "chinese": "Trung Hoa",
+          "japanese": "Nhật Bản",
+          "western": "Món Âu"
+        },
+        "phone": "Số điện thoại",
+        "email": "Email",
+        "priceRange": "Khoảng giá trung bình/người",
+        "address": "Địa chỉ chi tiết",
+        "description": "Mô tả",
+        "placeholders": {
+          "slug": "royal-pavilion",
+          "name": "The Royal Pavilion",
+          "timezone": "Asia/Ho_Chi_Minh",
+          "phone": "0901 234 567",
+          "email": "contact@example.com",
+          "priceRange": "150K - 300K/người",
+          "address": "123 Nguyễn Huệ",
+          "description": "Giới thiệu ngắn về phong cách ẩm thực và không gian nhà hàng"
+        },
+        "cancel": "Hủy",
+        "create": "Tạo nhà hàng",
+        "save": "Lưu thay đổi",
+        "created": "Đã tạo {name} ở trạng thái bản nháp.",
+        "updated": "Đã cập nhật {name}.",
+        "saveError": "Không thể lưu nhà hàng. Hãy kiểm tra thông tin và thử lại.",
+        "loadError": "Không thể tải thông tin nhà hàng."
+      },
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      }
     },
     "restaurantDetail": {
-      "back": "Quay lại danh sách nhà hàng", "loadError": "Không thể tải thông tin nhà hàng.", "viewPublic": "Xem trang công khai",
-      "tabs": { "profile": "Thông tin", "booking": "Cài đặt đặt bàn", "hours": "Giờ hoạt động", "menu": "Thực đơn", "media": "Hình ảnh" },
-      "statuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
-      "profile": { "title": "Thông tin nhà hàng", "edit": "Sửa thông tin", "cuisine": "Loại ẩm thực", "priceRange": "Khoảng giá", "location": "Khu vực", "timezone": "Múi giờ", "phone": "Số điện thoại", "email": "Email", "address": "Địa chỉ", "description": "Mô tả" },
-      "booking": { "loadError": "Không thể tải cài đặt đặt bàn.", "notConfigured": "Nhà hàng chưa có cài đặt đặt bàn. Kiểm tra các giá trị mặc định rồi bấm lưu để khởi tạo.", "save": "Lưu cài đặt đặt bàn" },
-      "hours": { "loadError": "Không thể tải giờ hoạt động.", "saveSettingsFirst": "Hãy lưu cài đặt đặt bàn trước khi lưu giờ hoạt động hoặc tạo khung giờ." },
-      "notifications": { "profileSaved": "Đã lưu thông tin nhà hàng.", "profileError": "Không thể lưu thông tin nhà hàng.", "settingsSaved": "Đã lưu cài đặt đặt bàn.", "settingsError": "Không thể lưu cài đặt đặt bàn. Hãy kiểm tra các giá trị.", "hoursSaved": "Đã lưu giờ hoạt động và tạo {count} khung giờ.", "hoursError": "Không thể lưu giờ hoạt động.", "slotsGenerated": "Đã tạo {count} khung giờ.", "regenerateError": "Không thể tạo lại khung giờ." }
+      "back": "Quay lại danh sách nhà hàng",
+      "loadError": "Không thể tải thông tin nhà hàng.",
+      "viewPublic": "Xem trang công khai",
+      "tabs": {
+        "profile": "Thông tin",
+        "booking": "Cài đặt đặt bàn",
+        "hours": "Giờ hoạt động",
+        "menu": "Thực đơn",
+        "media": "Hình ảnh"
+      },
+      "statuses": {
+        "DRAFT": "Bản nháp",
+        "PENDING": "Chờ duyệt",
+        "CHANGES_REQUESTED": "Cần chỉnh sửa",
+        "ACTIVE": "Đang hoạt động",
+        "SUSPENDED": "Tạm ngưng"
+      },
+      "profile": {
+        "title": "Thông tin nhà hàng",
+        "edit": "Sửa thông tin",
+        "cuisine": "Loại ẩm thực",
+        "priceRange": "Khoảng giá",
+        "location": "Khu vực",
+        "timezone": "Múi giờ",
+        "phone": "Số điện thoại",
+        "email": "Email",
+        "address": "Địa chỉ",
+        "description": "Mô tả"
+      },
+      "booking": {
+        "loadError": "Không thể tải cài đặt đặt bàn.",
+        "notConfigured": "Nhà hàng chưa có cài đặt đặt bàn. Kiểm tra các giá trị mặc định rồi bấm lưu để khởi tạo.",
+        "save": "Lưu cài đặt đặt bàn"
+      },
+      "hours": {
+        "loadError": "Không thể tải giờ hoạt động.",
+        "saveSettingsFirst": "Hãy lưu cài đặt đặt bàn trước khi lưu giờ hoạt động hoặc tạo khung giờ."
+      },
+      "notifications": {
+        "profileSaved": "Đã lưu thông tin nhà hàng.",
+        "profileError": "Không thể lưu thông tin nhà hàng.",
+        "settingsSaved": "Đã lưu cài đặt đặt bàn.",
+        "settingsError": "Không thể lưu cài đặt đặt bàn. Hãy kiểm tra các giá trị.",
+        "hoursSaved": "Đã lưu giờ hoạt động và tạo {count} khung giờ.",
+        "hoursError": "Không thể lưu giờ hoạt động.",
+        "slotsGenerated": "Đã tạo {count} khung giờ.",
+        "regenerateError": "Không thể tạo lại khung giờ."
+      }
     },
     "reservations": {
-      "title": "Đặt bàn", "description": "Xem lượt đặt bàn của tất cả nhà hàng trong hệ thống.", "loadError": "Không thể tải danh sách đặt bàn.", "empty": "Không có lượt đặt bàn phù hợp với bộ lọc.", "details": "Chi tiết", "guests": "{count} khách",
-      "filters": { "search": "Tìm mã đặt bàn, khách hàng, số điện thoại hoặc email", "restaurant": "Lọc theo nhà hàng", "allRestaurants": "Tất cả nhà hàng", "noRestaurants": "Không tìm thấy nhà hàng", "status": "Lọc theo trạng thái", "allStatuses": "Tất cả trạng thái", "dateFrom": "Từ ngày", "dateTo": "Đến ngày" },
-      "table": { "reference": "Mã đặt bàn", "restaurant": "Nhà hàng", "customer": "Khách hàng", "schedule": "Thời gian / Số khách", "status": "Trạng thái" },
-      "statuses": { "PENDING": "Chờ xác nhận", "CONFIRMED": "Đã xác nhận", "CHECKED_IN": "Đã đến", "COMPLETED": "Hoàn tất", "CANCELLED": "Đã hủy", "DECLINED": "Đã từ chối", "NO_SHOW": "Không đến" },
-      "pagination": { "rowsPerPage": "Số dòng mỗi trang" },
+      "title": "Đặt bàn",
+      "description": "Xem lượt đặt bàn của tất cả nhà hàng trong hệ thống.",
+      "loadError": "Không thể tải danh sách đặt bàn.",
+      "empty": "Không có lượt đặt bàn phù hợp với bộ lọc.",
+      "details": "Chi tiết",
+      "guests": "{count} khách",
+      "filters": {
+        "search": "Tìm mã đặt bàn, khách hàng, số điện thoại hoặc email",
+        "restaurant": "Lọc theo nhà hàng",
+        "allRestaurants": "Tất cả nhà hàng",
+        "noRestaurants": "Không tìm thấy nhà hàng",
+        "status": "Lọc theo trạng thái",
+        "allStatuses": "Tất cả trạng thái",
+        "dateFrom": "Từ ngày",
+        "dateTo": "Đến ngày"
+      },
+      "table": {
+        "reference": "Mã đặt bàn",
+        "restaurant": "Nhà hàng",
+        "customer": "Khách hàng",
+        "schedule": "Thời gian / Số khách",
+        "status": "Trạng thái"
+      },
+      "statuses": {
+        "PENDING": "Chờ xác nhận",
+        "CONFIRMED": "Đã xác nhận",
+        "CHECKED_IN": "Đã đến",
+        "COMPLETED": "Hoàn tất",
+        "CANCELLED": "Đã hủy",
+        "DECLINED": "Đã từ chối",
+        "NO_SHOW": "Không đến"
+      },
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      },
       "detail": {
-        "title": "Chi tiết đặt bàn", "back": "Quay lại danh sách", "loading": "Đang tải chi tiết đặt bàn...", "loadError": "Không thể tải chi tiết đặt bàn.", "notAvailable": "Không có",
-        "reservation": { "title": "Thông tin đặt bàn", "start": "Bắt đầu", "end": "Kết thúc", "partySize": "Số khách", "request": "Yêu cầu đặc biệt", "preOrder": "Đặt món trước" },
-        "customer": { "title": "Khách hàng", "name": "Họ tên", "phone": "Số điện thoại", "email": "Email" },
-        "restaurant": { "title": "Nhà hàng", "name": "Tên nhà hàng", "slug": "Slug", "id": "ID nhà hàng" },
-        "status": { "title": "Trạng thái hệ thống", "booking": "Đặt bàn", "visit": "Lượt đến", "created": "Ngày tạo", "updated": "Cập nhật gần nhất" },
-        "proposal": { "title": "Đề xuất thời gian khác", "time": "Thời gian đề xuất", "status": "Trạng thái", "initiator": "Người yêu cầu", "respondBy": "Hạn phản hồi", "message": "Lời nhắn" }
+        "title": "Chi tiết đặt bàn",
+        "back": "Quay lại danh sách",
+        "loading": "Đang tải chi tiết đặt bàn...",
+        "loadError": "Không thể tải chi tiết đặt bàn.",
+        "notAvailable": "Không có",
+        "reservation": {
+          "title": "Thông tin đặt bàn",
+          "start": "Bắt đầu",
+          "end": "Kết thúc",
+          "partySize": "Số khách",
+          "request": "Yêu cầu đặc biệt",
+          "preOrder": "Đặt món trước"
+        },
+        "customer": {
+          "title": "Khách hàng",
+          "name": "Họ tên",
+          "phone": "Số điện thoại",
+          "email": "Email"
+        },
+        "restaurant": {
+          "title": "Nhà hàng",
+          "name": "Tên nhà hàng",
+          "slug": "Slug",
+          "id": "ID nhà hàng"
+        },
+        "status": {
+          "title": "Trạng thái hệ thống",
+          "booking": "Đặt bàn",
+          "visit": "Lượt đến",
+          "created": "Ngày tạo",
+          "updated": "Cập nhật gần nhất"
+        },
+        "proposal": {
+          "title": "Đề xuất thời gian khác",
+          "time": "Thời gian đề xuất",
+          "status": "Trạng thái",
+          "initiator": "Người yêu cầu",
+          "respondBy": "Hạn phản hồi",
+          "message": "Lời nhắn"
+        }
       }
     },
     "assignments": {
-      "title": "Phân quyền nhà hàng", "description": "Liên kết chủ nhà hàng và nhân viên với nhà hàng họ được quản lý.", "loadError": "Không thể tải danh sách phân quyền.", "empty": "Không có phân quyền phù hợp với bộ lọc.",
-      "filters": { "search": "Tìm người dùng, email hoặc nhà hàng", "role": "Lọc theo vai trò", "allRoles": "Tất cả vai trò" },
-      "table": { "user": "Người dùng", "restaurant": "Nhà hàng", "role": "Vai trò", "restaurantStatus": "Trạng thái nhà hàng", "actions": "Thao tác" },
-      "roles": { "OWNER": "Chủ nhà hàng", "STAFF": "Nhân viên" },
-      "restaurantStatuses": { "DRAFT": "Bản nháp", "PENDING": "Chờ duyệt", "CHANGES_REQUESTED": "Cần chỉnh sửa", "ACTIVE": "Đang hoạt động", "SUSPENDED": "Tạm ngưng" },
-      "form": { "createTitle": "Thêm phân quyền", "editTitle": "Sửa phân quyền", "description": "Mỗi tài khoản chỉ có thể liên kết với một nhà hàng.", "user": "Người dùng", "userPlaceholder": "Tìm tên, userid hoặc email", "restaurant": "Nhà hàng", "restaurantPlaceholder": "Tìm tên hoặc slug nhà hàng", "role": "Vai trò tại nhà hàng", "noUsers": "Không tìm thấy khách hàng đang hoạt động", "noRestaurants": "Không tìm thấy nhà hàng" },
-      "actions": { "create": "Thêm phân quyền", "edit": "Sửa", "remove": "Gỡ liên kết", "assign": "Liên kết", "save": "Lưu thay đổi", "cancel": "Hủy", "openMenu": "Mở thao tác cho {name}", "saved": "Đã cập nhật phân quyền cho {name}.", "saveError": "Không thể lưu phân quyền. Hãy kiểm tra người dùng và nhà hàng.", "removed": "Đã gỡ liên kết của {name}.", "removeError": "Không thể gỡ liên kết.", "removeTitle": "Gỡ liên kết của {name}?", "removeDescription": "Tài khoản sẽ trở lại vai trò khách hàng và không còn quyền quản lý nhà hàng." },
-      "pagination": { "rowsPerPage": "Số dòng mỗi trang" }
+      "title": "Phân quyền nhà hàng",
+      "description": "Liên kết chủ nhà hàng và nhân viên với nhà hàng họ được quản lý.",
+      "loadError": "Không thể tải danh sách phân quyền.",
+      "empty": "Không có phân quyền phù hợp với bộ lọc.",
+      "filters": {
+        "search": "Tìm người dùng, email hoặc nhà hàng",
+        "role": "Lọc theo vai trò",
+        "allRoles": "Tất cả vai trò"
+      },
+      "table": {
+        "user": "Người dùng",
+        "restaurant": "Nhà hàng",
+        "role": "Vai trò",
+        "restaurantStatus": "Trạng thái nhà hàng",
+        "actions": "Thao tác"
+      },
+      "roles": {
+        "OWNER": "Chủ nhà hàng",
+        "STAFF": "Nhân viên"
+      },
+      "restaurantStatuses": {
+        "DRAFT": "Bản nháp",
+        "PENDING": "Chờ duyệt",
+        "CHANGES_REQUESTED": "Cần chỉnh sửa",
+        "ACTIVE": "Đang hoạt động",
+        "SUSPENDED": "Tạm ngưng"
+      },
+      "form": {
+        "createTitle": "Thêm phân quyền",
+        "editTitle": "Sửa phân quyền",
+        "description": "Mỗi tài khoản chỉ có thể liên kết với một nhà hàng.",
+        "user": "Người dùng",
+        "userPlaceholder": "Tìm tên, userid hoặc email",
+        "restaurant": "Nhà hàng",
+        "restaurantPlaceholder": "Tìm tên hoặc slug nhà hàng",
+        "role": "Vai trò tại nhà hàng",
+        "noUsers": "Không tìm thấy khách hàng đang hoạt động",
+        "noRestaurants": "Không tìm thấy nhà hàng"
+      },
+      "actions": {
+        "create": "Thêm phân quyền",
+        "edit": "Sửa",
+        "remove": "Gỡ liên kết",
+        "assign": "Liên kết",
+        "save": "Lưu thay đổi",
+        "cancel": "Hủy",
+        "openMenu": "Mở thao tác cho {name}",
+        "saved": "Đã cập nhật phân quyền cho {name}.",
+        "saveError": "Không thể lưu phân quyền. Hãy kiểm tra người dùng và nhà hàng.",
+        "removed": "Đã gỡ liên kết của {name}.",
+        "removeError": "Không thể gỡ liên kết.",
+        "removeTitle": "Gỡ liên kết của {name}?",
+        "removeDescription": "Tài khoản sẽ trở lại vai trò khách hàng và không còn quyền quản lý nhà hàng."
+      },
+      "pagination": {
+        "rowsPerPage": "Số dòng mỗi trang"
+      }
     },
     "preferences": {
-      "title": "Cài đặt cá nhân", "description": "Tùy chỉnh giao diện và cách hiển thị dữ liệu trong khu vực quản trị hệ thống.",
-      "appearance": { "title": "Giao diện", "description": "Các lựa chọn này chỉ áp dụng cho tài khoản của bạn.", "themeColor": "Màu chủ đề", "themeColorHint": "Chọn màu gợi ý hoặc nhập mã HEX gồm sáu chữ số.", "invalidColor": "Hãy nhập theo định dạng #RRGGBB.", "preview": "Xem trước", "previewText": "Quản trị hệ thống", "previewButton": "Thao tác chính", "density": "Mật độ hiển thị", "comfortable": "Thoải mái", "compact": "Thu gọn" },
-      "display": { "title": "Dữ liệu và ngôn ngữ", "description": "Chọn mặc định cho danh sách và ngày tháng trong trang quản trị.", "pageSize": "Số dòng mặc định mỗi trang", "dateFormat": "Định dạng ngày", "language": "Ngôn ngữ", "vietnamese": "Tiếng Việt", "english": "Tiếng Anh" },
-      "save": "Lưu cài đặt", "reset": "Khôi phục mặc định", "saved": "Đã lưu cài đặt cá nhân.", "saveError": "Không thể lưu cài đặt cá nhân.", "resetDone": "Đã khôi phục cài đặt mặc định.", "resetError": "Không thể khôi phục cài đặt mặc định.", "errorHint": "Cài đặt cũ vẫn đang được giữ. Hãy thử lại."
+      "title": "Cài đặt cá nhân",
+      "description": "Tùy chỉnh giao diện và cách hiển thị dữ liệu trong khu vực quản trị hệ thống.",
+      "appearance": {
+        "title": "Giao diện",
+        "description": "Các lựa chọn này chỉ áp dụng cho tài khoản của bạn.",
+        "themeColor": "Màu chủ đề",
+        "themeColorHint": "Chọn màu gợi ý hoặc nhập mã HEX gồm sáu chữ số.",
+        "invalidColor": "Hãy nhập theo định dạng #RRGGBB.",
+        "preview": "Xem trước",
+        "previewText": "Quản trị hệ thống",
+        "previewButton": "Thao tác chính",
+        "density": "Mật độ hiển thị",
+        "comfortable": "Thoải mái",
+        "compact": "Thu gọn"
+      },
+      "display": {
+        "title": "Dữ liệu và ngôn ngữ",
+        "description": "Chọn mặc định cho danh sách và ngày tháng trong trang quản trị.",
+        "pageSize": "Số dòng mặc định mỗi trang",
+        "dateFormat": "Định dạng ngày",
+        "language": "Ngôn ngữ",
+        "vietnamese": "Tiếng Việt",
+        "english": "Tiếng Anh"
+      },
+      "save": "Lưu cài đặt",
+      "reset": "Khôi phục mặc định",
+      "saved": "Đã lưu cài đặt cá nhân.",
+      "saveError": "Không thể lưu cài đặt cá nhân.",
+      "resetDone": "Đã khôi phục cài đặt mặc định.",
+      "resetError": "Không thể khôi phục cài đặt mặc định.",
+      "errorHint": "Cài đặt cũ vẫn đang được giữ. Hãy thử lại."
     }
   },
   "Navigation": {
@@ -642,7 +1816,11 @@
   "OwnerGuests": {
     "title": "Quản lý khách",
     "eyebrow": "Lịch sử đặt bàn",
-    "stats": { "profiles": "Hồ sơ khách", "repeatGuests": "Khách quay lại", "returnRate": "Tỷ lệ quay lại" },
+    "stats": {
+      "profiles": "Hồ sơ khách",
+      "repeatGuests": "Khách quay lại",
+      "returnRate": "Tỷ lệ quay lại"
+    },
     "searchPlaceholder": "Tìm tên, số điện thoại hoặc email",
     "searchLabel": "Tìm kiếm khách",
     "history": "{reservations} lượt đặt · {visits} lượt đến · {noShows} no-show",
@@ -682,7 +1860,11 @@
       "policy": {
         "title": "Chính sách đặt bàn",
         "confirmationMode": "Chế độ xác nhận",
-        "modes": { "auto": "Tự động", "manual": "Thủ công", "hybrid": "Kết hợp theo số khách" },
+        "modes": {
+          "auto": "Tự động",
+          "manual": "Thủ công",
+          "hybrid": "Kết hợp theo số khách"
+        },
         "manualFromPartySize": "Xác nhận thủ công từ số khách",
         "guestCapacity": "Sức chứa khách",
         "bookingWindow": "Thời hạn đặt trước (ngày)",
@@ -706,7 +1888,15 @@
         "closes": "Đóng cửa",
         "removePeriod": "Xóa khoảng giờ {day}",
         "save": "Lưu giờ hoạt động",
-        "days": { "monday": "Thứ Hai", "tuesday": "Thứ Ba", "wednesday": "Thứ Tư", "thursday": "Thứ Năm", "friday": "Thứ Sáu", "saturday": "Thứ Bảy", "sunday": "Chủ Nhật" }
+        "days": {
+          "monday": "Thứ Hai",
+          "tuesday": "Thứ Ba",
+          "wednesday": "Thứ Tư",
+          "thursday": "Thứ Năm",
+          "friday": "Thứ Sáu",
+          "saturday": "Thứ Bảy",
+          "sunday": "Chủ Nhật"
+        }
       }
     },
     "bookingSlotsModal": {

@@ -36,6 +36,7 @@ import {
 import { RestaurantFormDialog } from "@/features/system-admin/components/restaurant-form-dialog";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
 import {
+  accountAccentColor,
   formatPreferenceDate,
   useAccountPreferences,
 } from "@/features/system-admin/components/account-preferences-context";
@@ -76,6 +77,7 @@ function actionKey(action: RestaurantStatusAction) {
 export function SystemAdminRestaurantsScreen() {
   const t = useTranslations("SystemAdmin.restaurants");
   const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
@@ -217,13 +219,13 @@ export function SystemAdminRestaurantsScreen() {
           restaurant.approvalStatus === "PENDING"
             ? ["ACTIVE", "CHANGES_REQUESTED"]
             : restaurant.approvalStatus === "DRAFT" ||
-                restaurant.approvalStatus === "CHANGES_REQUESTED"
+              restaurant.approvalStatus === "CHANGES_REQUESTED"
               ? ["PENDING"]
-            : restaurant.approvalStatus === "ACTIVE"
-              ? ["SUSPENDED"]
-              : restaurant.approvalStatus === "SUSPENDED"
-                ? ["ACTIVE"]
-                : [];
+              : restaurant.approvalStatus === "ACTIVE"
+                ? ["SUSPENDED"]
+                : restaurant.approvalStatus === "SUSPENDED"
+                  ? ["ACTIVE"]
+                  : [];
         return (
           <Menu position="bottom-end" withinPortal>
             <Menu.Target>
@@ -274,7 +276,11 @@ export function SystemAdminRestaurantsScreen() {
           <Title order={1}>{t("title")}</Title>
           <Text c={uiColors.textSecondary}>{t("description")}</Text>
         </Stack>
-        <Button leftSection={<IconPlus size={17} />} onClick={() => setEditor(null)}>
+        <Button
+          color={accentColor}
+          autoContrast
+          leftSection={<IconPlus size={17} />}
+          onClick={() => setEditor(null)}>
           {t("actions.create")}
         </Button>
       </Group>
@@ -349,8 +355,8 @@ export function SystemAdminRestaurantsScreen() {
         opened={statusAction !== null}
         title={statusAction
           ? t(`actions.dialog.${actionKey(statusAction)}.title`, {
-              name: statusAction.restaurant.name,
-            })
+            name: statusAction.restaurant.name,
+          })
           : ""}
         description={statusAction
           ? t(`actions.dialog.${actionKey(statusAction)}.description`)
