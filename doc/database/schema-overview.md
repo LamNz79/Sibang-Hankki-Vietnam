@@ -1,20 +1,17 @@
 # Sibang Hankki Database Overview
 
-This diagram is a simplified view of `schema.dbml`. The DBML file remains the source of truth for columns, indexes, constraints, and data types.
+This diagram is a simplified view of `unified-schema.dbml`. The DBML describes the agreed target model; Flyway migrations remain the source of truth for the deployed schema.
 
 ```mermaid
 flowchart LR
   subgraph Identity["Identity & Access"]
     direction TB
-    users["users<br/>Profile + ACTIVE / SUSPENDED / CLOSED"]
-    user_roles["user_roles<br/>CUSTOMER · OWNER · ADMIN"]
-    users -->|"1 : N"| user_roles
+    users["users<br/>Unique userid + role + restaurant scope<br/>ACTIVE / SUSPENDED / CLOSED"]
   end
 
   subgraph Store["Store Management"]
     direction LR
     restaurants["restaurants<br/>Store profile and approval status"]
-    restaurant_members["restaurant_members<br/>Owners and staff per store"]
     approval_events["store_approval_events<br/>Approval audit history"]
 
     subgraph StoreConfig["Store Configuration"]
@@ -24,7 +21,6 @@ flowchart LR
       schedule_exceptions["schedule_exceptions"]
     end
 
-    restaurants -->|"1 : N"| restaurant_members
     restaurants -->|"1 : N"| approval_events
     restaurants -->|"1 : 1"| booking_settings
     restaurants -->|"1 : N"| business_hours
@@ -43,7 +39,7 @@ flowchart LR
     reservations --> reservation_events
   end
 
-  users ==>|"manages through membership"| restaurant_members
+  users ==>|"OWNER / STAFF via restaurant_id"| restaurants
   restaurants ==>|"publishes capacity"| booking_slots
   restaurants -->|"receives"| reservations
 
@@ -51,8 +47,8 @@ flowchart LR
   classDef store fill:#fff1dd,stroke:#c77700,color:#5f3900;
   classDef booking fill:#e8f7ee,stroke:#37865a,color:#173e2a;
 
-  class users,user_roles identity;
-  class restaurants,restaurant_members,approval_events,booking_settings,business_hours,schedule_exceptions store;
+  class users identity;
+  class restaurants,approval_events,booking_settings,business_hours,schedule_exceptions store;
   class booking_slots,reservations,proposals,reservation_events booking;
 ```
 
@@ -60,15 +56,15 @@ Legend:
 
 - Solid arrows represent core ownership relationships.
 - Thick arrows represent the primary store-to-booking flow.
-- Actor/customer foreign keys are intentionally hidden here to prevent crossing lines; they remain visible in `schema.dbml`.
+- Actor/customer foreign keys are intentionally hidden here to prevent crossing lines; they remain visible in `unified-schema.dbml`.
 
 ## Authorization model
 
 | Check | Purpose |
 | --- | --- |
 | `users.status = ACTIVE` | Account may authenticate and perform actions. Account status overrides every role. |
-| `user_roles` | Grants the global CUSTOMER, OWNER, or ADMIN workspace role. |
-| Active `restaurant_members` row | Scopes OWNER/STAFF actions to a particular restaurant. |
+| `users.role` | Grants the CUSTOMER, OWNER, STAFF, or ADMIN role. |
+| `users.restaurant_id` | Scopes OWNER/STAFF actions to one restaurant and is required for those roles. |
 | Resource attributes | Backend checks ownership, restaurant status, reservation status, and allowed transition for every request. |
 
 Frontend visibility is not authorization. Every backend endpoint must apply these checks and deny by default.
@@ -90,7 +86,7 @@ Frontend visibility is not authorization. Every backend endpoint must apply thes
 ## Retention and deletion
 
 - Users are closed through `users.status`; referenced users are not hard-deleted.
-- Restaurant access is revoked through `restaurant_members.revoked_at` instead of deleting membership history.
+- Restaurant access is revoked by suspending/closing the account or changing its direct `users.restaurant_id` scope; V1 has no membership-history table.
 - Reservations are cancelled through status transitions and are never deleted as part of the normal workflow.
 - Approval and reservation events are append-only audit records.
 
@@ -111,11 +107,11 @@ The future migration must enforce these rules in SQL, not only in Java:
 | Client action | Backend responsibility | Main tables |
 | --- | --- | --- |
 | Customer submits reservation | Validate active account/store/slot and create idempotently | `reservations`, `reservation_events` |
-| Owner confirms or declines | Validate active membership and allowed transition | `reservations`, `booking_slots`, `reservation_events` |
+| Owner confirms or declines | Validate active account, direct restaurant scope, and allowed transition | `reservations`, `booking_slots`, `reservation_events` |
 | Owner proposes an alternative | Store proposed slot/time/party size without overwriting history | `reservation_proposals`, `reservation_events` |
 | Customer accepts proposal | Recheck capacity and apply proposal atomically | `reservation_proposals`, `reservations`, `booking_slots`, `reservation_events` |
 | Customer or owner cancels | Check actor and cutoff, release confirmed capacity once | `reservations`, `booking_slots`, `reservation_events` |
-| Owner checks in guest | Validate token, store and membership, then transition once | `reservations`, `reservation_events` |
+| Owner checks in guest | Validate token and direct restaurant scope, then transition once | `reservations`, `reservation_events` |
 | Admin approves/suspends store | Validate admin role and append approval decision | `restaurants`, `store_approval_events` |
 
 ## Items still requiring business confirmation
