@@ -9,6 +9,7 @@ import type {
   SystemAdminUserUpdateInput,
 } from "@/features/system-admin/data/system-admin-directory";
 import { uiColors } from "@/theme";
+import { useAccountPreferences, accountAccentColor } from "./account-preferences-context";
 
 type Props = {
   user: SystemAdminUser | null;
@@ -19,6 +20,8 @@ type Props = {
 
 export function SystemAdminUserDialog({ user, submitting, onClose, onSubmit }: Props) {
   const t = useTranslations("SystemAdmin.users.form");
+  const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const [userid, setUserid] = useState(user?.userid ?? "");
   const [name, setName] = useState(user?.name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
@@ -92,7 +95,12 @@ export function SystemAdminUserDialog({ user, submitting, onClose, onSubmit }: P
             <Button variant="default" onClick={onClose} disabled={submitting}>
               {t("cancel")}
             </Button>
-            <Button type="submit" loading={submitting}>
+            <Button
+              color={accentColor}
+              autoContrast
+              type="submit"
+              loading={submitting}
+            >
               {user ? t("save") : t("create")}
             </Button>
           </Group>
