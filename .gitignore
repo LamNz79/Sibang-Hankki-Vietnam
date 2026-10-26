@@ -25,6 +25,14 @@
 .DS_Store
 *.pem
 /Lam_*.xlsx
+/.tmp-report-profile/
+/Lam_*.ods
+/Lam_*.pdf
+/doc/logos/
+/doc/sibanghanggi_table.xlsx
+/doc/ARCHITECTURE_NFR_SECURITY_AUDIT_*.md
+/doc/SECURITY_PENETRATION_TEST_*.md
+/doc/database/monday-meeting.md
 /.vscode/settings.json
 /doc/AWS_STAGING_README.md
 /doc/PROJECT_TRANSFER_UBUNTU.md
