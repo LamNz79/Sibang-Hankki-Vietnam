@@ -22,7 +22,10 @@ import { useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import { RestaurantAssignmentDialog } from "@/features/system-admin/components/restaurant-assignment-dialog";
 import { StatusActionDialog } from "@/features/system-admin/components/status-action-dialog";
-import { useAccountPreferences } from "@/features/system-admin/components/account-preferences-context";
+import {
+  accountAccentColor,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import {
   createSystemAdminRestaurantAssignment,
   getSystemAdminRestaurantAssignments,
@@ -41,6 +44,7 @@ const pageSizes = [10, 20, 50, 100];
 export function SystemAdminAssignmentsScreen() {
   const t = useTranslations("SystemAdmin.assignments");
   const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
@@ -194,7 +198,12 @@ export function SystemAdminAssignmentsScreen() {
           <Title order={1}>{t("title")}</Title>
           <Text c={uiColors.textSecondary}>{t("description")}</Text>
         </Stack>
-        <Button leftSection={<IconLink size={17} />} onClick={() => setEditor("create")}>
+        <Button
+          color={accentColor}
+          autoContrast
+          leftSection={<IconLink size={17} />}
+          onClick={() => setEditor("create")}
+        >
           {t("actions.create")}
         </Button>
       </Group>
