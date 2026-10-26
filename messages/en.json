@@ -44,47 +44,196 @@
     }
   },
   "Home": {
-    "subtitle": "Find a table fast and book with confidence.", "loadingReservations": "Loading reservations...", "loading": "Loading...",
-    "header": { "notifications": "Notifications", "currentLocation": "Current location", "searchPlaceholder": "Search restaurants or cities", "searchLabel": "Search restaurants or cities" },
-    "banner": { "eyebrow": "Main banner", "title": "Today's dining benefits", "description": "Discover current restaurant offers." },
-    "sections": { "specialCategories": "Special categories", "upToFive": "Up to 5", "exploreCity": "Explore by city", "viewAll": "View all", "sortBy": "Sort by", "cuisine": "Cuisine", "priceRange": "Price range" },
-    "categories": { "michelin": "Michelin", "buffet": "Buffet", "special-deal": "Special deal", "date-night": "Date night", "trending": "Trending" },
-    "sort": { "recommended": "Recommended", "rating": "Top rated", "earliest": "Earliest available" },
-    "cuisines": { "western": "Western", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese" },
-    "prices": { "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
-    "location": { "title": "Choose location", "defaultLocation": "Ho Chi Minh City", "hint": "Choose a province or city, then select a ward or commune.", "provinces": "Province / city", "wards": "Ward / commune", "searchProvince": "Search province or city", "searchWard": "Search ward or commune", "selectWholeProvince": "Choose all", "loadError": "Could not load the location list.", "retry": "Try again", "nothingFound": "No matching location found.", "noWards": "No wards or communes found." }
+    "subtitle": "Find a table fast and book with confidence.",
+    "loadingReservations": "Loading reservations...",
+    "loading": "Loading...",
+    "header": {
+      "notifications": "Notifications",
+      "currentLocation": "Current location",
+      "searchPlaceholder": "Search restaurants or cities",
+      "searchLabel": "Search restaurants or cities"
+    },
+    "banner": {
+      "eyebrow": "Main banner",
+      "title": "Today's dining benefits",
+      "description": "Discover current restaurant offers."
+    },
+    "sections": {
+      "specialCategories": "Special categories",
+      "upToFive": "Up to 5",
+      "exploreCity": "Explore by city",
+      "viewAll": "View all",
+      "sortBy": "Sort by",
+      "cuisine": "Cuisine",
+      "priceRange": "Price range"
+    },
+    "categories": {
+      "michelin": "Michelin",
+      "buffet": "Buffet",
+      "special-deal": "Special deal",
+      "date-night": "Date night",
+      "trending": "Trending"
+    },
+    "sort": {
+      "recommended": "Recommended",
+      "rating": "Top rated",
+      "earliest": "Earliest available"
+    },
+    "cuisines": {
+      "western": "Western",
+      "chinese": "Chinese",
+      "vietnamese": "Vietnamese",
+      "japanese": "Japanese"
+    },
+    "prices": {
+      "under150": "Under 150K",
+      "under300": "150K–300K",
+      "over300": "Over 300K"
+    },
+    "location": {
+      "title": "Choose location",
+      "defaultLocation": "Ho Chi Minh City",
+      "hint": "Choose a province or city, then select a ward or commune.",
+      "provinces": "Province / city",
+      "wards": "Ward / commune",
+      "searchProvince": "Search province or city",
+      "searchWard": "Search ward or commune",
+      "selectWholeProvince": "Choose all",
+      "loadError": "Could not load the location list.",
+      "retry": "Try again",
+      "nothingFound": "No matching location found.",
+      "noWards": "No wards or communes found."
+    }
   },
   "RestaurantAvailability": {
-    "unknown": "Check times in the booking step", "contact": "Contact the restaurant for this party size", "unavailable": "No online times for {count} guests today", "available": "Available today from {time}", "availableConfirmation": "Available today from {time} · confirmation required"
+    "unknown": "Check times in the booking step",
+    "contact": "Contact the restaurant for this party size",
+    "unavailable": "No online times for {count} guests today",
+    "available": "Available today from {time}",
+    "availableConfirmation": "Available today from {time} · confirmation required"
   },
   "RestaurantDiscovery": {
-    "title": "Restaurant list", "categoryTitle": "{category} in {location}", "cityTitle": "Restaurants in {city}", "hoChiMinhCity": "Ho Chi Minh City", "subtitle": "Filtered results", "searchPlaceholder": "Search restaurant or area",
-    "availabilityTitle": "Availability is shown per restaurant", "availabilityDescription": "Browse first, then choose the exact date, time, and party size in the booking step.", "all": "All", "available": "Available", "filters": "Filters", "reset": "Reset",
-    "sort": { "recommended": "Recommended", "rating": "Top rated", "earliest": "Earliest available" }, "loading": "Loading restaurants...",
-    "price": { "all": "Price", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
-    "priceOptions": { "all": "All", "under150": "Under 150K", "under300": "150K–300K", "over300": "Over 300K" },
-    "cuisine": { "all": "Cuisine", "korean": "Korean", "chinese": "Chinese", "vietnamese": "Vietnamese", "japanese": "Japanese", "western": "Western" },
-    "benefits": { "special_deal": "Special deal", "available": "Available", "date_night": "Date night", "michelin": "Michelin" },
-    "restaurants": "Restaurants", "categoryResults": "{category} restaurants", "imageAlt": "{name} image", "cardAvailabilityHint": "Based on 2 guests today. Choose exact details in the booking step.",
-    "priceRange": "Price range", "cuisineTitle": "Cuisine", "benefitsTitle": "Special benefits", "showResults": "Show {count} restaurants",
-    "empty": { "locationTitle": "No restaurants in this area yet", "locationDescription": "There are no active restaurants available in {location}. Choose another location to keep exploring.", "changeLocation": "Choose another location", "filtersTitle": "No matching restaurants", "filtersDescription": "Try removing your search or filters to see more restaurants.", "clearFilters": "Clear search and filters" }
+    "title": "Restaurant list",
+    "categoryTitle": "{category} in {location}",
+    "cityTitle": "Restaurants in {city}",
+    "hoChiMinhCity": "Ho Chi Minh City",
+    "subtitle": "Filtered results",
+    "searchPlaceholder": "Search restaurant or area",
+    "availabilityTitle": "Availability is shown per restaurant",
+    "availabilityDescription": "Browse first, then choose the exact date, time, and party size in the booking step.",
+    "all": "All",
+    "available": "Available",
+    "filters": "Filters",
+    "reset": "Reset",
+    "sort": {
+      "recommended": "Recommended",
+      "rating": "Top rated",
+      "earliest": "Earliest available"
+    },
+    "loading": "Loading restaurants...",
+    "price": {
+      "all": "Price",
+      "under150": "< 150K",
+      "under300": "150K–300K",
+      "over300": "> 300K"
+    },
+    "priceOptions": {
+      "all": "All",
+      "under150": "Under 150K",
+      "under300": "150K–300K",
+      "over300": "Over 300K"
+    },
+    "cuisine": {
+      "all": "Cuisine",
+      "korean": "Korean",
+      "chinese": "Chinese",
+      "vietnamese": "Vietnamese",
+      "japanese": "Japanese",
+      "western": "Western"
+    },
+    "benefits": {
+      "special_deal": "Special deal",
+      "available": "Available",
+      "date_night": "Date night",
+      "michelin": "Michelin"
+    },
+    "restaurants": "Restaurants",
+    "categoryResults": "{category} restaurants",
+    "imageAlt": "{name} image",
+    "cardAvailabilityHint": "Based on 2 guests today. Choose exact details in the booking step.",
+    "priceRange": "Price range",
+    "cuisineTitle": "Cuisine",
+    "benefitsTitle": "Special benefits",
+    "showResults": "Show {count} restaurants",
+    "empty": {
+      "locationTitle": "No restaurants in this area yet",
+      "locationDescription": "There are no active restaurants available in {location}. Choose another location to keep exploring.",
+      "changeLocation": "Choose another location",
+      "filtersTitle": "No matching restaurants",
+      "filtersDescription": "Try removing your search or filters to see more restaurants.",
+      "clearFilters": "Clear search and filters"
+    }
   },
   "RestaurantDetails": {
-    "title": "Restaurant details", "subtitle": "Restaurant profile", "selectDateTime": "Select date & time", "viewPhotos": "View {count, plural, one {# photo} other {# photos}}", "photosTitle": "{name} photos", "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.", "menu": "Menu", "save": "Save restaurant", "unsave": "Remove from saved", "saved": "Restaurant saved.", "removed": "Restaurant removed from saved.", "saveError": "Could not update your saved restaurants. Try again."
+    "title": "Restaurant details",
+    "subtitle": "Restaurant profile",
+    "selectDateTime": "Select date & time",
+    "viewPhotos": "View {count, plural, one {# photo} other {# photos}}",
+    "photosTitle": "{name} photos",
+    "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.",
+    "menu": "Menu",
+    "save": "Save restaurant",
+    "unsave": "Remove from saved",
+    "saved": "Restaurant saved.",
+    "removed": "Restaurant removed from saved.",
+    "saveError": "Could not update your saved restaurants. Try again."
   },
-  "SavedRestaurants": { "title": "Saved restaurants", "subtitle": "Your personal shortlist", "count": "{count, plural, one {# saved restaurant} other {# saved restaurants}}", "emptyTitle": "No saved restaurants yet", "emptyDescription": "Tap the heart on a restaurant page to keep it here for later.", "explore": "Explore restaurants", "viewDetails": "View details", "remove": "Remove {name} from saved", "removeError": "Could not remove the restaurant. Try again.", "loginRequired": "Sign in required", "loginDescription": "Sign in with a customer account to view saved restaurants across devices.", "login": "Sign in", "loadError": "Could not load saved restaurants", "retry": "Try again" },
+  "SavedRestaurants": {
+    "title": "Saved restaurants",
+    "subtitle": "Your personal shortlist",
+    "count": "{count, plural, one {# saved restaurant} other {# saved restaurants}}",
+    "emptyTitle": "No saved restaurants yet",
+    "emptyDescription": "Tap the heart on a restaurant page to keep it here for later.",
+    "explore": "Explore restaurants",
+    "viewDetails": "View details",
+    "remove": "Remove {name} from saved",
+    "removeError": "Could not remove the restaurant. Try again.",
+    "loginRequired": "Sign in required",
+    "loginDescription": "Sign in with a customer account to view saved restaurants across devices.",
+    "login": "Sign in",
+    "loadError": "Could not load saved restaurants",
+    "retry": "Try again"
+  },
   "BookingTime": {
-    "title": "Time", "emptyTitle": "No online times available", "emptyDescription": "Try another date or guest count. Online availability depends on the restaurant's capacity settings."
+    "title": "Time",
+    "emptyTitle": "No online times available",
+    "emptyDescription": "Try another date or guest count. Online availability depends on the restaurant's capacity settings."
   },
   "PasswordManagement": {
     "change": {
-      "action": "Change password", "title": "Change your password", "description": "Enter your current password and choose a new one. You will be signed out after the change.",
-      "currentPassword": "Current password", "newPassword": "New password", "confirmPassword": "Confirm new password", "requirements": "Use 8 to 72 characters.", "mismatch": "The passwords do not match.",
-      "cancel": "Cancel", "submit": "Change password", "success": "Password changed. Log in again with your new password.", "wrongCurrent": "The current password is incorrect.", "error": "Could not change the password. Try again."
+      "action": "Change password",
+      "title": "Change your password",
+      "description": "Enter your current password and choose a new one. You will be signed out after the change.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "requirements": "Use 8 to 72 characters.",
+      "mismatch": "The passwords do not match.",
+      "cancel": "Cancel",
+      "submit": "Change password",
+      "success": "Password changed. Log in again with your new password.",
+      "wrongCurrent": "The current password is incorrect.",
+      "error": "Could not change the password. Try again."
     },
     "reset": {
-      "title": "Reset password for {name}", "description": "Set a temporary password and share it through a secure channel. Existing sessions will be signed out.",
-      "newPassword": "Temporary password", "confirmPassword": "Confirm temporary password", "requirements": "Use 8 to 72 characters.", "mismatch": "The passwords do not match.", "cancel": "Cancel", "submit": "Reset password"
+      "title": "Reset password for {name}",
+      "description": "Set a temporary password and share it through a secure channel. Existing sessions will be signed out.",
+      "newPassword": "Temporary password",
+      "confirmPassword": "Confirm temporary password",
+      "requirements": "Use 8 to 72 characters.",
+      "mismatch": "The passwords do not match.",
+      "cancel": "Cancel",
+      "submit": "Reset password"
     }
   },
   "Account": {
@@ -147,27 +296,142 @@
     }
   },
   "CustomerBooking": {
-    "title": "Book a table", "subtitle": "Table booking",
-    "submit": { "change": "Request this time", "reservation": "Request reservation", "selectTime": "Select an available time" },
-    "date": { "title": "Date", "selected": "Selected date", "none": "No date selected" },
-    "guests": { "title": "Guests", "remove": "Remove one guest", "count": "Number of guests", "add": "Add one guest", "largePartyTitle": "Large party request", "largePartyDescription": "For groups larger than 10 guests, contact the restaurant directly to confirm a suitable time. Online booking is unavailable." },
-    "change": { "title": "Choose another time", "description": "Your party size remains {count, plural, one {# guest} other {# guests}}. A confirmed booking keeps its current time until the restaurant accepts your request.", "messageLabel": "Message to the restaurant (optional)", "messagePlaceholder": "For example: Could we move our booking one hour later?" },
-    "contact": { "title": "Contact information", "name": "Full name", "phone": "Phone number", "email": "Email (optional)", "invalidEmail": "Enter a valid email address." },
-    "requests": { "title": "Requests and pre-order", "description": "Optional information for the restaurant to prepare before you arrive.", "specialRequest": "Special request (optional)", "specialRequestPlaceholder": "For example: window seat, child chair, or allergy information", "menu": { "title": "Choose dishes (optional)", "description": "Select dishes and quantities to include in your pre-order request.", "choose": "Choose dishes", "edit": "Edit", "selectedCount": "{count, plural, =0 {No dishes selected} one {# dish selected} other {# dishes selected}}", "done": "{count, plural, =0 {Done} other {Done (#)}}", "add": "Add {item}", "remove": "Remove one {item}", "quantity": "{item}: {quantity} selected" }, "preOrder": "Additional pre-order note (optional)", "preOrderDescription": "Dish selections and this note are requests for the restaurant, not a confirmed food order.", "preOrderPlaceholder": "For example: no peanuts or separate the sauce", "preOrderTooLong": "The selected dishes and note are too long. Remove an item or shorten the note." },
-    "errors": { "changeTitle": "Unable to change this reservation", "changeDescription": "A time-change request is already waiting for the restaurant.", "submissionTitle": "Unable to send reservation", "submissionDescription": "Check your information and try again." },
-    "availability": { "loading": "Checking available times...", "errorTitle": "Unable to check availability", "errorDescription": "Available times could not be loaded.", "retry": "Try again", "confirmationTitle": "Restaurant confirmation required", "confirmationDescription": "Choose an available time and send your request. The reservation will remain pending until the restaurant confirms it." },
-    "success": { "changeTitle": "New time request sent", "confirmedTitle": "Reservation confirmed", "pendingTitle": "Reservation request sent", "confirmedChangeDescription": "Your current booking stays confirmed until the restaurant reviews the new time.", "pendingChangeDescription": "Your requested time was updated and still needs restaurant confirmation.", "confirmedDescription": "Your table has been confirmed.", "pendingDescription": "The restaurant will review your request and contact you if anything needs to change.", "changePending": "Change pending", "confirmed": "Confirmed", "pendingConfirmation": "Pending confirmation", "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}", "viewDetails": "View reservation details", "exploreRestaurants": "Explore more restaurants" }
+    "title": "Book a table",
+    "subtitle": "Table booking",
+    "submit": {
+      "change": "Request this time",
+      "reservation": "Request reservation",
+      "selectTime": "Select an available time"
+    },
+    "date": {
+      "title": "Date",
+      "selected": "Selected date",
+      "none": "No date selected"
+    },
+    "guests": {
+      "title": "Guests",
+      "remove": "Remove one guest",
+      "count": "Number of guests",
+      "add": "Add one guest",
+      "largePartyTitle": "Large party request",
+      "largePartyDescription": "For groups larger than 10 guests, contact the restaurant directly to confirm a suitable time. Online booking is unavailable."
+    },
+    "change": {
+      "title": "Choose another time",
+      "description": "Your party size remains {count, plural, one {# guest} other {# guests}}. A confirmed booking keeps its current time until the restaurant accepts your request.",
+      "messageLabel": "Message to the restaurant (optional)",
+      "messagePlaceholder": "For example: Could we move our booking one hour later?"
+    },
+    "contact": {
+      "title": "Contact information",
+      "name": "Full name",
+      "phone": "Phone number",
+      "email": "Email (optional)",
+      "invalidEmail": "Enter a valid email address."
+    },
+    "requests": {
+      "title": "Requests and pre-order",
+      "description": "Optional information for the restaurant to prepare before you arrive.",
+      "specialRequest": "Special request (optional)",
+      "specialRequestPlaceholder": "For example: window seat, child chair, or allergy information",
+      "menu": {
+        "title": "Choose dishes (optional)",
+        "description": "Select dishes and quantities to include in your pre-order request.",
+        "choose": "Choose dishes",
+        "edit": "Edit",
+        "selectedCount": "{count, plural, =0 {No dishes selected} one {# dish selected} other {# dishes selected}}",
+        "done": "{count, plural, =0 {Done} other {Done (#)}}",
+        "add": "Add {item}",
+        "remove": "Remove one {item}",
+        "quantity": "{item}: {quantity} selected"
+      },
+      "preOrder": "Additional pre-order note (optional)",
+      "preOrderDescription": "Dish selections and this note are requests for the restaurant, not a confirmed food order.",
+      "preOrderPlaceholder": "For example: no peanuts or separate the sauce",
+      "preOrderTooLong": "The selected dishes and note are too long. Remove an item or shorten the note."
+    },
+    "errors": {
+      "changeTitle": "Unable to change this reservation",
+      "changeDescription": "A time-change request is already waiting for the restaurant.",
+      "submissionTitle": "Unable to send reservation",
+      "submissionDescription": "Check your information and try again."
+    },
+    "availability": {
+      "loading": "Checking available times...",
+      "errorTitle": "Unable to check availability",
+      "errorDescription": "Available times could not be loaded.",
+      "retry": "Try again",
+      "confirmationTitle": "Restaurant confirmation required",
+      "confirmationDescription": "Choose an available time and send your request. The reservation will remain pending until the restaurant confirms it."
+    },
+    "success": {
+      "changeTitle": "New time request sent",
+      "confirmedTitle": "Reservation confirmed",
+      "pendingTitle": "Reservation request sent",
+      "confirmedChangeDescription": "Your current booking stays confirmed until the restaurant reviews the new time.",
+      "pendingChangeDescription": "Your requested time was updated and still needs restaurant confirmation.",
+      "confirmedDescription": "Your table has been confirmed.",
+      "pendingDescription": "The restaurant will review your request and contact you if anything needs to change.",
+      "changePending": "Change pending",
+      "confirmed": "Confirmed",
+      "pendingConfirmation": "Pending confirmation",
+      "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}",
+      "viewDetails": "View reservation details",
+      "exploreRestaurants": "Explore more restaurants"
+    }
   },
   "CustomerReservations": {
-    "title": "My reservations", "subtitle": "Your upcoming dining plans.", "heading": "Reservations", "description": "Track upcoming plans and review your dining history.",
-    "scope": { "upcoming": "Upcoming ({count})", "history": "History ({count})", "all": "All ({count})" },
-    "searchPlaceholder": "Search restaurant or booking reference", "searchLabel": "Search reservations", "filterLabel": "Filter reservation status",
-    "filters": { "all": "All statuses", "action": "Action required", "pending": "Pending confirmation", "confirmed": "Confirmed", "checkedIn": "Checked in or seated", "completed": "Completed", "closed": "Cancelled, declined or no-show" },
-    "status": { "pending": "Pending confirmation", "action": "Action required", "cancelled": "Reservation cancelled", "expired": "Request expired", "declined": "Request declined", "checkedIn": "Checked in", "seated": "Seated", "completed": "Completed", "noShow": "No-show", "confirmed": "Confirmed" },
-    "suggestedTime": "Suggested {time}", "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}",
-    "loadError": { "title": "Could not load reservations", "description": "Check your connection and try again.", "retry": "Try again" },
-    "showing": "Showing {visible} of {total}", "clearFilters": "Clear filters", "showMore": "Show more ({count} remaining)",
-    "empty": { "filteredTitle": "No matching reservations", "historyTitle": "No reservation history", "upcomingTitle": "No upcoming reservations", "filteredDescription": "Try another restaurant name, booking reference, or status.", "historyDescription": "Completed, cancelled, and past reservations will appear here.", "upcomingDescription": "Your reservation requests and confirmed bookings will appear here." },
+    "title": "My reservations",
+    "subtitle": "Your upcoming dining plans.",
+    "heading": "Reservations",
+    "description": "Track upcoming plans and review your dining history.",
+    "scope": {
+      "upcoming": "Upcoming ({count})",
+      "history": "History ({count})",
+      "all": "All ({count})"
+    },
+    "searchPlaceholder": "Search restaurant or booking reference",
+    "searchLabel": "Search reservations",
+    "filterLabel": "Filter reservation status",
+    "filters": {
+      "all": "All statuses",
+      "action": "Action required",
+      "pending": "Pending confirmation",
+      "confirmed": "Confirmed",
+      "checkedIn": "Checked in or seated",
+      "completed": "Completed",
+      "closed": "Cancelled, declined or no-show"
+    },
+    "status": {
+      "pending": "Pending confirmation",
+      "action": "Action required",
+      "cancelled": "Reservation cancelled",
+      "expired": "Request expired",
+      "declined": "Request declined",
+      "checkedIn": "Checked in",
+      "seated": "Seated",
+      "completed": "Completed",
+      "noShow": "No-show",
+      "confirmed": "Confirmed"
+    },
+    "suggestedTime": "Suggested {time}",
+    "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}",
+    "loadError": {
+      "title": "Could not load reservations",
+      "description": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "showing": "Showing {visible} of {total}",
+    "clearFilters": "Clear filters",
+    "showMore": "Show more ({count} remaining)",
+    "empty": {
+      "filteredTitle": "No matching reservations",
+      "historyTitle": "No reservation history",
+      "upcomingTitle": "No upcoming reservations",
+      "filteredDescription": "Try another restaurant name, booking reference, or status.",
+      "historyDescription": "Completed, cancelled, and past reservations will appear here.",
+      "upcomingDescription": "Your reservation requests and confirmed bookings will appear here."
+    },
     "exploreRestaurants": "Explore restaurants"
   },
   "CustomerReservationDetails": {
@@ -178,19 +442,60 @@
       "back": "Back to reservations"
     },
     "status": {
-      "pending": { "badge": "Pending confirmation", "title": "Waiting for the restaurant", "description": "The restaurant will confirm your request or contact you if anything needs to change." },
-      "alternative": { "badge": "Action required", "title": "The restaurant suggested a new time", "description": "Review the proposed time below. Your table is not confirmed until you accept it." },
-      "declined": { "badge": "Request declined", "restaurantTitle": "The restaurant could not confirm this request", "restaurantDescription": "No table is being held. Choose another time when you are ready.", "customerTitle": "This request is closed", "customerDescription": "The restaurant has been notified that you declined the proposed time." },
-      "confirmed": { "badge": "Reservation confirmed", "title": "Your table is confirmed", "description": "Your reservation is ready. Show the booking code when you arrive." },
-      "cancelled": { "badge": "Reservation cancelled", "title": "This reservation was cancelled", "description": "The table is no longer being held. You can make a new reservation at any time." },
+      "pending": {
+        "badge": "Pending confirmation",
+        "title": "Waiting for the restaurant",
+        "description": "The restaurant will confirm your request or contact you if anything needs to change."
+      },
+      "alternative": {
+        "badge": "Action required",
+        "title": "The restaurant suggested a new time",
+        "description": "Review the proposed time below. Your table is not confirmed until you accept it."
+      },
+      "declined": {
+        "badge": "Request declined",
+        "restaurantTitle": "The restaurant could not confirm this request",
+        "restaurantDescription": "No table is being held. Choose another time when you are ready.",
+        "customerTitle": "This request is closed",
+        "customerDescription": "The restaurant has been notified that you declined the proposed time."
+      },
+      "confirmed": {
+        "badge": "Reservation confirmed",
+        "title": "Your table is confirmed",
+        "description": "Your reservation is ready. Show the booking code when you arrive."
+      },
+      "cancelled": {
+        "badge": "Reservation cancelled",
+        "title": "This reservation was cancelled",
+        "description": "The table is no longer being held. You can make a new reservation at any time."
+      },
       "visit": {
-        "arrived": { "badge": "Checked in", "title": "Your arrival is recorded", "description": "The restaurant knows you have arrived." },
-        "seated": { "badge": "Seated", "title": "Your table is ready", "description": "The restaurant has seated your party." },
-        "completed": { "badge": "Visit completed", "title": "Thank you for dining with us", "description": "This restaurant visit is complete." },
-        "noShow": { "badge": "No-show", "title": "The restaurant marked this visit as a no-show", "description": "Contact the restaurant if this is incorrect." }
+        "arrived": {
+          "badge": "Checked in",
+          "title": "Your arrival is recorded",
+          "description": "The restaurant knows you have arrived."
+        },
+        "seated": {
+          "badge": "Seated",
+          "title": "Your table is ready",
+          "description": "The restaurant has seated your party."
+        },
+        "completed": {
+          "badge": "Visit completed",
+          "title": "Thank you for dining with us",
+          "description": "This restaurant visit is complete."
+        },
+        "noShow": {
+          "badge": "No-show",
+          "title": "The restaurant marked this visit as a no-show",
+          "description": "Contact the restaurant if this is incorrect."
+        }
       }
     },
-    "reference": { "label": "Booking reference", "copy": "Copy booking reference" },
+    "reference": {
+      "label": "Booking reference",
+      "copy": "Copy booking reference"
+    },
     "information": {
       "date": "Date",
       "timeGuests": "Time · guests",
@@ -242,43 +547,231 @@
     }
   },
   "OwnerDashboard": {
-    "restaurantFallback": "Restaurant", "eyebrow": "Service overview", "addWalkIn": "Add walk-in", "guestCount": "{count, plural, one {# guest} other {# guests}}",
-    "loadError": { "title": "Unable to load reservations", "retry": "Try again" },
-    "toolbar": { "today": "Today · {date}", "previousDay": "Previous day", "nextDay": "Next day", "returnToday": "Return to today", "searchPlaceholder": "Guest name or booking code", "searchLabel": "Search reservations by guest name, booking code, or phone", "clearSearch": "Clear reservation search", "filter": "Filter reservations" },
-    "overview": { "metrics": { "bookings": "Bookings", "expectedGuests": "Expected guests", "preOrders": "Pre-orders", "vipGuests": "VIP guests" }, "attention": { "title": "Needs attention", "description": "{count, plural, one {# reservation request needs review.} other {# reservation requests need review.}}" }, "nextArrival": "Next arrival", "vip": "VIP", "preOrder": "pre-order", "guestCount": "{count, plural, one {# guest} other {# guests}}" },
-    "list": { "title": "Reservations", "shown": "{count} shown", "searchEmptyTitle": "No reservations found", "filterEmptyTitle": "No reservations match", "searchEmptyDescription": "Check the guest name, booking code, or phone number.", "filterEmptyDescription": "Try another status or guest filter." },
-    "filters": { "title": "Filter reservations", "status": "Status", "chooseOne": "Choose one", "guestDetails": "Guest details", "selectAny": "Select any", "reset": "Reset", "show": "Show {count} reservations", "statuses": { "all": "All", "pending": "Pending", "waitingGuest": "Waiting guest", "confirmed": "Confirmed", "declined": "Declined", "expired": "Expired", "cancelled": "Cancelled", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "noShow": "No-show" }, "guests": { "vip": "VIP", "preOrder": "Pre-order", "largeParty": "4+ guests" } },
-    "walkIn": { "title": "Add walk-in", "description": "Add a guest who arrived without an online reservation. Capacity is taken from the current service slot.", "errorTitle": "Unable to add walk-in", "capacityError": "There is not enough capacity in the current service slot.", "genericError": "The walk-in could not be added. Please try again.", "name": "Guest name", "namePlaceholder": "Enter guest name", "nameRequired": "Guest name is required.", "phone": "Phone", "phonePlaceholder": "Enter phone number", "phoneRequired": "Phone number is required.", "partySize": "Party size", "notes": "Notes", "notesPlaceholder": "Seating or allergy notes", "cancel": "Cancel", "submit": "Add guest", "added": "Walk-in guest added." }
+    "restaurantFallback": "Restaurant",
+    "eyebrow": "Service overview",
+    "addWalkIn": "Add walk-in",
+    "guestCount": "{count, plural, one {# guest} other {# guests}}",
+    "loadError": {
+      "title": "Unable to load reservations",
+      "retry": "Try again"
+    },
+    "toolbar": {
+      "today": "Today · {date}",
+      "previousDay": "Previous day",
+      "nextDay": "Next day",
+      "returnToday": "Return to today",
+      "searchPlaceholder": "Guest name or booking code",
+      "searchLabel": "Search reservations by guest name, booking code, or phone",
+      "clearSearch": "Clear reservation search",
+      "filter": "Filter reservations"
+    },
+    "overview": {
+      "metrics": {
+        "bookings": "Bookings",
+        "expectedGuests": "Expected guests",
+        "preOrders": "Pre-orders",
+        "vipGuests": "VIP guests"
+      },
+      "attention": {
+        "title": "Needs attention",
+        "description": "{count, plural, one {# reservation request needs review.} other {# reservation requests need review.}}"
+      },
+      "nextArrival": "Next arrival",
+      "vip": "VIP",
+      "preOrder": "pre-order",
+      "guestCount": "{count, plural, one {# guest} other {# guests}}"
+    },
+    "list": {
+      "title": "Reservations",
+      "shown": "{count} shown",
+      "searchEmptyTitle": "No reservations found",
+      "filterEmptyTitle": "No reservations match",
+      "searchEmptyDescription": "Check the guest name, booking code, or phone number.",
+      "filterEmptyDescription": "Try another status or guest filter."
+    },
+    "filters": {
+      "title": "Filter reservations",
+      "status": "Status",
+      "chooseOne": "Choose one",
+      "guestDetails": "Guest details",
+      "selectAny": "Select any",
+      "reset": "Reset",
+      "show": "Show {count} reservations",
+      "statuses": {
+        "all": "All",
+        "pending": "Pending",
+        "waitingGuest": "Waiting guest",
+        "confirmed": "Confirmed",
+        "declined": "Declined",
+        "expired": "Expired",
+        "cancelled": "Cancelled",
+        "arrived": "Arrived",
+        "seated": "Seated",
+        "completed": "Completed",
+        "noShow": "No-show"
+      },
+      "guests": {
+        "vip": "VIP",
+        "preOrder": "Pre-order",
+        "largeParty": "4+ guests"
+      }
+    },
+    "walkIn": {
+      "title": "Add walk-in",
+      "description": "Add a guest who arrived without an online reservation. Capacity is taken from the current service slot.",
+      "errorTitle": "Unable to add walk-in",
+      "capacityError": "There is not enough capacity in the current service slot.",
+      "genericError": "The walk-in could not be added. Please try again.",
+      "name": "Guest name",
+      "namePlaceholder": "Enter guest name",
+      "nameRequired": "Guest name is required.",
+      "phone": "Phone",
+      "phonePlaceholder": "Enter phone number",
+      "phoneRequired": "Phone number is required.",
+      "partySize": "Party size",
+      "notes": "Notes",
+      "notesPlaceholder": "Seating or allergy notes",
+      "cancel": "Cancel",
+      "submit": "Add guest",
+      "added": "Walk-in guest added."
+    }
   },
   "OwnerReservationDetails": {
     "title": "Reservation details",
     "eyebrow": "Selected guest only",
     "notFound": "Reservation not found.",
-    "notification": { "title": "Confirmation sent", "message": "{guest} was notified that the table is confirmed." },
-    "footer": { "viewArrival": "View {guest}'s arrival", "checkIn": "Check in {guest}", "waiting": "Waiting for guest response", "closed": "Request closed", "confirm": "Confirm reservation" },
-    "menu": { "aria": "Reservation actions", "label": "Reservation actions", "contact": "Contact guest", "noShow": "Mark as no-show", "cancel": "Cancel reservation" },
-    "noShow": { "title": "Mark {guest} as no-show?", "description": "Use this only after the arrival grace period. This cannot be undone and does not restore slot capacity.", "keep": "Keep waiting", "confirm": "Mark no-show", "error": "Could not mark this reservation as no-show. The grace period may not have passed yet." },
-    "cancel": { "title": "Cancel this reservation?", "description": "The table will be released and this action cannot be undone.", "reason": "Cancellation reason", "placeholder": "Tell the guest why the reservation is being cancelled", "keep": "Keep reservation", "confirm": "Cancel reservation", "error": "Unable to cancel the reservation. Refresh and try again." },
-    "information": { "title": "Reservation information", "date": "Date", "largeParty": "Large party", "guests": "Guests", "guestCount": "{count, plural, one {# guest} other {# guests}}", "table": "Table", "notAssigned": "Not assigned", "preOrder": "Pre-order", "noPreOrder": "No pre-order" },
-    "confirmation": { "title": "Guest confirmation", "description": "Send the confirmed booking in the app. Call only when the guest needs urgent or special follow-up.", "notify": "Notify guest", "call": "Call guest" },
-    "summary": { "meta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}" },
-    "badges": { "pending": "Pending", "alternative-proposed": "Alternative proposed", "confirmed": "Confirmed", "declined": "Declined", "expired": "Expired", "cancelled": "Cancelled", "expected": "Expected", "arrived": "Arrived", "seated": "Seated", "completed": "Completed", "no-show": "No-show", "vip": "VIP", "regular": "Regular", "new": "New", "preOrder": "Pre-order" },
-    "notes": { "title": "Service notes", "empty": "No service notes" },
+    "notification": {
+      "title": "Confirmation sent",
+      "message": "{guest} was notified that the table is confirmed."
+    },
+    "footer": {
+      "viewArrival": "View {guest}'s arrival",
+      "checkIn": "Check in {guest}",
+      "waiting": "Waiting for guest response",
+      "closed": "Request closed",
+      "confirm": "Confirm reservation"
+    },
+    "menu": {
+      "aria": "Reservation actions",
+      "label": "Reservation actions",
+      "contact": "Contact guest",
+      "noShow": "Mark as no-show",
+      "cancel": "Cancel reservation"
+    },
+    "noShow": {
+      "title": "Mark {guest} as no-show?",
+      "description": "Use this only after the arrival grace period. This cannot be undone and does not restore slot capacity.",
+      "keep": "Keep waiting",
+      "confirm": "Mark no-show",
+      "error": "Could not mark this reservation as no-show. The grace period may not have passed yet."
+    },
+    "cancel": {
+      "title": "Cancel this reservation?",
+      "description": "The table will be released and this action cannot be undone.",
+      "reason": "Cancellation reason",
+      "placeholder": "Tell the guest why the reservation is being cancelled",
+      "keep": "Keep reservation",
+      "confirm": "Cancel reservation",
+      "error": "Unable to cancel the reservation. Refresh and try again."
+    },
+    "information": {
+      "title": "Reservation information",
+      "date": "Date",
+      "largeParty": "Large party",
+      "guests": "Guests",
+      "guestCount": "{count, plural, one {# guest} other {# guests}}",
+      "table": "Table",
+      "notAssigned": "Not assigned",
+      "preOrder": "Pre-order",
+      "noPreOrder": "No pre-order"
+    },
+    "confirmation": {
+      "title": "Guest confirmation",
+      "description": "Send the confirmed booking in the app. Call only when the guest needs urgent or special follow-up.",
+      "notify": "Notify guest",
+      "call": "Call guest"
+    },
+    "summary": {
+      "meta": "{time} · {count, plural, one {# guest} other {# guests}} · Ref. {reference}"
+    },
+    "badges": {
+      "pending": "Pending",
+      "alternative-proposed": "Alternative proposed",
+      "confirmed": "Confirmed",
+      "declined": "Declined",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "expected": "Expected",
+      "arrived": "Arrived",
+      "seated": "Seated",
+      "completed": "Completed",
+      "no-show": "No-show",
+      "vip": "VIP",
+      "regular": "Regular",
+      "new": "New",
+      "preOrder": "Pre-order"
+    },
+    "notes": {
+      "title": "Service notes",
+      "empty": "No service notes"
+    },
     "customerResponse": {
-      "acceptedTitle": "Guest accepted the suggested time", "acceptedDescription": "Confirmed for {date} at {time}.",
-      "declinedTitle": "Guest declined the suggested time", "declinedSlot": "the suggested time", "declinedDescription": "The guest declined {slot}. Suggest another slot or contact them directly.",
-      "requestedTitle": "Guest requested another time", "requestedDescription": "Review the new request for {date} at {time}.",
-      "changeTitle": "Guest requested a booking change", "changeDescription": "Move this confirmed booking to {date} at {time}? The original time remains reserved until you accept.", "acceptChange": "Accept new time", "declineChange": "Keep original time", "changeError": "Unable to respond to this request",
-      "waitingTitle": "Waiting for guest response", "waitingDescription": "Suggested {date} at {time}."
+      "acceptedTitle": "Guest accepted the suggested time",
+      "acceptedDescription": "Confirmed for {date} at {time}.",
+      "declinedTitle": "Guest declined the suggested time",
+      "declinedSlot": "the suggested time",
+      "declinedDescription": "The guest declined {slot}. Suggest another slot or contact them directly.",
+      "requestedTitle": "Guest requested another time",
+      "requestedDescription": "Review the new request for {date} at {time}.",
+      "changeTitle": "Guest requested a booking change",
+      "changeDescription": "Move this confirmed booking to {date} at {time}? The original time remains reserved until you accept.",
+      "acceptChange": "Accept new time",
+      "declineChange": "Keep original time",
+      "changeError": "Unable to respond to this request",
+      "waitingTitle": "Waiting for guest response",
+      "waitingDescription": "Suggested {date} at {time}."
     },
     "response": {
-      "title": "Respond to request", "alternativeSent": "Alternative sent", "unable": "Unable to accommodate", "awaiting": "Awaiting response",
-      "waiting": "Waiting for the guest to respond to {slot}.", "notified": "The guest was notified: {reason}.", "instructions": "Confirm the requested time, suggest another time, or let the guest know the restaurant is full.",
+      "title": "Respond to request",
+      "alternativeSent": "Alternative sent",
+      "unable": "Unable to accommodate",
+      "awaiting": "Awaiting response",
+      "waiting": "Waiting for the guest to respond to {slot}.",
+      "notified": "The guest was notified: {reason}.",
+      "instructions": "Confirm the requested time, suggest another time, or let the guest know the restaurant is full.",
       "updates": "Call the guest when a same-day or special request needs a quick answer.",
-      "changeTime": "Change suggested time", "suggestTime": "Suggest another time", "call": "Call guest", "noTable": "No table",
-      "alternativeDrawer": { "title": "Suggest another time", "requestedTime": "Guest's requested time", "availableTimes": "Available alternatives", "description": "Select one available alternative to send to the guest.", "loading": "Loading available times...", "noSlots": "No other online times are available for these two days.", "loadError": "Unable to load available times", "message": "Message (optional)", "placeholder": "For example: We can keep a window table at this time.", "send": "Send suggested time", "sendError": "Unable to send the suggested time", "sentTitle": "Alternative time sent", "sentMessage": "{guest} will receive an in-app notification and can accept or decline." },
-      "unavailableDrawer": { "title": "Unable to accommodate", "description": "Choose a clear reason. It will be stored with the reservation decision.", "notify": "Decline request", "notifiedTitle": "Request declined", "notifiedMessage": "The request was declined because: {reason}." },
-      "reasons": { "fullyBooked": "Fully booked", "partySize": "Cannot accommodate this party size", "closed": "Restaurant is closed", "other": "Other" }
+      "changeTime": "Change suggested time",
+      "suggestTime": "Suggest another time",
+      "call": "Call guest",
+      "noTable": "No table",
+      "alternativeDrawer": {
+        "title": "Suggest another time",
+        "requestedTime": "Guest's requested time",
+        "availableTimes": "Available alternatives",
+        "description": "Select one available alternative to send to the guest.",
+        "loading": "Loading available times...",
+        "noSlots": "No other online times are available for these two days.",
+        "loadError": "Unable to load available times",
+        "message": "Message (optional)",
+        "placeholder": "For example: We can keep a window table at this time.",
+        "send": "Send suggested time",
+        "sendError": "Unable to send the suggested time",
+        "sentTitle": "Alternative time sent",
+        "sentMessage": "{guest} will receive an in-app notification and can accept or decline."
+      },
+      "unavailableDrawer": {
+        "title": "Unable to accommodate",
+        "description": "Choose a clear reason. It will be stored with the reservation decision.",
+        "notify": "Decline request",
+        "notifiedTitle": "Request declined",
+        "notifiedMessage": "The request was declined because: {reason}."
+      },
+      "reasons": {
+        "fullyBooked": "Fully booked",
+        "partySize": "Cannot accommodate this party size",
+        "closed": "Restaurant is closed",
+        "other": "Other"
+      }
     }
   },
   "OwnerCheckIn": {
@@ -408,34 +901,70 @@
       "description": "Monitor today's reservations and pending guest requests.",
       "refresh": "Refresh",
       "metrics": {
-        "bookings": { "label": "Today's reservations", "detail": "All statuses" },
-        "checkedIn": { "label": "Checked in", "detail": "Arrived, seated, or completed" },
-        "pending": { "label": "Pending today", "detail": "Waiting for restaurant response" },
-        "noShow": { "label": "No-show today", "detail": "Marked as no-show" }
+        "bookings": {
+          "label": "Today's reservations",
+          "detail": "All statuses"
+        },
+        "checkedIn": {
+          "label": "Checked in",
+          "detail": "Arrived, seated, or completed"
+        },
+        "pending": {
+          "label": "Pending today",
+          "detail": "Waiting for restaurant response"
+        },
+        "noShow": {
+          "label": "No-show today",
+          "detail": "Marked as no-show"
+        }
       },
       "trend": {
         "title": "Reservations by service date",
         "period": "Last 7 days"
       },
-      "pending": { "title": "Pending requests", "total": "{count} total", "review": "Review", "empty": "No pending requests" },
+      "pending": {
+        "title": "Pending requests",
+        "total": "{count} total",
+        "review": "Review",
+        "empty": "No pending requests"
+      },
       "loadError": "Unable to load restaurant operations. Refresh or sign in again."
     },
     "reservations": {
       "title": "Reservations",
       "description": "Manage reservations, check-ins, cancellations, and no-show cases in one place.",
       "metrics": {
-        "confirmed": { "label": "Confirmed", "detail": "All records" },
-        "checkedIn": { "label": "Checked in", "detail": "All records" },
-        "cancelled": { "label": "Cancelled", "detail": "All records" },
-        "noShow": { "label": "No-show", "detail": "All records" }
+        "confirmed": {
+          "label": "Confirmed",
+          "detail": "All records"
+        },
+        "checkedIn": {
+          "label": "Checked in",
+          "detail": "All records"
+        },
+        "cancelled": {
+          "label": "Cancelled",
+          "detail": "All records"
+        },
+        "noShow": {
+          "label": "No-show",
+          "detail": "All records"
+        }
       },
       "filters": {
         "searchPlaceholder": "Search reference, customer, phone, or email",
         "searchLabel": "Search reservations",
         "periodLabel": "Reservation period",
         "statusLabel": "Reservation status",
-        "period": { "all": "All reservations", "today": "Today", "last7Days": "Last 7 days", "thisMonth": "This month" },
-        "status": { "all": "All reservation statuses" }
+        "period": {
+          "all": "All reservations",
+          "today": "Today",
+          "last7Days": "Last 7 days",
+          "thisMonth": "This month"
+        },
+        "status": {
+          "all": "All reservation statuses"
+        }
       },
       "table": {
         "id": "Reservation ID",
@@ -446,14 +975,30 @@
         "status": "Status",
         "slot": "{date} · {time} · {count, plural, one {# guest} other {# guests}}"
       },
-      "channels": { "app": "App booking", "web": "Web booking" },
-      "checkIn": { "complete": "Complete", "pending": "Pending", "none": "-" },
-      "statuses": { "pending": "Pending", "confirmed": "Confirmed", "checkedIn": "Checked in", "cancelled": "Cancelled", "declined": "Declined", "noShow": "No-show" },
+      "channels": {
+        "app": "App booking",
+        "web": "Web booking"
+      },
+      "checkIn": {
+        "complete": "Complete",
+        "pending": "Pending",
+        "none": "-"
+      },
+      "statuses": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "checkedIn": "Checked in",
+        "cancelled": "Cancelled",
+        "declined": "Declined",
+        "noShow": "No-show"
+      },
       "details": "Details",
       "resolve": "Resolve",
       "empty": "No reservations match these filters.",
-    "loadError": "Unable to load reservations. Refresh or sign in again.",
-    "pagination": { "rowsPerPage": "Rows per page" }
+      "loadError": "Unable to load reservations. Refresh or sign in again.",
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      }
     },
     "reservationDetail": {
       "title": "Reservation details",
@@ -461,14 +1006,57 @@
       "manageReservation": "Manage reservation",
       "loading": "Loading reservation...",
       "loadError": "Unable to load this reservation.",
-      "operations": { "confirm": "Confirm reservation", "checkIn": "Check in guest", "seat": "Mark as seated", "complete": "Complete visit", "noAction": "No further action is available for this reservation.", "error": "Unable to update the reservation. Refresh and try again." },
-      "reservation": { "title": "Reservation information", "date": "Date", "time": "Time", "partySize": "Party size", "guests": "{count, plural, one {# guest} other {# guests}}", "channel": "Booking channel", "request": "Request" },
-      "customer": { "title": "Customer & store", "name": "Customer", "phone": "Phone", "email": "Email", "language": "Language", "store": "Store" },
-      "languages": { "en": "English", "vi": "Vietnamese", "ko": "Korean" },
-      "checkIn": { "title": "Check-in", "status": "Status", "method": "Method", "qr": "QR code" },
-      "history": { "title": "Change history", "created": "Reservation created", "currentStatus": "Current status" },
+      "operations": {
+        "confirm": "Confirm reservation",
+        "checkIn": "Check in guest",
+        "seat": "Mark as seated",
+        "complete": "Complete visit",
+        "noAction": "No further action is available for this reservation.",
+        "error": "Unable to update the reservation. Refresh and try again."
+      },
+      "reservation": {
+        "title": "Reservation information",
+        "date": "Date",
+        "time": "Time",
+        "partySize": "Party size",
+        "guests": "{count, plural, one {# guest} other {# guests}}",
+        "channel": "Booking channel",
+        "request": "Request"
+      },
+      "customer": {
+        "title": "Customer & store",
+        "name": "Customer",
+        "phone": "Phone",
+        "email": "Email",
+        "language": "Language",
+        "store": "Store"
+      },
+      "languages": {
+        "en": "English",
+        "vi": "Vietnamese",
+        "ko": "Korean"
+      },
+      "checkIn": {
+        "title": "Check-in",
+        "status": "Status",
+        "method": "Method",
+        "qr": "QR code"
+      },
+      "history": {
+        "title": "Change history",
+        "created": "Reservation created",
+        "currentStatus": "Current status"
+      },
       "notAvailable": "Not available",
-      "modal": { "title": "Change reservation status", "status": "New status", "reason": "Reason", "reasonRequired": "A reason is required for cancellation and no-show review.", "prototypeNotice": "This prototype does not save changes after leaving the page.", "cancel": "Cancel", "save": "Save" }
+      "modal": {
+        "title": "Change reservation status",
+        "status": "New status",
+        "reason": "Reason",
+        "reasonRequired": "A reason is required for cancellation and no-show review.",
+        "prototypeNotice": "This prototype does not save changes after leaving the page.",
+        "cancel": "Cancel",
+        "save": "Save"
+      }
     },
     "customers": {
       "title": "Customers",
@@ -486,25 +1074,43 @@
       },
       "empty": "No guests match this search.",
       "loadError": "Unable to load guests. Refresh or sign in again.",
-      "pagination": { "rowsPerPage": "Rows per page" }
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      }
     },
     "stores": {
       "title": "Stores",
       "description": "Manage onboarding reviews, store profiles, operating status, and contracts.",
       "addStore": "Add store",
       "metrics": {
-        "active": { "label": "Active stores", "detail": "+42 this month" },
-        "pending": { "label": "Pending approval", "detail": "2 pending over 48 hours" },
-        "suspended": { "label": "Suspended", "detail": "3 admin suspensions" },
-        "rating": { "label": "Average rating", "detail": "36,208 reviews" }
+        "active": {
+          "label": "Active stores",
+          "detail": "+42 this month"
+        },
+        "pending": {
+          "label": "Pending approval",
+          "detail": "2 pending over 48 hours"
+        },
+        "suspended": {
+          "label": "Suspended",
+          "detail": "3 admin suspensions"
+        },
+        "rating": {
+          "label": "Average rating",
+          "detail": "36,208 reviews"
+        }
       },
       "filters": {
         "searchPlaceholder": "Search store, store ID, or manager",
         "searchLabel": "Search stores",
         "statusLabel": "Onboarding status",
         "regionLabel": "Store region",
-        "status": { "all": "All onboarding statuses" },
-        "region": { "all": "All regions" }
+        "status": {
+          "all": "All onboarding statuses"
+        },
+        "region": {
+          "all": "All regions"
+        }
       },
       "table": {
         "store": "Store",
@@ -514,9 +1120,23 @@
         "commission": "Commission",
         "status": "Status"
       },
-      "statuses": { "draft": "Draft", "pending": "Pending approval", "changesRequested": "Changes requested", "active": "Active", "suspended": "Suspended" },
-      "regions": { "hoChiMinh": "Ho Chi Minh", "hanoi": "Hanoi", "daNang": "Da Nang" },
-      "categories": { "vietnamese": "Vietnamese", "korean": "Korean", "fusion": "Fusion" },
+      "statuses": {
+        "draft": "Draft",
+        "pending": "Pending approval",
+        "changesRequested": "Changes requested",
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "regions": {
+        "hoChiMinh": "Ho Chi Minh",
+        "hanoi": "Hanoi",
+        "daNang": "Da Nang"
+      },
+      "categories": {
+        "vietnamese": "Vietnamese",
+        "korean": "Korean",
+        "fusion": "Fusion"
+      },
       "underReview": "Under review",
       "details": "Details",
       "review": "Review",
@@ -528,20 +1148,44 @@
       "thisMonth": "This month",
       "download": "Download",
       "metrics": {
-        "gmv": { "label": "Total GMV", "detail": "+10.8% vs. last month" },
-        "commission": { "label": "Commission revenue", "detail": "4.7% average commission" },
-        "advertising": { "label": "Advertising revenue", "detail": "+18.2% vs. last month" },
-        "settlement": { "label": "Pending settlement", "detail": "6 items require review" }
+        "gmv": {
+          "label": "Total GMV",
+          "detail": "+10.8% vs. last month"
+        },
+        "commission": {
+          "label": "Commission revenue",
+          "detail": "4.7% average commission"
+        },
+        "advertising": {
+          "label": "Advertising revenue",
+          "detail": "+18.2% vs. last month"
+        },
+        "settlement": {
+          "label": "Pending settlement",
+          "detail": "6 items require review"
+        }
       },
       "trend": {
         "title": "GMV and platform revenue",
         "period": "Last 6 months",
-        "months": { "mar": "Mar", "apr": "Apr", "may": "May", "jun": "Jun", "jul": "Jul", "aug": "Aug" }
+        "months": {
+          "mar": "Mar",
+          "apr": "Apr",
+          "may": "May",
+          "jun": "Jun",
+          "jul": "Jul",
+          "aug": "Aug"
+        }
       },
       "mix": {
         "title": "Revenue mix",
         "period": "Aug",
-        "items": { "commission": "Booking commission", "advertising": "Advertising", "promotions": "Promotions", "other": "Other" }
+        "items": {
+          "commission": "Booking commission",
+          "advertising": "Advertising",
+          "promotions": "Promotions",
+          "other": "Other"
+        }
       }
     },
     "campaigns": {
@@ -552,18 +1196,68 @@
         "placementLabel": "Campaign placement",
         "statusLabel": "Campaign status",
         "periodLabel": "Campaign period",
-        "placement": { "all": "All placements" },
-        "status": { "all": "All statuses" },
-        "period": { "all": "All periods", "last30Days": "Last 30 days", "next30Days": "Next 30 days" }
+        "placement": {
+          "all": "All placements"
+        },
+        "status": {
+          "all": "All statuses"
+        },
+        "period": {
+          "all": "All periods",
+          "last30Days": "Last 30 days",
+          "next30Days": "Next 30 days"
+        }
       },
-      "placements": { "homeMain": "Home main", "searchTop": "Search top", "regionalHome": "Regional home", "storeDetail": "Store detail" },
-      "statuses": { "live": "Live", "scheduled": "Scheduled", "ended": "Ended" },
+      "placements": {
+        "homeMain": "Home main",
+        "searchTop": "Search top",
+        "regionalHome": "Regional home",
+        "storeDetail": "Store detail"
+      },
+      "statuses": {
+        "live": "Live",
+        "scheduled": "Scheduled",
+        "ended": "Ended"
+      },
       "items": {
-        "weekendDining": { "headline": "Weekend Dining", "subtitle": "Discover popular restaurants for the weekend", "name": "Weekend Dining main banner", "schedule": "Sep 1–14", "metric1": "Impressions", "metric2": "Clicks", "metric3": "CTR" },
-        "hanoiNewOpen": { "headline": "Hanoi New Open", "subtitle": "Discover newly opened restaurants", "name": "Hanoi new store promotion", "schedule": "Sep 10–30", "metric1": "Est. impressions", "metric2": "Target", "metric3": "Stores" },
-        "chefsChoice": { "headline": "Chef's Choice", "subtitle": "Editor's fine dining picks", "name": "Chef's Choice curation", "schedule": "Aug 15–31", "metric1": "Impressions", "metric2": "Clicks", "metric3": "CTR" }
+        "weekendDining": {
+          "headline": "Weekend Dining",
+          "subtitle": "Discover popular restaurants for the weekend",
+          "name": "Weekend Dining main banner",
+          "schedule": "Sep 1–14",
+          "metric1": "Impressions",
+          "metric2": "Clicks",
+          "metric3": "CTR"
+        },
+        "hanoiNewOpen": {
+          "headline": "Hanoi New Open",
+          "subtitle": "Discover newly opened restaurants",
+          "name": "Hanoi new store promotion",
+          "schedule": "Sep 10–30",
+          "metric1": "Est. impressions",
+          "metric2": "Target",
+          "metric3": "Stores"
+        },
+        "chefsChoice": {
+          "headline": "Chef's Choice",
+          "subtitle": "Editor's fine dining picks",
+          "name": "Chef's Choice curation",
+          "schedule": "Aug 15–31",
+          "metric1": "Impressions",
+          "metric2": "Clicks",
+          "metric3": "CTR"
+        }
       },
-      "modal": { "title": "Create campaign", "name": "Campaign name", "description": "Description", "placement": "Placement", "startDate": "Start date", "endDate": "End date", "cancel": "Cancel", "create": "Create" },
+      "modal": {
+        "title": "Create campaign",
+        "name": "Campaign name",
+        "description": "Description",
+        "placement": "Placement",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "cancel": "Cancel",
+        "create": "Create"
+      },
       "empty": "No campaigns match these filters."
     },
     "settings": {
@@ -574,105 +1268,527 @@
         "title": "Operations settings",
         "scope": "Platform-wide",
         "items": {
-          "storeRegistration": { "title": "Store registration alerts", "description": "Notify the assignee when a new review request arrives." },
-          "noShowRestriction": { "title": "Automatic no-show restriction", "description": "Restrict bookings after 3 no-shows within 30 days." },
-          "bannerEndAlert": { "title": "Banner end alert", "description": "Notify the campaign owner 48 hours before the end." }
+          "storeRegistration": {
+            "title": "Store registration alerts",
+            "description": "Notify the assignee when a new review request arrives."
+          },
+          "noShowRestriction": {
+            "title": "Automatic no-show restriction",
+            "description": "Restrict bookings after 3 no-shows within 30 days."
+          },
+          "bannerEndAlert": {
+            "title": "Banner end alert",
+            "description": "Notify the campaign owner 48 hours before the end."
+          }
         }
       },
       "roles": {
         "title": "Admin roles",
         "manage": "Manage roles",
         "items": {
-          "superAdmin": { "title": "Super Admin", "description": "All features · {users} users", "badge": "Full access" },
-          "operations": { "title": "Operations", "description": "Customers, stores, reservations · {users} users", "badge": "Operations" },
-          "marketing": { "title": "Marketing", "description": "Ads, banners, reports · {users} users", "badge": "Marketing" },
-          "finance": { "title": "Finance", "description": "Revenue, settlements · {users} users", "badge": "Finance" }
+          "superAdmin": {
+            "title": "Super Admin",
+            "description": "All features · {users} users",
+            "badge": "Full access"
+          },
+          "operations": {
+            "title": "Operations",
+            "description": "Customers, stores, reservations · {users} users",
+            "badge": "Operations"
+          },
+          "marketing": {
+            "title": "Marketing",
+            "description": "Ads, banners, reports · {users} users",
+            "badge": "Marketing"
+          },
+          "finance": {
+            "title": "Finance",
+            "description": "Revenue, settlements · {users} users",
+            "badge": "Finance"
+          }
         }
       },
-      "modal": { "title": "Invite admin", "email": "Email address", "role": "Admin role", "requireMfa": "Require MFA", "cancel": "Cancel", "invite": "Send invitation" }
+      "modal": {
+        "title": "Invite admin",
+        "email": "Email address",
+        "role": "Admin role",
+        "requireMfa": "Require MFA",
+        "cancel": "Cancel",
+        "invite": "Send invitation"
+      }
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "System administration", "toggleNavigation": "Toggle system admin navigation", "adminOnly": "ADMIN ACCESS ONLY", "navigation": { "dashboard": "Overview", "users": "Users", "restaurants": "Restaurants", "reservations": "Reservations", "assignments": "Restaurant access", "preferences": "Personal settings" } },
+    "shell": {
+      "title": "System administration",
+      "toggleNavigation": "Toggle system admin navigation",
+      "adminOnly": "ADMIN ACCESS ONLY",
+      "navigation": {
+        "dashboard": "Overview",
+        "users": "Users",
+        "restaurants": "Restaurants",
+        "reservations": "Reservations",
+        "assignments": "Restaurant access",
+        "preferences": "Personal settings"
+      }
+    },
     "dashboard": {
-      "title": "System overview", "description": "Monitor users, restaurants, and work requiring attention.", "loadError": "Some overview data could not be loaded.", "viewAll": "View all",
-      "metrics": { "users": { "label": "Users", "detail": "All accounts across the platform" }, "restaurants": { "label": "Restaurants", "detail": "{count} active restaurants" }, "pending": { "label": "Pending review", "detail": "Restaurants requiring administrator review" }, "assignments": { "label": "Access assignments", "detail": "Linked OWNER and STAFF accounts" } },
-      "pending": { "title": "Restaurants pending review", "description": "Profiles requiring the next administrator action.", "status": "Pending", "empty": "No restaurants are currently pending review." },
-      "quickActions": { "title": "Quick access", "description": "Go to the main administration areas.", "users": "Manage users", "restaurants": "Manage restaurants", "assignments": "Manage restaurant access" }
-    },
-    "users": {
-      "title": "Users", "description": "Search and review every active system account.", "loadError": "Could not load users.", "empty": "No users match these filters.",
-      "filters": { "search": "Search userid, name, or email", "role": "Filter by role", "status": "Filter by status", "allRoles": "All roles", "allStatuses": "All statuses" },
-      "table": { "user": "User", "contact": "Contact", "role": "Role", "status": "Status", "restaurant": "Restaurant ID", "created": "Created", "actions": "Actions" },
-      "statuses": { "ACTIVE": "Active", "SUSPENDED": "Suspended", "CLOSED": "Closed" },
-      "actions": {
-        "openMenu": "Open actions for {name}", "create": "Add user", "edit": "Edit details", "resetPassword": "Reset password", "passwordReset": "Password reset for {name}.", "passwordResetError": "Could not reset the password.", "suspend": "Suspend", "reactivate": "Reactivate", "cancel": "Cancel",
-        "suspendTitle": "Suspend {name}?", "suspendDescription": "This user will lose their current session and cannot sign in until reactivated.",
-        "reactivateTitle": "Reactivate {name}?", "reactivateDescription": "This user will be able to sign in again.",
-        "suspendedSuccess": "{name} has been suspended.", "reactivatedSuccess": "{name} has been reactivated.", "error": "Could not update the user status.", "created": "An account was created for {name}.", "updated": "{name}'s profile was updated.", "saveError": "Could not save the user. Check the details or whether the userid already exists."
-      },
-      "form": { "createTitle": "Add user", "editTitle": "Edit user", "description": "New accounts are created as customers. Assign restaurant access from the Restaurant access page.", "userid": "Login ID", "useridHint": "Use 3 to 30 characters. It cannot be changed after creation.", "name": "Full name", "email": "Email (optional)", "phone": "Phone (optional)", "password": "Temporary password", "passwordHint": "Use 8 to 72 characters and share it through a secure channel.", "placeholders": { "userid": "nguyenan", "name": "Nguyen Van An", "email": "an@example.com", "phone": "0901 234 567", "password": "At least 8 characters" }, "cancel": "Cancel", "create": "Create user", "save": "Save changes" },
-      "pagination": { "rowsPerPage": "Rows per page" }
-    },
-    "restaurants": {
-      "title": "Restaurants", "description": "Review restaurants across every approval status.", "loadError": "Could not load restaurants.", "empty": "No restaurants match these filters.",
-      "filters": { "search": "Search name or slug", "city": "Province / city", "status": "Filter by status", "allStatuses": "All statuses" },
-      "table": { "restaurant": "Restaurant", "city": "Province / city", "location": "Ward / commune", "status": "Approval status", "created": "Created", "actions": "Actions" },
-      "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
-      "actions": {
-        "openMenu": "Open actions for {name}", "create": "Add restaurant", "manage": "Manage restaurant", "edit": "Edit details", "archive": "Archive", "submit": "Submit for review", "resubmit": "Resubmit for review", "approve": "Approve", "reactivate": "Reactivate", "requestChanges": "Request changes", "suspend": "Suspend", "cancel": "Cancel", "error": "Could not update the restaurant status.", "archiveTitle": "Archive {name}?", "archiveDescription": "Only a draft restaurant without linked users or reservations can be archived.", "archived": "{name} has been archived.", "archiveError": "Could not archive the restaurant.",
-        "success": { "submit": "{name} was submitted for review.", "resubmit": "{name} was resubmitted for review.", "approve": "{name} has been approved.", "reactivate": "{name} has been reactivated.", "requestChanges": "Changes have been requested from {name}.", "suspend": "{name} has been suspended." },
-        "dialog": {
-          "submit": { "title": "Submit {name} for review?", "description": "The restaurant will move to pending system-admin review." },
-          "resubmit": { "title": "Resubmit {name} for review?", "description": "Confirm the requested changes are complete and submit the restaurant again." },
-          "approve": { "title": "Approve {name}?", "description": "The restaurant will become visible and available for new bookings." },
-          "reactivate": { "title": "Reactivate {name}?", "description": "The restaurant will become visible and available for new bookings again." },
-          "requestChanges": { "title": "Request changes from {name}?", "description": "The restaurant will remain unavailable until its information is corrected and submitted again." },
-          "suspend": { "title": "Suspend {name}?", "description": "The restaurant will be removed from public discovery and cannot receive new bookings." }
+      "title": "System overview",
+      "description": "Monitor users, restaurants, and work requiring attention.",
+      "loadError": "Some overview data could not be loaded.",
+      "viewAll": "View all",
+      "metrics": {
+        "users": {
+          "label": "Users",
+          "detail": "All accounts across the platform"
+        },
+        "restaurants": {
+          "label": "Restaurants",
+          "detail": "{count} active restaurants"
+        },
+        "pending": {
+          "label": "Pending review",
+          "detail": "Restaurants requiring administrator review"
+        },
+        "assignments": {
+          "label": "Access assignments",
+          "detail": "Linked OWNER and STAFF accounts"
         }
       },
-      "form": { "createTitle": "Add restaurant", "editTitle": "Edit restaurant", "slug": "Slug (URL path)", "name": "Name", "province": "Province / city", "selectProvince": "Select a province or city", "ward": "Ward / commune / special zone", "selectWard": "Select a ward, commune, or special zone", "selectProvinceFirst": "Select a province or city first", "locationLoadError": "Could not load the location list. Try again.", "timezone": "Timezone", "cuisine": "Cuisine", "selectCuisine": "Select a cuisine", "cuisines": { "vietnamese": "Vietnamese", "korean": "Korean", "chinese": "Chinese", "japanese": "Japanese", "western": "Western" }, "phone": "Phone", "email": "Email", "priceRange": "Average price per guest", "address": "Detailed address", "description": "Description", "placeholders": { "slug": "royal-pavilion", "name": "The Royal Pavilion", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K per guest", "address": "123 Nguyen Hue Street", "description": "Briefly describe the restaurant's cuisine and atmosphere" }, "cancel": "Cancel", "create": "Create restaurant", "save": "Save changes", "created": "{name} has been created as a draft.", "updated": "{name} has been updated.", "saveError": "Could not save the restaurant. Check the fields and try again.", "loadError": "Could not load the restaurant details." },
-      "pagination": { "rowsPerPage": "Rows per page" }
+      "pending": {
+        "title": "Restaurants pending review",
+        "description": "Profiles requiring the next administrator action.",
+        "status": "Pending",
+        "empty": "No restaurants are currently pending review."
+      },
+      "quickActions": {
+        "title": "Quick access",
+        "description": "Go to the main administration areas.",
+        "users": "Manage users",
+        "restaurants": "Manage restaurants",
+        "assignments": "Manage restaurant access"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search and review every active system account.",
+      "loadError": "Could not load users.",
+      "empty": "No users match these filters.",
+      "filters": {
+        "search": "Search userid, name, or email",
+        "role": "Filter by role",
+        "status": "Filter by status",
+        "allRoles": "All roles",
+        "allStatuses": "All statuses"
+      },
+      "table": {
+        "user": "User",
+        "contact": "Contact",
+        "role": "Role",
+        "status": "Status",
+        "restaurant": "Restaurant ID",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "statuses": {
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended",
+        "CLOSED": "Closed"
+      },
+      "actions": {
+        "openMenu": "Open actions for {name}",
+        "create": "Add user",
+        "edit": "Edit details",
+        "resetPassword": "Reset password",
+        "passwordReset": "Password reset for {name}.",
+        "passwordResetError": "Could not reset the password.",
+        "suspend": "Suspend",
+        "reactivate": "Reactivate",
+        "cancel": "Cancel",
+        "suspendTitle": "Suspend {name}?",
+        "suspendDescription": "This user will lose their current session and cannot sign in until reactivated.",
+        "reactivateTitle": "Reactivate {name}?",
+        "reactivateDescription": "This user will be able to sign in again.",
+        "suspendedSuccess": "{name} has been suspended.",
+        "reactivatedSuccess": "{name} has been reactivated.",
+        "error": "Could not update the user status.",
+        "created": "An account was created for {name}.",
+        "updated": "{name}'s profile was updated.",
+        "saveError": "Could not save the user. Check the details or whether the userid already exists."
+      },
+      "form": {
+        "createTitle": "Add user",
+        "editTitle": "Edit user",
+        "description": "New accounts are created as customers. Assign restaurant access from the Restaurant access page.",
+        "userid": "Login ID",
+        "useridHint": "Use 3 to 30 characters. It cannot be changed after creation.",
+        "name": "Full name",
+        "email": "Email (optional)",
+        "phone": "Phone (optional)",
+        "password": "Temporary password",
+        "passwordHint": "Use 8 to 72 characters and share it through a secure channel.",
+        "placeholders": {
+          "userid": "nguyenan",
+          "name": "Nguyen Van An",
+          "email": "an@example.com",
+          "phone": "0901 234 567",
+          "password": "At least 8 characters"
+        },
+        "cancel": "Cancel",
+        "create": "Create user",
+        "save": "Save changes"
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      }
+    },
+    "restaurants": {
+      "title": "Restaurants",
+      "description": "Review restaurants across every approval status.",
+      "loadError": "Could not load restaurants.",
+      "empty": "No restaurants match these filters.",
+      "filters": {
+        "search": "Search name or slug",
+        "city": "Province / city",
+        "status": "Filter by status",
+        "allStatuses": "All statuses"
+      },
+      "table": {
+        "restaurant": "Restaurant",
+        "city": "Province / city",
+        "location": "Ward / commune",
+        "status": "Approval status",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "statuses": {
+        "DRAFT": "Draft",
+        "PENDING": "Pending",
+        "CHANGES_REQUESTED": "Changes requested",
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended"
+      },
+      "actions": {
+        "openMenu": "Open actions for {name}",
+        "create": "Add restaurant",
+        "manage": "Manage restaurant",
+        "edit": "Edit details",
+        "archive": "Archive",
+        "submit": "Submit for review",
+        "resubmit": "Resubmit for review",
+        "approve": "Approve",
+        "reactivate": "Reactivate",
+        "requestChanges": "Request changes",
+        "suspend": "Suspend",
+        "cancel": "Cancel",
+        "error": "Could not update the restaurant status.",
+        "archiveTitle": "Archive {name}?",
+        "archiveDescription": "Only a draft restaurant without linked users or reservations can be archived.",
+        "archived": "{name} has been archived.",
+        "archiveError": "Could not archive the restaurant.",
+        "success": {
+          "submit": "{name} was submitted for review.",
+          "resubmit": "{name} was resubmitted for review.",
+          "approve": "{name} has been approved.",
+          "reactivate": "{name} has been reactivated.",
+          "requestChanges": "Changes have been requested from {name}.",
+          "suspend": "{name} has been suspended."
+        },
+        "dialog": {
+          "submit": {
+            "title": "Submit {name} for review?",
+            "description": "The restaurant will move to pending system-admin review."
+          },
+          "resubmit": {
+            "title": "Resubmit {name} for review?",
+            "description": "Confirm the requested changes are complete and submit the restaurant again."
+          },
+          "approve": {
+            "title": "Approve {name}?",
+            "description": "The restaurant will become visible and available for new bookings."
+          },
+          "reactivate": {
+            "title": "Reactivate {name}?",
+            "description": "The restaurant will become visible and available for new bookings again."
+          },
+          "requestChanges": {
+            "title": "Request changes from {name}?",
+            "description": "The restaurant will remain unavailable until its information is corrected and submitted again."
+          },
+          "suspend": {
+            "title": "Suspend {name}?",
+            "description": "The restaurant will be removed from public discovery and cannot receive new bookings."
+          }
+        }
+      },
+      "form": {
+        "createTitle": "Add restaurant",
+        "editTitle": "Edit restaurant",
+        "slug": "Slug (URL path)",
+        "name": "Name",
+        "province": "Province / city",
+        "selectProvince": "Select a province or city",
+        "ward": "Ward / commune / special zone",
+        "selectWard": "Select a ward, commune, or special zone",
+        "selectProvinceFirst": "Select a province or city first",
+        "locationLoadError": "Could not load the location list. Try again.",
+        "timezone": "Timezone",
+        "cuisine": "Cuisine",
+        "selectCuisine": "Select a cuisine",
+        "cuisines": {
+          "vietnamese": "Vietnamese",
+          "korean": "Korean",
+          "chinese": "Chinese",
+          "japanese": "Japanese",
+          "western": "Western"
+        },
+        "phone": "Phone",
+        "email": "Email",
+        "priceRange": "Average price per guest",
+        "address": "Detailed address",
+        "description": "Description",
+        "placeholders": {
+          "slug": "royal-pavilion",
+          "name": "The Royal Pavilion",
+          "timezone": "Asia/Ho_Chi_Minh",
+          "phone": "0901 234 567",
+          "email": "contact@example.com",
+          "priceRange": "150K - 300K per guest",
+          "address": "123 Nguyen Hue Street",
+          "description": "Briefly describe the restaurant's cuisine and atmosphere"
+        },
+        "cancel": "Cancel",
+        "create": "Create restaurant",
+        "save": "Save changes",
+        "created": "{name} has been created as a draft.",
+        "updated": "{name} has been updated.",
+        "saveError": "Could not save the restaurant. Check the fields and try again.",
+        "loadError": "Could not load the restaurant details."
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      }
     },
     "restaurantDetail": {
-      "back": "Back to restaurants", "loadError": "Could not load the restaurant.", "viewPublic": "View public page",
-      "tabs": { "profile": "Profile", "booking": "Booking settings", "hours": "Business hours", "menu": "Menu", "media": "Photos" },
-      "statuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
-      "profile": { "title": "Restaurant profile", "edit": "Edit profile", "cuisine": "Cuisine", "priceRange": "Price range", "location": "Location", "timezone": "Timezone", "phone": "Phone", "email": "Email", "address": "Address", "description": "Description" },
-      "booking": { "loadError": "Could not load booking settings.", "notConfigured": "This restaurant has no booking settings yet. Review the defaults and save to initialize them.", "save": "Save booking settings" },
-      "hours": { "loadError": "Could not load business hours.", "saveSettingsFirst": "Save booking settings before saving business hours or generating slots." },
-      "notifications": { "profileSaved": "Restaurant profile saved.", "profileError": "Could not save the restaurant profile.", "settingsSaved": "Booking settings saved.", "settingsError": "Could not save booking settings. Check the values.", "hoursSaved": "Business hours saved and {count} slots generated.", "hoursError": "Could not save business hours.", "slotsGenerated": "Generated {count} slots.", "regenerateError": "Could not regenerate slots." }
+      "back": "Back to restaurants",
+      "loadError": "Could not load the restaurant.",
+      "viewPublic": "View public page",
+      "tabs": {
+        "profile": "Profile",
+        "booking": "Booking settings",
+        "hours": "Business hours",
+        "menu": "Menu",
+        "media": "Photos"
+      },
+      "statuses": {
+        "DRAFT": "Draft",
+        "PENDING": "Pending",
+        "CHANGES_REQUESTED": "Changes requested",
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended"
+      },
+      "profile": {
+        "title": "Restaurant profile",
+        "edit": "Edit profile",
+        "cuisine": "Cuisine",
+        "priceRange": "Price range",
+        "location": "Location",
+        "timezone": "Timezone",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "description": "Description"
+      },
+      "booking": {
+        "loadError": "Could not load booking settings.",
+        "notConfigured": "This restaurant has no booking settings yet. Review the defaults and save to initialize them.",
+        "save": "Save booking settings"
+      },
+      "hours": {
+        "loadError": "Could not load business hours.",
+        "saveSettingsFirst": "Save booking settings before saving business hours or generating slots."
+      },
+      "notifications": {
+        "profileSaved": "Restaurant profile saved.",
+        "profileError": "Could not save the restaurant profile.",
+        "settingsSaved": "Booking settings saved.",
+        "settingsError": "Could not save booking settings. Check the values.",
+        "hoursSaved": "Business hours saved and {count} slots generated.",
+        "hoursError": "Could not save business hours.",
+        "slotsGenerated": "Generated {count} slots.",
+        "regenerateError": "Could not regenerate slots."
+      }
     },
     "reservations": {
-      "title": "Reservations", "description": "View reservations across every restaurant in the system.", "loadError": "Could not load reservations.", "empty": "No reservations match these filters.", "details": "Details", "guests": "{count} guests",
-      "filters": { "search": "Search reference, customer, phone, or email", "restaurant": "Filter by restaurant", "allRestaurants": "All restaurants", "noRestaurants": "No restaurants found", "status": "Filter by status", "allStatuses": "All statuses", "dateFrom": "From date", "dateTo": "To date" },
-      "table": { "reference": "Reservation ID", "restaurant": "Restaurant", "customer": "Customer", "schedule": "Date / Party", "status": "Status" },
-      "statuses": { "PENDING": "Pending", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "COMPLETED": "Completed", "CANCELLED": "Cancelled", "DECLINED": "Declined", "NO_SHOW": "No-show" },
-      "pagination": { "rowsPerPage": "Rows per page" },
+      "title": "Reservations",
+      "description": "View reservations across every restaurant in the system.",
+      "loadError": "Could not load reservations.",
+      "empty": "No reservations match these filters.",
+      "details": "Details",
+      "guests": "{count} guests",
+      "filters": {
+        "search": "Search reference, customer, phone, or email",
+        "restaurant": "Filter by restaurant",
+        "allRestaurants": "All restaurants",
+        "noRestaurants": "No restaurants found",
+        "status": "Filter by status",
+        "allStatuses": "All statuses",
+        "dateFrom": "From date",
+        "dateTo": "To date"
+      },
+      "table": {
+        "reference": "Reservation ID",
+        "restaurant": "Restaurant",
+        "customer": "Customer",
+        "schedule": "Date / Party",
+        "status": "Status"
+      },
+      "statuses": {
+        "PENDING": "Pending",
+        "CONFIRMED": "Confirmed",
+        "CHECKED_IN": "Checked in",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled",
+        "DECLINED": "Declined",
+        "NO_SHOW": "No-show"
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      },
       "detail": {
-        "title": "Reservation details", "back": "Back to reservations", "loading": "Loading reservation details...", "loadError": "Could not load the reservation details.", "notAvailable": "Not available",
-        "reservation": { "title": "Reservation", "start": "Starts", "end": "Ends", "partySize": "Party size", "request": "Special request", "preOrder": "Pre-order" },
-        "customer": { "title": "Customer", "name": "Name", "phone": "Phone", "email": "Email" },
-        "restaurant": { "title": "Restaurant", "name": "Restaurant name", "slug": "Slug", "id": "Restaurant ID" },
-        "status": { "title": "System status", "booking": "Booking", "visit": "Visit", "created": "Created", "updated": "Last updated" },
-        "proposal": { "title": "Alternative proposal", "time": "Proposed time", "status": "Status", "initiator": "Requested by", "respondBy": "Respond by", "message": "Message" }
+        "title": "Reservation details",
+        "back": "Back to reservations",
+        "loading": "Loading reservation details...",
+        "loadError": "Could not load the reservation details.",
+        "notAvailable": "Not available",
+        "reservation": {
+          "title": "Reservation",
+          "start": "Starts",
+          "end": "Ends",
+          "partySize": "Party size",
+          "request": "Special request",
+          "preOrder": "Pre-order"
+        },
+        "customer": {
+          "title": "Customer",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email"
+        },
+        "restaurant": {
+          "title": "Restaurant",
+          "name": "Restaurant name",
+          "slug": "Slug",
+          "id": "Restaurant ID"
+        },
+        "status": {
+          "title": "System status",
+          "booking": "Booking",
+          "visit": "Visit",
+          "created": "Created",
+          "updated": "Last updated"
+        },
+        "proposal": {
+          "title": "Alternative proposal",
+          "time": "Proposed time",
+          "status": "Status",
+          "initiator": "Requested by",
+          "respondBy": "Respond by",
+          "message": "Message"
+        }
       }
     },
     "assignments": {
-      "title": "Restaurant access", "description": "Link owners and staff to the restaurant they are allowed to manage.", "loadError": "Could not load restaurant access.", "empty": "No assignments match these filters.",
-      "filters": { "search": "Search user, email, or restaurant", "role": "Filter by role", "allRoles": "All roles" },
-      "table": { "user": "User", "restaurant": "Restaurant", "role": "Role", "restaurantStatus": "Restaurant status", "actions": "Actions" },
-      "roles": { "OWNER": "Owner", "STAFF": "Staff" },
-      "restaurantStatuses": { "DRAFT": "Draft", "PENDING": "Pending", "CHANGES_REQUESTED": "Changes requested", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
-      "form": { "createTitle": "Add restaurant access", "editTitle": "Edit restaurant access", "description": "Each account can be linked to one restaurant only.", "user": "User", "userPlaceholder": "Search name, userid, or email", "restaurant": "Restaurant", "restaurantPlaceholder": "Search restaurant name or slug", "role": "Restaurant role", "noUsers": "No active customers found", "noRestaurants": "No restaurants found" },
-      "actions": { "create": "Add access", "edit": "Edit", "remove": "Remove access", "assign": "Assign", "save": "Save changes", "cancel": "Cancel", "openMenu": "Open actions for {name}", "saved": "Restaurant access updated for {name}.", "saveError": "Could not save access. Check the user and restaurant.", "removed": "Restaurant access removed for {name}.", "removeError": "Could not remove access.", "removeTitle": "Remove access for {name}?", "removeDescription": "This account will return to the customer role and will no longer manage the restaurant." },
-      "pagination": { "rowsPerPage": "Rows per page" }
+      "title": "Restaurant access",
+      "description": "Link owners and staff to the restaurant they are allowed to manage.",
+      "loadError": "Could not load restaurant access.",
+      "empty": "No assignments match these filters.",
+      "filters": {
+        "search": "Search user, email, or restaurant",
+        "role": "Filter by role",
+        "allRoles": "All roles"
+      },
+      "table": {
+        "user": "User",
+        "restaurant": "Restaurant",
+        "role": "Role",
+        "restaurantStatus": "Restaurant status",
+        "actions": "Actions"
+      },
+      "roles": {
+        "OWNER": "Owner",
+        "STAFF": "Staff"
+      },
+      "restaurantStatuses": {
+        "DRAFT": "Draft",
+        "PENDING": "Pending",
+        "CHANGES_REQUESTED": "Changes requested",
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended"
+      },
+      "form": {
+        "createTitle": "Add restaurant access",
+        "editTitle": "Edit restaurant access",
+        "description": "Each account can be linked to one restaurant only.",
+        "user": "User",
+        "userPlaceholder": "Search name, userid, or email",
+        "restaurant": "Restaurant",
+        "restaurantPlaceholder": "Search restaurant name or slug",
+        "role": "Restaurant role",
+        "noUsers": "No active customers found",
+        "noRestaurants": "No restaurants found"
+      },
+      "actions": {
+        "create": "Add access",
+        "edit": "Edit",
+        "remove": "Remove access",
+        "assign": "Assign",
+        "save": "Save changes",
+        "cancel": "Cancel",
+        "openMenu": "Open actions for {name}",
+        "saved": "Restaurant access updated for {name}.",
+        "saveError": "Could not save access. Check the user and restaurant.",
+        "removed": "Restaurant access removed for {name}.",
+        "removeError": "Could not remove access.",
+        "removeTitle": "Remove access for {name}?",
+        "removeDescription": "This account will return to the customer role and will no longer manage the restaurant."
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page"
+      }
     },
     "preferences": {
-      "title": "Personal settings", "description": "Customize how the system administration workspace looks and displays data.",
-      "appearance": { "title": "Appearance", "description": "These choices apply only to your account.", "themeColor": "Theme color", "themeColorHint": "Choose a preset or enter a six-digit HEX color.", "invalidColor": "Use the #RRGGBB format.", "preview": "Preview", "previewText": "System administration", "previewButton": "Primary action", "density": "Display density", "comfortable": "Comfortable", "compact": "Compact" },
-      "display": { "title": "Data and language", "description": "Choose the defaults used in administration lists and dates.", "pageSize": "Default rows per page", "dateFormat": "Date format", "language": "Language", "vietnamese": "Vietnamese", "english": "English" },
-      "save": "Save settings", "reset": "Restore defaults", "saved": "Personal settings saved.", "saveError": "Could not save personal settings.", "resetDone": "Default settings restored.", "resetError": "Could not restore default settings.", "errorHint": "Your previous settings are still active. Try again."
+      "title": "Personal settings",
+      "description": "Customize how the system administration workspace looks and displays data.",
+      "appearance": {
+        "title": "Appearance",
+        "description": "These choices apply only to your account.",
+        "themeColor": "Theme color",
+        "themeColorHint": "Choose a preset or enter a six-digit HEX color.",
+        "invalidColor": "Use the #RRGGBB format.",
+        "preview": "Preview",
+        "previewText": "System administration",
+        "previewButton": "Primary action",
+        "density": "Display density",
+        "comfortable": "Comfortable",
+        "compact": "Compact"
+      },
+      "display": {
+        "title": "Data and language",
+        "description": "Choose the defaults used in administration lists and dates.",
+        "pageSize": "Default rows per page",
+        "dateFormat": "Date format",
+        "language": "Language",
+        "vietnamese": "Vietnamese",
+        "english": "English"
+      },
+      "save": "Save settings",
+      "reset": "Restore defaults",
+      "saved": "Personal settings saved.",
+      "saveError": "Could not save personal settings.",
+      "resetDone": "Default settings restored.",
+      "resetError": "Could not restore default settings.",
+      "errorHint": "Your previous settings are still active. Try again."
     }
   },
   "Navigation": {
@@ -700,7 +1816,11 @@
   "OwnerGuests": {
     "title": "Guest management",
     "eyebrow": "Reservation history",
-    "stats": { "profiles": "Guest profiles", "repeatGuests": "Repeat guests", "returnRate": "Return rate" },
+    "stats": {
+      "profiles": "Guest profiles",
+      "repeatGuests": "Repeat guests",
+      "returnRate": "Return rate"
+    },
     "searchPlaceholder": "Search name, phone, or email",
     "searchLabel": "Search guests",
     "history": "{reservations} bookings · {visits} visits · {noShows} no-shows",
@@ -740,7 +1860,11 @@
       "policy": {
         "title": "Booking policy",
         "confirmationMode": "Confirmation mode",
-        "modes": { "auto": "Automatic", "manual": "Manual", "hybrid": "Hybrid by party size" },
+        "modes": {
+          "auto": "Automatic",
+          "manual": "Manual",
+          "hybrid": "Hybrid by party size"
+        },
         "manualFromPartySize": "Manual confirmation from party size",
         "guestCapacity": "Guest capacity",
         "bookingWindow": "Booking window (days)",
@@ -764,7 +1888,15 @@
         "closes": "Closes",
         "removePeriod": "Remove {day} period",
         "save": "Save business hours",
-        "days": { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thursday": "Thursday", "friday": "Friday", "saturday": "Saturday", "sunday": "Sunday" }
+        "days": {
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday"
+        }
       }
     },
     "bookingSlotsModal": {

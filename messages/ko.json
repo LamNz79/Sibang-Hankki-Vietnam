@@ -44,47 +44,196 @@
     }
   },
   "Home": {
-    "subtitle": "빠르게 테이블을 찾고 안심하고 예약하세요.", "loadingReservations": "예약을 불러오는 중...", "loading": "불러오는 중...",
-    "header": { "notifications": "알림", "currentLocation": "현재 위치", "searchPlaceholder": "레스토랑 또는 도시 검색", "searchLabel": "레스토랑 또는 도시 검색" },
-    "banner": { "eyebrow": "메인 배너", "title": "오늘의 다이닝 혜택", "description": "현재 이용 가능한 레스토랑 혜택을 확인하세요." },
-    "sections": { "specialCategories": "추천 카테고리", "upToFive": "최대 5개", "exploreCity": "도시별 탐색", "viewAll": "전체 보기", "sortBy": "정렬", "cuisine": "요리", "priceRange": "가격대" },
-    "categories": { "michelin": "미쉐린", "buffet": "뷔페", "special-deal": "특별 혜택", "date-night": "데이트", "trending": "인기" },
-    "sort": { "recommended": "추천순", "rating": "평점순", "earliest": "빠른 예약 가능순" },
-    "cuisines": { "western": "양식", "chinese": "중식", "vietnamese": "베트남 요리", "japanese": "일식" },
-    "prices": { "under150": "150K 미만", "under300": "150K–300K", "over300": "300K 초과" },
-    "location": { "title": "지역 선택", "defaultLocation": "호찌민시", "hint": "성 또는 직할시를 선택한 다음 동, 면 또는 특별구를 선택하세요.", "provinces": "성 / 직할시", "wards": "동 / 면 / 특별구", "searchProvince": "성 또는 직할시 검색", "searchWard": "동, 면 또는 특별구 검색", "selectWholeProvince": "전체 선택", "loadError": "행정구역 목록을 불러올 수 없습니다.", "retry": "다시 시도", "nothingFound": "일치하는 지역을 찾을 수 없습니다.", "noWards": "동, 면 또는 특별구를 찾을 수 없습니다." }
+    "subtitle": "빠르게 테이블을 찾고 안심하고 예약하세요.",
+    "loadingReservations": "예약을 불러오는 중...",
+    "loading": "불러오는 중...",
+    "header": {
+      "notifications": "알림",
+      "currentLocation": "현재 위치",
+      "searchPlaceholder": "레스토랑 또는 도시 검색",
+      "searchLabel": "레스토랑 또는 도시 검색"
+    },
+    "banner": {
+      "eyebrow": "메인 배너",
+      "title": "오늘의 다이닝 혜택",
+      "description": "현재 이용 가능한 레스토랑 혜택을 확인하세요."
+    },
+    "sections": {
+      "specialCategories": "추천 카테고리",
+      "upToFive": "최대 5개",
+      "exploreCity": "도시별 탐색",
+      "viewAll": "전체 보기",
+      "sortBy": "정렬",
+      "cuisine": "요리",
+      "priceRange": "가격대"
+    },
+    "categories": {
+      "michelin": "미쉐린",
+      "buffet": "뷔페",
+      "special-deal": "특별 혜택",
+      "date-night": "데이트",
+      "trending": "인기"
+    },
+    "sort": {
+      "recommended": "추천순",
+      "rating": "평점순",
+      "earliest": "빠른 예약 가능순"
+    },
+    "cuisines": {
+      "western": "양식",
+      "chinese": "중식",
+      "vietnamese": "베트남 요리",
+      "japanese": "일식"
+    },
+    "prices": {
+      "under150": "150K 미만",
+      "under300": "150K–300K",
+      "over300": "300K 초과"
+    },
+    "location": {
+      "title": "지역 선택",
+      "defaultLocation": "호찌민시",
+      "hint": "성 또는 직할시를 선택한 다음 동, 면 또는 특별구를 선택하세요.",
+      "provinces": "성 / 직할시",
+      "wards": "동 / 면 / 특별구",
+      "searchProvince": "성 또는 직할시 검색",
+      "searchWard": "동, 면 또는 특별구 검색",
+      "selectWholeProvince": "전체 선택",
+      "loadError": "행정구역 목록을 불러올 수 없습니다.",
+      "retry": "다시 시도",
+      "nothingFound": "일치하는 지역을 찾을 수 없습니다.",
+      "noWards": "동, 면 또는 특별구를 찾을 수 없습니다."
+    }
   },
   "RestaurantAvailability": {
-    "unknown": "예약 단계에서 시간을 확인하세요", "contact": "이 인원수는 레스토랑에 문의하세요", "unavailable": "오늘 {count}명 온라인 예약 가능 시간이 없습니다", "available": "오늘 {time}부터 예약 가능", "availableConfirmation": "오늘 {time}부터 예약 가능 · 레스토랑 확인 필요"
+    "unknown": "예약 단계에서 시간을 확인하세요",
+    "contact": "이 인원수는 레스토랑에 문의하세요",
+    "unavailable": "오늘 {count}명 온라인 예약 가능 시간이 없습니다",
+    "available": "오늘 {time}부터 예약 가능",
+    "availableConfirmation": "오늘 {time}부터 예약 가능 · 레스토랑 확인 필요"
   },
   "RestaurantDiscovery": {
-    "title": "레스토랑 목록", "categoryTitle": "{location}의 {category}", "cityTitle": "{city} 레스토랑", "hoChiMinhCity": "호찌민시", "subtitle": "필터 결과", "searchPlaceholder": "레스토랑 또는 지역 검색",
-    "availabilityTitle": "레스토랑별 예약 가능 시간을 표시합니다", "availabilityDescription": "레스토랑을 둘러본 후 예약 단계에서 날짜, 시간, 인원수를 정확히 선택하세요.", "all": "전체", "available": "예약 가능", "filters": "필터", "reset": "초기화",
-    "sort": { "recommended": "추천순", "rating": "평점순", "earliest": "가장 빠른 시간" }, "loading": "레스토랑을 불러오는 중...",
-    "price": { "all": "가격", "under150": "< 150K", "under300": "150K–300K", "over300": "> 300K" },
-    "priceOptions": { "all": "전체", "under150": "150K 미만", "under300": "150K–300K", "over300": "300K 초과" },
-    "cuisine": { "all": "요리", "korean": "한식", "chinese": "중식", "vietnamese": "베트남식", "japanese": "일식", "western": "양식" },
-    "benefits": { "special_deal": "특별 혜택", "available": "예약 가능", "date_night": "데이트", "michelin": "미쉐린" },
-    "restaurants": "레스토랑", "categoryResults": "{category} 레스토랑", "imageAlt": "{name} 이미지", "cardAvailabilityHint": "오늘 2명 기준입니다. 예약 단계에서 정확한 정보를 선택하세요.",
-    "priceRange": "가격대", "cuisineTitle": "요리", "benefitsTitle": "특별 혜택", "showResults": "레스토랑 {count}개 보기",
-    "empty": { "locationTitle": "아직 이 지역에 레스토랑이 없습니다", "locationDescription": "현재 {location}에 이용 가능한 레스토랑이 없습니다. 다른 지역을 선택해 보세요.", "changeLocation": "다른 지역 선택", "filtersTitle": "조건에 맞는 레스토랑이 없습니다", "filtersDescription": "검색어나 필터를 지우고 더 많은 레스토랑을 확인해 보세요.", "clearFilters": "검색 및 필터 지우기" }
+    "title": "레스토랑 목록",
+    "categoryTitle": "{location}의 {category}",
+    "cityTitle": "{city} 레스토랑",
+    "hoChiMinhCity": "호찌민시",
+    "subtitle": "필터 결과",
+    "searchPlaceholder": "레스토랑 또는 지역 검색",
+    "availabilityTitle": "레스토랑별 예약 가능 시간을 표시합니다",
+    "availabilityDescription": "레스토랑을 둘러본 후 예약 단계에서 날짜, 시간, 인원수를 정확히 선택하세요.",
+    "all": "전체",
+    "available": "예약 가능",
+    "filters": "필터",
+    "reset": "초기화",
+    "sort": {
+      "recommended": "추천순",
+      "rating": "평점순",
+      "earliest": "가장 빠른 시간"
+    },
+    "loading": "레스토랑을 불러오는 중...",
+    "price": {
+      "all": "가격",
+      "under150": "< 150K",
+      "under300": "150K–300K",
+      "over300": "> 300K"
+    },
+    "priceOptions": {
+      "all": "전체",
+      "under150": "150K 미만",
+      "under300": "150K–300K",
+      "over300": "300K 초과"
+    },
+    "cuisine": {
+      "all": "요리",
+      "korean": "한식",
+      "chinese": "중식",
+      "vietnamese": "베트남식",
+      "japanese": "일식",
+      "western": "양식"
+    },
+    "benefits": {
+      "special_deal": "특별 혜택",
+      "available": "예약 가능",
+      "date_night": "데이트",
+      "michelin": "미쉐린"
+    },
+    "restaurants": "레스토랑",
+    "categoryResults": "{category} 레스토랑",
+    "imageAlt": "{name} 이미지",
+    "cardAvailabilityHint": "오늘 2명 기준입니다. 예약 단계에서 정확한 정보를 선택하세요.",
+    "priceRange": "가격대",
+    "cuisineTitle": "요리",
+    "benefitsTitle": "특별 혜택",
+    "showResults": "레스토랑 {count}개 보기",
+    "empty": {
+      "locationTitle": "아직 이 지역에 레스토랑이 없습니다",
+      "locationDescription": "현재 {location}에 이용 가능한 레스토랑이 없습니다. 다른 지역을 선택해 보세요.",
+      "changeLocation": "다른 지역 선택",
+      "filtersTitle": "조건에 맞는 레스토랑이 없습니다",
+      "filtersDescription": "검색어나 필터를 지우고 더 많은 레스토랑을 확인해 보세요.",
+      "clearFilters": "검색 및 필터 지우기"
+    }
   },
   "RestaurantDetails": {
-    "title": "레스토랑 상세", "subtitle": "레스토랑 정보", "selectDateTime": "날짜 및 시간 선택", "viewPhotos": "사진 {count}장 보기", "photosTitle": "{name} 사진", "availabilityHint": "오늘 2명 기준 예약 가능 시간입니다. 예약 단계에서 다른 날짜나 인원수를 선택할 수 있습니다.", "menu": "메뉴", "save": "레스토랑 저장", "unsave": "저장 목록에서 삭제", "saved": "레스토랑을 저장했습니다.", "removed": "저장 목록에서 삭제했습니다.", "saveError": "저장 목록을 업데이트할 수 없습니다. 다시 시도해 주세요."
+    "title": "레스토랑 상세",
+    "subtitle": "레스토랑 정보",
+    "selectDateTime": "날짜 및 시간 선택",
+    "viewPhotos": "사진 {count}장 보기",
+    "photosTitle": "{name} 사진",
+    "availabilityHint": "오늘 2명 기준 예약 가능 시간입니다. 예약 단계에서 다른 날짜나 인원수를 선택할 수 있습니다.",
+    "menu": "메뉴",
+    "save": "레스토랑 저장",
+    "unsave": "저장 목록에서 삭제",
+    "saved": "레스토랑을 저장했습니다.",
+    "removed": "저장 목록에서 삭제했습니다.",
+    "saveError": "저장 목록을 업데이트할 수 없습니다. 다시 시도해 주세요."
   },
-  "SavedRestaurants": { "title": "저장한 레스토랑", "subtitle": "나만의 레스토랑 목록", "count": "저장한 레스토랑 {count}개", "emptyTitle": "저장한 레스토랑이 없습니다", "emptyDescription": "레스토랑 페이지에서 하트 아이콘을 눌러 나중에 다시 확인하세요.", "explore": "레스토랑 둘러보기", "viewDetails": "상세 보기", "remove": "저장 목록에서 {name} 삭제", "removeError": "레스토랑을 삭제할 수 없습니다. 다시 시도해 주세요.", "loginRequired": "로그인이 필요합니다", "loginDescription": "고객 계정으로 로그인하여 기기 간 저장한 레스토랑을 확인하세요.", "login": "로그인", "loadError": "저장한 레스토랑을 불러올 수 없습니다", "retry": "다시 시도" },
+  "SavedRestaurants": {
+    "title": "저장한 레스토랑",
+    "subtitle": "나만의 레스토랑 목록",
+    "count": "저장한 레스토랑 {count}개",
+    "emptyTitle": "저장한 레스토랑이 없습니다",
+    "emptyDescription": "레스토랑 페이지에서 하트 아이콘을 눌러 나중에 다시 확인하세요.",
+    "explore": "레스토랑 둘러보기",
+    "viewDetails": "상세 보기",
+    "remove": "저장 목록에서 {name} 삭제",
+    "removeError": "레스토랑을 삭제할 수 없습니다. 다시 시도해 주세요.",
+    "loginRequired": "로그인이 필요합니다",
+    "loginDescription": "고객 계정으로 로그인하여 기기 간 저장한 레스토랑을 확인하세요.",
+    "login": "로그인",
+    "loadError": "저장한 레스토랑을 불러올 수 없습니다",
+    "retry": "다시 시도"
+  },
   "BookingTime": {
-    "title": "시간", "emptyTitle": "온라인 예약 가능 시간이 없습니다", "emptyDescription": "다른 날짜나 인원수를 선택하세요. 예약 가능 시간은 레스토랑의 수용 인원 설정에 따라 달라집니다."
+    "title": "시간",
+    "emptyTitle": "온라인 예약 가능 시간이 없습니다",
+    "emptyDescription": "다른 날짜나 인원수를 선택하세요. 예약 가능 시간은 레스토랑의 수용 인원 설정에 따라 달라집니다."
   },
   "PasswordManagement": {
     "change": {
-      "action": "비밀번호 변경", "title": "비밀번호 변경", "description": "현재 비밀번호를 입력하고 새 비밀번호를 설정하세요. 변경 후 로그아웃됩니다.",
-      "currentPassword": "현재 비밀번호", "newPassword": "새 비밀번호", "confirmPassword": "새 비밀번호 확인", "requirements": "8~72자를 사용하세요.", "mismatch": "비밀번호가 일치하지 않습니다.",
-      "cancel": "취소", "submit": "비밀번호 변경", "success": "비밀번호가 변경되었습니다. 새 비밀번호로 다시 로그인하세요.", "wrongCurrent": "현재 비밀번호가 올바르지 않습니다.", "error": "비밀번호를 변경할 수 없습니다. 다시 시도하세요."
+      "action": "비밀번호 변경",
+      "title": "비밀번호 변경",
+      "description": "현재 비밀번호를 입력하고 새 비밀번호를 설정하세요. 변경 후 로그아웃됩니다.",
+      "currentPassword": "현재 비밀번호",
+      "newPassword": "새 비밀번호",
+      "confirmPassword": "새 비밀번호 확인",
+      "requirements": "8~72자를 사용하세요.",
+      "mismatch": "비밀번호가 일치하지 않습니다.",
+      "cancel": "취소",
+      "submit": "비밀번호 변경",
+      "success": "비밀번호가 변경되었습니다. 새 비밀번호로 다시 로그인하세요.",
+      "wrongCurrent": "현재 비밀번호가 올바르지 않습니다.",
+      "error": "비밀번호를 변경할 수 없습니다. 다시 시도하세요."
     },
     "reset": {
-      "title": "{name} 비밀번호 재설정", "description": "임시 비밀번호를 설정하고 안전한 채널로 전달하세요. 기존 세션은 로그아웃됩니다.",
-      "newPassword": "임시 비밀번호", "confirmPassword": "임시 비밀번호 확인", "requirements": "8~72자를 사용하세요.", "mismatch": "비밀번호가 일치하지 않습니다.", "cancel": "취소", "submit": "비밀번호 재설정"
+      "title": "{name} 비밀번호 재설정",
+      "description": "임시 비밀번호를 설정하고 안전한 채널로 전달하세요. 기존 세션은 로그아웃됩니다.",
+      "newPassword": "임시 비밀번호",
+      "confirmPassword": "임시 비밀번호 확인",
+      "requirements": "8~72자를 사용하세요.",
+      "mismatch": "비밀번호가 일치하지 않습니다.",
+      "cancel": "취소",
+      "submit": "비밀번호 재설정"
     }
   },
   "Account": {
@@ -147,48 +296,229 @@
     }
   },
   "CustomerBooking": {
-    "title": "테이블 예약", "subtitle": "예약 정보",
-    "submit": { "change": "이 시간으로 요청", "reservation": "예약 요청", "selectTime": "가능한 시간 선택" },
-    "date": { "title": "날짜", "selected": "선택한 날짜", "none": "날짜를 선택하지 않았습니다" },
-    "guests": { "title": "인원", "remove": "인원 한 명 줄이기", "count": "인원수", "add": "인원 한 명 추가", "largePartyTitle": "단체 예약 요청", "largePartyDescription": "10명 초과 단체는 적절한 시간을 확인하기 위해 레스토랑에 직접 문의해 주세요. 온라인 예약은 지원되지 않습니다." },
-    "change": { "title": "다른 시간 선택", "description": "인원은 {count}명으로 유지됩니다. 매장에서 요청을 수락할 때까지 기존 확정 시간이 유지됩니다.", "messageLabel": "레스토랑에 보낼 메시지 (선택)", "messagePlaceholder": "예: 예약 시간을 한 시간 늦출 수 있을까요?" },
-    "contact": { "title": "연락처 정보", "name": "이름", "phone": "전화번호", "email": "이메일 (선택)", "invalidEmail": "올바른 이메일 주소를 입력해 주세요." },
-    "requests": { "title": "요청사항 및 사전 주문", "description": "방문 전에 매장에서 준비할 수 있도록 선택 정보를 입력하세요.", "specialRequest": "특별 요청 (선택)", "specialRequestPlaceholder": "예: 창가 자리, 유아용 의자 또는 알레르기 정보", "menu": { "title": "메뉴 선택 (선택)", "description": "사전 주문 요청에 포함할 메뉴와 수량을 선택하세요.", "choose": "메뉴 선택", "edit": "변경", "selectedCount": "{count}개 선택", "done": "완료 ({count})", "add": "{item} 추가", "remove": "{item} 한 개 빼기", "quantity": "{item}: {quantity}개 선택" }, "preOrder": "추가 사전 주문 메모 (선택)", "preOrderDescription": "선택한 메뉴와 메모는 매장에 보내는 요청이며 확정된 음식 주문이 아닙니다.", "preOrderPlaceholder": "예: 땅콩 제외 또는 소스 별도", "preOrderTooLong": "선택한 메뉴와 메모가 너무 깁니다. 메뉴를 줄이거나 메모를 짧게 작성해 주세요." },
-    "errors": { "changeTitle": "이 예약을 변경할 수 없습니다", "changeDescription": "시간 변경 요청이 이미 매장 확인을 기다리고 있습니다.", "submissionTitle": "예약 요청을 보낼 수 없습니다", "submissionDescription": "입력 정보를 확인하고 다시 시도해 주세요." },
-    "availability": { "loading": "예약 가능 시간을 확인하는 중...", "errorTitle": "예약 가능 시간을 확인할 수 없습니다", "errorDescription": "예약 가능 시간을 불러오지 못했습니다.", "retry": "다시 시도", "confirmationTitle": "매장 확인 필요", "confirmationDescription": "가능한 시간을 선택하고 요청을 보내세요. 매장에서 확인할 때까지 예약은 대기 상태로 유지됩니다." },
-    "success": { "changeTitle": "새 시간 요청을 보냈습니다", "confirmedTitle": "예약이 확정되었습니다", "pendingTitle": "예약 요청을 보냈습니다", "confirmedChangeDescription": "매장에서 새 시간을 검토할 때까지 현재 예약이 확정 상태로 유지됩니다.", "pendingChangeDescription": "요청 시간이 변경되었으며 매장 확인이 필요합니다.", "confirmedDescription": "테이블 예약이 확정되었습니다.", "pendingDescription": "매장에서 요청을 검토하고 변경이 필요한 경우 연락드립니다.", "changePending": "변경 대기", "confirmed": "예약 확정", "pendingConfirmation": "확인 대기", "guestLocation": "{count}명 · {district}", "viewDetails": "예약 상세 보기", "exploreRestaurants": "다른 레스토랑 둘러보기" }
+    "title": "테이블 예약",
+    "subtitle": "예약 정보",
+    "submit": {
+      "change": "이 시간으로 요청",
+      "reservation": "예약 요청",
+      "selectTime": "가능한 시간 선택"
+    },
+    "date": {
+      "title": "날짜",
+      "selected": "선택한 날짜",
+      "none": "날짜를 선택하지 않았습니다"
+    },
+    "guests": {
+      "title": "인원",
+      "remove": "인원 한 명 줄이기",
+      "count": "인원수",
+      "add": "인원 한 명 추가",
+      "largePartyTitle": "단체 예약 요청",
+      "largePartyDescription": "10명 초과 단체는 적절한 시간을 확인하기 위해 레스토랑에 직접 문의해 주세요. 온라인 예약은 지원되지 않습니다."
+    },
+    "change": {
+      "title": "다른 시간 선택",
+      "description": "인원은 {count}명으로 유지됩니다. 매장에서 요청을 수락할 때까지 기존 확정 시간이 유지됩니다.",
+      "messageLabel": "레스토랑에 보낼 메시지 (선택)",
+      "messagePlaceholder": "예: 예약 시간을 한 시간 늦출 수 있을까요?"
+    },
+    "contact": {
+      "title": "연락처 정보",
+      "name": "이름",
+      "phone": "전화번호",
+      "email": "이메일 (선택)",
+      "invalidEmail": "올바른 이메일 주소를 입력해 주세요."
+    },
+    "requests": {
+      "title": "요청사항 및 사전 주문",
+      "description": "방문 전에 매장에서 준비할 수 있도록 선택 정보를 입력하세요.",
+      "specialRequest": "특별 요청 (선택)",
+      "specialRequestPlaceholder": "예: 창가 자리, 유아용 의자 또는 알레르기 정보",
+      "menu": {
+        "title": "메뉴 선택 (선택)",
+        "description": "사전 주문 요청에 포함할 메뉴와 수량을 선택하세요.",
+        "choose": "메뉴 선택",
+        "edit": "변경",
+        "selectedCount": "{count}개 선택",
+        "done": "완료 ({count})",
+        "add": "{item} 추가",
+        "remove": "{item} 한 개 빼기",
+        "quantity": "{item}: {quantity}개 선택"
+      },
+      "preOrder": "추가 사전 주문 메모 (선택)",
+      "preOrderDescription": "선택한 메뉴와 메모는 매장에 보내는 요청이며 확정된 음식 주문이 아닙니다.",
+      "preOrderPlaceholder": "예: 땅콩 제외 또는 소스 별도",
+      "preOrderTooLong": "선택한 메뉴와 메모가 너무 깁니다. 메뉴를 줄이거나 메모를 짧게 작성해 주세요."
+    },
+    "errors": {
+      "changeTitle": "이 예약을 변경할 수 없습니다",
+      "changeDescription": "시간 변경 요청이 이미 매장 확인을 기다리고 있습니다.",
+      "submissionTitle": "예약 요청을 보낼 수 없습니다",
+      "submissionDescription": "입력 정보를 확인하고 다시 시도해 주세요."
+    },
+    "availability": {
+      "loading": "예약 가능 시간을 확인하는 중...",
+      "errorTitle": "예약 가능 시간을 확인할 수 없습니다",
+      "errorDescription": "예약 가능 시간을 불러오지 못했습니다.",
+      "retry": "다시 시도",
+      "confirmationTitle": "매장 확인 필요",
+      "confirmationDescription": "가능한 시간을 선택하고 요청을 보내세요. 매장에서 확인할 때까지 예약은 대기 상태로 유지됩니다."
+    },
+    "success": {
+      "changeTitle": "새 시간 요청을 보냈습니다",
+      "confirmedTitle": "예약이 확정되었습니다",
+      "pendingTitle": "예약 요청을 보냈습니다",
+      "confirmedChangeDescription": "매장에서 새 시간을 검토할 때까지 현재 예약이 확정 상태로 유지됩니다.",
+      "pendingChangeDescription": "요청 시간이 변경되었으며 매장 확인이 필요합니다.",
+      "confirmedDescription": "테이블 예약이 확정되었습니다.",
+      "pendingDescription": "매장에서 요청을 검토하고 변경이 필요한 경우 연락드립니다.",
+      "changePending": "변경 대기",
+      "confirmed": "예약 확정",
+      "pendingConfirmation": "확인 대기",
+      "guestLocation": "{count}명 · {district}",
+      "viewDetails": "예약 상세 보기",
+      "exploreRestaurants": "다른 레스토랑 둘러보기"
+    }
   },
   "CustomerReservations": {
-    "title": "내 예약", "subtitle": "예정된 식사 일정을 확인하세요.", "heading": "예약", "description": "예정된 일정과 지난 방문 내역을 확인하세요.",
-    "scope": { "upcoming": "예정 ({count})", "history": "이력 ({count})", "all": "전체 ({count})" },
-    "searchPlaceholder": "레스토랑 또는 예약번호 검색", "searchLabel": "예약 검색", "filterLabel": "예약 상태 필터",
-    "filters": { "all": "전체 상태", "action": "응답 필요", "pending": "확인 대기", "confirmed": "예약 확정", "checkedIn": "체크인 또는 착석", "completed": "방문 완료", "closed": "취소, 거절 또는 노쇼" },
-    "status": { "pending": "확인 대기", "action": "응답 필요", "cancelled": "예약 취소", "expired": "요청 만료", "declined": "요청 거절", "checkedIn": "체크인 완료", "seated": "착석 완료", "completed": "방문 완료", "noShow": "노쇼", "confirmed": "예약 확정" },
-    "suggestedTime": "제안 {time}", "guestLocation": "{count}명 · {district}",
-    "loadError": { "title": "예약 목록을 불러올 수 없습니다", "description": "연결 상태를 확인하고 다시 시도해 주세요.", "retry": "다시 시도" },
-    "showing": "{total}개 중 {visible}개 표시", "clearFilters": "필터 초기화", "showMore": "더 보기 ({count}개 남음)",
-    "empty": { "filteredTitle": "조건에 맞는 예약이 없습니다", "historyTitle": "예약 이력이 없습니다", "upcomingTitle": "예정된 예약이 없습니다", "filteredDescription": "다른 레스토랑 이름, 예약번호 또는 상태를 입력해 보세요.", "historyDescription": "완료, 취소 및 지난 예약이 여기에 표시됩니다.", "upcomingDescription": "예약 요청과 확정된 예약이 여기에 표시됩니다." },
+    "title": "내 예약",
+    "subtitle": "예정된 식사 일정을 확인하세요.",
+    "heading": "예약",
+    "description": "예정된 일정과 지난 방문 내역을 확인하세요.",
+    "scope": {
+      "upcoming": "예정 ({count})",
+      "history": "이력 ({count})",
+      "all": "전체 ({count})"
+    },
+    "searchPlaceholder": "레스토랑 또는 예약번호 검색",
+    "searchLabel": "예약 검색",
+    "filterLabel": "예약 상태 필터",
+    "filters": {
+      "all": "전체 상태",
+      "action": "응답 필요",
+      "pending": "확인 대기",
+      "confirmed": "예약 확정",
+      "checkedIn": "체크인 또는 착석",
+      "completed": "방문 완료",
+      "closed": "취소, 거절 또는 노쇼"
+    },
+    "status": {
+      "pending": "확인 대기",
+      "action": "응답 필요",
+      "cancelled": "예약 취소",
+      "expired": "요청 만료",
+      "declined": "요청 거절",
+      "checkedIn": "체크인 완료",
+      "seated": "착석 완료",
+      "completed": "방문 완료",
+      "noShow": "노쇼",
+      "confirmed": "예약 확정"
+    },
+    "suggestedTime": "제안 {time}",
+    "guestLocation": "{count}명 · {district}",
+    "loadError": {
+      "title": "예약 목록을 불러올 수 없습니다",
+      "description": "연결 상태를 확인하고 다시 시도해 주세요.",
+      "retry": "다시 시도"
+    },
+    "showing": "{total}개 중 {visible}개 표시",
+    "clearFilters": "필터 초기화",
+    "showMore": "더 보기 ({count}개 남음)",
+    "empty": {
+      "filteredTitle": "조건에 맞는 예약이 없습니다",
+      "historyTitle": "예약 이력이 없습니다",
+      "upcomingTitle": "예정된 예약이 없습니다",
+      "filteredDescription": "다른 레스토랑 이름, 예약번호 또는 상태를 입력해 보세요.",
+      "historyDescription": "완료, 취소 및 지난 예약이 여기에 표시됩니다.",
+      "upcomingDescription": "예약 요청과 확정된 예약이 여기에 표시됩니다."
+    },
     "exploreRestaurants": "레스토랑 둘러보기"
   },
   "CustomerReservationDetails": {
     "title": "예약 상세",
-    "notFound": { "title": "예약을 찾을 수 없습니다", "description": "예약이 삭제되었거나 이 기기에서 확인할 수 없습니다.", "back": "예약 목록으로" },
+    "notFound": {
+      "title": "예약을 찾을 수 없습니다",
+      "description": "예약이 삭제되었거나 이 기기에서 확인할 수 없습니다.",
+      "back": "예약 목록으로"
+    },
     "status": {
-      "pending": { "badge": "확인 대기", "title": "매장 확인을 기다리고 있습니다", "description": "매장에서 요청을 확인하거나 변경이 필요한 경우 연락드립니다." },
-      "alternative": { "badge": "응답 필요", "title": "매장에서 새로운 시간을 제안했습니다", "description": "아래 제안 시간을 확인하세요. 수락하기 전까지 예약은 확정되지 않습니다." },
-      "declined": { "badge": "요청 거절", "restaurantTitle": "매장에서 이 요청을 확정하지 못했습니다", "restaurantDescription": "현재 확보된 테이블이 없습니다. 준비되면 다른 시간을 선택하세요.", "customerTitle": "이 요청은 종료되었습니다", "customerDescription": "제안 시간을 거절했다는 내용이 매장에 전달되었습니다." },
-      "confirmed": { "badge": "예약 확정", "title": "테이블이 확정되었습니다", "description": "예약이 준비되었습니다. 도착 시 예약 코드를 보여 주세요." },
-      "cancelled": { "badge": "예약 취소", "title": "예약이 취소되었습니다", "description": "더 이상 테이블이 보류되지 않습니다. 언제든 새 예약을 만들 수 있습니다." },
+      "pending": {
+        "badge": "확인 대기",
+        "title": "매장 확인을 기다리고 있습니다",
+        "description": "매장에서 요청을 확인하거나 변경이 필요한 경우 연락드립니다."
+      },
+      "alternative": {
+        "badge": "응답 필요",
+        "title": "매장에서 새로운 시간을 제안했습니다",
+        "description": "아래 제안 시간을 확인하세요. 수락하기 전까지 예약은 확정되지 않습니다."
+      },
+      "declined": {
+        "badge": "요청 거절",
+        "restaurantTitle": "매장에서 이 요청을 확정하지 못했습니다",
+        "restaurantDescription": "현재 확보된 테이블이 없습니다. 준비되면 다른 시간을 선택하세요.",
+        "customerTitle": "이 요청은 종료되었습니다",
+        "customerDescription": "제안 시간을 거절했다는 내용이 매장에 전달되었습니다."
+      },
+      "confirmed": {
+        "badge": "예약 확정",
+        "title": "테이블이 확정되었습니다",
+        "description": "예약이 준비되었습니다. 도착 시 예약 코드를 보여 주세요."
+      },
+      "cancelled": {
+        "badge": "예약 취소",
+        "title": "예약이 취소되었습니다",
+        "description": "더 이상 테이블이 보류되지 않습니다. 언제든 새 예약을 만들 수 있습니다."
+      },
       "visit": {
-        "arrived": { "badge": "체크인 완료", "title": "도착이 확인되었습니다", "description": "매장에서 고객님의 도착을 확인했습니다." },
-        "seated": { "badge": "착석 완료", "title": "테이블이 준비되었습니다", "description": "매장에서 일행을 테이블로 안내했습니다." },
-        "completed": { "badge": "방문 완료", "title": "방문해 주셔서 감사합니다", "description": "이번 매장 방문이 완료되었습니다." },
-        "noShow": { "badge": "노쇼", "title": "매장에서 노쇼로 표시했습니다", "description": "잘못된 경우 매장에 문의해 주세요." }
+        "arrived": {
+          "badge": "체크인 완료",
+          "title": "도착이 확인되었습니다",
+          "description": "매장에서 고객님의 도착을 확인했습니다."
+        },
+        "seated": {
+          "badge": "착석 완료",
+          "title": "테이블이 준비되었습니다",
+          "description": "매장에서 일행을 테이블로 안내했습니다."
+        },
+        "completed": {
+          "badge": "방문 완료",
+          "title": "방문해 주셔서 감사합니다",
+          "description": "이번 매장 방문이 완료되었습니다."
+        },
+        "noShow": {
+          "badge": "노쇼",
+          "title": "매장에서 노쇼로 표시했습니다",
+          "description": "잘못된 경우 매장에 문의해 주세요."
+        }
       }
     },
-    "reference": { "label": "예약번호", "copy": "예약번호 복사" },
-    "information": { "date": "날짜", "timeGuests": "시간 · 인원", "guestCount": "{count}명", "preOrder": "사전 주문", "noPreOrder": "추가하지 않음", "request": "요청사항", "noRequest": "특별 요청 없음" },
-    "actions": { "newReservation": "새 예약하기", "changeRequest": "요청 변경", "change": "변경", "cancelRequest": "요청 취소", "cancel": "취소", "changeHint": "정책 확정 후 변경 기능이 추가됩니다", "cancelHint": "이 예약은 온라인으로 취소할 수 없습니다", "cancelTitle": "이 예약을 취소할까요?", "cancelDescription": "식당에서 테이블 보류를 해제합니다. 이 작업은 되돌릴 수 없습니다.", "cancelError": "취소할 수 없습니다. 취소 가능 시간이 지났을 수 있습니다.", "keep": "예약 유지", "confirmCancel": "예약 취소" },
+    "reference": {
+      "label": "예약번호",
+      "copy": "예약번호 복사"
+    },
+    "information": {
+      "date": "날짜",
+      "timeGuests": "시간 · 인원",
+      "guestCount": "{count}명",
+      "preOrder": "사전 주문",
+      "noPreOrder": "추가하지 않음",
+      "request": "요청사항",
+      "noRequest": "특별 요청 없음"
+    },
+    "actions": {
+      "newReservation": "새 예약하기",
+      "changeRequest": "요청 변경",
+      "change": "변경",
+      "cancelRequest": "요청 취소",
+      "cancel": "취소",
+      "changeHint": "정책 확정 후 변경 기능이 추가됩니다",
+      "cancelHint": "이 예약은 온라인으로 취소할 수 없습니다",
+      "cancelTitle": "이 예약을 취소할까요?",
+      "cancelDescription": "식당에서 테이블 보류를 해제합니다. 이 작업은 되돌릴 수 없습니다.",
+      "cancelError": "취소할 수 없습니다. 취소 가능 시간이 지났을 수 있습니다.",
+      "keep": "예약 유지",
+      "confirmCancel": "예약 취소"
+    },
     "changeRequest": {
       "pendingTitle": "매장 확인을 기다리고 있습니다",
       "pendingDescription": "{date} {time}로 변경을 요청했습니다. 매장에서 수락할 때까지 기존 확정 시간이 유지됩니다.",
@@ -196,36 +526,252 @@
       "declinedDescription": "{date} {time} 변경 요청이 거절되었습니다. 기존 확정 예약은 그대로 유지됩니다."
     },
     "proposal": {
-      "title": "새로운 시간 제안", "description": "매장에서 기존 요청 시간을 확정하지 못해 가능한 다른 시간을 제안했습니다.", "requested": "요청 시간", "suggested": "제안 시간", "restaurantMessage": "매장 메시지", "respondBy": "{deadline}까지 응답해 주세요", "accept": "{time} 수락", "chooseAnother": "다른 시간 선택", "declineRequest": "요청 거절", "declineTitle": "이 제안을 거절하시겠습니까?", "declineDescription": "매장에서 제안한 {time} 시간의 확보를 해제합니다. 이후 새 예약을 할 수 있습니다.", "keep": "제안 유지", "decline": "거절", "acceptedTitle": "새 시간 확정", "acceptedMessage": "{time} 수락 내용이 {restaurant}에 전달되었습니다.", "declinedTitle": "요청 거절", "declinedMessage": "{restaurant}에 전달되었습니다.", "responseError": "제안을 업데이트할 수 없습니다. 다시 시도해 주세요."
+      "title": "새로운 시간 제안",
+      "description": "매장에서 기존 요청 시간을 확정하지 못해 가능한 다른 시간을 제안했습니다.",
+      "requested": "요청 시간",
+      "suggested": "제안 시간",
+      "restaurantMessage": "매장 메시지",
+      "respondBy": "{deadline}까지 응답해 주세요",
+      "accept": "{time} 수락",
+      "chooseAnother": "다른 시간 선택",
+      "declineRequest": "요청 거절",
+      "declineTitle": "이 제안을 거절하시겠습니까?",
+      "declineDescription": "매장에서 제안한 {time} 시간의 확보를 해제합니다. 이후 새 예약을 할 수 있습니다.",
+      "keep": "제안 유지",
+      "decline": "거절",
+      "acceptedTitle": "새 시간 확정",
+      "acceptedMessage": "{time} 수락 내용이 {restaurant}에 전달되었습니다.",
+      "declinedTitle": "요청 거절",
+      "declinedMessage": "{restaurant}에 전달되었습니다.",
+      "responseError": "제안을 업데이트할 수 없습니다. 다시 시도해 주세요."
     }
   },
   "OwnerDashboard": {
-    "restaurantFallback": "레스토랑", "eyebrow": "서비스 개요", "addWalkIn": "워크인 추가", "guestCount": "{count}명",
-    "loadError": { "title": "예약 목록을 불러올 수 없습니다", "retry": "다시 시도" },
-    "toolbar": { "today": "오늘 · {date}", "previousDay": "이전 날", "nextDay": "다음 날", "returnToday": "오늘로 돌아가기", "searchPlaceholder": "고객 이름 또는 예약번호", "searchLabel": "고객 이름, 예약번호 또는 전화번호로 예약 검색", "clearSearch": "예약 검색 지우기", "filter": "예약 필터" },
-    "overview": { "metrics": { "bookings": "예약", "expectedGuests": "예상 고객", "preOrders": "사전 주문", "vipGuests": "VIP 고객" }, "attention": { "title": "확인 필요", "description": "검토할 예약 요청이 {count}건 있습니다." }, "nextArrival": "다음 도착 고객", "vip": "VIP", "preOrder": "사전 주문", "guestCount": "{count}명" },
-    "list": { "title": "예약", "shown": "{count}건 표시", "searchEmptyTitle": "예약을 찾을 수 없습니다", "filterEmptyTitle": "조건에 맞는 예약이 없습니다", "searchEmptyDescription": "고객 이름, 예약번호 또는 전화번호를 확인하세요.", "filterEmptyDescription": "다른 상태 또는 고객 필터를 선택해 보세요." },
-    "filters": { "title": "예약 필터", "status": "상태", "chooseOne": "하나 선택", "guestDetails": "고객 정보", "selectAny": "복수 선택 가능", "reset": "초기화", "show": "예약 {count}건 보기", "statuses": { "all": "전체", "pending": "대기 중", "waitingGuest": "고객 응답 대기", "confirmed": "확정", "declined": "거절", "expired": "만료", "cancelled": "취소", "arrived": "도착", "seated": "착석", "completed": "완료", "noShow": "노쇼" }, "guests": { "vip": "VIP", "preOrder": "사전 주문", "largeParty": "4명 이상" } },
-    "walkIn": { "title": "워크인 추가", "description": "온라인 예약 없이 방문한 고객을 추가합니다. 현재 서비스 시간대의 수용 인원에서 차감됩니다.", "errorTitle": "워크인을 추가할 수 없습니다", "capacityError": "현재 서비스 시간대의 수용 인원이 부족합니다.", "genericError": "워크인을 추가하지 못했습니다. 다시 시도해 주세요.", "name": "고객 이름", "namePlaceholder": "고객 이름 입력", "nameRequired": "고객 이름은 필수입니다.", "phone": "전화번호", "phonePlaceholder": "전화번호 입력", "phoneRequired": "전화번호는 필수입니다.", "partySize": "인원", "notes": "메모", "notesPlaceholder": "좌석 또는 알레르기 메모", "cancel": "취소", "submit": "고객 추가", "added": "워크인 고객을 추가했습니다." }
+    "restaurantFallback": "레스토랑",
+    "eyebrow": "서비스 개요",
+    "addWalkIn": "워크인 추가",
+    "guestCount": "{count}명",
+    "loadError": {
+      "title": "예약 목록을 불러올 수 없습니다",
+      "retry": "다시 시도"
+    },
+    "toolbar": {
+      "today": "오늘 · {date}",
+      "previousDay": "이전 날",
+      "nextDay": "다음 날",
+      "returnToday": "오늘로 돌아가기",
+      "searchPlaceholder": "고객 이름 또는 예약번호",
+      "searchLabel": "고객 이름, 예약번호 또는 전화번호로 예약 검색",
+      "clearSearch": "예약 검색 지우기",
+      "filter": "예약 필터"
+    },
+    "overview": {
+      "metrics": {
+        "bookings": "예약",
+        "expectedGuests": "예상 고객",
+        "preOrders": "사전 주문",
+        "vipGuests": "VIP 고객"
+      },
+      "attention": {
+        "title": "확인 필요",
+        "description": "검토할 예약 요청이 {count}건 있습니다."
+      },
+      "nextArrival": "다음 도착 고객",
+      "vip": "VIP",
+      "preOrder": "사전 주문",
+      "guestCount": "{count}명"
+    },
+    "list": {
+      "title": "예약",
+      "shown": "{count}건 표시",
+      "searchEmptyTitle": "예약을 찾을 수 없습니다",
+      "filterEmptyTitle": "조건에 맞는 예약이 없습니다",
+      "searchEmptyDescription": "고객 이름, 예약번호 또는 전화번호를 확인하세요.",
+      "filterEmptyDescription": "다른 상태 또는 고객 필터를 선택해 보세요."
+    },
+    "filters": {
+      "title": "예약 필터",
+      "status": "상태",
+      "chooseOne": "하나 선택",
+      "guestDetails": "고객 정보",
+      "selectAny": "복수 선택 가능",
+      "reset": "초기화",
+      "show": "예약 {count}건 보기",
+      "statuses": {
+        "all": "전체",
+        "pending": "대기 중",
+        "waitingGuest": "고객 응답 대기",
+        "confirmed": "확정",
+        "declined": "거절",
+        "expired": "만료",
+        "cancelled": "취소",
+        "arrived": "도착",
+        "seated": "착석",
+        "completed": "완료",
+        "noShow": "노쇼"
+      },
+      "guests": {
+        "vip": "VIP",
+        "preOrder": "사전 주문",
+        "largeParty": "4명 이상"
+      }
+    },
+    "walkIn": {
+      "title": "워크인 추가",
+      "description": "온라인 예약 없이 방문한 고객을 추가합니다. 현재 서비스 시간대의 수용 인원에서 차감됩니다.",
+      "errorTitle": "워크인을 추가할 수 없습니다",
+      "capacityError": "현재 서비스 시간대의 수용 인원이 부족합니다.",
+      "genericError": "워크인을 추가하지 못했습니다. 다시 시도해 주세요.",
+      "name": "고객 이름",
+      "namePlaceholder": "고객 이름 입력",
+      "nameRequired": "고객 이름은 필수입니다.",
+      "phone": "전화번호",
+      "phonePlaceholder": "전화번호 입력",
+      "phoneRequired": "전화번호는 필수입니다.",
+      "partySize": "인원",
+      "notes": "메모",
+      "notesPlaceholder": "좌석 또는 알레르기 메모",
+      "cancel": "취소",
+      "submit": "고객 추가",
+      "added": "워크인 고객을 추가했습니다."
+    }
   },
   "OwnerReservationDetails": {
-    "title": "예약 상세", "eyebrow": "선택한 고객 정보", "notFound": "예약을 찾을 수 없습니다.",
-    "notification": { "title": "확정 알림 전송", "message": "{guest}님에게 테이블 확정 알림을 보냈습니다." },
-    "footer": { "viewArrival": "{guest}님의 방문 상태 보기", "checkIn": "{guest}님 체크인", "waiting": "고객 응답 대기 중", "closed": "요청 종료", "confirm": "예약 확정" },
-    "menu": { "aria": "예약 작업", "label": "예약 작업", "contact": "고객에게 연락", "noShow": "노쇼로 표시", "cancel": "예약 취소" },
-    "noShow": { "title": "{guest}님을 노쇼로 표시할까요?", "description": "도착 유예 시간이 지난 후에만 사용하세요. 이 작업은 되돌릴 수 없으며 시간대 수용 인원은 복구되지 않습니다.", "keep": "계속 대기", "confirm": "노쇼로 표시", "error": "이 예약을 노쇼로 표시할 수 없습니다. 도착 유예 시간이 아직 지나지 않았을 수 있습니다." },
-    "cancel": { "title": "이 예약을 취소할까요?", "description": "테이블이 해제되며 이 작업은 되돌릴 수 없습니다.", "reason": "취소 사유", "placeholder": "매장에서 예약을 취소하는 이유를 고객에게 알려 주세요", "keep": "예약 유지", "confirm": "예약 취소", "error": "예약을 취소할 수 없습니다. 새로고침 후 다시 시도해 주세요." },
-    "information": { "title": "예약 정보", "date": "날짜", "largeParty": "단체 예약", "guests": "인원", "guestCount": "{count}명", "table": "테이블", "notAssigned": "미배정", "preOrder": "사전 주문", "noPreOrder": "사전 주문 없음" },
-    "confirmation": { "title": "고객 예약 확정", "description": "앱으로 예약 확정을 보내세요. 긴급하거나 특별한 확인이 필요할 때만 전화하세요.", "notify": "고객에게 알림", "call": "고객에게 전화" },
-    "summary": { "meta": "{time} · {count}명 · 예약번호 {reference}" },
-    "badges": { "pending": "대기 중", "alternative-proposed": "다른 시간 제안", "confirmed": "확정", "declined": "거절", "expired": "만료", "cancelled": "취소", "expected": "방문 예정", "arrived": "도착", "seated": "착석", "completed": "완료", "no-show": "노쇼", "vip": "VIP", "regular": "일반", "new": "신규", "preOrder": "사전 주문" },
-    "notes": { "title": "서비스 메모", "empty": "서비스 메모 없음" },
-    "customerResponse": { "acceptedTitle": "고객이 제안 시간을 수락했습니다", "acceptedDescription": "{date} {time}로 확정되었습니다.", "declinedTitle": "고객이 제안 시간을 거절했습니다", "declinedSlot": "제안 시간", "declinedDescription": "고객이 {slot}을 거절했습니다. 다른 시간을 제안하거나 직접 연락하세요.", "requestedTitle": "고객이 다른 시간을 요청했습니다", "requestedDescription": "{date} {time}의 새 요청을 확인하세요.", "changeTitle": "고객이 예약 변경을 요청했습니다", "changeDescription": "확정된 예약을 {date} {time}로 변경할까요? 수락할 때까지 기존 시간이 유지됩니다.", "acceptChange": "새 시간 수락", "declineChange": "기존 시간 유지", "changeError": "이 요청에 응답할 수 없습니다", "waitingTitle": "고객 응답 대기 중", "waitingDescription": "{date} {time}를 제안했습니다." },
+    "title": "예약 상세",
+    "eyebrow": "선택한 고객 정보",
+    "notFound": "예약을 찾을 수 없습니다.",
+    "notification": {
+      "title": "확정 알림 전송",
+      "message": "{guest}님에게 테이블 확정 알림을 보냈습니다."
+    },
+    "footer": {
+      "viewArrival": "{guest}님의 방문 상태 보기",
+      "checkIn": "{guest}님 체크인",
+      "waiting": "고객 응답 대기 중",
+      "closed": "요청 종료",
+      "confirm": "예약 확정"
+    },
+    "menu": {
+      "aria": "예약 작업",
+      "label": "예약 작업",
+      "contact": "고객에게 연락",
+      "noShow": "노쇼로 표시",
+      "cancel": "예약 취소"
+    },
+    "noShow": {
+      "title": "{guest}님을 노쇼로 표시할까요?",
+      "description": "도착 유예 시간이 지난 후에만 사용하세요. 이 작업은 되돌릴 수 없으며 시간대 수용 인원은 복구되지 않습니다.",
+      "keep": "계속 대기",
+      "confirm": "노쇼로 표시",
+      "error": "이 예약을 노쇼로 표시할 수 없습니다. 도착 유예 시간이 아직 지나지 않았을 수 있습니다."
+    },
+    "cancel": {
+      "title": "이 예약을 취소할까요?",
+      "description": "테이블이 해제되며 이 작업은 되돌릴 수 없습니다.",
+      "reason": "취소 사유",
+      "placeholder": "매장에서 예약을 취소하는 이유를 고객에게 알려 주세요",
+      "keep": "예약 유지",
+      "confirm": "예약 취소",
+      "error": "예약을 취소할 수 없습니다. 새로고침 후 다시 시도해 주세요."
+    },
+    "information": {
+      "title": "예약 정보",
+      "date": "날짜",
+      "largeParty": "단체 예약",
+      "guests": "인원",
+      "guestCount": "{count}명",
+      "table": "테이블",
+      "notAssigned": "미배정",
+      "preOrder": "사전 주문",
+      "noPreOrder": "사전 주문 없음"
+    },
+    "confirmation": {
+      "title": "고객 예약 확정",
+      "description": "앱으로 예약 확정을 보내세요. 긴급하거나 특별한 확인이 필요할 때만 전화하세요.",
+      "notify": "고객에게 알림",
+      "call": "고객에게 전화"
+    },
+    "summary": {
+      "meta": "{time} · {count}명 · 예약번호 {reference}"
+    },
+    "badges": {
+      "pending": "대기 중",
+      "alternative-proposed": "다른 시간 제안",
+      "confirmed": "확정",
+      "declined": "거절",
+      "expired": "만료",
+      "cancelled": "취소",
+      "expected": "방문 예정",
+      "arrived": "도착",
+      "seated": "착석",
+      "completed": "완료",
+      "no-show": "노쇼",
+      "vip": "VIP",
+      "regular": "일반",
+      "new": "신규",
+      "preOrder": "사전 주문"
+    },
+    "notes": {
+      "title": "서비스 메모",
+      "empty": "서비스 메모 없음"
+    },
+    "customerResponse": {
+      "acceptedTitle": "고객이 제안 시간을 수락했습니다",
+      "acceptedDescription": "{date} {time}로 확정되었습니다.",
+      "declinedTitle": "고객이 제안 시간을 거절했습니다",
+      "declinedSlot": "제안 시간",
+      "declinedDescription": "고객이 {slot}을 거절했습니다. 다른 시간을 제안하거나 직접 연락하세요.",
+      "requestedTitle": "고객이 다른 시간을 요청했습니다",
+      "requestedDescription": "{date} {time}의 새 요청을 확인하세요.",
+      "changeTitle": "고객이 예약 변경을 요청했습니다",
+      "changeDescription": "확정된 예약을 {date} {time}로 변경할까요? 수락할 때까지 기존 시간이 유지됩니다.",
+      "acceptChange": "새 시간 수락",
+      "declineChange": "기존 시간 유지",
+      "changeError": "이 요청에 응답할 수 없습니다",
+      "waitingTitle": "고객 응답 대기 중",
+      "waitingDescription": "{date} {time}를 제안했습니다."
+    },
     "response": {
-      "title": "요청에 응답", "alternativeSent": "다른 시간 전송됨", "unable": "예약 불가", "awaiting": "응답 대기", "waiting": "{slot}에 대한 고객 응답을 기다리고 있습니다.", "notified": "고객에게 알림: {reason}.", "instructions": "요청 시간을 확정하거나 다른 시간을 제안하거나 만석임을 고객에게 알려 주세요.", "updates": "당일 또는 특별 요청에 빠른 답변이 필요하면 고객에게 전화하세요.", "changeTime": "제안 시간 변경", "suggestTime": "다른 시간 제안", "call": "고객에게 전화", "noTable": "테이블 없음",
-      "alternativeDrawer": { "title": "다른 시간 제안", "requestedTime": "고객 요청 시간", "availableTimes": "예약 가능한 다른 시간", "description": "고객에게 보낼 예약 가능한 시간을 선택하세요.", "loading": "예약 가능한 시간을 불러오는 중...", "noSlots": "이틀 동안 다른 온라인 예약 시간이 없습니다.", "loadError": "예약 가능한 시간을 불러올 수 없습니다", "message": "메시지 (선택)", "placeholder": "예: 이 시간에는 창가 테이블을 준비할 수 있습니다.", "send": "제안 시간 전송", "sendError": "제안 시간을 보낼 수 없습니다", "sentTitle": "다른 시간 전송 완료", "sentMessage": "{guest}님은 앱 알림을 받고 수락하거나 거절할 수 있습니다." },
-      "unavailableDrawer": { "title": "예약 불가", "description": "명확한 이유를 선택하세요. 예약 처리 기록에 함께 저장됩니다.", "notify": "요청 거절", "notifiedTitle": "요청 거절됨", "notifiedMessage": "다음 이유로 요청이 거절되었습니다: {reason}." },
-      "reasons": { "fullyBooked": "만석", "partySize": "해당 인원 수용 불가", "closed": "영업 종료", "other": "기타" }
+      "title": "요청에 응답",
+      "alternativeSent": "다른 시간 전송됨",
+      "unable": "예약 불가",
+      "awaiting": "응답 대기",
+      "waiting": "{slot}에 대한 고객 응답을 기다리고 있습니다.",
+      "notified": "고객에게 알림: {reason}.",
+      "instructions": "요청 시간을 확정하거나 다른 시간을 제안하거나 만석임을 고객에게 알려 주세요.",
+      "updates": "당일 또는 특별 요청에 빠른 답변이 필요하면 고객에게 전화하세요.",
+      "changeTime": "제안 시간 변경",
+      "suggestTime": "다른 시간 제안",
+      "call": "고객에게 전화",
+      "noTable": "테이블 없음",
+      "alternativeDrawer": {
+        "title": "다른 시간 제안",
+        "requestedTime": "고객 요청 시간",
+        "availableTimes": "예약 가능한 다른 시간",
+        "description": "고객에게 보낼 예약 가능한 시간을 선택하세요.",
+        "loading": "예약 가능한 시간을 불러오는 중...",
+        "noSlots": "이틀 동안 다른 온라인 예약 시간이 없습니다.",
+        "loadError": "예약 가능한 시간을 불러올 수 없습니다",
+        "message": "메시지 (선택)",
+        "placeholder": "예: 이 시간에는 창가 테이블을 준비할 수 있습니다.",
+        "send": "제안 시간 전송",
+        "sendError": "제안 시간을 보낼 수 없습니다",
+        "sentTitle": "다른 시간 전송 완료",
+        "sentMessage": "{guest}님은 앱 알림을 받고 수락하거나 거절할 수 있습니다."
+      },
+      "unavailableDrawer": {
+        "title": "예약 불가",
+        "description": "명확한 이유를 선택하세요. 예약 처리 기록에 함께 저장됩니다.",
+        "notify": "요청 거절",
+        "notifiedTitle": "요청 거절됨",
+        "notifiedMessage": "다음 이유로 요청이 거절되었습니다: {reason}."
+      },
+      "reasons": {
+        "fullyBooked": "만석",
+        "partySize": "해당 인원 수용 불가",
+        "closed": "영업 종료",
+        "other": "기타"
+      }
     }
   },
   "OwnerCheckIn": {
@@ -265,8 +811,8 @@
     "arrival": {
       "title": "고객 방문",
       "eyebrow": "방문 상태 관리",
-        "notFound": "예약을 찾을 수 없습니다.",
-        "updateError": "방문 상태를 업데이트할 수 없습니다. 새로고침 후 다시 시도해 주세요.",
+      "notFound": "예약을 찾을 수 없습니다.",
+      "updateError": "방문 상태를 업데이트할 수 없습니다. 새로고침 후 다시 시도해 주세요.",
       "visitStatus": "방문 상태",
       "statuses": {
         "expected": "예약 확정",
@@ -355,34 +901,70 @@
       "description": "오늘의 예약과 대기 중인 고객 요청을 확인합니다.",
       "refresh": "새로고침",
       "metrics": {
-        "bookings": { "label": "오늘 예약", "detail": "전체 상태" },
-        "checkedIn": { "label": "체크인", "detail": "도착, 착석 또는 완료" },
-        "pending": { "label": "오늘 처리 대기", "detail": "레스토랑 응답 대기 중" },
-        "noShow": { "label": "오늘 노쇼", "detail": "노쇼로 표시됨" }
+        "bookings": {
+          "label": "오늘 예약",
+          "detail": "전체 상태"
+        },
+        "checkedIn": {
+          "label": "체크인",
+          "detail": "도착, 착석 또는 완료"
+        },
+        "pending": {
+          "label": "오늘 처리 대기",
+          "detail": "레스토랑 응답 대기 중"
+        },
+        "noShow": {
+          "label": "오늘 노쇼",
+          "detail": "노쇼로 표시됨"
+        }
       },
       "trend": {
         "title": "서비스 날짜별 예약",
         "period": "최근 7일"
       },
-      "pending": { "title": "대기 중인 요청", "total": "총 {count}건", "review": "검토", "empty": "대기 중인 요청이 없습니다" },
+      "pending": {
+        "title": "대기 중인 요청",
+        "total": "총 {count}건",
+        "review": "검토",
+        "empty": "대기 중인 요청이 없습니다"
+      },
       "loadError": "레스토랑 운영 데이터를 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요."
     },
     "reservations": {
       "title": "예약 운영",
       "description": "예약, 체크인, 취소 및 노쇼 사례를 한곳에서 관리합니다.",
       "metrics": {
-        "confirmed": { "label": "예약 확정", "detail": "전체 기록" },
-        "checkedIn": { "label": "체크인", "detail": "전체 기록" },
-        "cancelled": { "label": "취소", "detail": "전체 기록" },
-        "noShow": { "label": "노쇼", "detail": "전체 기록" }
+        "confirmed": {
+          "label": "예약 확정",
+          "detail": "전체 기록"
+        },
+        "checkedIn": {
+          "label": "체크인",
+          "detail": "전체 기록"
+        },
+        "cancelled": {
+          "label": "취소",
+          "detail": "전체 기록"
+        },
+        "noShow": {
+          "label": "노쇼",
+          "detail": "전체 기록"
+        }
       },
       "filters": {
         "searchPlaceholder": "예약번호, 고객, 전화번호 또는 이메일 검색",
         "searchLabel": "예약 검색",
         "periodLabel": "예약 기간",
         "statusLabel": "예약 상태",
-        "period": { "all": "전체 예약", "today": "오늘", "last7Days": "최근 7일", "thisMonth": "이번 달" },
-        "status": { "all": "전체 예약 상태" }
+        "period": {
+          "all": "전체 예약",
+          "today": "오늘",
+          "last7Days": "최근 7일",
+          "thisMonth": "이번 달"
+        },
+        "status": {
+          "all": "전체 예약 상태"
+        }
       },
       "table": {
         "id": "예약번호",
@@ -393,14 +975,30 @@
         "status": "상태",
         "slot": "{date} · {time} · {count}명"
       },
-      "channels": { "app": "앱 예약", "web": "웹 예약" },
-      "checkIn": { "complete": "완료", "pending": "대기 중", "none": "-" },
-      "statuses": { "pending": "대기 중", "confirmed": "예약 확정", "checkedIn": "체크인", "cancelled": "취소", "declined": "거절", "noShow": "노쇼" },
+      "channels": {
+        "app": "앱 예약",
+        "web": "웹 예약"
+      },
+      "checkIn": {
+        "complete": "완료",
+        "pending": "대기 중",
+        "none": "-"
+      },
+      "statuses": {
+        "pending": "대기 중",
+        "confirmed": "예약 확정",
+        "checkedIn": "체크인",
+        "cancelled": "취소",
+        "declined": "거절",
+        "noShow": "노쇼"
+      },
       "details": "상세",
       "resolve": "처리",
       "empty": "필터 조건에 맞는 예약이 없습니다.",
-    "loadError": "예약 목록을 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요.",
-    "pagination": { "rowsPerPage": "페이지당 행" }
+      "loadError": "예약 목록을 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요.",
+      "pagination": {
+        "rowsPerPage": "페이지당 행"
+      }
     },
     "reservationDetail": {
       "title": "예약 상세",
@@ -408,14 +1006,57 @@
       "manageReservation": "예약 관리",
       "loading": "예약을 불러오는 중...",
       "loadError": "이 예약을 불러올 수 없습니다.",
-      "operations": { "confirm": "예약 확정", "checkIn": "고객 체크인", "seat": "착석 처리", "complete": "방문 완료", "noAction": "이 예약에 대해 추가로 수행할 작업이 없습니다.", "error": "예약을 업데이트할 수 없습니다. 새로고침 후 다시 시도하세요." },
-      "reservation": { "title": "예약 정보", "date": "날짜", "time": "시간", "partySize": "인원", "guests": "{count}명", "channel": "예약 채널", "request": "요청사항" },
-      "customer": { "title": "고객 및 가게", "name": "고객", "phone": "전화번호", "email": "이메일", "language": "언어", "store": "가게" },
-      "languages": { "en": "영어", "vi": "베트남어", "ko": "한국어" },
-      "checkIn": { "title": "체크인", "status": "상태", "method": "방법", "qr": "QR 코드" },
-      "history": { "title": "변경 이력", "created": "예약 생성", "currentStatus": "현재 상태" },
+      "operations": {
+        "confirm": "예약 확정",
+        "checkIn": "고객 체크인",
+        "seat": "착석 처리",
+        "complete": "방문 완료",
+        "noAction": "이 예약에 대해 추가로 수행할 작업이 없습니다.",
+        "error": "예약을 업데이트할 수 없습니다. 새로고침 후 다시 시도하세요."
+      },
+      "reservation": {
+        "title": "예약 정보",
+        "date": "날짜",
+        "time": "시간",
+        "partySize": "인원",
+        "guests": "{count}명",
+        "channel": "예약 채널",
+        "request": "요청사항"
+      },
+      "customer": {
+        "title": "고객 및 가게",
+        "name": "고객",
+        "phone": "전화번호",
+        "email": "이메일",
+        "language": "언어",
+        "store": "가게"
+      },
+      "languages": {
+        "en": "영어",
+        "vi": "베트남어",
+        "ko": "한국어"
+      },
+      "checkIn": {
+        "title": "체크인",
+        "status": "상태",
+        "method": "방법",
+        "qr": "QR 코드"
+      },
+      "history": {
+        "title": "변경 이력",
+        "created": "예약 생성",
+        "currentStatus": "현재 상태"
+      },
       "notAvailable": "없음",
-      "modal": { "title": "예약 상태 변경", "status": "새 상태", "reason": "사유", "reasonRequired": "취소 또는 노쇼 검토 상태 변경 시 사유를 입력해야 합니다.", "prototypeNotice": "프로토타입에서는 페이지를 나가면 변경사항이 저장되지 않습니다.", "cancel": "취소", "save": "저장" }
+      "modal": {
+        "title": "예약 상태 변경",
+        "status": "새 상태",
+        "reason": "사유",
+        "reasonRequired": "취소 또는 노쇼 검토 상태 변경 시 사유를 입력해야 합니다.",
+        "prototypeNotice": "프로토타입에서는 페이지를 나가면 변경사항이 저장되지 않습니다.",
+        "cancel": "취소",
+        "save": "저장"
+      }
     },
     "customers": {
       "title": "고객 관리",
@@ -433,25 +1074,43 @@
       },
       "empty": "검색 조건에 맞는 고객이 없습니다.",
       "loadError": "고객 목록을 불러올 수 없습니다. 새로고침하거나 다시 로그인해 주세요.",
-      "pagination": { "rowsPerPage": "페이지당 행" }
+      "pagination": {
+        "rowsPerPage": "페이지당 행"
+      }
     },
     "stores": {
       "title": "가게 관리",
       "description": "입점 심사, 가게 프로필, 운영 상태 및 계약을 관리합니다.",
       "addStore": "가게 추가",
       "metrics": {
-        "active": { "label": "운영 중", "detail": "이번 달 +42곳" },
-        "pending": { "label": "승인 대기", "detail": "48시간 초과 2건" },
-        "suspended": { "label": "일시 중지", "detail": "관리자 중지 3건" },
-        "rating": { "label": "평균 평점", "detail": "리뷰 36,208건" }
+        "active": {
+          "label": "운영 중",
+          "detail": "이번 달 +42곳"
+        },
+        "pending": {
+          "label": "승인 대기",
+          "detail": "48시간 초과 2건"
+        },
+        "suspended": {
+          "label": "일시 중지",
+          "detail": "관리자 중지 3건"
+        },
+        "rating": {
+          "label": "평균 평점",
+          "detail": "리뷰 36,208건"
+        }
       },
       "filters": {
         "searchPlaceholder": "가게, 가게 ID 또는 관리자 검색",
         "searchLabel": "가게 검색",
         "statusLabel": "입점 상태",
         "regionLabel": "가게 지역",
-        "status": { "all": "전체 입점 상태" },
-        "region": { "all": "전체 지역" }
+        "status": {
+          "all": "전체 입점 상태"
+        },
+        "region": {
+          "all": "전체 지역"
+        }
       },
       "table": {
         "store": "가게",
@@ -461,9 +1120,23 @@
         "commission": "수수료",
         "status": "상태"
       },
-      "statuses": { "draft": "작성 중", "pending": "승인 대기", "changesRequested": "보완 요청", "active": "운영 중", "suspended": "일시 중지" },
-      "regions": { "hoChiMinh": "호찌민", "hanoi": "하노이", "daNang": "다낭" },
-      "categories": { "vietnamese": "베트남 음식", "korean": "한식", "fusion": "퓨전" },
+      "statuses": {
+        "draft": "작성 중",
+        "pending": "승인 대기",
+        "changesRequested": "보완 요청",
+        "active": "운영 중",
+        "suspended": "일시 중지"
+      },
+      "regions": {
+        "hoChiMinh": "호찌민",
+        "hanoi": "하노이",
+        "daNang": "다낭"
+      },
+      "categories": {
+        "vietnamese": "베트남 음식",
+        "korean": "한식",
+        "fusion": "퓨전"
+      },
       "underReview": "검토 중",
       "details": "상세",
       "review": "검토",
@@ -475,20 +1148,44 @@
       "thisMonth": "이번 달",
       "download": "다운로드",
       "metrics": {
-        "gmv": { "label": "총 거래액", "detail": "지난달 대비 +10.8%" },
-        "commission": { "label": "수수료 매출", "detail": "평균 수수료율 4.7%" },
-        "advertising": { "label": "광고 매출", "detail": "지난달 대비 +18.2%" },
-        "settlement": { "label": "정산 대기", "detail": "검토 필요 6건" }
+        "gmv": {
+          "label": "총 거래액",
+          "detail": "지난달 대비 +10.8%"
+        },
+        "commission": {
+          "label": "수수료 매출",
+          "detail": "평균 수수료율 4.7%"
+        },
+        "advertising": {
+          "label": "광고 매출",
+          "detail": "지난달 대비 +18.2%"
+        },
+        "settlement": {
+          "label": "정산 대기",
+          "detail": "검토 필요 6건"
+        }
       },
       "trend": {
         "title": "거래액 및 플랫폼 매출",
         "period": "최근 6개월",
-        "months": { "mar": "3월", "apr": "4월", "may": "5월", "jun": "6월", "jul": "7월", "aug": "8월" }
+        "months": {
+          "mar": "3월",
+          "apr": "4월",
+          "may": "5월",
+          "jun": "6월",
+          "jul": "7월",
+          "aug": "8월"
+        }
       },
       "mix": {
         "title": "매출 구성",
         "period": "8월",
-        "items": { "commission": "예약 수수료", "advertising": "광고", "promotions": "프로모션", "other": "기타" }
+        "items": {
+          "commission": "예약 수수료",
+          "advertising": "광고",
+          "promotions": "프로모션",
+          "other": "기타"
+        }
       }
     },
     "campaigns": {
@@ -499,18 +1196,68 @@
         "placementLabel": "캠페인 노출 위치",
         "statusLabel": "캠페인 상태",
         "periodLabel": "캠페인 기간",
-        "placement": { "all": "전체 위치" },
-        "status": { "all": "전체 상태" },
-        "period": { "all": "전체 기간", "last30Days": "최근 30일", "next30Days": "향후 30일" }
+        "placement": {
+          "all": "전체 위치"
+        },
+        "status": {
+          "all": "전체 상태"
+        },
+        "period": {
+          "all": "전체 기간",
+          "last30Days": "최근 30일",
+          "next30Days": "향후 30일"
+        }
       },
-      "placements": { "homeMain": "홈 메인", "searchTop": "검색 결과 상단", "regionalHome": "지역 홈", "storeDetail": "가게 상세" },
-      "statuses": { "live": "진행 중", "scheduled": "예약", "ended": "종료" },
+      "placements": {
+        "homeMain": "홈 메인",
+        "searchTop": "검색 결과 상단",
+        "regionalHome": "지역 홈",
+        "storeDetail": "가게 상세"
+      },
+      "statuses": {
+        "live": "진행 중",
+        "scheduled": "예약",
+        "ended": "종료"
+      },
       "items": {
-        "weekendDining": { "headline": "주말 맛집", "subtitle": "주말 인기 레스토랑을 만나보세요", "name": "주말 맛집 메인 배너", "schedule": "9월 1–14일", "metric1": "노출", "metric2": "클릭", "metric3": "CTR" },
-        "hanoiNewOpen": { "headline": "하노이 신규 오픈", "subtitle": "새로 문을 연 레스토랑을 만나보세요", "name": "하노이 신규 가게 프로모션", "schedule": "9월 10–30일", "metric1": "예상 노출", "metric2": "타깃", "metric3": "가게" },
-        "chefsChoice": { "headline": "셰프의 선택", "subtitle": "에디터가 고른 파인다이닝", "name": "셰프의 선택 큐레이션", "schedule": "8월 15–31일", "metric1": "노출", "metric2": "클릭", "metric3": "CTR" }
+        "weekendDining": {
+          "headline": "주말 맛집",
+          "subtitle": "주말 인기 레스토랑을 만나보세요",
+          "name": "주말 맛집 메인 배너",
+          "schedule": "9월 1–14일",
+          "metric1": "노출",
+          "metric2": "클릭",
+          "metric3": "CTR"
+        },
+        "hanoiNewOpen": {
+          "headline": "하노이 신규 오픈",
+          "subtitle": "새로 문을 연 레스토랑을 만나보세요",
+          "name": "하노이 신규 가게 프로모션",
+          "schedule": "9월 10–30일",
+          "metric1": "예상 노출",
+          "metric2": "타깃",
+          "metric3": "가게"
+        },
+        "chefsChoice": {
+          "headline": "셰프의 선택",
+          "subtitle": "에디터가 고른 파인다이닝",
+          "name": "셰프의 선택 큐레이션",
+          "schedule": "8월 15–31일",
+          "metric1": "노출",
+          "metric2": "클릭",
+          "metric3": "CTR"
+        }
       },
-      "modal": { "title": "캠페인 생성", "name": "캠페인 이름", "description": "설명", "placement": "노출 위치", "startDate": "시작일", "endDate": "종료일", "cancel": "취소", "create": "생성" },
+      "modal": {
+        "title": "캠페인 생성",
+        "name": "캠페인 이름",
+        "description": "설명",
+        "placement": "노출 위치",
+        "startDate": "시작일",
+        "endDate": "종료일",
+        "cancel": "취소",
+        "create": "생성"
+      },
       "empty": "필터 조건에 맞는 캠페인이 없습니다."
     },
     "settings": {
@@ -521,105 +1268,527 @@
         "title": "운영 설정",
         "scope": "플랫폼 전체",
         "items": {
-          "storeRegistration": { "title": "가게 등록 알림", "description": "새 심사 요청이 도착하면 담당자에게 알립니다." },
-          "noShowRestriction": { "title": "자동 노쇼 이용 제한", "description": "30일 이내 노쇼 3회 발생 시 예약을 제한합니다." },
-          "bannerEndAlert": { "title": "배너 종료 알림", "description": "종료 48시간 전에 캠페인 담당자에게 알립니다." }
+          "storeRegistration": {
+            "title": "가게 등록 알림",
+            "description": "새 심사 요청이 도착하면 담당자에게 알립니다."
+          },
+          "noShowRestriction": {
+            "title": "자동 노쇼 이용 제한",
+            "description": "30일 이내 노쇼 3회 발생 시 예약을 제한합니다."
+          },
+          "bannerEndAlert": {
+            "title": "배너 종료 알림",
+            "description": "종료 48시간 전에 캠페인 담당자에게 알립니다."
+          }
         }
       },
       "roles": {
         "title": "관리자 역할",
         "manage": "역할 관리",
         "items": {
-          "superAdmin": { "title": "최고 관리자", "description": "전체 기능 · 사용자 {users}명", "badge": "전체 권한" },
-          "operations": { "title": "운영", "description": "고객, 가게, 예약 · 사용자 {users}명", "badge": "운영" },
-          "marketing": { "title": "마케팅", "description": "광고, 배너, 보고서 · 사용자 {users}명", "badge": "마케팅" },
-          "finance": { "title": "재무", "description": "매출, 정산 · 사용자 {users}명", "badge": "재무" }
+          "superAdmin": {
+            "title": "최고 관리자",
+            "description": "전체 기능 · 사용자 {users}명",
+            "badge": "전체 권한"
+          },
+          "operations": {
+            "title": "운영",
+            "description": "고객, 가게, 예약 · 사용자 {users}명",
+            "badge": "운영"
+          },
+          "marketing": {
+            "title": "마케팅",
+            "description": "광고, 배너, 보고서 · 사용자 {users}명",
+            "badge": "마케팅"
+          },
+          "finance": {
+            "title": "재무",
+            "description": "매출, 정산 · 사용자 {users}명",
+            "badge": "재무"
+          }
         }
       },
-      "modal": { "title": "관리자 초대", "email": "이메일 주소", "role": "관리자 역할", "requireMfa": "MFA 필수", "cancel": "취소", "invite": "초대 보내기" }
+      "modal": {
+        "title": "관리자 초대",
+        "email": "이메일 주소",
+        "role": "관리자 역할",
+        "requireMfa": "MFA 필수",
+        "cancel": "취소",
+        "invite": "초대 보내기"
+      }
     }
   },
   "SystemAdmin": {
-    "shell": { "title": "시스템 관리", "toggleNavigation": "시스템 관리자 탐색 열기", "adminOnly": "관리자 전용", "navigation": { "dashboard": "개요", "users": "사용자", "restaurants": "레스토랑", "reservations": "예약", "assignments": "레스토랑 권한", "preferences": "개인 설정" } },
+    "shell": {
+      "title": "시스템 관리",
+      "toggleNavigation": "시스템 관리자 탐색 열기",
+      "adminOnly": "관리자 전용",
+      "navigation": {
+        "dashboard": "개요",
+        "users": "사용자",
+        "restaurants": "레스토랑",
+        "reservations": "예약",
+        "assignments": "레스토랑 권한",
+        "preferences": "개인 설정"
+      }
+    },
     "dashboard": {
-      "title": "시스템 개요", "description": "사용자, 레스토랑 및 처리할 작업을 빠르게 확인합니다.", "loadError": "일부 개요 데이터를 불러올 수 없습니다.", "viewAll": "전체 보기",
-      "metrics": { "users": { "label": "사용자", "detail": "플랫폼의 모든 계정" }, "restaurants": { "label": "레스토랑", "detail": "활성 레스토랑 {count}개" }, "pending": { "label": "승인 대기", "detail": "관리자 검토가 필요한 레스토랑" }, "assignments": { "label": "권한 연결", "detail": "연결된 OWNER 및 STAFF 계정" } },
-      "pending": { "title": "승인 대기 레스토랑", "description": "다음 관리자 작업이 필요한 프로필입니다.", "status": "대기", "empty": "현재 승인 대기 중인 레스토랑이 없습니다." },
-      "quickActions": { "title": "빠른 이동", "description": "주요 관리 영역으로 이동합니다.", "users": "사용자 관리", "restaurants": "레스토랑 관리", "assignments": "레스토랑 권한 관리" }
-    },
-    "users": {
-      "title": "사용자", "description": "시스템 계정을 검색하고 확인합니다.", "loadError": "사용자 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 사용자가 없습니다.",
-      "filters": { "search": "아이디, 이름 또는 이메일 검색", "role": "역할 필터", "status": "상태 필터", "allRoles": "모든 역할", "allStatuses": "모든 상태" },
-      "table": { "user": "사용자", "contact": "연락처", "role": "역할", "status": "상태", "restaurant": "레스토랑 ID", "created": "생성일", "actions": "작업" },
-      "statuses": { "ACTIVE": "활성", "SUSPENDED": "정지", "CLOSED": "폐쇄" },
-      "actions": {
-        "openMenu": "{name} 작업 열기", "create": "사용자 추가", "edit": "정보 수정", "resetPassword": "비밀번호 재설정", "passwordReset": "{name}의 비밀번호를 재설정했습니다.", "passwordResetError": "비밀번호를 재설정할 수 없습니다.", "suspend": "정지", "reactivate": "재활성화", "cancel": "취소",
-        "suspendTitle": "{name} 계정을 정지할까요?", "suspendDescription": "현재 세션이 종료되며 재활성화될 때까지 로그인할 수 없습니다.",
-        "reactivateTitle": "{name} 계정을 재활성화할까요?", "reactivateDescription": "사용자가 다시 로그인할 수 있습니다.",
-        "suspendedSuccess": "{name} 계정을 정지했습니다.", "reactivatedSuccess": "{name} 계정을 재활성화했습니다.", "error": "사용자 상태를 변경할 수 없습니다.", "created": "{name}의 계정을 생성했습니다.", "updated": "{name}의 정보를 업데이트했습니다.", "saveError": "사용자를 저장할 수 없습니다. 정보 또는 아이디 중복 여부를 확인하세요."
-      },
-      "form": { "createTitle": "사용자 추가", "editTitle": "사용자 수정", "description": "새 계정은 고객 역할로 생성됩니다. 레스토랑 권한 페이지에서 권한을 할당하세요.", "userid": "로그인 아이디", "useridHint": "3~30자를 사용하세요. 생성 후 변경할 수 없습니다.", "name": "이름", "email": "이메일 (선택)", "phone": "전화번호 (선택)", "password": "임시 비밀번호", "passwordHint": "8~72자를 사용하고 안전한 채널로 전달하세요.", "placeholders": { "userid": "nguyenan", "name": "Nguyen Van An", "email": "an@example.com", "phone": "0901 234 567", "password": "8자 이상" }, "cancel": "취소", "create": "사용자 생성", "save": "변경 사항 저장" },
-      "pagination": { "rowsPerPage": "페이지당 행 수" }
-    },
-    "restaurants": {
-      "title": "레스토랑", "description": "모든 승인 상태의 레스토랑을 확인합니다.", "loadError": "레스토랑 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 레스토랑이 없습니다.",
-      "filters": { "search": "이름 또는 슬러그 검색", "city": "성/직할시", "status": "상태 필터", "allStatuses": "모든 상태" },
-      "table": { "restaurant": "레스토랑", "city": "성/직할시", "location": "동/면/특별구", "status": "승인 상태", "created": "생성일", "actions": "작업" },
-      "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
-      "actions": {
-        "openMenu": "{name} 작업 열기", "create": "레스토랑 추가", "manage": "레스토랑 관리", "edit": "정보 수정", "archive": "보관", "submit": "검토 요청", "resubmit": "재검토 요청", "approve": "승인", "reactivate": "재활성화", "requestChanges": "수정 요청", "suspend": "정지", "cancel": "취소", "error": "레스토랑 상태를 변경할 수 없습니다.", "archiveTitle": "{name}을(를) 보관할까요?", "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.", "archived": "{name}을(를) 보관했습니다.", "archiveError": "레스토랑을 보관할 수 없습니다.",
-        "success": { "submit": "{name}을(를) 검토 요청했습니다.", "resubmit": "{name}을(를) 재검토 요청했습니다.", "approve": "{name}을(를) 승인했습니다.", "reactivate": "{name}을(를) 재활성화했습니다.", "requestChanges": "{name}에 수정을 요청했습니다.", "suspend": "{name}을(를) 정지했습니다." },
-        "dialog": {
-          "submit": { "title": "{name}을(를) 검토 요청할까요?", "description": "레스토랑이 시스템 관리자 검토 대기 상태로 변경됩니다." },
-          "resubmit": { "title": "{name}을(를) 재검토 요청할까요?", "description": "요청된 수정이 완료되었음을 확인하고 다시 제출합니다." },
-          "approve": { "title": "{name}을(를) 승인할까요?", "description": "레스토랑이 공개되고 새 예약을 받을 수 있습니다." },
-          "reactivate": { "title": "{name}을(를) 재활성화할까요?", "description": "레스토랑이 다시 공개되고 새 예약을 받을 수 있습니다." },
-          "requestChanges": { "title": "{name}에 수정을 요청할까요?", "description": "정보를 수정하고 다시 제출할 때까지 레스토랑은 비활성 상태로 유지됩니다." },
-          "suspend": { "title": "{name}을(를) 정지할까요?", "description": "레스토랑이 공개 목록에서 숨겨지고 새 예약을 받을 수 없습니다." }
+      "title": "시스템 개요",
+      "description": "사용자, 레스토랑 및 처리할 작업을 빠르게 확인합니다.",
+      "loadError": "일부 개요 데이터를 불러올 수 없습니다.",
+      "viewAll": "전체 보기",
+      "metrics": {
+        "users": {
+          "label": "사용자",
+          "detail": "플랫폼의 모든 계정"
+        },
+        "restaurants": {
+          "label": "레스토랑",
+          "detail": "활성 레스토랑 {count}개"
+        },
+        "pending": {
+          "label": "승인 대기",
+          "detail": "관리자 검토가 필요한 레스토랑"
+        },
+        "assignments": {
+          "label": "권한 연결",
+          "detail": "연결된 OWNER 및 STAFF 계정"
         }
       },
-      "form": { "createTitle": "레스토랑 추가", "editTitle": "레스토랑 수정", "slug": "슬러그(URL 경로)", "name": "이름", "province": "성/직할시", "selectProvince": "성 또는 직할시 선택", "ward": "동/면/특별구", "selectWard": "동, 면 또는 특별구 선택", "selectProvinceFirst": "먼저 성 또는 직할시를 선택하세요", "locationLoadError": "행정구역 목록을 불러올 수 없습니다. 다시 시도하세요.", "timezone": "시간대", "cuisine": "요리 종류", "selectCuisine": "요리 종류 선택", "cuisines": { "vietnamese": "베트남 요리", "korean": "한식", "chinese": "중식", "japanese": "일식", "western": "양식" }, "phone": "전화번호", "email": "이메일", "priceRange": "1인 평균 가격대", "address": "상세 주소", "description": "설명", "placeholders": { "slug": "royal-pavilion", "name": "더 로열 파빌리온", "timezone": "Asia/Ho_Chi_Minh", "phone": "0901 234 567", "email": "contact@example.com", "priceRange": "150K - 300K / 1인", "address": "123 Nguyen Hue Street", "description": "레스토랑의 요리와 분위기를 간단히 설명하세요" }, "cancel": "취소", "create": "레스토랑 생성", "save": "변경 사항 저장", "created": "{name}을(를) 초안으로 생성했습니다.", "updated": "{name}을(를) 업데이트했습니다.", "saveError": "레스토랑을 저장할 수 없습니다. 입력값을 확인하고 다시 시도하세요.", "loadError": "레스토랑 정보를 불러올 수 없습니다." },
-      "pagination": { "rowsPerPage": "페이지당 행 수" }
+      "pending": {
+        "title": "승인 대기 레스토랑",
+        "description": "다음 관리자 작업이 필요한 프로필입니다.",
+        "status": "대기",
+        "empty": "현재 승인 대기 중인 레스토랑이 없습니다."
+      },
+      "quickActions": {
+        "title": "빠른 이동",
+        "description": "주요 관리 영역으로 이동합니다.",
+        "users": "사용자 관리",
+        "restaurants": "레스토랑 관리",
+        "assignments": "레스토랑 권한 관리"
+      }
+    },
+    "users": {
+      "title": "사용자",
+      "description": "시스템 계정을 검색하고 확인합니다.",
+      "loadError": "사용자 목록을 불러올 수 없습니다.",
+      "empty": "필터와 일치하는 사용자가 없습니다.",
+      "filters": {
+        "search": "아이디, 이름 또는 이메일 검색",
+        "role": "역할 필터",
+        "status": "상태 필터",
+        "allRoles": "모든 역할",
+        "allStatuses": "모든 상태"
+      },
+      "table": {
+        "user": "사용자",
+        "contact": "연락처",
+        "role": "역할",
+        "status": "상태",
+        "restaurant": "레스토랑 ID",
+        "created": "생성일",
+        "actions": "작업"
+      },
+      "statuses": {
+        "ACTIVE": "활성",
+        "SUSPENDED": "정지",
+        "CLOSED": "폐쇄"
+      },
+      "actions": {
+        "openMenu": "{name} 작업 열기",
+        "create": "사용자 추가",
+        "edit": "정보 수정",
+        "resetPassword": "비밀번호 재설정",
+        "passwordReset": "{name}의 비밀번호를 재설정했습니다.",
+        "passwordResetError": "비밀번호를 재설정할 수 없습니다.",
+        "suspend": "정지",
+        "reactivate": "재활성화",
+        "cancel": "취소",
+        "suspendTitle": "{name} 계정을 정지할까요?",
+        "suspendDescription": "현재 세션이 종료되며 재활성화될 때까지 로그인할 수 없습니다.",
+        "reactivateTitle": "{name} 계정을 재활성화할까요?",
+        "reactivateDescription": "사용자가 다시 로그인할 수 있습니다.",
+        "suspendedSuccess": "{name} 계정을 정지했습니다.",
+        "reactivatedSuccess": "{name} 계정을 재활성화했습니다.",
+        "error": "사용자 상태를 변경할 수 없습니다.",
+        "created": "{name}의 계정을 생성했습니다.",
+        "updated": "{name}의 정보를 업데이트했습니다.",
+        "saveError": "사용자를 저장할 수 없습니다. 정보 또는 아이디 중복 여부를 확인하세요."
+      },
+      "form": {
+        "createTitle": "사용자 추가",
+        "editTitle": "사용자 수정",
+        "description": "새 계정은 고객 역할로 생성됩니다. 레스토랑 권한 페이지에서 권한을 할당하세요.",
+        "userid": "로그인 아이디",
+        "useridHint": "3~30자를 사용하세요. 생성 후 변경할 수 없습니다.",
+        "name": "이름",
+        "email": "이메일 (선택)",
+        "phone": "전화번호 (선택)",
+        "password": "임시 비밀번호",
+        "passwordHint": "8~72자를 사용하고 안전한 채널로 전달하세요.",
+        "placeholders": {
+          "userid": "nguyenan",
+          "name": "Nguyen Van An",
+          "email": "an@example.com",
+          "phone": "0901 234 567",
+          "password": "8자 이상"
+        },
+        "cancel": "취소",
+        "create": "사용자 생성",
+        "save": "변경 사항 저장"
+      },
+      "pagination": {
+        "rowsPerPage": "페이지당 행 수"
+      }
+    },
+    "restaurants": {
+      "title": "레스토랑",
+      "description": "모든 승인 상태의 레스토랑을 확인합니다.",
+      "loadError": "레스토랑 목록을 불러올 수 없습니다.",
+      "empty": "필터와 일치하는 레스토랑이 없습니다.",
+      "filters": {
+        "search": "이름 또는 슬러그 검색",
+        "city": "성/직할시",
+        "status": "상태 필터",
+        "allStatuses": "모든 상태"
+      },
+      "table": {
+        "restaurant": "레스토랑",
+        "city": "성/직할시",
+        "location": "동/면/특별구",
+        "status": "승인 상태",
+        "created": "생성일",
+        "actions": "작업"
+      },
+      "statuses": {
+        "DRAFT": "초안",
+        "PENDING": "대기",
+        "CHANGES_REQUESTED": "수정 요청",
+        "ACTIVE": "활성",
+        "SUSPENDED": "정지"
+      },
+      "actions": {
+        "openMenu": "{name} 작업 열기",
+        "create": "레스토랑 추가",
+        "manage": "레스토랑 관리",
+        "edit": "정보 수정",
+        "archive": "보관",
+        "submit": "검토 요청",
+        "resubmit": "재검토 요청",
+        "approve": "승인",
+        "reactivate": "재활성화",
+        "requestChanges": "수정 요청",
+        "suspend": "정지",
+        "cancel": "취소",
+        "error": "레스토랑 상태를 변경할 수 없습니다.",
+        "archiveTitle": "{name}을(를) 보관할까요?",
+        "archiveDescription": "연결된 사용자나 예약이 없는 초안 레스토랑만 보관할 수 있습니다.",
+        "archived": "{name}을(를) 보관했습니다.",
+        "archiveError": "레스토랑을 보관할 수 없습니다.",
+        "success": {
+          "submit": "{name}을(를) 검토 요청했습니다.",
+          "resubmit": "{name}을(를) 재검토 요청했습니다.",
+          "approve": "{name}을(를) 승인했습니다.",
+          "reactivate": "{name}을(를) 재활성화했습니다.",
+          "requestChanges": "{name}에 수정을 요청했습니다.",
+          "suspend": "{name}을(를) 정지했습니다."
+        },
+        "dialog": {
+          "submit": {
+            "title": "{name}을(를) 검토 요청할까요?",
+            "description": "레스토랑이 시스템 관리자 검토 대기 상태로 변경됩니다."
+          },
+          "resubmit": {
+            "title": "{name}을(를) 재검토 요청할까요?",
+            "description": "요청된 수정이 완료되었음을 확인하고 다시 제출합니다."
+          },
+          "approve": {
+            "title": "{name}을(를) 승인할까요?",
+            "description": "레스토랑이 공개되고 새 예약을 받을 수 있습니다."
+          },
+          "reactivate": {
+            "title": "{name}을(를) 재활성화할까요?",
+            "description": "레스토랑이 다시 공개되고 새 예약을 받을 수 있습니다."
+          },
+          "requestChanges": {
+            "title": "{name}에 수정을 요청할까요?",
+            "description": "정보를 수정하고 다시 제출할 때까지 레스토랑은 비활성 상태로 유지됩니다."
+          },
+          "suspend": {
+            "title": "{name}을(를) 정지할까요?",
+            "description": "레스토랑이 공개 목록에서 숨겨지고 새 예약을 받을 수 없습니다."
+          }
+        }
+      },
+      "form": {
+        "createTitle": "레스토랑 추가",
+        "editTitle": "레스토랑 수정",
+        "slug": "슬러그(URL 경로)",
+        "name": "이름",
+        "province": "성/직할시",
+        "selectProvince": "성 또는 직할시 선택",
+        "ward": "동/면/특별구",
+        "selectWard": "동, 면 또는 특별구 선택",
+        "selectProvinceFirst": "먼저 성 또는 직할시를 선택하세요",
+        "locationLoadError": "행정구역 목록을 불러올 수 없습니다. 다시 시도하세요.",
+        "timezone": "시간대",
+        "cuisine": "요리 종류",
+        "selectCuisine": "요리 종류 선택",
+        "cuisines": {
+          "vietnamese": "베트남 요리",
+          "korean": "한식",
+          "chinese": "중식",
+          "japanese": "일식",
+          "western": "양식"
+        },
+        "phone": "전화번호",
+        "email": "이메일",
+        "priceRange": "1인 평균 가격대",
+        "address": "상세 주소",
+        "description": "설명",
+        "placeholders": {
+          "slug": "royal-pavilion",
+          "name": "더 로열 파빌리온",
+          "timezone": "Asia/Ho_Chi_Minh",
+          "phone": "0901 234 567",
+          "email": "contact@example.com",
+          "priceRange": "150K - 300K / 1인",
+          "address": "123 Nguyen Hue Street",
+          "description": "레스토랑의 요리와 분위기를 간단히 설명하세요"
+        },
+        "cancel": "취소",
+        "create": "레스토랑 생성",
+        "save": "변경 사항 저장",
+        "created": "{name}을(를) 초안으로 생성했습니다.",
+        "updated": "{name}을(를) 업데이트했습니다.",
+        "saveError": "레스토랑을 저장할 수 없습니다. 입력값을 확인하고 다시 시도하세요.",
+        "loadError": "레스토랑 정보를 불러올 수 없습니다."
+      },
+      "pagination": {
+        "rowsPerPage": "페이지당 행 수"
+      }
     },
     "restaurantDetail": {
-      "back": "레스토랑 목록으로", "loadError": "레스토랑 정보를 불러올 수 없습니다.", "viewPublic": "공개 페이지 보기",
-      "tabs": { "profile": "정보", "booking": "예약 설정", "hours": "영업시간", "menu": "메뉴", "media": "사진" },
-      "statuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
-      "profile": { "title": "레스토랑 정보", "edit": "정보 수정", "cuisine": "요리 종류", "priceRange": "가격대", "location": "지역", "timezone": "시간대", "phone": "전화번호", "email": "이메일", "address": "주소", "description": "설명" },
-      "booking": { "loadError": "예약 설정을 불러올 수 없습니다.", "notConfigured": "이 레스토랑에는 아직 예약 설정이 없습니다. 기본값을 확인한 후 저장하여 초기화하세요.", "save": "예약 설정 저장" },
-      "hours": { "loadError": "영업시간을 불러올 수 없습니다.", "saveSettingsFirst": "영업시간을 저장하거나 슬롯을 생성하기 전에 예약 설정을 저장하세요." },
-      "notifications": { "profileSaved": "레스토랑 정보를 저장했습니다.", "profileError": "레스토랑 정보를 저장할 수 없습니다.", "settingsSaved": "예약 설정을 저장했습니다.", "settingsError": "예약 설정을 저장할 수 없습니다. 값을 확인하세요.", "hoursSaved": "영업시간을 저장하고 슬롯 {count}개를 생성했습니다.", "hoursError": "영업시간을 저장할 수 없습니다.", "slotsGenerated": "슬롯 {count}개를 생성했습니다.", "regenerateError": "슬롯을 다시 생성할 수 없습니다." }
+      "back": "레스토랑 목록으로",
+      "loadError": "레스토랑 정보를 불러올 수 없습니다.",
+      "viewPublic": "공개 페이지 보기",
+      "tabs": {
+        "profile": "정보",
+        "booking": "예약 설정",
+        "hours": "영업시간",
+        "menu": "메뉴",
+        "media": "사진"
+      },
+      "statuses": {
+        "DRAFT": "초안",
+        "PENDING": "대기",
+        "CHANGES_REQUESTED": "수정 요청",
+        "ACTIVE": "활성",
+        "SUSPENDED": "정지"
+      },
+      "profile": {
+        "title": "레스토랑 정보",
+        "edit": "정보 수정",
+        "cuisine": "요리 종류",
+        "priceRange": "가격대",
+        "location": "지역",
+        "timezone": "시간대",
+        "phone": "전화번호",
+        "email": "이메일",
+        "address": "주소",
+        "description": "설명"
+      },
+      "booking": {
+        "loadError": "예약 설정을 불러올 수 없습니다.",
+        "notConfigured": "이 레스토랑에는 아직 예약 설정이 없습니다. 기본값을 확인한 후 저장하여 초기화하세요.",
+        "save": "예약 설정 저장"
+      },
+      "hours": {
+        "loadError": "영업시간을 불러올 수 없습니다.",
+        "saveSettingsFirst": "영업시간을 저장하거나 슬롯을 생성하기 전에 예약 설정을 저장하세요."
+      },
+      "notifications": {
+        "profileSaved": "레스토랑 정보를 저장했습니다.",
+        "profileError": "레스토랑 정보를 저장할 수 없습니다.",
+        "settingsSaved": "예약 설정을 저장했습니다.",
+        "settingsError": "예약 설정을 저장할 수 없습니다. 값을 확인하세요.",
+        "hoursSaved": "영업시간을 저장하고 슬롯 {count}개를 생성했습니다.",
+        "hoursError": "영업시간을 저장할 수 없습니다.",
+        "slotsGenerated": "슬롯 {count}개를 생성했습니다.",
+        "regenerateError": "슬롯을 다시 생성할 수 없습니다."
+      }
     },
     "reservations": {
-      "title": "예약", "description": "시스템의 모든 레스토랑 예약을 확인합니다.", "loadError": "예약 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 예약이 없습니다.", "details": "상세", "guests": "{count}명",
-      "filters": { "search": "예약 번호, 고객, 전화번호 또는 이메일 검색", "restaurant": "레스토랑 필터", "allRestaurants": "모든 레스토랑", "noRestaurants": "레스토랑을 찾을 수 없습니다", "status": "상태 필터", "allStatuses": "모든 상태", "dateFrom": "시작일", "dateTo": "종료일" },
-      "table": { "reference": "예약 번호", "restaurant": "레스토랑", "customer": "고객", "schedule": "일시 / 인원", "status": "상태" },
-      "statuses": { "PENDING": "확인 대기", "CONFIRMED": "확정", "CHECKED_IN": "도착", "COMPLETED": "완료", "CANCELLED": "취소", "DECLINED": "거절", "NO_SHOW": "노쇼" },
-      "pagination": { "rowsPerPage": "페이지당 행 수" },
+      "title": "예약",
+      "description": "시스템의 모든 레스토랑 예약을 확인합니다.",
+      "loadError": "예약 목록을 불러올 수 없습니다.",
+      "empty": "필터와 일치하는 예약이 없습니다.",
+      "details": "상세",
+      "guests": "{count}명",
+      "filters": {
+        "search": "예약 번호, 고객, 전화번호 또는 이메일 검색",
+        "restaurant": "레스토랑 필터",
+        "allRestaurants": "모든 레스토랑",
+        "noRestaurants": "레스토랑을 찾을 수 없습니다",
+        "status": "상태 필터",
+        "allStatuses": "모든 상태",
+        "dateFrom": "시작일",
+        "dateTo": "종료일"
+      },
+      "table": {
+        "reference": "예약 번호",
+        "restaurant": "레스토랑",
+        "customer": "고객",
+        "schedule": "일시 / 인원",
+        "status": "상태"
+      },
+      "statuses": {
+        "PENDING": "확인 대기",
+        "CONFIRMED": "확정",
+        "CHECKED_IN": "도착",
+        "COMPLETED": "완료",
+        "CANCELLED": "취소",
+        "DECLINED": "거절",
+        "NO_SHOW": "노쇼"
+      },
+      "pagination": {
+        "rowsPerPage": "페이지당 행 수"
+      },
       "detail": {
-        "title": "예약 상세", "back": "예약 목록으로", "loading": "예약 상세 정보를 불러오는 중...", "loadError": "예약 상세 정보를 불러올 수 없습니다.", "notAvailable": "정보 없음",
-        "reservation": { "title": "예약 정보", "start": "시작", "end": "종료", "partySize": "인원", "request": "특별 요청", "preOrder": "사전 주문" },
-        "customer": { "title": "고객", "name": "이름", "phone": "전화번호", "email": "이메일" },
-        "restaurant": { "title": "레스토랑", "name": "레스토랑 이름", "slug": "슬러그", "id": "레스토랑 ID" },
-        "status": { "title": "시스템 상태", "booking": "예약", "visit": "방문", "created": "생성일", "updated": "최근 수정" },
-        "proposal": { "title": "대체 시간 제안", "time": "제안 시간", "status": "상태", "initiator": "요청자", "respondBy": "응답 기한", "message": "메시지" }
+        "title": "예약 상세",
+        "back": "예약 목록으로",
+        "loading": "예약 상세 정보를 불러오는 중...",
+        "loadError": "예약 상세 정보를 불러올 수 없습니다.",
+        "notAvailable": "정보 없음",
+        "reservation": {
+          "title": "예약 정보",
+          "start": "시작",
+          "end": "종료",
+          "partySize": "인원",
+          "request": "특별 요청",
+          "preOrder": "사전 주문"
+        },
+        "customer": {
+          "title": "고객",
+          "name": "이름",
+          "phone": "전화번호",
+          "email": "이메일"
+        },
+        "restaurant": {
+          "title": "레스토랑",
+          "name": "레스토랑 이름",
+          "slug": "슬러그",
+          "id": "레스토랑 ID"
+        },
+        "status": {
+          "title": "시스템 상태",
+          "booking": "예약",
+          "visit": "방문",
+          "created": "생성일",
+          "updated": "최근 수정"
+        },
+        "proposal": {
+          "title": "대체 시간 제안",
+          "time": "제안 시간",
+          "status": "상태",
+          "initiator": "요청자",
+          "respondBy": "응답 기한",
+          "message": "메시지"
+        }
       }
     },
     "assignments": {
-      "title": "레스토랑 권한", "description": "사장님과 직원을 관리할 레스토랑에 연결합니다.", "loadError": "레스토랑 권한 목록을 불러올 수 없습니다.", "empty": "필터와 일치하는 권한이 없습니다.",
-      "filters": { "search": "사용자, 이메일 또는 레스토랑 검색", "role": "역할 필터", "allRoles": "모든 역할" },
-      "table": { "user": "사용자", "restaurant": "레스토랑", "role": "역할", "restaurantStatus": "레스토랑 상태", "actions": "작업" },
-      "roles": { "OWNER": "사장님", "STAFF": "직원" },
-      "restaurantStatuses": { "DRAFT": "초안", "PENDING": "대기", "CHANGES_REQUESTED": "수정 요청", "ACTIVE": "활성", "SUSPENDED": "정지" },
-      "form": { "createTitle": "레스토랑 권한 추가", "editTitle": "레스토랑 권한 수정", "description": "각 계정은 하나의 레스토랑에만 연결할 수 있습니다.", "user": "사용자", "userPlaceholder": "이름, 아이디 또는 이메일 검색", "restaurant": "레스토랑", "restaurantPlaceholder": "레스토랑 이름 또는 슬러그 검색", "role": "레스토랑 역할", "noUsers": "활성 고객을 찾을 수 없습니다", "noRestaurants": "레스토랑을 찾을 수 없습니다" },
-      "actions": { "create": "권한 추가", "edit": "수정", "remove": "권한 제거", "assign": "연결", "save": "변경 사항 저장", "cancel": "취소", "openMenu": "{name} 작업 열기", "saved": "{name}의 레스토랑 권한을 업데이트했습니다.", "saveError": "권한을 저장할 수 없습니다. 사용자와 레스토랑을 확인하세요.", "removed": "{name}의 레스토랑 권한을 제거했습니다.", "removeError": "권한을 제거할 수 없습니다.", "removeTitle": "{name}의 권한을 제거할까요?", "removeDescription": "이 계정은 고객 역할로 돌아가며 레스토랑을 더 이상 관리할 수 없습니다." },
-      "pagination": { "rowsPerPage": "페이지당 행 수" }
+      "title": "레스토랑 권한",
+      "description": "사장님과 직원을 관리할 레스토랑에 연결합니다.",
+      "loadError": "레스토랑 권한 목록을 불러올 수 없습니다.",
+      "empty": "필터와 일치하는 권한이 없습니다.",
+      "filters": {
+        "search": "사용자, 이메일 또는 레스토랑 검색",
+        "role": "역할 필터",
+        "allRoles": "모든 역할"
+      },
+      "table": {
+        "user": "사용자",
+        "restaurant": "레스토랑",
+        "role": "역할",
+        "restaurantStatus": "레스토랑 상태",
+        "actions": "작업"
+      },
+      "roles": {
+        "OWNER": "사장님",
+        "STAFF": "직원"
+      },
+      "restaurantStatuses": {
+        "DRAFT": "초안",
+        "PENDING": "대기",
+        "CHANGES_REQUESTED": "수정 요청",
+        "ACTIVE": "활성",
+        "SUSPENDED": "정지"
+      },
+      "form": {
+        "createTitle": "레스토랑 권한 추가",
+        "editTitle": "레스토랑 권한 수정",
+        "description": "각 계정은 하나의 레스토랑에만 연결할 수 있습니다.",
+        "user": "사용자",
+        "userPlaceholder": "이름, 아이디 또는 이메일 검색",
+        "restaurant": "레스토랑",
+        "restaurantPlaceholder": "레스토랑 이름 또는 슬러그 검색",
+        "role": "레스토랑 역할",
+        "noUsers": "활성 고객을 찾을 수 없습니다",
+        "noRestaurants": "레스토랑을 찾을 수 없습니다"
+      },
+      "actions": {
+        "create": "권한 추가",
+        "edit": "수정",
+        "remove": "권한 제거",
+        "assign": "연결",
+        "save": "변경 사항 저장",
+        "cancel": "취소",
+        "openMenu": "{name} 작업 열기",
+        "saved": "{name}의 레스토랑 권한을 업데이트했습니다.",
+        "saveError": "권한을 저장할 수 없습니다. 사용자와 레스토랑을 확인하세요.",
+        "removed": "{name}의 레스토랑 권한을 제거했습니다.",
+        "removeError": "권한을 제거할 수 없습니다.",
+        "removeTitle": "{name}의 권한을 제거할까요?",
+        "removeDescription": "이 계정은 고객 역할로 돌아가며 레스토랑을 더 이상 관리할 수 없습니다."
+      },
+      "pagination": {
+        "rowsPerPage": "페이지당 행 수"
+      }
     },
     "preferences": {
-      "title": "개인 설정", "description": "시스템 관리 화면과 데이터 표시 방식을 맞춤 설정합니다.",
-      "appearance": { "title": "화면", "description": "이 설정은 현재 계정에만 적용됩니다.", "themeColor": "테마 색상", "themeColorHint": "추천 색상을 선택하거나 6자리 HEX 색상을 입력하세요.", "invalidColor": "#RRGGBB 형식을 사용하세요.", "preview": "미리보기", "previewText": "시스템 관리", "previewButton": "기본 작업", "density": "표시 밀도", "comfortable": "여유 있게", "compact": "간격 좁게" },
-      "display": { "title": "데이터 및 언어", "description": "관리 목록과 날짜의 기본 표시 방식을 선택합니다.", "pageSize": "페이지당 기본 행 수", "dateFormat": "날짜 형식", "language": "언어", "vietnamese": "베트남어", "english": "영어" },
-      "save": "설정 저장", "reset": "기본값 복원", "saved": "개인 설정을 저장했습니다.", "saveError": "개인 설정을 저장할 수 없습니다.", "resetDone": "기본 설정을 복원했습니다.", "resetError": "기본 설정을 복원할 수 없습니다.", "errorHint": "이전 설정이 유지됩니다. 다시 시도하세요."
+      "title": "개인 설정",
+      "description": "시스템 관리 화면과 데이터 표시 방식을 맞춤 설정합니다.",
+      "appearance": {
+        "title": "화면",
+        "description": "이 설정은 현재 계정에만 적용됩니다.",
+        "themeColor": "테마 색상",
+        "themeColorHint": "추천 색상을 선택하거나 6자리 HEX 색상을 입력하세요.",
+        "invalidColor": "#RRGGBB 형식을 사용하세요.",
+        "preview": "미리보기",
+        "previewText": "시스템 관리",
+        "previewButton": "기본 작업",
+        "density": "표시 밀도",
+        "comfortable": "여유 있게",
+        "compact": "간격 좁게"
+      },
+      "display": {
+        "title": "데이터 및 언어",
+        "description": "관리 목록과 날짜의 기본 표시 방식을 선택합니다.",
+        "pageSize": "페이지당 기본 행 수",
+        "dateFormat": "날짜 형식",
+        "language": "언어",
+        "vietnamese": "베트남어",
+        "english": "영어"
+      },
+      "save": "설정 저장",
+      "reset": "기본값 복원",
+      "saved": "개인 설정을 저장했습니다.",
+      "saveError": "개인 설정을 저장할 수 없습니다.",
+      "resetDone": "기본 설정을 복원했습니다.",
+      "resetError": "기본 설정을 복원할 수 없습니다.",
+      "errorHint": "이전 설정이 유지됩니다. 다시 시도하세요."
     }
   },
   "Navigation": {
@@ -647,7 +1816,11 @@
   "OwnerGuests": {
     "title": "고객 관리",
     "eyebrow": "예약 내역",
-    "stats": { "profiles": "고객 프로필", "repeatGuests": "재방문 고객", "returnRate": "재방문율" },
+    "stats": {
+      "profiles": "고객 프로필",
+      "repeatGuests": "재방문 고객",
+      "returnRate": "재방문율"
+    },
     "searchPlaceholder": "이름, 전화번호 또는 이메일 검색",
     "searchLabel": "고객 검색",
     "history": "예약 {reservations}건 · 방문 {visits}회 · 노쇼 {noShows}회",
@@ -687,7 +1860,11 @@
       "policy": {
         "title": "예약 정책",
         "confirmationMode": "확정 방식",
-        "modes": { "auto": "자동", "manual": "수동", "hybrid": "인원수에 따른 혼합 방식" },
+        "modes": {
+          "auto": "자동",
+          "manual": "수동",
+          "hybrid": "인원수에 따른 혼합 방식"
+        },
         "manualFromPartySize": "수동 확정을 적용할 인원수",
         "guestCapacity": "수용 인원",
         "bookingWindow": "예약 가능 기간 (일)",
@@ -711,7 +1888,15 @@
         "closes": "영업 종료",
         "removePeriod": "{day} 시간대 삭제",
         "save": "영업 시간 저장",
-        "days": { "monday": "월요일", "tuesday": "화요일", "wednesday": "수요일", "thursday": "목요일", "friday": "금요일", "saturday": "토요일", "sunday": "일요일" }
+        "days": {
+          "monday": "월요일",
+          "tuesday": "화요일",
+          "wednesday": "수요일",
+          "thursday": "목요일",
+          "friday": "금요일",
+          "saturday": "토요일",
+          "sunday": "일요일"
+        }
       }
     },
     "bookingSlotsModal": {

@@ -36,6 +36,7 @@ import { StatusActionDialog } from "@/features/system-admin/components/status-ac
 import { SystemAdminUserDialog } from "@/features/system-admin/components/system-admin-user-dialog";
 import { ResetPasswordDialog } from "@/features/system-admin/components/reset-password-dialog";
 import {
+  accountAccentColor,
   formatPreferenceDate,
   useAccountPreferences,
 } from "@/features/system-admin/components/account-preferences-context";
@@ -56,6 +57,7 @@ type UserStatusAction = {
 export function SystemAdminUsersScreen() {
   const t = useTranslations("SystemAdmin.users");
   const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 350);
@@ -230,6 +232,8 @@ export function SystemAdminUsersScreen() {
           <Text c={uiColors.textSecondary}>{t("description")}</Text>
         </Stack>
         <Button
+          color={accentColor}
+          autoContrast
           leftSection={<IconUserPlus size={17} />}
           onClick={() => setEditor("create")}
         >
