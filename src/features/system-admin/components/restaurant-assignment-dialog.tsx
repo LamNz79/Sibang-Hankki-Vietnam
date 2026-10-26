@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { Button, Group, Loader, Modal, Select, Stack, Text } from "@mantine/core";
 import { useTranslations } from "next-intl";
+import {
+  accountAccentColor,
+  useAccountPreferences,
+} from "@/features/system-admin/components/account-preferences-context";
 import type {
   SystemAdminRestaurant,
   SystemAdminRestaurantAssignment,
@@ -42,6 +46,8 @@ export function RestaurantAssignmentDialog({
   onSubmit,
 }: Props) {
   const t = useTranslations("SystemAdmin.assignments");
+  const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const [userId, setUserId] = useState<string | null>(assignment?.userId ?? null);
   const [restaurantId, setRestaurantId] = useState<string | null>(assignment?.restaurantId ?? null);
   const [role, setRole] = useState<SystemAdminRestaurantAssignmentRole>(assignment?.role ?? "OWNER");
@@ -122,6 +128,8 @@ export function RestaurantAssignmentDialog({
             {t("actions.cancel")}
           </Button>
           <Button
+            color={accentColor}
+            autoContrast
             loading={submitting}
             disabled={!userId || !restaurantId}
             onClick={() => {
