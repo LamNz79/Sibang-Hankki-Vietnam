@@ -834,6 +834,7 @@
       "notifications": "Thông báo",
       "adminName": "Quản trị viên",
       "adminRole": "Quản trị nhà hàng",
+      "staffRole": "Nhân viên nhà hàng",
       "adminOnly": "ĐỘI NGŨ NHÀ HÀNG",
       "auditNotice": "Mọi thay đổi đều được ghi vào nhật ký kiểm toán.",
       "navigation": {

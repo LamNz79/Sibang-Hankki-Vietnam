@@ -26,7 +26,7 @@ import { useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { StatusBadge } from "@/components/ui";
-import { getOwnerSettings } from "@/features/owner/settings/data/owner-settings";
+import { getOwnerRestaurantContext } from "@/features/owner/data/owner-restaurant-context";
 import type {
   OwnerRequestResponse,
   OwnerReservation,
@@ -127,9 +127,9 @@ export function OwnerReservationResponsePanel({
   const [selectedAlternative, setSelectedAlternative] = useState("");
   const [selectedReason, setSelectedReason] = useState("");
   const [message, setMessage] = useState("");
-  const settingsQuery = useQuery({
-    queryKey: ["owner-settings"],
-    queryFn: ({ signal }) => getOwnerSettings(signal),
+  const restaurantQuery = useQuery({
+    queryKey: ["owner-restaurant-context"],
+    queryFn: ({ signal }) => getOwnerRestaurantContext(signal),
     retry: false,
   });
   const formatDate = (date: string) =>
@@ -151,18 +151,18 @@ export function OwnerReservationResponsePanel({
     queries: alternativeDates.map((date) => ({
       queryKey: [
         "restaurant-availability",
-        settingsQuery.data?.slug,
+        restaurantQuery.data?.slug,
         date,
         reservation.partySize,
       ],
       queryFn: ({ signal }: { signal: AbortSignal }) =>
         getAvailability(
-          settingsQuery.data!.slug,
+          restaurantQuery.data!.slug,
           date,
           reservation.partySize,
           signal,
         ),
-      enabled: alternativeOpened && Boolean(settingsQuery.data?.slug),
+      enabled: alternativeOpened && Boolean(restaurantQuery.data?.slug),
       retry: false,
     })),
   });
@@ -179,7 +179,7 @@ export function OwnerReservationResponsePanel({
         id: `${slot.date}|${slot.time}`,
       }));
   const slotsLoading =
-    settingsQuery.isPending ||
+    restaurantQuery.isPending ||
     availabilityQueries.some((query) => query.isFetching);
   const openAlternative = () => {
     setSelectedAlternative("");
@@ -356,12 +356,12 @@ export function OwnerReservationResponsePanel({
                 {t("alternativeDrawer.loading")}
               </Text>
             ) : null}
-            {settingsQuery.isError ||
+            {restaurantQuery.isError ||
             availabilityQueries.some((query) => query.isError) ? (
               <Alert color="red" title={t("alternativeDrawer.loadError")} />
             ) : null}
             {!slotsLoading &&
-            !settingsQuery.isError &&
+            !restaurantQuery.isError &&
             !availabilityQueries.some((query) => query.isError) &&
             alternativeSlots.length === 0 ? (
               <Text size="sm" c={uiColors.textSecondary}>

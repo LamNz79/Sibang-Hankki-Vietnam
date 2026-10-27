@@ -19,6 +19,9 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getSessionUser, type SessionUser } from "@/features/auth/data/session";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 import { uiColors } from "@/theme";
 
 type OwnerShellProps = {
@@ -32,23 +35,30 @@ type OwnerShellProps = {
 };
 
 const navigation = [
-  { href: "/owner", labelKey: "today", icon: IconHomeStats, exact: true },
+  { href: "/owner", labelKey: "today", icon: IconHomeStats, exact: true, ownerOnly: false },
   {
     href: "/owner/check-in",
     labelKey: "checkIn",
     icon: IconQrcode,
+    ownerOnly: false,
   },
   {
     href: "/owner/guests",
     labelKey: "guests",
-    icon: IconUsers
+    icon: IconUsers,
+    ownerOnly: false,
   },
   {
     href: "/owner/settings",
     labelKey: "settings",
-    icon: IconSettings
+    icon: IconSettings,
+    ownerOnly: true,
   },
 ] as const;
+
+export function getOwnerNavigation(role: SessionUser["role"] | undefined) {
+  return navigation.filter((item) => !item.ownerOnly || role === "OWNER");
+}
 
 function isActivePath(pathname: string, href: string, exact?: boolean) {
   return exact ? pathname === href : pathname.startsWith(href);
@@ -102,6 +112,12 @@ export function OwnerShell({
 }: OwnerShellProps) {
   const pathname = usePathname();
   const t = useTranslations("Navigation.owner");
+  const session = useQuery({
+    queryKey: ["auth-session"],
+    queryFn: ({ signal }) => getSessionUser(signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
 
   return (
     <Box mih="100dvh" bg={uiColors.appBackground}>
@@ -130,7 +146,7 @@ export function OwnerShell({
           }}
         >
           <Group h={48} gap="sm" wrap="nowrap">
-            <Box w={40} miw={40}>
+            <Box w={88} miw={88}>
               {backHref ? (
                 <Link
                   href={backHref}
@@ -169,8 +185,11 @@ export function OwnerShell({
               </Title>
             </Stack>
 
-            <Box w={40} miw={40}>
-              {headerAction}
+            <Box w={88} miw={88}>
+              <Group gap={4} justify="flex-end" wrap="nowrap">
+                {headerAction}
+                <LogoutButton compact />
+              </Group>
             </Box>
           </Group>
         </Box>
@@ -216,7 +235,7 @@ export function OwnerShell({
             }}
           >
             <Group grow gap={2} wrap="nowrap">
-              {navigation.map((item) => (
+              {getOwnerNavigation(session.data?.role).map((item) => (
                 <OwnerBottomNavLink
                   key={item.href}
                   href={item.href}

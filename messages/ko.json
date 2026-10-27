@@ -834,6 +834,7 @@
       "notifications": "알림",
       "adminName": "관리자",
       "adminRole": "레스토랑 관리자",
+      "staffRole": "레스토랑 직원",
       "adminOnly": "레스토랑 팀",
       "auditNotice": "모든 변경 사항은 감사 로그에 기록됩니다.",
       "navigation": {

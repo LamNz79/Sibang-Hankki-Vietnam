@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   canAccessRestaurantWorkspace,
   canAccessSystemAdmin,
+  canManageRestaurant,
 } from "./server-session";
 
 describe("restaurant workspace access", () => {
@@ -17,5 +18,12 @@ describe("restaurant workspace access", () => {
     expect(canAccessSystemAdmin("OWNER")).toBe(false);
     expect(canAccessSystemAdmin("STAFF")).toBe(false);
     expect(canAccessSystemAdmin("CUSTOMER")).toBe(false);
+  });
+
+  it("allows only OWNER to manage restaurant configuration", () => {
+    expect(canManageRestaurant("OWNER")).toBe(true);
+    expect(canManageRestaurant("STAFF")).toBe(false);
+    expect(canManageRestaurant("CUSTOMER")).toBe(false);
+    expect(canManageRestaurant("ADMIN")).toBe(false);
   });
 });

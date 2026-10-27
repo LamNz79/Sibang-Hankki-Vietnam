@@ -25,18 +25,22 @@ import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { ChangePasswordButton } from "@/features/auth/components/change-password-button";
 import { LogoutButton } from "@/features/auth/components/logout-button";
-import { getSessionUser } from "@/features/auth/data/session";
+import { getSessionUser, type SessionUser } from "@/features/auth/data/session";
 import { LanguageSelect } from "@/features/i18n";
 import { uiColors } from "@/theme";
 
 const adminNavigation = [
-  { href: "/admin", labelKey: "dashboard", icon: IconLayoutDashboard },
-  { href: "/admin/reservations", labelKey: "reservations", icon: IconCalendarEvent },
-  { href: "/admin/customers", labelKey: "customers", icon: IconUsers },
-  { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2 },
-  { href: "/admin/media", labelKey: "media", icon: IconPhoto },
-  { href: "/admin/settings", labelKey: "settings", icon: IconSettings },
+  { href: "/admin", labelKey: "dashboard", icon: IconLayoutDashboard, ownerOnly: false },
+  { href: "/admin/reservations", labelKey: "reservations", icon: IconCalendarEvent, ownerOnly: false },
+  { href: "/admin/customers", labelKey: "customers", icon: IconUsers, ownerOnly: false },
+  { href: "/admin/menu", labelKey: "menu", icon: IconToolsKitchen2, ownerOnly: true },
+  { href: "/admin/media", labelKey: "media", icon: IconPhoto, ownerOnly: true },
+  { href: "/admin/settings", labelKey: "settings", icon: IconSettings, ownerOnly: true },
 ] as const;
+
+export function getAdminNavigation(role: SessionUser["role"] | undefined) {
+  return adminNavigation.filter((item) => !item.ownerOnly || role === "OWNER");
+}
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -88,7 +92,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   {userid}
                 </Text>
                 <Text size="10px" c={uiColors.textSecondary}>
-                  {t("adminRole")}
+                  {t(session.data?.role === "STAFF" ? "staffRole" : "adminRole")}
                 </Text>
               </Stack>
             </Group>
@@ -118,7 +122,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
         <AppShell.Section grow>
           <Stack gap={4}>
-            {adminNavigation.map((item) => {
+            {getAdminNavigation(session.data?.role).map((item) => {
               const active =
                 item.href === "/admin"
                   ? pathname === item.href
