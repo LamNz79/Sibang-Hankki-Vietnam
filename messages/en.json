@@ -834,6 +834,7 @@
       "notifications": "Notifications",
       "adminName": "Restaurant Manager",
       "adminRole": "Restaurant Admin",
+      "staffRole": "Restaurant Staff",
       "adminOnly": "RESTAURANT TEAM",
       "auditNotice": "All changes are recorded in the audit log.",
       "navigation": {

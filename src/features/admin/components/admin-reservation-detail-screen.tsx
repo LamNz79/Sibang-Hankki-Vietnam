@@ -40,7 +40,7 @@ import {
 } from "@/features/owner/hooks/use-owner-reservations";
 import { OwnerCustomerResponseCard } from "@/features/owner/reservations/components/owner-customer-response-card";
 import { OwnerReservationResponsePanel } from "@/features/owner/reservations/components/owner-reservation-response-panel";
-import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
+import { useOwnerRestaurantContext } from "@/features/owner/hooks/use-owner-restaurant-context";
 import { ReservationStatus } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
 
@@ -68,7 +68,7 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
     useOwnerReservation(id);
   const actions = useOwnerReservationActions(id);
   const manualCheckIn = useOwnerManualCheckIn();
-  const { query: settingsQuery } = useOwnerSettings();
+  const { query: restaurantQuery } = useOwnerRestaurantContext();
 
   if (isPending) {
     return (
@@ -259,7 +259,7 @@ export function AdminReservationDetailScreen({ id }: { id: string }) {
               />
               <DetailRow
                 label={t("customer.store")}
-                value={settingsQuery.data?.name ?? t("notAvailable")}
+                value={restaurantQuery.data?.name ?? t("notAvailable")}
               />
             </DetailCard>
           </Grid.Col>

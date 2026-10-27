@@ -11,6 +11,10 @@ export function canAccessSystemAdmin(role: SessionUser["role"]) {
   return role === "ADMIN";
 }
 
+export function canManageRestaurant(role: SessionUser["role"]) {
+  return role === "OWNER";
+}
+
 async function getSessionUser() {
   const cookieHeader = (await cookies()).toString();
   const response = await fetch(
@@ -28,6 +32,13 @@ export async function requireRestaurantWorkspace() {
   if (!user) redirect("/login");
 
   if (!canAccessRestaurantWorkspace(user.role)) redirect("/");
+}
+
+export async function requireRestaurantOwner() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
+
+  if (!canManageRestaurant(user.role)) redirect("/admin");
 }
 
 export async function requireSystemAdmin() {

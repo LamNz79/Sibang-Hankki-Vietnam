@@ -11,7 +11,7 @@ import { OwnerFilterDrawer } from "@/features/owner/dashboard/components/owner-f
 import { OwnerReservationList } from "@/features/owner/dashboard/components/owner-reservation-list";
 import { OwnerWalkInModal } from "@/features/owner/dashboard/components/owner-walk-in-modal";
 import { useOwnerDashboard } from "@/features/owner/dashboard/hooks/use-owner-dashboard";
-import { useOwnerSettings } from "@/features/owner/settings/hooks/use-owner-settings";
+import { useOwnerRestaurantContext } from "@/features/owner/hooks/use-owner-restaurant-context";
 import { OwnerShell } from "@/features/owner/shared";
 
 /** Coordinates the owner daily-operations dashboard presentation components. */
@@ -19,7 +19,7 @@ export function OwnerDashboardScreen() {
   const t = useTranslations("OwnerDashboard");
   const format = useFormatter();
   const dashboard = useOwnerDashboard();
-  const settings = useOwnerSettings();
+  const restaurant = useOwnerRestaurantContext();
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
   const formattedDate = format.dateTime(dashboard.selectedDate, {
@@ -34,7 +34,7 @@ export function OwnerDashboardScreen() {
   return (
     <>
       <OwnerShell
-        title={settings.query.data?.name ?? t("restaurantFallback")}
+        title={restaurant.query.data?.name ?? t("restaurantFallback")}
         eyebrow={t("eyebrow")}
         footerAction={
           <PrimaryActionButton

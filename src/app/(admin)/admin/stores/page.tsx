@@ -1,5 +1,7 @@
 import { AdminStoresScreen } from "@/features/admin";
+import { requireRestaurantOwner } from "@/features/auth/data/server-session";
 
-export default function AdminStoresPage() {
+export default async function AdminStoresPage() {
+  await requireRestaurantOwner();
   return <AdminStoresScreen />;
 }
