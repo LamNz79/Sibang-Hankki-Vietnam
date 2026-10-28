@@ -12,7 +12,7 @@ import type {
   OwnerCustomerResponse,
   OwnerReservation,
 } from "@/features/owner/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 function useResponseContent(
@@ -26,6 +26,7 @@ function useResponseContent(
       weekday: "short",
       month: "short",
       day: "numeric",
+      timeZone: restaurantTimeZone,
     });
 
   if (response.kind === "accepted-alternative") {

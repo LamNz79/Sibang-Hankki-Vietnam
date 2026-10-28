@@ -1,4 +1,5 @@
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
+import { getRestaurantDateKey } from "@/lib/date-time";
 
 export type RestaurantAvailabilityMap = Record<
   string,
@@ -6,15 +7,7 @@ export type RestaurantAvailabilityMap = Record<
 >;
 
 export function getRestaurantLocalDate(date = new Date()) {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(date);
-  const value = (type: Intl.DateTimeFormatPartTypes) =>
-    parts.find((part) => part.type === type)?.value ?? "";
-  return `${value("year")}-${value("month")}-${value("day")}`;
+  return getRestaurantDateKey(date);
 }
 
 export type LiveAvailabilityState =

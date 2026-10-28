@@ -54,6 +54,7 @@ import { VisitStatus } from "@/features/reservations/types";
 import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
+import { getRestaurantDateTimeKey } from "@/lib/date-time";
 
 /** Configuration accepted by a row in the customer account menu. */
 type AccountMenuItemProps = {
@@ -166,7 +167,7 @@ export function AccountScreen() {
   const profile = profileQuery.data;
   const { upcoming, past } = partitionCustomerReservations(
     reservations,
-    dayjs().format("YYYY-MM-DDTHH:mm"),
+    getRestaurantDateTimeKey(),
   );
   const latestCompletedVisit = [...past]
     .filter((reservation) => reservation.visitStatus === VisitStatus.Completed)

@@ -58,6 +58,14 @@ describe("admin reservation data", () => {
     });
   });
 
+  it("uses the restaurant calendar at the UTC/Vietnam date boundary", () => {
+    const instant = new Date("2026-10-25T17:30:00.000Z");
+    expect(getAdminReservationDateRange("today", instant)).toEqual({
+      dateFrom: "2026-10-26",
+      dateTo: "2026-10-26",
+    });
+  });
+
   it("only offers the next valid operational action", () => {
     expect(getAdminReservationPrimaryAction({
       ...ownerReservation,

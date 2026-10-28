@@ -13,6 +13,7 @@ import { OwnerWalkInModal } from "@/features/owner/dashboard/components/owner-wa
 import { useOwnerDashboard } from "@/features/owner/dashboard/hooks/use-owner-dashboard";
 import { useOwnerRestaurantContext } from "@/features/owner/hooks/use-owner-restaurant-context";
 import { OwnerShell } from "@/features/owner/shared";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 
 /** Coordinates the owner daily-operations dashboard presentation components. */
 export function OwnerDashboardScreen() {
@@ -22,10 +23,11 @@ export function OwnerDashboardScreen() {
   const restaurant = useOwnerRestaurantContext();
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [walkInOpened, setWalkInOpened] = useState(false);
-  const formattedDate = format.dateTime(dashboard.selectedDate, {
+  const formattedDate = format.dateTime(toRestaurantDate(dashboard.selectedDate), {
     weekday: "long",
     month: "short",
     day: "numeric",
+    timeZone: restaurantTimeZone,
   });
   const dateLabel = dashboard.isToday
     ? t("toolbar.today", { date: formattedDate })

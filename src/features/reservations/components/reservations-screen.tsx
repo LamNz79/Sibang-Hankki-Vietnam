@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import {
@@ -41,7 +40,11 @@ import {
   VisitStatus,
   type CustomerReservation,
 } from "@/features/reservations/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import {
+  getRestaurantDateTimeKey,
+  restaurantTimeZone,
+  toRestaurantDate,
+} from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type ReservationScope = "upcoming" | "past" | "all";
@@ -194,6 +197,7 @@ function ReservationCards({
                       weekday: "short",
                       month: "short",
                       day: "numeric",
+                      timeZone: restaurantTimeZone,
                     })}
                   </Text>
                   <IconClock size={15} color={uiColors.textSecondary} />
@@ -243,7 +247,7 @@ export function ReservationsScreen() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const { upcoming, past } = partitionCustomerReservations(
     reservations,
-    dayjs().format("YYYY-MM-DDTHH:mm"),
+    getRestaurantDateTimeKey(),
   );
   const filteredReservations = useMemo(() => {
     const scoped =

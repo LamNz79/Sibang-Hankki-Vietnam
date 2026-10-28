@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { useFormatter, useTranslations } from "next-intl";
 import type { CustomerReservation } from "@/features/reservations/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type DetailRowProps = {
@@ -83,6 +83,7 @@ export function ReservationInformationCard({
           year: "numeric",
           month: "short",
           day: "numeric",
+          timeZone: restaurantTimeZone,
         })}
         iconBackground={uiColors.detailDateSurface}
         iconColor={uiColors.detailDateText}

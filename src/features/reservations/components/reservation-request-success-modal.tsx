@@ -16,7 +16,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type ReservationRequestSuccessModalProps = {
@@ -117,6 +117,7 @@ export function ReservationRequestSuccessModal({
                     year: "numeric",
                     month: "short",
                     day: "numeric",
+                    timeZone: restaurantTimeZone,
                   })}
                 </Text>
               </Group>

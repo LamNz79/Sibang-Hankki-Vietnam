@@ -21,6 +21,7 @@ import {
   type SystemAdminReservationFilterStatus,
 } from "@/features/system-admin/data/system-admin-reservations";
 import { uiColors } from "@/theme";
+import { restaurantTimeZone } from "@/lib/date-time";
 
 const pageSizes = [10, 20, 50, 100];
 const statuses: SystemAdminReservationFilterStatus[] = [
@@ -140,7 +141,10 @@ export function SystemAdminReservationsScreen() {
             {formatPreferenceDate(new Date(reservation.startsAt), preferences)}
           </Text>
           <Text size="xs" c={uiColors.textSecondary}>
-            {format.dateTime(new Date(reservation.startsAt), { timeStyle: "short" })}
+            {format.dateTime(new Date(reservation.startsAt), {
+              timeStyle: "short",
+              timeZone: restaurantTimeZone,
+            })}
             {" · "}{t("guests", { count: reservation.partySize })}
           </Text>
         </Stack>

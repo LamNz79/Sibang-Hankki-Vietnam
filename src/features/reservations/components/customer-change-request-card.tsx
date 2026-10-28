@@ -4,7 +4,7 @@ import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconCalendarClock, IconX } from "@tabler/icons-react";
 import { useFormatter, useTranslations } from "next-intl";
 import type { CustomerReservation } from "@/features/reservations/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 export function CustomerChangeRequestCard({
@@ -22,6 +22,7 @@ export function CustomerChangeRequestCard({
     weekday: "short",
     month: "short",
     day: "numeric",
+    timeZone: restaurantTimeZone,
   });
   const Icon = pending ? IconCalendarClock : IconX;
 
