@@ -221,7 +221,6 @@ export function RestaurantFormDialog({
               />
               <Select
                 label={t("timezone")}
-                description={t("timezoneHelp")}
                 placeholder={t("selectTimezone")}
                 value={input.timezone}
                 onChange={(value) => setInput((current) => ({

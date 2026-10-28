@@ -1535,7 +1535,6 @@
         "locationLoadError": "Could not load the location list. Try again.",
         "timezone": "Timezone",
         "selectTimezone": "Select a timezone",
-        "timezoneHelp": "Business hours and reservation times use this timezone.",
         "timezoneNotFound": "No timezone found",
         "timezones": {
           "Asia": {
