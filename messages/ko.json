@@ -1781,7 +1781,8 @@
         "dateFormat": "날짜 형식",
         "language": "언어",
         "vietnamese": "베트남어",
-        "english": "영어"
+        "english": "영어",
+        "korean": "한국어"
       },
       "save": "설정 저장",
       "reset": "기본값 복원",

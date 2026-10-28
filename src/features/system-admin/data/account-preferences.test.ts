@@ -57,4 +57,22 @@ describe("account preferences API", () => {
       }),
     ]);
   });
+
+  it("sends Korean as a supported account locale", async () => {
+    vi.stubEnv("API_BASE_URL", "");
+    const koreanPreferences = { ...defaultAccountPreferences, locale: "ko" as const };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({
+        headerName: "X-CSRF-TOKEN",
+        parameterName: "_csrf",
+        token: "csrf-token",
+      }))
+      .mockResolvedValueOnce(Response.json(koreanPreferences));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(updateAccountPreferences(koreanPreferences)).resolves.toEqual(koreanPreferences);
+    expect(fetchMock.mock.calls[1][1]).toEqual(expect.objectContaining({
+      body: JSON.stringify(koreanPreferences),
+    }));
+  });
 });

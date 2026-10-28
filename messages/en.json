@@ -1781,7 +1781,8 @@
         "dateFormat": "Date format",
         "language": "Language",
         "vietnamese": "Vietnamese",
-        "english": "English"
+        "english": "English",
+        "korean": "Korean"
       },
       "save": "Save settings",
       "reset": "Restore defaults",

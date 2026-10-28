@@ -4,7 +4,7 @@ import { apiEndpoints } from "@/lib/api/endpoints";
 
 export type DisplayDensity = "COMFORTABLE" | "COMPACT";
 export type AccountDateFormat = "DD_MM_YYYY" | "MM_DD_YYYY";
-export type AccountLocale = "vi" | "en";
+export type AccountLocale = "vi" | "en" | "ko";
 
 export type AccountPreferences = {
   themeColor: string;
