@@ -1534,6 +1534,18 @@
         "selectProvinceFirst": "Select a province or city first",
         "locationLoadError": "Could not load the location list. Try again.",
         "timezone": "Timezone",
+        "selectTimezone": "Select a timezone",
+        "timezoneHelp": "Business hours and reservation times use this timezone.",
+        "timezoneNotFound": "No timezone found",
+        "timezones": {
+          "Asia": {
+            "Ho_Chi_Minh": "Vietnam — Ho Chi Minh City (UTC+07:00)",
+            "Seoul": "South Korea — Seoul (UTC+09:00)",
+            "Tokyo": "Japan — Tokyo (UTC+09:00)",
+            "Singapore": "Singapore (UTC+08:00)",
+            "Bangkok": "Thailand — Bangkok (UTC+07:00)"
+          }
+        },
         "cuisine": "Cuisine",
         "selectCuisine": "Select a cuisine",
         "cuisines": {

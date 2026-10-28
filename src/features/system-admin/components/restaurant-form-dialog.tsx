@@ -47,6 +47,14 @@ const cuisineLabels: Record<string, string> = {
   western: "Western",
 };
 
+const timezoneValues = [
+  "Asia/Ho_Chi_Minh",
+  "Asia/Seoul",
+  "Asia/Tokyo",
+  "Asia/Singapore",
+  "Asia/Bangkok",
+] as const;
+
 function toInput(restaurant: SystemAdminRestaurantDetail | null) {
   if (!restaurant) return emptyRestaurant;
   return {
@@ -211,13 +219,23 @@ export function RestaurantFormDialog({
                 }))}
                 clearable
               />
-              <TextInput
+              <Select
                 label={t("timezone")}
-                placeholder={t("placeholders.timezone")}
+                description={t("timezoneHelp")}
+                placeholder={t("selectTimezone")}
                 value={input.timezone}
-                onChange={change("timezone")}
+                onChange={(value) => setInput((current) => ({
+                  ...current,
+                  timezone: value ?? current.timezone,
+                }))}
+                data={timezoneValues.map((value) => ({
+                  value,
+                  label: t(`timezones.${value.replaceAll("/", ".")}`),
+                }))}
+                searchable
+                allowDeselect={false}
+                nothingFoundMessage={t("timezoneNotFound")}
                 required
-                maxLength={64}
               />
               <TextInput
                 label={t("phone")}
