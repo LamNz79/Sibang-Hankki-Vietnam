@@ -196,6 +196,7 @@ export function SystemAdminPreferencesScreen() {
               data={[
                 { value: "vi", label: t("display.vietnamese") },
                 { value: "en", label: t("display.english") },
+                { value: "ko", label: t("display.korean") },
               ]}
               allowDeselect={false}
               disabled={pending}

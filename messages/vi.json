@@ -1781,7 +1781,8 @@
         "dateFormat": "Định dạng ngày",
         "language": "Ngôn ngữ",
         "vietnamese": "Tiếng Việt",
-        "english": "Tiếng Anh"
+        "english": "Tiếng Anh",
+        "korean": "Tiếng Hàn"
       },
       "save": "Lưu cài đặt",
       "reset": "Khôi phục mặc định",
