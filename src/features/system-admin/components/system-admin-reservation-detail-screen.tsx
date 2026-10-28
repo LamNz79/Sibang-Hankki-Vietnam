@@ -16,6 +16,7 @@ import {
   getSystemAdminReservationDisplayStatus,
 } from "@/features/system-admin/data/system-admin-reservations";
 import { uiColors } from "@/theme";
+import { restaurantTimeZone } from "@/lib/date-time";
 
 const statusTones = {
   PENDING: "warning",
@@ -48,6 +49,7 @@ export function SystemAdminReservationDetailScreen({ id }: { id: string }) {
     const date = new Date(value);
     return `${formatPreferenceDate(date, preferences)} ${format.dateTime(date, {
       timeStyle: "short",
+      timeZone: restaurantTimeZone,
     })}`;
   };
   const fallback = (value: string | null) => value || t("detail.notAvailable");

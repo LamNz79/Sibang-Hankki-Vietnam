@@ -16,6 +16,7 @@ import {
   type OwnerGuestFilter,
   type OwnerReservationFilter,
 } from "@/features/owner/selectors/owner-reservation-selectors";
+import { getRestaurantDateKey } from "@/lib/date-time";
 
 /** Summary values displayed in the owner dashboard metric cards. */
 export type OwnerDashboardSummary = {
@@ -32,7 +33,7 @@ export type OwnerDashboardSummary = {
 export function useOwnerDashboard() {
   const ownerReservationQuery = useOwnerReservations();
   const ownerReservations = ownerReservationQuery.reservations;
-  const [selectedDate, setSelectedDate] = useState(dayjs().startOf("day"));
+  const [selectedDate, setSelectedDate] = useState(() => getRestaurantDateKey());
   const [statusFilter, setStatusFilter] =
     useState<OwnerReservationFilter>("all");
   const [guestFilters, setGuestFilters] = useState<OwnerGuestFilter[]>([]);
@@ -40,9 +41,7 @@ export function useOwnerDashboard() {
 
   const reservationsForSelectedDate = useMemo(
     () =>
-      ownerReservations.filter((reservation) =>
-        dayjs(reservation.date).isSame(selectedDate, "day"),
-      ),
+      ownerReservations.filter((reservation) => reservation.date === selectedDate),
     [ownerReservations, selectedDate],
   );
 
@@ -104,7 +103,7 @@ export function useOwnerDashboard() {
     ).length,
   };
 
-  const isToday = selectedDate.isSame(dayjs(), "day");
+  const isToday = selectedDate === getRestaurantDateKey();
   const hasActiveFilters = statusFilter !== "all" || guestFilters.length > 0;
   const activeFilterCount =
     (statusFilter === "all" ? 0 : 1) + guestFilters.length;
@@ -127,13 +126,13 @@ export function useOwnerDashboard() {
     reservationsLoading: ownerReservationQuery.isPending,
     reservationsError: ownerReservationQuery.isError,
     retryReservations: () => void ownerReservationQuery.refetch(),
-    selectedDate: selectedDate.toDate(),
+    selectedDate,
     isToday,
     selectPreviousDay: () =>
-      setSelectedDate((current) => current.subtract(1, "day")),
+      setSelectedDate((current) => dayjs(current).subtract(1, "day").format("YYYY-MM-DD")),
     selectNextDay: () =>
-      setSelectedDate((current) => current.add(1, "day")),
-    returnToToday: () => setSelectedDate(dayjs().startOf("day")),
+      setSelectedDate((current) => dayjs(current).add(1, "day").format("YYYY-MM-DD")),
+    returnToToday: () => setSelectedDate(getRestaurantDateKey()),
     searchQuery,
     setSearchQuery,
     statusFilter,

@@ -1534,6 +1534,17 @@
         "selectProvinceFirst": "Hãy chọn tỉnh hoặc thành phố trước",
         "locationLoadError": "Không thể tải danh sách địa giới. Hãy thử lại.",
         "timezone": "Múi giờ",
+        "selectTimezone": "Chọn múi giờ",
+        "timezoneNotFound": "Không tìm thấy múi giờ",
+        "timezones": {
+          "Asia": {
+            "Ho_Chi_Minh": "Việt Nam — Thành phố Hồ Chí Minh (UTC+07:00)",
+            "Seoul": "Hàn Quốc — Seoul (UTC+09:00)",
+            "Tokyo": "Nhật Bản — Tokyo (UTC+09:00)",
+            "Singapore": "Singapore (UTC+08:00)",
+            "Bangkok": "Thái Lan — Bangkok (UTC+07:00)"
+          }
+        },
         "cuisine": "Loại ẩm thực",
         "selectCuisine": "Chọn loại ẩm thực",
         "cuisines": {

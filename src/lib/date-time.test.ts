@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { restaurantTimeZone, toRestaurantDate } from "./date-time";
+import {
+  getRestaurantDateKey,
+  getRestaurantDateTimeKey,
+  restaurantTimeZone,
+  toRestaurantDate,
+} from "./date-time";
 
 describe("restaurant date and time", () => {
   it("keeps a date-only value on the selected Vietnam calendar day", () => {
@@ -22,5 +27,11 @@ describe("restaurant date and time", () => {
         timeZone: restaurantTimeZone,
       }).format(new Date("2026-10-25T13:30:00Z")),
     ).toBe("20:30");
+  });
+
+  it("derives the business day and time from Vietnam instead of the device timezone", () => {
+    const instant = new Date("2026-10-25T17:30:00.000Z");
+    expect(getRestaurantDateKey(instant)).toBe("2026-10-26");
+    expect(getRestaurantDateTimeKey(instant)).toBe("2026-10-26T00:30");
   });
 });

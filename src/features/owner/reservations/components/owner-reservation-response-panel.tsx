@@ -32,7 +32,7 @@ import type {
   OwnerReservation,
 } from "@/features/owner/types";
 import { getAvailability } from "@/features/reservations/data/availability";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 type OwnerReservationResponsePanelProps = {
@@ -137,6 +137,7 @@ export function OwnerReservationResponsePanel({
       weekday: "short",
       month: "short",
       day: "numeric",
+      timeZone: restaurantTimeZone,
     });
   const getReasonLabel = (reason: string) => {
     const option = unavailableReasons.find((item) => item.value === reason);

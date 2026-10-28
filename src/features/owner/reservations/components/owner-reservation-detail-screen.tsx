@@ -39,7 +39,7 @@ import type {
   OwnerRequestResponse,
   OwnerReservation,
 } from "@/features/owner/types";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 import { OwnerCustomerResponseCard } from "./owner-customer-response-card";
 import { OwnerReservationSummaryCard } from "./owner-reservation-summary-card";
@@ -134,6 +134,7 @@ export function OwnerReservationDetailScreen() {
       weekday: "long",
       month: "short",
       day: "numeric",
+      timeZone: restaurantTimeZone,
     });
 
   if (isPending) {

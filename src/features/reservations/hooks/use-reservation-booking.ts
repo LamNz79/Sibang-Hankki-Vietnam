@@ -25,6 +25,7 @@ import {
   useRequestAnotherTime,
   useRequestReservationChange,
 } from "@/features/reservations/hooks/use-customer-reservations";
+import { getRestaurantDateKey } from "@/lib/date-time";
 
 type UseReservationBookingOptions = {
   restaurant: RestaurantRecord;
@@ -40,7 +41,10 @@ export function useReservationBooking({
   changeReservationId,
 }: UseReservationBookingOptions) {
   const bookingPolicy = resolveBookingPolicy(restaurant.bookingPolicy);
-  const bookingStartDate = useMemo(() => dayjs().startOf("day"), []);
+  const bookingStartDate = useMemo(
+    () => dayjs(getRestaurantDateKey()),
+    [],
+  );
   const bookingEndDate = useMemo(
     () => getBookingWindowEndDate(bookingStartDate, bookingPolicy.bookingWindowDays),
     [bookingPolicy.bookingWindowDays, bookingStartDate],

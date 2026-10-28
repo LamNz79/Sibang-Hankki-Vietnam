@@ -1534,6 +1534,17 @@
         "selectProvinceFirst": "먼저 성 또는 직할시를 선택하세요",
         "locationLoadError": "행정구역 목록을 불러올 수 없습니다. 다시 시도하세요.",
         "timezone": "시간대",
+        "selectTimezone": "시간대 선택",
+        "timezoneNotFound": "시간대를 찾을 수 없습니다",
+        "timezones": {
+          "Asia": {
+            "Ho_Chi_Minh": "베트남 — 호찌민시 (UTC+07:00)",
+            "Seoul": "대한민국 — 서울 (UTC+09:00)",
+            "Tokyo": "일본 — 도쿄 (UTC+09:00)",
+            "Singapore": "싱가포르 (UTC+08:00)",
+            "Bangkok": "태국 — 방콕 (UTC+07:00)"
+          }
+        },
         "cuisine": "요리 종류",
         "selectCuisine": "요리 종류 선택",
         "cuisines": {

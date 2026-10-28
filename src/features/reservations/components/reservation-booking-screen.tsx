@@ -12,7 +12,7 @@ import { BookingTimeSelector } from "@/features/reservations/components/booking-
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
 import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { useReservationBooking } from "@/features/reservations/hooks/use-reservation-booking";
-import { toRestaurantDate } from "@/lib/date-time";
+import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
 
 type ReservationBookingScreenProps = {
   restaurant: RestaurantRecord;
@@ -37,6 +37,7 @@ export function ReservationBookingScreen({
         year: "numeric",
         month: "short",
         day: "numeric",
+        timeZone: restaurantTimeZone,
       })
     : t("date.none");
 

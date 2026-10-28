@@ -40,6 +40,7 @@ import {
   useCustomerCheckInToken,
   useCustomerReservations,
 } from "@/features/reservations/hooks/use-customer-reservations";
+import { getRestaurantDateTimeKey } from "@/lib/date-time";
 import { uiColors } from "@/theme";
 
 function HomeContent() {
@@ -61,7 +62,7 @@ function HomeContent() {
   const reservations = useCustomerReservations();
   const confirmedReservations = getUpcomingConfirmedReservations(
     reservations,
-    dayjs().format("YYYY-MM-DDTHH:mm"),
+    getRestaurantDateTimeKey(),
   );
   const nextConfirmedReservation = confirmedReservations[0];
   const selectedReservation = confirmedReservations.find(

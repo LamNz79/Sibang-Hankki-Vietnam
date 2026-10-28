@@ -3,6 +3,8 @@ import {
   VisitStatus,
 } from "@/features/reservations/types";
 import type { OwnerReservation } from "@/features/owner/types";
+import dayjs from "dayjs";
+import { getRestaurantDateKey } from "@/lib/date-time";
 
 export type AdminReservationStatus =
   | "pending"
@@ -110,23 +112,16 @@ export function getAdminReservationDateRange(
   today = new Date(),
 ) {
   if (period === "all") return {};
-  const todayKey = localDateKey(today);
+  const todayKey = getRestaurantDateKey(today);
   if (period === "today") return { dateFrom: todayKey, dateTo: todayKey };
   if (period === "last7Days") {
-    const firstDay = new Date(today);
-    firstDay.setHours(0, 0, 0, 0);
-    firstDay.setDate(firstDay.getDate() - 6);
-    return { dateFrom: localDateKey(firstDay), dateTo: todayKey };
+    return {
+      dateFrom: dayjs(todayKey).subtract(6, "day").format("YYYY-MM-DD"),
+      dateTo: todayKey,
+    };
   }
   return {
-    dateFrom: localDateKey(new Date(today.getFullYear(), today.getMonth(), 1)),
-    dateTo: localDateKey(new Date(today.getFullYear(), today.getMonth() + 1, 0)),
+    dateFrom: dayjs(todayKey).startOf("month").format("YYYY-MM-DD"),
+    dateTo: dayjs(todayKey).endOf("month").format("YYYY-MM-DD"),
   };
-}
-
-function localDateKey(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
 }
