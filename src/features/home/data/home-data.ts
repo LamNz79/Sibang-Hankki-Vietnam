@@ -5,14 +5,12 @@ import {
   IconStar,
   IconTrendingUp,
 } from "@tabler/icons-react";
-import { uiColors } from "@/theme";
-
 export const categories = [
-  { label: "Michelin", slug: "michelin", icon: IconStar, color: uiColors.brandPrimaryMuted },
-  { label: "Buffet", slug: "buffet", icon: IconFlame, color: uiColors.brandPrimaryMuted },
-  { label: "Special deal", slug: "special-deal", icon: IconPercentage, color: uiColors.brandPrimaryMuted },
-  { label: "Date night", slug: "date-night", icon: IconHeart, color: uiColors.brandPrimaryMuted },
-  { label: "Trending", slug: "trending", icon: IconTrendingUp, color: uiColors.brandPrimaryMuted },
+  { label: "Michelin", slug: "michelin", icon: IconStar, image: "/images/sample/restaurants/royal-pavilion-interior.jpg" },
+  { label: "Buffet", slug: "buffet", icon: IconFlame, image: "/images/sample/food/korean-bbq-beef.jpg" },
+  { label: "Special deal", slug: "special-deal", icon: IconPercentage, image: "/images/sample/food/cantonese-roast-duck.jpg" },
+  { label: "Date night", slug: "date-night", icon: IconHeart, image: "/images/sample/restaurants/royal-pavilion-private-dining.jpg" },
+  { label: "Trending", slug: "trending", icon: IconTrendingUp, image: "/images/sample/food/pho-bo.jpg" },
 ] as const;
 
 export const cityTiles = [
@@ -20,19 +18,19 @@ export const cityTiles = [
     label: "Ho Chi Minh City",
     slug: "ho-chi-minh",
     badge: undefined,
-    background: "linear-gradient(135deg, #6da1c3 0%, #c4d9ea 100%)",
+    background: "url('/images/sample/cities/ho-chi-minh-city.jpg') center / cover",
   },
   {
     label: "Hanoi",
     slug: "hanoi",
     badge: undefined,
-    background: "linear-gradient(135deg, #6b635e 0%, #afa59d 100%)",
+    background: "url('/images/sample/cities/hanoi.jpg') center / cover",
   },
   {
     label: "Da Nang",
     slug: "da-nang",
     badge: undefined,
-    background: "linear-gradient(135deg, #90b7d8 0%, #cfe2f1 100%)",
+    background: "url('/images/sample/cities/da-nang.jpg') center / cover",
   },
 ];
 
