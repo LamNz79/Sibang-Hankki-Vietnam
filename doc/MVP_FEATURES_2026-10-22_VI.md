@@ -322,6 +322,7 @@ Các màn hình sau đã có giao diện để định hướng sản phẩm nh�
 - Dining map trong tài khoản Customer.
 - Xếp bàn vật lý/table assignment cho reservation.
 - Thanh toán online, hoàn tiền và đối soát.
+- Chỉnh sửa món đặt trước sau khi đã tạo reservation: Customer có thể thêm, xóa hoặc đổi món về sau. Tính năng ở phiên bản sau này cần thay `preOrderNote` dạng văn bản hiện tại bằng danh sách món có cấu trúc, lưu lịch sử thay đổi, thông báo cho nhà hàng, áp dụng thời hạn chỉnh sửa và được thiết kế cùng luồng payment/deposit, thanh toán phần chênh lệch và hoàn tiền khi payment được triển khai.
 - Gửi email/SMS/push notification thật.
 - Upload file ảnh trực tiếp lên object storage; MVP hiện quản lý ảnh bằng URL.
 - Dark mode và tùy biến theme cho Owner/Customer; preference cá nhân hiện chỉ có UI trong System Admin.

@@ -321,6 +321,7 @@ The following screens exist as product-direction prototypes but currently use de
 - Customer dining map.
 - Physical table assignment for reservations.
 - Online payment, refunds, and settlement.
+- Post-booking pre-order editing: Customers can add, remove, or change menu items after creating a reservation. This later-version feature should replace the current free-text `preOrderNote` with structured pre-order items, retain change history, notify the restaurant, enforce an editing cutoff, and be designed together with payment/deposit, price-difference, and refund handling when payment is introduced.
 - Real email, SMS, or push-notification delivery.
 - Direct image-file upload to object storage; the MVP currently manages images by URL.
 - Dark mode and theme customization for Owner/Customer; personal preference UI is currently limited to System Admin.
