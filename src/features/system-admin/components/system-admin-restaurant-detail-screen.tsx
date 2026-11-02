@@ -53,6 +53,7 @@ import {
 } from "@/features/system-admin/data/system-admin-booking-configuration";
 import { ApiError } from "@/lib/api/client";
 import { uiColors } from "@/theme";
+import { useAccountPreferences, accountAccentColor } from "./account-preferences-context";
 
 const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
 const numberValue = (value: string | number) => typeof value === "number" ? value : 0;
@@ -79,6 +80,8 @@ const statusTones = {
 
 export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
   const t = useTranslations("SystemAdmin.restaurantDetail");
+  const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   const ownerT = useTranslations("OwnerSettings.page");
   const queryClient = useQueryClient();
   const [editingProfile, setEditingProfile] = useState(false);
@@ -184,6 +187,8 @@ export function SystemAdminRestaurantDetailScreen({ id }: { id: string }) {
           <Group gap="sm">
             {restaurant.approvalStatus === "ACTIVE" ? (
               <Button
+                color={accentColor}
+                autoContrast
                 component={Link}
                 href={`/restaurants/${restaurant.slug}`}
                 target="_blank"
