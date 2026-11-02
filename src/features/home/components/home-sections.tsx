@@ -12,19 +12,24 @@ export function HeroBanner() {
       p="lg"
       style={{
         border: `1px solid ${uiColors.borderStrong}`,
-        background:
-          "repeating-linear-gradient(-45deg, #fff7f3 0, #fff7f3 12px, #fce9e2 12px, #fce9e2 24px)",
+        backgroundImage:
+          "linear-gradient(90deg, rgba(26, 12, 7, 0.82), rgba(26, 12, 7, 0.18)), url('/images/sample/restaurants/royal-pavilion-dining-hall.jpg')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
         boxShadow: "none",
+        minHeight: 160,
+        display: "flex",
+        alignItems: "center",
       }}
     >
       <Stack gap={10}>
-        <Text size="sm" fw={700} c={uiColors.brandPrimaryMuted} tt="uppercase">
+        <Text size="sm" fw={700} c="white" tt="uppercase">
           {t("eyebrow")}
         </Text>
-        <Title order={2} size="h2" c={uiColors.textPrimary}>
+        <Title order={2} size="h2" c="white">
           {t("title")}
         </Title>
-        <Text size="sm" c={uiColors.textSecondary}>
+        <Text size="sm" c="white">
           {t("description")}
         </Text>
       </Stack>
@@ -49,7 +54,7 @@ export function CityTileGrid({
           <Box
             w="100%"
             style={{
-              height: 42,
+              height: 72,
               borderRadius: 8,
               background: item.background,
               position: "relative",
