@@ -84,6 +84,21 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
     initialContent.heroBanner ?? emptyHero,
   );
   const [cities, setCities] = useState<AdminCityImage[]>(initialContent.cityImages);
+  function updateHeroField<K extends keyof AdminHeroBanner>(
+    key: K,
+    value: AdminHeroBanner[K],
+  ) {
+    setHero((current) => ({ ...current, [key]: value }));
+  }
+  function updateCityField<K extends keyof AdminCityImage>(
+    index: number,
+    key: K,
+    value: AdminCityImage[K],
+  ) {
+    setCities((current) => current.map((city, cityIndex) =>
+      cityIndex === index ? { ...city, [key]: value } : city,
+    ));
+  }
   const updateCache = (update: (current: AdminHomeContent) => AdminHomeContent) => {
     queryClient.setQueryData<AdminHomeContent>(queryKey, (current) =>
       current ? update(current) : current,
@@ -134,10 +149,7 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
             <Switch
               label={t("enabled")}
               checked={hero.enabled}
-              onChange={(event) => setHero((current) => ({
-                ...current,
-                enabled: event.currentTarget.checked,
-              }))}
+              onChange={(event) => updateHeroField("enabled", event.currentTarget.checked)}
             />
           </Group>
 
@@ -168,20 +180,14 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
               label={t("hero.imageUrl")}
               description={t("hero.imageUrlHint")}
               value={hero.imageUrl}
-              onChange={(event) => setHero((current) => ({
-                ...current,
-                imageUrl: event.currentTarget.value,
-              }))}
+              onChange={(event) => updateHeroField("imageUrl", event.currentTarget.value)}
             />
             <TextInput
               required
               label={t("hero.targetUrl")}
               description={t("hero.targetUrlHint")}
               value={hero.targetUrl}
-              onChange={(event) => setHero((current) => ({
-                ...current,
-                targetUrl: event.currentTarget.value,
-              }))}
+              onChange={(event) => updateHeroField("targetUrl", event.currentTarget.value)}
             />
           </SimpleGrid>
 
@@ -198,19 +204,13 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
                     label={t("hero.headline")}
                     maxLength={120}
                     value={hero[titleKey] ?? ""}
-                    onChange={(event) => setHero((current) => ({
-                      ...current,
-                      [titleKey]: event.currentTarget.value,
-                    }))}
+                    onChange={(event) => updateHeroField(titleKey, event.currentTarget.value)}
                   />
                   <TextInput
                     label={t("imageAlt")}
                     maxLength={300}
                     value={hero[altKey] ?? ""}
-                    onChange={(event) => setHero((current) => ({
-                      ...current,
-                      [altKey]: event.currentTarget.value,
-                    }))}
+                    onChange={(event) => updateHeroField(altKey, event.currentTarget.value)}
                   />
                   <Textarea
                     label={t("hero.copy")}
@@ -218,10 +218,7 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
                     autosize
                     minRows={2}
                     value={hero[descriptionKey] ?? ""}
-                    onChange={(event) => setHero((current) => ({
-                      ...current,
-                      [descriptionKey]: event.currentTarget.value,
-                    }))}
+                    onChange={(event) => updateHeroField(descriptionKey, event.currentTarget.value)}
                   />
                 </SimpleGrid>
               </Tabs.Panel>
@@ -270,39 +267,33 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
                     <Switch
                       aria-label={t("enabled")}
                       checked={city.enabled}
-                      onChange={(event) => setCities((current) => current.map((item, itemIndex) =>
-                        itemIndex === index ? { ...item, enabled: event.currentTarget.checked } : item,
-                      ))}
+                      onChange={(event) => updateCityField(
+                        index,
+                        "enabled",
+                        event.currentTarget.checked,
+                      )}
                     />
                   </Group>
                   <TextInput
                     label={t("cities.slug")}
                     value={city.citySlug}
-                    onChange={(event) => setCities((current) => current.map((item, itemIndex) =>
-                      itemIndex === index ? { ...item, citySlug: event.currentTarget.value } : item,
-                    ))}
+                    onChange={(event) => updateCityField(index, "citySlug", event.currentTarget.value)}
                   />
                   <TextInput
                     label={t("cities.imageUrl")}
                     value={city.imageUrl}
-                    onChange={(event) => setCities((current) => current.map((item, itemIndex) =>
-                      itemIndex === index ? { ...item, imageUrl: event.currentTarget.value } : item,
-                    ))}
+                    onChange={(event) => updateCityField(index, "imageUrl", event.currentTarget.value)}
                   />
                   <TextInput
                     label={t("imageAlt")}
                     value={city.imageAlt ?? ""}
-                    onChange={(event) => setCities((current) => current.map((item, itemIndex) =>
-                      itemIndex === index ? { ...item, imageAlt: event.currentTarget.value } : item,
-                    ))}
+                    onChange={(event) => updateCityField(index, "imageAlt", event.currentTarget.value)}
                   />
                   <NumberInput
                     label={t("cities.sortOrder")}
                     min={0}
                     value={city.sortOrder}
-                    onChange={(value) => setCities((current) => current.map((item, itemIndex) =>
-                      itemIndex === index ? { ...item, sortOrder: Number(value) || 0 } : item,
-                    ))}
+                    onChange={(value) => updateCityField(index, "sortOrder", Number(value) || 0)}
                   />
                   <Button
                     variant="light"
