@@ -31,6 +31,7 @@ import {
   type AdminHomeContent,
 } from "@/features/home/data/home-content";
 import { uiColors } from "@/theme";
+import { useAccountPreferences, accountAccentColor } from "./account-preferences-context";
 
 const queryKey = ["system-admin-home-content"] as const;
 const emptyHero: AdminHeroBanner = {
@@ -55,6 +56,7 @@ const languages = [
 
 export function SystemAdminHomeContentScreen() {
   const t = useTranslations("SystemAdmin.homeContent");
+
   const contentQuery = useQuery({
     queryKey,
     queryFn: ({ signal }) => getSystemAdminHomeContent(signal),
@@ -131,7 +133,8 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
   });
 
   const heroValid = hero.imageUrl.trim() !== "" && hero.targetUrl.trim() !== "";
-
+  const preferences = useAccountPreferences();
+  const accentColor = accountAccentColor(preferences.themeColor);
   return (
     <Stack gap="xl">
       <Stack gap={3}>
@@ -227,6 +230,8 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
 
           <Group justify="flex-end">
             <Button
+              color={accentColor}
+              autoContrast
               leftSection={<IconDeviceFloppy size={17} />}
               onClick={() => heroMutation.mutate(hero)}
               loading={heroMutation.isPending}
