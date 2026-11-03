@@ -2,21 +2,30 @@ import Link from "next/link";
 import { Box, Card, Group, Stack, Text, Title } from "@mantine/core";
 import { SelectionChip } from "@/components/ui";
 import { useTranslations } from "next-intl";
+import type { PublicHeroBanner } from "@/features/home/data/home-content";
 import { uiColors } from "@/theme";
 
-export function HeroBanner() {
+export function HeroBanner({ content }: { content?: PublicHeroBanner | null }) {
   const t = useTranslations("Home.banner");
+  if (content === null) return null;
+
+  const title = content?.title ?? t("title");
+  const description = content?.description ?? t("description");
   return (
     <Card
+      component={Link}
+      href={content?.targetUrl ?? "/restaurants/royal-pavilion"}
+      aria-label={content?.imageAlt ?? title}
       radius="md"
       p="lg"
       style={{
         border: `1px solid ${uiColors.borderStrong}`,
-        backgroundImage:
-          "linear-gradient(90deg, rgba(26, 12, 7, 0.82), rgba(26, 12, 7, 0.18)), url('/images/sample/restaurants/royal-pavilion-dining-hall.jpg')",
+        backgroundImage: `linear-gradient(90deg, rgba(26, 12, 7, 0.82), rgba(26, 12, 7, 0.18)), url('${content?.imageUrl ?? "/images/sample/restaurants/royal-pavilion-dining-hall.jpg"}')`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         boxShadow: "none",
+        color: "inherit",
+        textDecoration: "none",
         minHeight: 160,
         display: "flex",
         alignItems: "center",
@@ -27,10 +36,10 @@ export function HeroBanner() {
           {t("eyebrow")}
         </Text>
         <Title order={2} size="h2" c="white">
-          {t("title")}
+          {title}
         </Title>
         <Text size="sm" c="white">
-          {t("description")}
+          {description}
         </Text>
       </Stack>
     </Card>

@@ -1330,6 +1330,7 @@
         "restaurants": "레스토랑",
         "reservations": "예약",
         "assignments": "레스토랑 권한",
+        "homeContent": "홈페이지 콘텐츠",
         "preferences": "개인 설정"
       }
     },
@@ -1368,6 +1369,44 @@
         "users": "사용자 관리",
         "restaurants": "레스토랑 관리",
         "assignments": "레스토랑 권한 관리"
+      }
+    },
+    "homeContent": {
+      "title": "홈페이지 콘텐츠",
+      "description": "고객에게 표시되는 메인 배너와 주요 도시 이미지를 관리합니다.",
+      "loadError": "홈페이지 콘텐츠를 불러올 수 없습니다.",
+      "retry": "다시 시도",
+      "enabled": "고객에게 표시",
+      "imageAlt": "이미지 대체 설명",
+      "languages": {
+        "vi": "베트남어",
+        "en": "영어",
+        "ko": "한국어"
+      },
+      "hero": {
+        "title": "메인 배너",
+        "description": "고객 홈페이지 상단에 표시되는 큰 배너입니다.",
+        "preview": "배너 미리보기",
+        "previewTitle": "홈페이지 배너 제목",
+        "imageUrl": "이미지 URL",
+        "imageUrlHint": "HTTPS URL 또는 /images/로 시작하는 경로를 사용하세요.",
+        "targetUrl": "이동 경로",
+        "targetUrlHint": "배너 선택 시 열리는 내부 페이지입니다. 예: /restaurants/royal-pavilion",
+        "headline": "제목",
+        "copy": "설명",
+        "save": "배너 저장",
+        "saved": "홈페이지 배너를 저장했습니다.",
+        "saveError": "홈페이지 배너를 저장할 수 없습니다."
+      },
+      "cities": {
+        "title": "주요 도시 이미지",
+        "description": "홈페이지 카테고리 아래에 표시되는 도시 카드를 수정합니다.",
+        "slug": "도시 슬러그",
+        "imageUrl": "이미지 URL",
+        "sortOrder": "표시 순서",
+        "save": "도시 저장",
+        "saved": "도시 이미지를 저장했습니다.",
+        "saveError": "도시 이미지를 저장할 수 없습니다."
       }
     },
     "users": {

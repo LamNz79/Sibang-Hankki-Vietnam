@@ -1330,6 +1330,7 @@
         "restaurants": "Nhà hàng",
         "reservations": "Đặt bàn",
         "assignments": "Phân quyền nhà hàng",
+        "homeContent": "Nội dung trang chủ",
         "preferences": "Cài đặt cá nhân"
       }
     },
@@ -1368,6 +1369,44 @@
         "users": "Quản lý người dùng",
         "restaurants": "Quản lý nhà hàng",
         "assignments": "Quản lý phân quyền nhà hàng"
+      }
+    },
+    "homeContent": {
+      "title": "Nội dung trang chủ",
+      "description": "Quản lý banner chính và ảnh thành phố hiển thị cho khách hàng.",
+      "loadError": "Không thể tải nội dung trang chủ.",
+      "retry": "Thử lại",
+      "enabled": "Hiển thị cho khách hàng",
+      "imageAlt": "Mô tả thay thế cho ảnh",
+      "languages": {
+        "vi": "Tiếng Việt",
+        "en": "Tiếng Anh",
+        "ko": "Tiếng Hàn"
+      },
+      "hero": {
+        "title": "Banner chính",
+        "description": "Đây là banner lớn ở đầu trang chủ của khách hàng.",
+        "preview": "Xem trước banner",
+        "previewTitle": "Tiêu đề banner trang chủ",
+        "imageUrl": "Đường dẫn ảnh",
+        "imageUrlHint": "Dùng URL HTTPS hoặc đường dẫn bắt đầu bằng /images/.",
+        "targetUrl": "Trang đích",
+        "targetUrlHint": "Trang nội bộ được mở khi chọn banner, ví dụ /restaurants/royal-pavilion.",
+        "headline": "Tiêu đề",
+        "copy": "Nội dung mô tả",
+        "save": "Lưu banner",
+        "saved": "Đã lưu banner trang chủ.",
+        "saveError": "Không thể lưu banner trang chủ."
+      },
+      "cities": {
+        "title": "Ảnh thành phố nổi bật",
+        "description": "Chỉnh sửa các thẻ thành phố nằm dưới danh mục trên trang chủ.",
+        "slug": "Mã thành phố",
+        "imageUrl": "Đường dẫn ảnh",
+        "sortOrder": "Thứ tự hiển thị",
+        "save": "Lưu thành phố",
+        "saved": "Đã lưu ảnh thành phố.",
+        "saveError": "Không thể lưu ảnh thành phố."
       }
     },
     "users": {

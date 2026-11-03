@@ -19,7 +19,8 @@ import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 import { BottomNav, MobileShell } from "@/components/layout/customer";
 import { SectionTitle } from "@/components/ui";
 import { HomeHeader } from "@/features/home/components/home-header";
@@ -34,6 +35,7 @@ import {
   categories,
   cityTiles,
 } from "@/features/home/data/home-data";
+import { getPublicHomeContent } from "@/features/home/data/home-content";
 import type { LocationSelection } from "@/features/locations/data/locations";
 import { getUpcomingConfirmedReservations } from "@/features/reservations/domain/selectors";
 import {
@@ -46,6 +48,7 @@ import { uiColors } from "@/theme";
 function HomeContent() {
   const t = useTranslations("ReservationQr");
   const homeT = useTranslations("Home");
+  const locale = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [location, setLocation] = useState<LocationSelection>({
@@ -56,6 +59,12 @@ function HomeContent() {
   const [locationOpened, setLocationOpened] = useState(false);
   const [qrPickerOpened, setQrPickerOpened] = useState(false);
   const [pickedQrId, setPickedQrId] = useState<string | null>(null);
+  const homeContent = useQuery({
+    queryKey: ["home-content", locale],
+    queryFn: ({ signal }) => getPublicHomeContent(locale, signal),
+    retry: false,
+    staleTime: 5 * 60_000,
+  });
   const deepLinkedQrId = searchParams.get("qr");
   const selectedQrId = pickedQrId ?? deepLinkedQrId;
   const qrOpened = qrPickerOpened || Boolean(deepLinkedQrId);
@@ -84,6 +93,16 @@ function HomeContent() {
     [homeT("prices.under300")]: "under300",
     [homeT("prices.over300")]: "over300",
   };
+  const managedCityTiles = homeContent.data
+    ? homeContent.data.cityImages.map((city) => ({
+        label: cityTiles.find((item) => item.slug === city.citySlug)?.label
+          ?? city.imageAlt
+          ?? city.citySlug.replaceAll("-", " "),
+        slug: city.citySlug,
+        badge: undefined,
+        background: `url('${city.imageUrl}') center / cover`,
+      }))
+    : cityTiles;
 
   const openQr = () => {
     setPickedQrId(
@@ -303,7 +322,7 @@ function HomeContent() {
         </>
       ) : null}
 
-      <HeroBanner />
+      <HeroBanner content={homeContent.data?.heroBanner} />
 
       <Group justify="space-between" align="flex-end">
         <SectionTitle title={homeT("sections.specialCategories")} />
@@ -337,7 +356,7 @@ function HomeContent() {
           {homeT("sections.viewAll")}
         </Text>
       </Group>
-      <CityTileGrid items={cityTiles} />
+      <CityTileGrid items={managedCityTiles} />
 
       <Box>
         <SectionTitle title={homeT("sections.sortBy")} />

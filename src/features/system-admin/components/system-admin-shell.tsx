@@ -19,6 +19,7 @@ import {
   IconCalendarEvent,
   IconLayoutDashboard,
   IconLink,
+  IconPhoto,
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
@@ -54,6 +55,7 @@ const navigation = [
     icon: IconCalendarEvent,
   },
   { href: "/system-admin/assignments", key: "assignments", icon: IconLink },
+  { href: "/system-admin/home-content", key: "homeContent", icon: IconPhoto },
   { href: "/system-admin/preferences", key: "preferences", icon: IconSettings },
 ] as const;
 
