@@ -1330,6 +1330,7 @@
         "restaurants": "Restaurants",
         "reservations": "Reservations",
         "assignments": "Restaurant access",
+        "homeContent": "Homepage content",
         "preferences": "Personal settings"
       }
     },
@@ -1368,6 +1369,44 @@
         "users": "Manage users",
         "restaurants": "Manage restaurants",
         "assignments": "Manage restaurant access"
+      }
+    },
+    "homeContent": {
+      "title": "Homepage content",
+      "description": "Manage the hero banner and featured city images shown to customers.",
+      "loadError": "Could not load homepage content.",
+      "retry": "Try again",
+      "enabled": "Visible to customers",
+      "imageAlt": "Alternative image text",
+      "languages": {
+        "vi": "Vietnamese",
+        "en": "English",
+        "ko": "Korean"
+      },
+      "hero": {
+        "title": "Hero banner",
+        "description": "This is the large banner at the top of the customer homepage.",
+        "preview": "Banner preview",
+        "previewTitle": "Homepage banner title",
+        "imageUrl": "Image URL",
+        "imageUrlHint": "Use an HTTPS URL or a path beginning with /images/.",
+        "targetUrl": "Destination",
+        "targetUrlHint": "Internal page opened when the banner is selected, for example /restaurants/royal-pavilion.",
+        "headline": "Headline",
+        "copy": "Description",
+        "save": "Save banner",
+        "saved": "Homepage banner saved.",
+        "saveError": "Could not save the homepage banner."
+      },
+      "cities": {
+        "title": "Featured city images",
+        "description": "Edit the city cards shown below the homepage categories.",
+        "slug": "City slug",
+        "imageUrl": "Image URL",
+        "sortOrder": "Display order",
+        "save": "Save city",
+        "saved": "City image saved.",
+        "saveError": "Could not save the city image."
       }
     },
     "users": {

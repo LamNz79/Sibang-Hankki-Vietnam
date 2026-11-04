@@ -45,6 +45,7 @@ export const apiEndpoints = {
   authMe: "/api/auth/me",
   authPassword: "/api/auth/password",
   accountPreferences: "/api/account/preferences",
+  homeContent: "/api/home-content",
   customerProfile: "/api/customer/profile",
   customerFavorites: "/api/customer/favorites",
   customerFavorite: (slug: string) =>
@@ -118,6 +119,10 @@ export const apiEndpoints = {
   systemAdminRestaurantMediaItem: (id: string, mediaId: string) =>
     `/api/admin/restaurants/${seg(id)}/media/${seg(mediaId)}`,
   systemAdminReservations: "/api/admin/reservations",
+  systemAdminHomeContent: "/api/admin/home-content",
+  systemAdminHomeContentHero: "/api/admin/home-content/hero",
+  systemAdminHomeContentCity: (provinceCode: number) =>
+    `/api/admin/home-content/cities/${provinceCode}`,
   systemAdminReservation: (id: string) =>
     `/api/admin/reservations/${seg(id)}`,
   locationProvinces: "/api/locations/provinces",
