@@ -301,6 +301,8 @@ function HomeContentEditor({ initialContent }: { initialContent: AdminHomeConten
                     onChange={(value) => updateCityField(index, "sortOrder", Number(value) || 0)}
                   />
                   <Button
+                    autoContrast
+                    color={accentColor}
                     variant="light"
                     leftSection={<IconDeviceFloppy size={17} />}
                     onClick={() => cityMutation.mutate(city)}
