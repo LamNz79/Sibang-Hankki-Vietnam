@@ -1,9 +1,9 @@
 {
   "Language": {
     "label": "Language",
-    "vietnamese": "Tiếng Việt",
+    "vietnamese": "Vietnamese",
     "english": "English",
-    "korean": "한국어"
+    "korean": "Korean"
   },
   "Auth": {
     "backHome": "Back to home",
@@ -1034,8 +1034,8 @@
       },
       "languages": {
         "en": "English",
-        "vi": "Tiếng Việt",
-        "ko": "한국어"
+        "vi": "Vietnamese",
+        "ko": "Korean"
       },
       "checkIn": {
         "title": "Check-in",
@@ -1379,9 +1379,9 @@
       "enabled": "Visible to customers",
       "imageAlt": "Alternative image text",
       "languages": {
-        "vi": "Tiếng Việt",
+        "vi": "Vietnamese",
         "en": "English",
-        "ko": "한국어"
+        "ko": "Korean"
       },
       "hero": {
         "title": "Hero banner",
@@ -1830,9 +1830,9 @@
         "pageSize": "Default rows per page",
         "dateFormat": "Date format",
         "language": "Language",
-        "vietnamese": "Tiếng Việt",
+        "vietnamese": "Vietnamese",
         "english": "English",
-        "korean": "한국어"
+        "korean": "Korean"
       },
       "save": "Save settings",
       "reset": "Restore defaults",

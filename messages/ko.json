@@ -1,9 +1,9 @@
 {
   "Language": {
     "label": "언어",
-    "vietnamese": "Tiếng Việt",
+    "vietnamese": "Vietnamese",
     "english": "English",
-    "korean": "한국어"
+    "korean": "Korean"
   },
   "Auth": {
     "backHome": "홈으로 돌아가기",
@@ -1034,8 +1034,8 @@
       },
       "languages": {
         "en": "English",
-        "vi": "Tiếng Việt",
-        "ko": "한국어"
+        "vi": "Vietnamese",
+        "ko": "Korean"
       },
       "checkIn": {
         "title": "체크인",
@@ -1379,9 +1379,9 @@
       "enabled": "고객에게 표시",
       "imageAlt": "이미지 대체 설명",
       "languages": {
-        "vi": "Tiếng Việt",
+        "vi": "Vietnamese",
         "en": "English",
-        "ko": "한국어"
+        "ko": "Korean"
       },
       "hero": {
         "title": "메인 배너",
@@ -1830,9 +1830,9 @@
         "pageSize": "페이지당 기본 행 수",
         "dateFormat": "날짜 형식",
         "language": "언어",
-        "vietnamese": "Tiếng Việt",
+        "vietnamese": "Vietnamese",
         "english": "English",
-        "korean": "한국어"
+        "korean": "Korean"
       },
       "save": "설정 저장",
       "reset": "기본값 복원",
