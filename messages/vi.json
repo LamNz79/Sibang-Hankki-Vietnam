@@ -1029,7 +1029,7 @@
         "name": "Khách hàng",
         "phone": "Điện thoại",
         "email": "Email",
-        "language": "Ngôn ngữ / 언어 / Language",
+        "language": "Ngôn ngữ",
         "store": "Cửa hàng"
       },
       "languages": {
@@ -1829,7 +1829,7 @@
         "description": "Chọn mặc định cho danh sách và ngày tháng trong trang quản trị.",
         "pageSize": "Số dòng mặc định mỗi trang",
         "dateFormat": "Định dạng ngày",
-        "language": "Ngôn ngữ",
+        "language": "Ngôn ngữ / 언어 / Language",
         "vietnamese": "Vietnamese",
         "english": "English",
         "korean": "Korean"

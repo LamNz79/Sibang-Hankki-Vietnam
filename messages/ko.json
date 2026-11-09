@@ -1029,7 +1029,7 @@
         "name": "고객",
         "phone": "전화번호",
         "email": "이메일",
-        "language": "Ngôn ngữ / 언어 / Language",
+        "language": "언어",
         "store": "가게"
       },
       "languages": {
@@ -1829,7 +1829,7 @@
         "description": "관리 목록과 날짜의 기본 표시 방식을 선택합니다.",
         "pageSize": "페이지당 기본 행 수",
         "dateFormat": "날짜 형식",
-        "language": "언어",
+        "language": "Ngôn ngữ / 언어 / Language",
         "vietnamese": "Vietnamese",
         "english": "English",
         "korean": "Korean"
