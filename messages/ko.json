@@ -1,8 +1,8 @@
 {
   "Language": {
     "label": "언어",
-    "vietnamese": "베트남어",
-    "english": "영어",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
     "korean": "한국어"
   },
   "Auth": {
@@ -1033,8 +1033,8 @@
         "store": "가게"
       },
       "languages": {
-        "en": "영어",
-        "vi": "베트남어",
+        "en": "English",
+        "vi": "Tiếng Việt",
         "ko": "한국어"
       },
       "checkIn": {
@@ -1379,8 +1379,8 @@
       "enabled": "고객에게 표시",
       "imageAlt": "이미지 대체 설명",
       "languages": {
-        "vi": "베트남어",
-        "en": "영어",
+        "vi": "Tiếng Việt",
+        "en": "English",
         "ko": "한국어"
       },
       "hero": {
@@ -1830,8 +1830,8 @@
         "pageSize": "페이지당 기본 행 수",
         "dateFormat": "날짜 형식",
         "language": "언어",
-        "vietnamese": "베트남어",
-        "english": "영어",
+        "vietnamese": "Tiếng Việt",
+        "english": "English",
         "korean": "한국어"
       },
       "save": "설정 저장",

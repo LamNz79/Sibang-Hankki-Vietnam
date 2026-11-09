@@ -2,8 +2,8 @@
   "Language": {
     "label": "Ngôn ngữ",
     "vietnamese": "Tiếng Việt",
-    "english": "Tiếng Anh",
-    "korean": "Tiếng Hàn"
+    "english": "English",
+    "korean": "한국어"
   },
   "Auth": {
     "backHome": "Về trang chủ",
@@ -1033,9 +1033,9 @@
         "store": "Cửa hàng"
       },
       "languages": {
-        "en": "Tiếng Anh",
+        "en": "English",
         "vi": "Tiếng Việt",
-        "ko": "Tiếng Hàn"
+        "ko": "한국어"
       },
       "checkIn": {
         "title": "Check-in",
@@ -1380,8 +1380,8 @@
       "imageAlt": "Mô tả thay thế cho ảnh",
       "languages": {
         "vi": "Tiếng Việt",
-        "en": "Tiếng Anh",
-        "ko": "Tiếng Hàn"
+        "en": "English",
+        "ko": "한국어"
       },
       "hero": {
         "title": "Banner chính",
@@ -1831,8 +1831,8 @@
         "dateFormat": "Định dạng ngày",
         "language": "Ngôn ngữ",
         "vietnamese": "Tiếng Việt",
-        "english": "Tiếng Anh",
-        "korean": "Tiếng Hàn"
+        "english": "English",
+        "korean": "한국어"
       },
       "save": "Lưu cài đặt",
       "reset": "Khôi phục mặc định",
