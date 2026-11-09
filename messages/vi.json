@@ -1,6 +1,6 @@
 {
   "Language": {
-    "label": "Ngôn ngữ",
+    "label": "Ngôn ngữ / 언어 / Language",
     "vietnamese": "Vietnamese",
     "english": "English",
     "korean": "Korean"
@@ -1029,7 +1029,7 @@
         "name": "Khách hàng",
         "phone": "Điện thoại",
         "email": "Email",
-        "language": "Ngôn ngữ",
+        "language": "Ngôn ngữ / 언어 / Language",
         "store": "Cửa hàng"
       },
       "languages": {
