@@ -376,6 +376,8 @@
       "confirmed": "Đã xác nhận",
       "pendingConfirmation": "Chờ xác nhận",
       "guestLocation": "{count} khách · {district}",
+      "payWithVnpay": "Thanh toán tiền cọc qua VNPAY",
+      "paymentError": "Không thể bắt đầu thanh toán. Vui lòng thử lại.",
       "viewDetails": "Xem chi tiết đặt bàn",
       "exploreRestaurants": "Khám phá thêm nhà hàng"
     }

@@ -5,6 +5,8 @@ export const apiEndpoints = {
   availability: (slug: string) =>
     `/api/restaurants/${seg(slug)}/availability`,
   reservations: "/api/reservations",
+  vnpayReservationCheckout: (id: string) =>
+    `/api/payments/vnpay/reservations/${seg(id)}`,
   customerReservation: (id: string) =>
     `/api/customer/reservations/${seg(id)}`,
   cancelCustomerReservation: (id: string) =>

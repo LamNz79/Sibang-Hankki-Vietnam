@@ -10,10 +10,13 @@ import {
 import {
   IconCalendarEvent,
   IconClock,
+  IconCreditCard,
   IconUsers,
 } from "@tabler/icons-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useState } from "react";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui";
+import { createVnpayCheckout } from "@/features/payments/data/create-vnpay-checkout";
 import type { CustomerReservation } from "@/features/reservations/types";
 import { ReservationStatus } from "@/features/reservations/types";
 import { restaurantTimeZone, toRestaurantDate } from "@/lib/date-time";
@@ -38,7 +41,10 @@ export function ReservationRequestSuccessModal({
   onExploreRestaurants,
 }: ReservationRequestSuccessModalProps) {
   const format = useFormatter();
+  const locale = useLocale();
   const t = useTranslations("CustomerBooking.success");
+  const [paymentPending, setPaymentPending] = useState(false);
+  const [paymentError, setPaymentError] = useState(false);
   const confirmed = reservation?.status === ReservationStatus.Confirmed;
   const displayDate = reservation
     ? reservation.changeRequest?.date ?? reservation.date
@@ -47,10 +53,37 @@ export function ReservationRequestSuccessModal({
     ? reservation.changeRequest?.time ?? reservation.time
     : "";
 
+  const resetPayment = () => {
+    setPaymentPending(false);
+    setPaymentError(false);
+  };
+
+  const closeModal = () => {
+    resetPayment();
+    onClose();
+  };
+
+  const startPayment = async () => {
+    if (!reservation || paymentPending) return;
+    setPaymentError(false);
+    setPaymentPending(true);
+    try {
+      const checkout = await createVnpayCheckout(
+        reservation.id,
+        reservation.managementToken,
+        locale,
+      );
+      window.location.assign(checkout.checkoutUrl);
+    } catch {
+      setPaymentError(true);
+      setPaymentPending(false);
+    }
+  };
+
   return (
     <Modal
       opened={opened}
-      onClose={onClose}
+      onClose={closeModal}
       centered
       title={null}
       radius="xl"
@@ -138,12 +171,33 @@ export function ReservationRequestSuccessModal({
           </Card>
 
           <Stack w="100%" gap="sm">
+            {confirmed && !isChangeRequest ? (
+              <Button
+                fullWidth
+                size="lg"
+                radius="md"
+                color="blue"
+                leftSection={<IconCreditCard size={19} />}
+                loading={paymentPending}
+                onClick={startPayment}
+              >
+                {t("payWithVnpay")}
+              </Button>
+            ) : null}
+            {paymentError ? (
+              <Text size="sm" c="red" ta="center" role="alert">
+                {t("paymentError")}
+              </Text>
+            ) : null}
             <Button
               fullWidth
               size="lg"
               radius="md"
               color="warmCoral"
-              onClick={() => onViewDetails(reservation)}
+              onClick={() => {
+                resetPayment();
+                onViewDetails(reservation);
+              }}
             >
               {t("viewDetails")}
             </Button>
@@ -153,7 +207,10 @@ export function ReservationRequestSuccessModal({
               radius="md"
               variant="subtle"
               color="gray"
-              onClick={onExploreRestaurants}
+              onClick={() => {
+                resetPayment();
+                onExploreRestaurants();
+              }}
             >
               {t("exploreRestaurants")}
             </Button>

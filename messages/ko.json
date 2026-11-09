@@ -376,6 +376,8 @@
       "confirmed": "예약 확정",
       "pendingConfirmation": "확인 대기",
       "guestLocation": "{count}명 · {district}",
+      "payWithVnpay": "VNPAY로 예약금 결제",
+      "paymentError": "결제를 시작할 수 없습니다. 다시 시도해 주세요.",
       "viewDetails": "예약 상세 보기",
       "exploreRestaurants": "다른 레스토랑 둘러보기"
     }

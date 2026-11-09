@@ -376,6 +376,8 @@
       "confirmed": "Confirmed",
       "pendingConfirmation": "Pending confirmation",
       "guestLocation": "{count, plural, one {# guest} other {# guests}} · {district}",
+      "payWithVnpay": "Pay deposit with VNPAY",
+      "paymentError": "Payment could not be started. Please try again.",
       "viewDetails": "View reservation details",
       "exploreRestaurants": "Explore more restaurants"
     }

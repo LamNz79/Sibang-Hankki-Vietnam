@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     const backend = process.env.API_BASE_URL ?? "http://localhost:8080";
-    return ["auth", "account", "customer", "owner", "admin", "locations", "restaurants"].map((scope) => ({
+    return ["auth", "account", "customer", "owner", "admin", "locations", "payments", "restaurants"].map((scope) => ({
       source: `/api/${scope}/:path*`,
       destination: `${backend}/api/${scope}/:path*`,
     }));
