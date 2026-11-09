@@ -1,6 +1,6 @@
 {
   "Language": {
-    "label": "Language",
+    "label": "Ngôn ngữ / 언어 / Language",
     "vietnamese": "Vietnamese",
     "english": "English",
     "korean": "Korean"
@@ -1829,7 +1829,7 @@
         "description": "Choose the defaults used in administration lists and dates.",
         "pageSize": "Default rows per page",
         "dateFormat": "Date format",
-        "language": "Language",
+        "language": "Ngôn ngữ / 언어 / Language",
         "vietnamese": "Vietnamese",
         "english": "English",
         "korean": "Korean"

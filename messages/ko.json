@@ -1,9 +1,9 @@
 {
   "Language": {
-    "label": "언어",
-    "vietnamese": "베트남어",
-    "english": "영어",
-    "korean": "한국어"
+    "label": "Ngôn ngữ / 언어 / Language",
+    "vietnamese": "Vietnamese",
+    "english": "English",
+    "korean": "Korean"
   },
   "Auth": {
     "backHome": "홈으로 돌아가기",
@@ -1033,9 +1033,9 @@
         "store": "가게"
       },
       "languages": {
-        "en": "영어",
-        "vi": "베트남어",
-        "ko": "한국어"
+        "en": "English",
+        "vi": "Vietnamese",
+        "ko": "Korean"
       },
       "checkIn": {
         "title": "체크인",
@@ -1379,9 +1379,9 @@
       "enabled": "고객에게 표시",
       "imageAlt": "이미지 대체 설명",
       "languages": {
-        "vi": "베트남어",
-        "en": "영어",
-        "ko": "한국어"
+        "vi": "Vietnamese",
+        "en": "English",
+        "ko": "Korean"
       },
       "hero": {
         "title": "메인 배너",
@@ -1829,10 +1829,10 @@
         "description": "관리 목록과 날짜의 기본 표시 방식을 선택합니다.",
         "pageSize": "페이지당 기본 행 수",
         "dateFormat": "날짜 형식",
-        "language": "언어",
-        "vietnamese": "베트남어",
-        "english": "영어",
-        "korean": "한국어"
+        "language": "Ngôn ngữ / 언어 / Language",
+        "vietnamese": "Vietnamese",
+        "english": "English",
+        "korean": "Korean"
       },
       "save": "설정 저장",
       "reset": "기본값 복원",
