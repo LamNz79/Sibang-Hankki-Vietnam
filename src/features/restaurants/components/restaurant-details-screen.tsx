@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ActionIcon, Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
+import { ActionIcon, Badge, Box, Button, Card, Group, Image, Modal, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconCalendarTime, IconClock, IconHeart, IconMapPin, IconPhoto } from "@tabler/icons-react";
+import { IconCalendarTime, IconCash, IconClock, IconHeart, IconInfoCircle, IconMapPin, IconPhoto } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
+import { RestaurantMenuSection } from "@/features/restaurants/components/restaurant-menu-section";
 import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
@@ -144,31 +145,71 @@ export function RestaurantDetailsScreen({
       </Modal>
 
       <Stack gap="sm">
-        <Text size="sm" fw={700} c={uiColors.textSecondary}>{restaurant.cuisineLabel} · {restaurant.district}</Text>
+        <Group gap="xs">
+          <Badge variant="light" color="warmCoral" radius="xl">
+            {restaurant.cuisineLabel}
+          </Badge>
+          <Group gap={4} wrap="nowrap">
+            <IconMapPin size={14} color={uiColors.textSecondary} />
+            <Text size="sm" fw={650} c={uiColors.textSecondary}>
+              {restaurant.district}
+            </Text>
+          </Group>
+        </Group>
         <Title order={1} size="h1" c={uiColors.textPrimary}>{restaurant.name}</Title>
-
-        <Text fw={600} c={uiColors.textPrimary}>{restaurant.priceRangeLabel}</Text>
 
         <Group gap="xs">
           {restaurant.tags.map((tag) => (
-            <Card key={tag} radius="md" p="xs" style={{ background: uiColors.surfaceMuted, border: `1px solid ${uiColors.border}` }}>
-              <Text size="xs" fw={700} c={uiColors.textPrimary}>{tag}</Text>
-            </Card>
+            <Badge
+              key={tag}
+              variant="outline"
+              color="gray"
+              radius="xl"
+              size="md"
+              styles={{ label: { color: uiColors.textPrimary } }}
+            >
+              {tag}
+            </Badge>
           ))}
         </Group>
       </Stack>
 
-      <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
-        <Stack gap="md">
-          <Group gap="xs">
-            <IconClock size={16} color={uiColors.textSecondary} />
-            <Text c={uiColors.textPrimary}>{restaurant.openHours}</Text>
-          </Group>
-          <Group gap="xs">
-            <IconMapPin size={16} color={uiColors.textSecondary} />
-            <Text c={uiColors.textPrimary}>{restaurant.address}</Text>
-          </Group>
-        </Stack>
+      <SimpleGrid cols={2} spacing="sm">
+        <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+          <Stack gap="sm">
+            <ThemeIcon radius="xl" size={36} variant="light" color="warmCoral">
+              <IconClock size={18} />
+            </ThemeIcon>
+            <Stack gap={2}>
+              <Text size="xs" fw={700} c={uiColors.textSecondary}>{t("openHours")}</Text>
+              <Text size="sm" fw={750} c={uiColors.textPrimary}>{restaurant.openHours}</Text>
+            </Stack>
+          </Stack>
+        </Card>
+
+        <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+          <Stack gap="sm">
+            <ThemeIcon radius="xl" size={36} variant="light" color="warmCoral">
+              <IconCash size={18} />
+            </ThemeIcon>
+            <Stack gap={2}>
+              <Text size="xs" fw={700} c={uiColors.textSecondary}>{t("priceRange")}</Text>
+              <Text size="sm" fw={750} c={uiColors.textPrimary}>{restaurant.priceRangeLabel}</Text>
+            </Stack>
+          </Stack>
+        </Card>
+      </SimpleGrid>
+
+      <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+        <Group gap="sm" wrap="nowrap" align="flex-start">
+          <ThemeIcon radius="xl" size={36} variant="light" color="warmCoral" style={{ flexShrink: 0 }}>
+            <IconMapPin size={18} />
+          </ThemeIcon>
+          <Stack gap={2}>
+            <Text size="xs" fw={700} c={uiColors.textSecondary}>{t("address")}</Text>
+            <Text size="sm" fw={650} c={uiColors.textPrimary}>{restaurant.address}</Text>
+          </Stack>
+        </Group>
       </Card>
 
       <Card radius="lg" p="lg" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.brandPrimarySoft }}>
@@ -183,49 +224,43 @@ export function RestaurantDetailsScreen({
         </Group>
       </Card>
 
-      <Text c={uiColors.textSecondary}>{restaurant.summary}</Text>
+      <Card
+        radius="lg"
+        p="lg"
+        style={{
+          border: `1px solid ${uiColors.border}`,
+          borderLeft: `4px solid ${uiColors.brandPrimary}`,
+          background: `linear-gradient(135deg, ${uiColors.brandPrimarySoft}, ${uiColors.surface})`,
+        }}
+      >
+        <Group gap="md" wrap="nowrap" align="flex-start">
+          <ThemeIcon
+            radius="xl"
+            size={40}
+            variant="light"
+            color="warmCoral"
+            style={{ flexShrink: 0 }}
+          >
+            <IconInfoCircle size={20} />
+          </ThemeIcon>
+          <Stack gap={6}>
+            <Text fw={800} c={uiColors.textPrimary}>{t("about")}</Text>
+            <Text
+              size="sm"
+              c={uiColors.textSecondary}
+              style={{ lineHeight: 1.65 }}
+            >
+              {restaurant.summary}
+            </Text>
+          </Stack>
+        </Group>
+      </Card>
 
-      {menuCategories.length > 0 && (
-        <Stack gap="md">
-          <Title order={2} size="h2" c={uiColors.textPrimary}>{t("menu")}</Title>
-          {menuCategories.map((category) => (
-            <Stack key={category.id} gap="sm">
-              <Title order={3} size="h3" c={uiColors.textPrimary}>{category.name}</Title>
-              {category.items.map((item) => (
-                <Card
-                  key={item.id}
-                  radius="lg"
-                  p="md"
-                  style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}
-                >
-                  <Group wrap="nowrap" align="flex-start">
-                    {item.imageUrl && (
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.name}
-                        w={96}
-                        h={96}
-                        radius="md"
-                        fit="cover"
-                        flex="0 0 auto"
-                      />
-                    )}
-                    <Stack gap={4} style={{ flex: 1, minWidth: 0 }}>
-                      <Text fw={700} c={uiColors.textPrimary}>{item.name}</Text>
-                      {item.description && (
-                        <Text size="sm" c={uiColors.textSecondary}>{item.description}</Text>
-                      )}
-                      <Text fw={700} c={uiColors.brandPrimary} mt="auto">
-                        <NumberFormatter value={item.price} thousandSeparator suffix={` ${item.currency}`} />
-                      </Text>
-                    </Stack>
-                  </Group>
-                </Card>
-              ))}
-            </Stack>
-          ))}
-        </Stack>
-      )}
+      <RestaurantMenuSection
+        categories={menuCategories}
+        restaurantName={restaurant.name}
+        restaurantSlug={restaurant.slug}
+      />
 
     </MobileShell>
   );

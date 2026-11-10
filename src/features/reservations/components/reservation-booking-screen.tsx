@@ -6,7 +6,7 @@ import { Alert, Button, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { MobileShell } from "@/components/layout/customer";
 import { BookingDateSelector } from "@/features/reservations/components/booking-date-selector";
 import { BookingGuestSelector } from "@/features/reservations/components/booking-guest-selector";
-import { BookingMenuSelector } from "@/features/reservations/components/booking-menu-selector";
+import { BookingMenuSelector } from "@/features/reservations/components/booking-menu-selector-panel";
 import { BookingRestaurantSummary } from "@/features/reservations/components/booking-restaurant-summary";
 import { BookingTimeSelector } from "@/features/reservations/components/booking-time-selector";
 import { ReservationRequestSuccessModal } from "@/features/reservations/components/reservation-request-success-modal";
