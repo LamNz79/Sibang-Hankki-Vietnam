@@ -197,6 +197,28 @@
     "removed": "Đã bỏ nhà hàng khỏi danh sách đã lưu.",
     "saveError": "Không thể cập nhật danh sách đã lưu. Hãy thử lại."
   },
+  "NearbyMap": {
+    "mapLabel": "Bản đồ nhà hàng gần bạn",
+    "searchPlaceholder": "Tìm nhà hàng, khu vực hoặc ẩm thực",
+    "yourLocation": "Vị trí của bạn",
+    "recenter": "Tìm vị trí của tôi",
+    "noResults": "Không có nhà hàng trên bản đồ phù hợp với tìm kiếm.",
+    "noCoordinates": "Nhà hàng chưa có tọa độ. Hãy thêm trong trang quản trị hệ thống.",
+    "missingKeyTitle": "Google Maps chưa được cấu hình",
+    "missingKeyDescription": "Hãy cấu hình NEXT_PUBLIC_GOOGLE_MAPS_API_KEY để hiển thị bản đồ.",
+    "loadErrorTitle": "Không thể tải Google Maps",
+    "loadErrorDescription": "Hãy kiểm tra API key, Maps JavaScript API, billing và giới hạn referrer.",
+    "locationDenied": "Quyền vị trí đang bị chặn. Hãy cho phép trong cài đặt trình duyệt rồi thử lại.",
+    "locationUnavailable": "Thiết bị không xác định được vị trí. Hãy bật dịch vụ vị trí và thử lại.",
+    "locationTimeout": "Định vị mất quá nhiều thời gian. Hãy bấm nút vị trí để thử lại.",
+    "save": "Lưu nhà hàng",
+    "share": "Chia sẻ nhà hàng",
+    "close": "Đóng thẻ nhà hàng",
+    "details": "Chi tiết",
+    "directions": "Chỉ đường",
+    "reserve": "Đặt bàn",
+    "linkCopied": "Đã sao chép liên kết nhà hàng."
+  },
   "SavedRestaurants": {
     "title": "Nhà hàng đã lưu",
     "subtitle": "Danh sách yêu thích của bạn",
@@ -1605,6 +1627,8 @@
         "phone": "Số điện thoại",
         "email": "Email",
         "priceRange": "Khoảng giá trung bình/người",
+        "latitude": "Vĩ độ",
+        "longitude": "Kinh độ",
         "address": "Địa chỉ chi tiết",
         "description": "Mô tả",
         "placeholders": {
@@ -1614,6 +1638,8 @@
           "phone": "0901 234 567",
           "email": "contact@example.com",
           "priceRange": "150K - 300K/người",
+          "latitude": "10.775600",
+          "longitude": "106.703900",
           "address": "123 Nguyễn Huệ",
           "description": "Giới thiệu ngắn về phong cách ẩm thực và không gian nhà hàng"
         },

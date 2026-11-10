@@ -35,3 +35,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # Sibang-Hankki-Vietnam
+
+## Nearby map
+
+The `/nearby` page requires Google Maps JavaScript API. Configure a browser-restricted key before starting Next.js:
+
+```env
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_browser_key
+NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID=your_map_id
+```
+
+Enable billing and restrict the key to Maps JavaScript API plus the web origins used by this application. The map only displays restaurants whose public API records contain both `latitude` and `longitude`.

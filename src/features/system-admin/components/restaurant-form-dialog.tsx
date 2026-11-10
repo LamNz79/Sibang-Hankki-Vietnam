@@ -7,6 +7,7 @@ import {
   Group,
   Loader,
   Modal,
+  NumberInput,
   Select,
   SimpleGrid,
   Stack,
@@ -37,6 +38,8 @@ const emptyRestaurant: SystemAdminRestaurantInput = {
   email: "",
   timezone: "Asia/Ho_Chi_Minh",
   priceRange: "",
+  latitude: null,
+  longitude: null,
 };
 
 const cuisineLabels: Record<string, string> = {
@@ -70,6 +73,8 @@ function toInput(restaurant: SystemAdminRestaurantDetail | null) {
     email: restaurant.email ?? "",
     timezone: restaurant.timezone,
     priceRange: restaurant.priceRange ?? "",
+    latitude: restaurant.latitude ?? null,
+    longitude: restaurant.longitude ?? null,
   };
 }
 
@@ -257,6 +262,30 @@ export function RestaurantFormDialog({
                 value={input.priceRange}
                 onChange={change("priceRange")}
                 maxLength={40}
+              />
+              <NumberInput
+                label={t("latitude")}
+                placeholder={t("placeholders.latitude")}
+                value={input.latitude ?? ""}
+                onChange={(value) => setInput((current) => ({
+                  ...current,
+                  latitude: typeof value === "number" ? value : null,
+                }))}
+                min={-90}
+                max={90}
+                decimalScale={6}
+              />
+              <NumberInput
+                label={t("longitude")}
+                placeholder={t("placeholders.longitude")}
+                value={input.longitude ?? ""}
+                onChange={(value) => setInput((current) => ({
+                  ...current,
+                  longitude: typeof value === "number" ? value : null,
+                }))}
+                min={-180}
+                max={180}
+                decimalScale={6}
               />
             </SimpleGrid>
             {provincesQuery.isError || wardsQuery.isError ? (

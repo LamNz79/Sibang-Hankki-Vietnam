@@ -197,6 +197,28 @@
     "removed": "Restaurant removed from saved.",
     "saveError": "Could not update your saved restaurants. Try again."
   },
+  "NearbyMap": {
+    "mapLabel": "Nearby restaurant map",
+    "searchPlaceholder": "Search restaurant, area, or cuisine",
+    "yourLocation": "Your location",
+    "recenter": "Find my location",
+    "noResults": "No mapped restaurants match your search.",
+    "noCoordinates": "Restaurants do not have coordinates yet. Add them in system administration.",
+    "missingKeyTitle": "Google Maps is not configured",
+    "missingKeyDescription": "Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to display the map.",
+    "loadErrorTitle": "Could not load Google Maps",
+    "loadErrorDescription": "Check the API key, Maps JavaScript API, billing, and referrer restrictions.",
+    "locationDenied": "Location access is blocked. Allow it in your browser settings and try again.",
+    "locationUnavailable": "Your device could not determine its location. Turn on location services and try again.",
+    "locationTimeout": "Location is taking too long. Tap the location button to try again.",
+    "save": "Save restaurant",
+    "share": "Share restaurant",
+    "close": "Close restaurant card",
+    "details": "Details",
+    "directions": "Directions",
+    "reserve": "Reserve",
+    "linkCopied": "Restaurant link copied."
+  },
   "SavedRestaurants": {
     "title": "Saved restaurants",
     "subtitle": "Your personal shortlist",
@@ -1605,6 +1627,8 @@
         "phone": "Phone",
         "email": "Email",
         "priceRange": "Average price per guest",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
         "address": "Detailed address",
         "description": "Description",
         "placeholders": {
@@ -1614,6 +1638,8 @@
           "phone": "0901 234 567",
           "email": "contact@example.com",
           "priceRange": "150K - 300K per guest",
+          "latitude": "10.775600",
+          "longitude": "106.703900",
           "address": "123 Nguyen Hue Street",
           "description": "Briefly describe the restaurant's cuisine and atmosphere"
         },

@@ -64,6 +64,8 @@ export type SystemAdminRestaurantDetail = SystemAdminRestaurant & {
   email: string | null;
   timezone: string;
   priceRange: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
 };
 
 export type SystemAdminRestaurantAssignmentRole = "OWNER" | "STAFF";
@@ -100,6 +102,8 @@ export type SystemAdminRestaurantInput = {
   email: string;
   timezone: string;
   priceRange: string;
+  latitude?: number | null;
+  longitude?: number | null;
 };
 
 export {

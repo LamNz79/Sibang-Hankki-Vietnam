@@ -16,7 +16,7 @@ const items = [
     icon: IconHome2
   },
   {
-    href: "/restaurants?nearMe=1",
+    href: "/nearby",
     labelKey: "nearby",
     icon: IconMapSearch
   },
