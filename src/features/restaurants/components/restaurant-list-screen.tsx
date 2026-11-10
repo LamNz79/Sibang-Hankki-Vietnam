@@ -46,14 +46,19 @@ import {
 } from "@/features/restaurants/domain/live-availability";
 import {
   distanceInKilometers,
+  getLocationErrorKey,
   isGeoPoint,
   type GeoPoint,
+  type LocationErrorKey,
 } from "@/features/restaurants/domain/location";
 import { uiColors } from "@/theme";
 
 type SortKey = "recommended" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
-type LocationErrorKey = "locationUnsupported" | "locationDenied" | "locationMissing";
+type LocationMessageKey =
+  | LocationErrorKey
+  | "locationUnsupported"
+  | "locationMissing";
 
 const sortOptions: SortKey[] = ["recommended", "earliest"];
 const priceOptions: PriceKey[] = ["all", "under150", "under300", "over300"];
@@ -108,7 +113,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const [query, setQuery] = useState(() => searchParams.get("search") ?? "");
   const [userLocation, setUserLocation] = useState<GeoPoint | null>(null);
   const [isLocating, setIsLocating] = useState(false);
-  const [locationError, setLocationError] = useState<LocationErrorKey | null>(null);
+  const [locationError, setLocationError] = useState<LocationMessageKey | null>(null);
   const handledNearMeRequest = useRef(false);
 
   const requestUserLocation = useCallback(() => {
@@ -128,11 +133,11 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
         setIsLocating(false);
         if (!restaurants.some(isGeoPoint)) setLocationError("locationMissing");
       },
-      () => {
+      (error) => {
         setIsLocating(false);
-        setLocationError("locationDenied");
+        setLocationError(getLocationErrorKey(error.code));
       },
-      { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
+      { enableHighAccuracy: false, timeout: 20_000, maximumAge: 300_000 },
     );
   }, [restaurants]);
 
@@ -140,7 +145,13 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     if (searchParams.get("nearMe") !== "1" || handledNearMeRequest.current) return;
     handledNearMeRequest.current = true;
     requestUserLocation();
-  }, [requestUserLocation, searchParams]);
+    const nextSearchParams = new URLSearchParams(searchParams.toString());
+    nextSearchParams.delete("nearMe");
+    const nextQuery = nextSearchParams.toString();
+    router.replace(nextQuery ? `/restaurants?${nextQuery}` : "/restaurants", {
+      scroll: false,
+    });
+  }, [requestUserLocation, router, searchParams]);
 
   const distanceFromUser = (restaurant: RestaurantSummary) =>
     userLocation && isGeoPoint(restaurant)

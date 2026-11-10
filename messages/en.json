@@ -127,6 +127,8 @@
     "locating": "Locating...",
     "locationUnsupported": "Location is not supported by this browser.",
     "locationDenied": "Allow location access to sort restaurants near you.",
+    "locationUnavailable": "Your device could not determine its location. Check that location services are turned on and try again.",
+    "locationTimeout": "Location is taking too long. Tap Near me to try again.",
     "locationMissing": "Restaurant coordinates are not available yet.",
     "distanceAway": "{distance} km away",
     "filters": "Filters",

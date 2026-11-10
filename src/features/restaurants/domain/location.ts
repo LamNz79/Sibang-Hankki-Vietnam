@@ -3,6 +3,11 @@ export type GeoPoint = {
   longitude: number;
 };
 
+export type LocationErrorKey =
+  | "locationDenied"
+  | "locationTimeout"
+  | "locationUnavailable";
+
 const EARTH_RADIUS_KM = 6_371;
 
 const toRadians = (degrees: number) => degrees * (Math.PI / 180);
@@ -32,6 +37,12 @@ export function distanceInKilometers(from: GeoPoint, to: GeoPoint) {
     * Math.sin(longitudeDelta / 2) ** 2;
 
   return 2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(haversine));
+}
+
+export function getLocationErrorKey(code: number): LocationErrorKey {
+  if (code === 1) return "locationDenied";
+  if (code === 3) return "locationTimeout";
+  return "locationUnavailable";
 }
 
 export function googleMapsDirectionsUrl(destination: {

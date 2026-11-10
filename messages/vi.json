@@ -127,6 +127,8 @@
     "locating": "Đang định vị...",
     "locationUnsupported": "Trình duyệt này không hỗ trợ định vị.",
     "locationDenied": "Hãy cho phép truy cập vị trí để xếp nhà hàng gần bạn.",
+    "locationUnavailable": "Thiết bị không xác định được vị trí. Hãy bật dịch vụ vị trí và thử lại.",
+    "locationTimeout": "Định vị mất quá nhiều thời gian. Hãy bấm Gần tôi để thử lại.",
     "locationMissing": "Nhà hàng chưa có dữ liệu tọa độ.",
     "distanceAway": "Cách {distance} km",
     "filters": "Bộ lọc",

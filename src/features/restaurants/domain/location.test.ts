@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   distanceInKilometers,
+  getLocationErrorKey,
   googleMapsDirectionsUrl,
   isGeoPoint,
 } from "@/features/restaurants/domain/location";
@@ -20,6 +21,12 @@ describe("restaurant location", () => {
 
     expect(distance).toBeGreaterThan(0.8);
     expect(distance).toBeLessThan(0.9);
+  });
+
+  it("distinguishes browser geolocation errors", () => {
+    expect(getLocationErrorKey(1)).toBe("locationDenied");
+    expect(getLocationErrorKey(2)).toBe("locationUnavailable");
+    expect(getLocationErrorKey(3)).toBe("locationTimeout");
   });
 
   it("builds directions with coordinates and a Google place ID", () => {
