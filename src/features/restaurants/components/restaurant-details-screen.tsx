@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { ActionIcon, Box, Button, Card, Group, Image, Modal, NumberFormatter, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconCalendarTime, IconClock, IconHeart, IconMapPin, IconPhoto } from "@tabler/icons-react";
+import { IconCalendarTime, IconClock, IconHeart, IconMapPin, IconNavigation, IconPhoto } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
 import type { RestaurantRecord } from "@/features/restaurants/data/types";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
+import { googleMapsDirectionsUrl } from "@/features/restaurants/domain/location";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
 import { ApiError } from "@/lib/api/client";
@@ -168,6 +169,17 @@ export function RestaurantDetailsScreen({
             <IconMapPin size={16} color={uiColors.textSecondary} />
             <Text c={uiColors.textPrimary}>{restaurant.address}</Text>
           </Group>
+          <Button
+            component="a"
+            href={googleMapsDirectionsUrl(restaurant)}
+            target="_blank"
+            rel="noreferrer"
+            variant="light"
+            color="warmCoral"
+            leftSection={<IconNavigation size={17} />}
+          >
+            {t("directions")}
+          </Button>
         </Stack>
       </Card>
 

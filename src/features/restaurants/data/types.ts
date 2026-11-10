@@ -49,6 +49,9 @@ export type RestaurantSummary = {
   availableFrom: string | null;
   priceKey: "under150" | "under300" | "over300";
   benefits: string[];
+  latitude?: number | null;
+  longitude?: number | null;
+  googlePlaceId?: string | null;
 };
 
 export type RestaurantRecord = RestaurantSummary & {

@@ -21,6 +21,7 @@ import {
   IconAdjustmentsHorizontal,
   IconArrowsSort,
   IconClock,
+  IconCurrentLocation,
   IconMapPin,
   IconMapPinOff,
   IconSearch,
@@ -43,10 +44,16 @@ import {
   getLiveAvailabilityState,
   type RestaurantAvailabilityMap,
 } from "@/features/restaurants/domain/live-availability";
+import {
+  distanceInKilometers,
+  isGeoPoint,
+  type GeoPoint,
+} from "@/features/restaurants/domain/location";
 import { uiColors } from "@/theme";
 
 type SortKey = "recommended" | "earliest";
 type PriceKey = "all" | "under150" | "under300" | "over300";
+type LocationErrorKey = "locationUnsupported" | "locationDenied" | "locationMissing";
 
 const sortOptions: SortKey[] = ["recommended", "earliest"];
 const priceOptions: PriceKey[] = ["all", "under150", "under300", "over300"];
@@ -99,6 +106,14 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const [selectedBenefits, setSelectedBenefits] = useState<BenefitKey[]>([]);
   const [filtersOpened, setFiltersOpened] = useState(false);
   const [query, setQuery] = useState(() => searchParams.get("search") ?? "");
+  const [userLocation, setUserLocation] = useState<GeoPoint | null>(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState<LocationErrorKey | null>(null);
+
+  const distanceFromUser = (restaurant: RestaurantSummary) =>
+    userLocation && isGeoPoint(restaurant)
+      ? distanceInKilometers(userLocation, restaurant)
+      : null;
 
   const filteredRestaurants = (() => {
     let list = restaurants.filter((restaurant) => {
@@ -116,6 +131,11 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     });
 
     list = [...list].sort((a, b) => {
+      if (userLocation) {
+        const distanceA = distanceFromUser(a) ?? Number.POSITIVE_INFINITY;
+        const distanceB = distanceFromUser(b) ?? Number.POSITIVE_INFINITY;
+        if (distanceA !== distanceB) return distanceA - distanceB;
+      }
       if (sortBy === "earliest") {
         return (getFirstLiveTime(availability[a.slug]) ?? "99:99").localeCompare(
           getFirstLiveTime(availability[b.slug]) ?? "99:99",
@@ -144,6 +164,35 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
     });
     const nextQuery = locationParams.toString();
     router.replace(nextQuery ? `/restaurants?${nextQuery}` : "/restaurants");
+  };
+  const toggleNearMe = () => {
+    if (userLocation) {
+      setUserLocation(null);
+      setLocationError(null);
+      return;
+    }
+    if (!("geolocation" in navigator)) {
+      setLocationError("locationUnsupported");
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationError(null);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setUserLocation({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+        setIsLocating(false);
+        if (!restaurants.some(isGeoPoint)) setLocationError("locationMissing");
+      },
+      () => {
+        setIsLocating(false);
+        setLocationError("locationDenied");
+      },
+      { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
+    );
   };
   const liveAvailabilityLabel = (restaurantAvailability: RestaurantAvailabilityMap[string]) => {
     const state = getLiveAvailabilityState(restaurantAvailability);
@@ -183,10 +232,12 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
         <Box style={{ position: "sticky", top: 0, zIndex: 30, marginInline: -16, marginTop: -6, paddingInline: 16, paddingTop: 10, paddingBottom: 12, background: uiColors.surfaceOverlay, backdropFilter: "blur(16px)", borderTop: `1px solid ${uiColors.surface}`, borderBottom: `1px solid ${uiColors.border}`, boxShadow: `0 10px 24px ${uiColors.shadowSoft}` }}>
           <Group gap="sm" wrap="nowrap" style={{ overflowX: "auto" }} className="hide-scrollbar">
             <Chip radius="xl" size="md" checked={sortBy !== "recommended"} onChange={() => setSortBy((current) => nextOption(sortOptions, current))} styles={sortBy !== "recommended" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconArrowsSort size={14} />}>{t(`sort.${sortBy}`)}</Chip>
+            <Chip radius="xl" size="md" checked={Boolean(userLocation)} disabled={isLocating} onChange={toggleNearMe} styles={userLocation ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconCurrentLocation size={14} />}>{t(isLocating ? "locating" : "nearMe")}</Chip>
             <Chip radius="xl" size="md" checked={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0} onChange={() => setFiltersOpened(true)} styles={filtersOpened || priceFilter !== "all" || cuisineFilter !== "all" || selectedBenefits.length > 0 ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles} icon={<IconAdjustmentsHorizontal size={14} />}>{t("filters")}</Chip>
             <Chip radius="xl" size="md" checked={priceFilter !== "all"} onChange={() => setPriceFilter((current) => nextOption(priceOptions, current))} styles={priceFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{t(`price.${priceFilter}`)}</Chip>
             <Chip radius="xl" size="md" checked={cuisineFilter !== "all"} onChange={() => setCuisineFilter((current) => nextOption(cuisineOptions, current))} styles={cuisineFilter !== "all" ? { label: { borderRadius: 999, background: uiColors.surface, border: `1px solid ${uiColors.brandPrimary}`, minHeight: 40, paddingInline: 14, color: uiColors.brandPrimary, fontWeight: 600 }, iconWrapper: { display: "none" } } : actionChipStyles}>{t(`cuisine.${cuisineFilter}`)}</Chip>
           </Group>
+          {locationError ? <Text size="xs" c="red.7" mt="xs">{t(locationError)}</Text> : null}
         </Box>
 
         <Group justify="space-between" align="center">
@@ -237,6 +288,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
         ) : filteredRestaurants.map((restaurant) => {
           const logoUrl = restaurantLogos[restaurant.slug];
           const cardImageUrl = logoUrl ?? restaurant.imageUrl;
+          const distance = distanceFromUser(restaurant);
           return (
             <Link key={restaurant.slug} href={`/restaurants/${restaurant.slug}`} style={{ textDecoration: "none" }}>
               <Card radius="lg" p={0} style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface, boxShadow: "none", overflow: "hidden" }}>
@@ -266,7 +318,12 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
                     <Text size="sm" c={uiColors.textSecondary}>{restaurant.cuisineLabel}</Text>
                     <Group gap={6}>
                       <IconMapPin size={14} color={uiColors.textSecondary} />
-                      <Text size="sm" c={uiColors.textSecondary}>{restaurant.area}</Text>
+                      <Text size="sm" c={uiColors.textSecondary}>
+                        {restaurant.area}
+                        {distance === null
+                          ? ""
+                          : ` · ${t("distanceAway", { distance: distance.toFixed(1) })}`}
+                      </Text>
                     </Group>
                     <Group gap={6} align="flex-start" wrap="nowrap">
                       <IconClock size={14} color={uiColors.brandPrimary} style={{ marginTop: 2, flexShrink: 0 }} />
