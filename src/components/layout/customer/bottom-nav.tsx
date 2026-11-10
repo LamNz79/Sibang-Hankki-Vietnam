@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Card, Group, Stack, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarTime,
   IconHome2,
@@ -16,7 +16,7 @@ const items = [
     icon: IconHome2
   },
   {
-    href: undefined,
+    href: "/restaurants?nearMe=1",
     labelKey: "nearby",
     icon: IconMapSearch
   },
@@ -50,7 +50,7 @@ export function BottomNav({ activePath }: BottomNavProps) {
     >
       <Group grow>
         {items.map((item) => {
-          const active = item.href ? activePath === item.href : false;
+          const active = activePath === item.href.split("?")[0];
           const Icon = item.icon;
           const label = t(item.labelKey);
 
@@ -74,14 +74,6 @@ export function BottomNav({ activePath }: BottomNavProps) {
               </Text>
             </Stack>
           );
-
-          if (!item.href) {
-            return (
-              <UnstyledButton key={item.labelKey} style={{ cursor: "default" }}>
-                {content}
-              </UnstyledButton>
-            );
-          }
 
           return (
             <Link

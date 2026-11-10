@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
@@ -109,6 +109,38 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
   const [userLocation, setUserLocation] = useState<GeoPoint | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [locationError, setLocationError] = useState<LocationErrorKey | null>(null);
+  const handledNearMeRequest = useRef(false);
+
+  const requestUserLocation = useCallback(() => {
+    if (!("geolocation" in navigator)) {
+      setLocationError("locationUnsupported");
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationError(null);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setUserLocation({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+        setIsLocating(false);
+        if (!restaurants.some(isGeoPoint)) setLocationError("locationMissing");
+      },
+      () => {
+        setIsLocating(false);
+        setLocationError("locationDenied");
+      },
+      { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
+    );
+  }, [restaurants]);
+
+  useEffect(() => {
+    if (searchParams.get("nearMe") !== "1" || handledNearMeRequest.current) return;
+    handledNearMeRequest.current = true;
+    requestUserLocation();
+  }, [requestUserLocation, searchParams]);
 
   const distanceFromUser = (restaurant: RestaurantSummary) =>
     userLocation && isGeoPoint(restaurant)
@@ -171,28 +203,7 @@ function RestaurantsContent({ restaurants, availability }: { restaurants: Restau
       setLocationError(null);
       return;
     }
-    if (!("geolocation" in navigator)) {
-      setLocationError("locationUnsupported");
-      return;
-    }
-
-    setIsLocating(true);
-    setLocationError(null);
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setUserLocation({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-        });
-        setIsLocating(false);
-        if (!restaurants.some(isGeoPoint)) setLocationError("locationMissing");
-      },
-      () => {
-        setIsLocating(false);
-        setLocationError("locationDenied");
-      },
-      { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
-    );
+    requestUserLocation();
   };
   const liveAvailabilityLabel = (restaurantAvailability: RestaurantAvailabilityMap[string]) => {
     const state = getLiveAvailabilityState(restaurantAvailability);
