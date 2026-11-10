@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { ActionIcon, Badge, Box, Button, Card, Group, Image, Modal, SimpleGrid, Stack, Text, ThemeIcon, Title, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconCalendarTime, IconCash, IconClock, IconHeart, IconInfoCircle, IconMapPin, IconPhoto } from "@tabler/icons-react";
+import { IconCalendarTime, IconCash, IconClock, IconExternalLink, IconHeart, IconInfoCircle, IconMapPin, IconPhoto } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { MobileShell } from "@/components/layout/customer";
 import { RestaurantMenuSection } from "@/features/restaurants/components/restaurant-menu-section";
 import type { RestaurantRecord } from "@/features/restaurants/data/types";
+import { googleMapsDirectionsUrl } from "@/features/restaurants/domain/google-maps";
 import { getLiveAvailabilityState } from "@/features/restaurants/domain/live-availability";
 import { useSavedRestaurants } from "@/features/restaurants/hooks/use-saved-restaurants";
 import type { RestaurantAvailability } from "@/features/reservations/data/availability";
@@ -200,14 +201,41 @@ export function RestaurantDetailsScreen({
         </Card>
       </SimpleGrid>
 
-      <Card radius="lg" p="md" style={{ border: `1px solid ${uiColors.border}`, background: uiColors.surface }}>
+      <Card
+        component="a"
+        href={googleMapsDirectionsUrl(restaurant)}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={t("directions", { name: restaurant.name })}
+        radius="lg"
+        p="md"
+        style={{
+          border: `1px solid ${uiColors.border}`,
+          background: uiColors.surface,
+          color: "inherit",
+          textDecoration: "none",
+        }}
+      >
         <Group gap="sm" wrap="nowrap" align="flex-start">
           <ThemeIcon radius="xl" size={36} variant="light" color="warmCoral" style={{ flexShrink: 0 }}>
             <IconMapPin size={18} />
           </ThemeIcon>
-          <Stack gap={2}>
-            <Text size="xs" fw={700} c={uiColors.textSecondary}>{t("address")}</Text>
-            <Text size="sm" fw={650} c={uiColors.textPrimary}>{restaurant.address}</Text>
+          <Stack gap="xs" style={{ flex: 1, minWidth: 0 }}>
+            <Stack gap={2}>
+              <Text size="xs" fw={700} c={uiColors.textSecondary}>{t("address")}</Text>
+              <Text size="sm" fw={650} c={uiColors.textPrimary}>{restaurant.address}</Text>
+            </Stack>
+            <Group gap={5} wrap="nowrap">
+              <IconExternalLink size={16} color={uiColors.brandPrimary} />
+              <Text
+                size="xs"
+                fw={700}
+                c={uiColors.brandPrimary}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                {t("openInGoogleMaps")}
+              </Text>
+            </Group>
           </Stack>
         </Group>
       </Card>

@@ -183,6 +183,8 @@
     "openHours": "Giờ mở cửa",
     "priceRange": "Khoảng giá",
     "address": "Địa chỉ",
+    "openInGoogleMaps": "Mở trong Google Maps",
+    "directions": "Chỉ đường đến {name}",
     "about": "Giới thiệu nhà hàng",
     "availabilityHint": "Tình trạng bàn hiển thị cho 2 khách hôm nay. Chọn ngày hoặc số khách khác ở bước đặt bàn.",
     "menu": "Thực đơn",
