@@ -183,6 +183,8 @@
     "openHours": "Opening hours",
     "priceRange": "Price range",
     "address": "Address",
+    "openInGoogleMaps": "Open in Google Maps",
+    "directions": "Get directions to {name}",
     "about": "About this restaurant",
     "availabilityHint": "Availability shown for 2 guests today. Choose another date or party size in the booking step.",
     "menu": "Menu",

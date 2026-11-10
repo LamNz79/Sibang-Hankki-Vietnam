@@ -183,6 +183,8 @@
     "openHours": "영업시간",
     "priceRange": "가격대",
     "address": "주소",
+    "openInGoogleMaps": "Google 지도에서 열기",
+    "directions": "{name} 길찾기",
     "about": "레스토랑 소개",
     "availabilityHint": "오늘 2명 기준 예약 가능 시간입니다. 예약 단계에서 다른 날짜나 인원수를 선택할 수 있습니다.",
     "menu": "메뉴",
