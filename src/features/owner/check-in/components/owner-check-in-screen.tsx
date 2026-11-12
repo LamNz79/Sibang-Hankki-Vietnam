@@ -16,6 +16,7 @@ import {
   Alert,
   Button,
   Card,
+  FileButton,
   Group,
   SegmentedControl,
   Stack,
@@ -48,12 +49,15 @@ import {
   VisitStatus,
 } from "@/features/reservations/types";
 import { uiColors } from "@/theme";
+import { cameraErrorIssue, cameraSupportIssue, requestCameraStream, type CameraIssue } from "../camera";
 
 type ScannerStatus =
   | "idle"
   | "starting"
   | "scanning"
   | "checking"
+  | "reading-photo"
+  | "photo-error"
   | "found"
   | "not-found"
   | "unavailable";
@@ -144,10 +148,15 @@ function OwnerCheckInContent() {
   const [mode, setMode] = useState("manual");
   const [query, setQuery] = useState("");
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>("idle");
+  const [cameraIssue, setCameraIssue] = useState<CameraIssue | null>(null);
+  const [cameraSession, setCameraSession] = useState(0);
   const [scannedReservation, setScannedReservation] =
     useState<OwnerReservation | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const scannerRef = useRef<QrScanner | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const cameraAttemptRef = useRef(0);
+  const resetPhotoRef = useRef<() => void>(null);
   const linkedReservation = ownerReservations.find(
     (reservation) => reservation.id === searchParams.get("reservation"),
   );
@@ -163,63 +172,106 @@ function OwnerCheckInContent() {
       : [];
 
   const stopCamera = useCallback(() => {
+    cameraAttemptRef.current += 1;
     scannerRef.current?.destroy();
     scannerRef.current = null;
+    streamRef.current?.getTracks().forEach(track => track.stop());
+    streamRef.current = null;
     if (videoRef.current) videoRef.current.srcObject = null;
   }, []);
 
   useEffect(() => stopCamera, [stopCamera]);
 
+  const checkInQr = (data: string) => {
+    stopCamera();
+    const attempt = cameraAttemptRef.current;
+    setScannerStatus("checking");
+    checkIn.mutate(data, {
+      onSuccess: (reservation) => {
+        if (cameraAttemptRef.current !== attempt) return;
+        setScannedReservation(reservation);
+        setScannerStatus("found");
+      },
+      onError: () => {
+        if (cameraAttemptRef.current === attempt) setScannerStatus("not-found");
+      },
+    });
+  };
+
   const startCamera = async () => {
     stopCamera();
     setScannedReservation(null);
-
-    const video = videoRef.current;
-    if (!navigator.mediaDevices?.getUserMedia || !video) {
+    const issue = cameraSupportIssue(window.isSecureContext, Boolean(navigator.mediaDevices?.getUserMedia));
+    setCameraIssue(issue);
+    if (issue) {
       setScannerStatus("unavailable");
       return;
     }
 
+    const attempt = cameraAttemptRef.current;
+    const isCurrent = () => cameraAttemptRef.current === attempt;
     setScannerStatus("starting");
-
-    const scanner = new QrScanner(
-      video,
-      ({ data }) => {
-        if (scannerRef.current !== scanner) return;
-
-        stopCamera();
-        setScannerStatus("checking");
-        checkIn.mutate(data, {
-          onSuccess: (reservation) => {
-            setScannedReservation(reservation);
-            setScannerStatus("found");
-          },
-          onError: () => setScannerStatus("not-found"),
-        });
-      },
-      {
-        preferredCamera: "environment",
-        maxScansPerSecond: 10,
-        highlightScanRegion: true,
-        highlightCodeOutline: true,
-        returnDetailedScanResult: true,
-      },
-    );
-    scannerRef.current = scanner;
+    // A fresh video element keeps the previous scanner's delayed cleanup away from a new stream.
+    setCameraSession(attempt);
 
     try {
+      const stream = await requestCameraStream(navigator.mediaDevices, isCurrent);
+      if (!stream) return;
+      streamRef.current = stream;
+      // Let React mount/show the video before qr-scanner checks Safari playback visibility.
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      if (!isCurrent()) return;
+      const video = videoRef.current;
+      if (!video) {
+        stopCamera();
+        return;
+      }
+      video.srcObject = stream;
+      const scanner = new QrScanner(
+        video,
+        ({ data }) => {
+          if (scannerRef.current !== scanner) return;
+
+          checkInQr(data);
+        },
+        {
+          preferredCamera: "environment",
+          maxScansPerSecond: 10,
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
+          returnDetailedScanResult: true,
+        },
+      );
+      scannerRef.current = scanner;
+
       await scanner.start();
       if (scannerRef.current === scanner) setScannerStatus("scanning");
-    } catch {
-      if (scannerRef.current !== scanner) return;
+    } catch (error) {
+      if (!isCurrent()) return;
       stopCamera();
+      setCameraIssue(cameraErrorIssue(error));
       setScannerStatus("unavailable");
+    }
+  };
+
+  const scanPhoto = async (file: File) => {
+    stopCamera();
+    const attempt = cameraAttemptRef.current;
+    setScannedReservation(null);
+    setCameraIssue(null);
+    setScannerStatus("reading-photo");
+    try {
+      const { data } = await QrScanner.scanImage(file, { returnDetailedScanResult: true });
+      if (cameraAttemptRef.current === attempt) checkInQr(data);
+    } catch {
+      if (cameraAttemptRef.current === attempt) setScannerStatus("photo-error");
     }
   };
 
   const changeMode = (nextMode: string) => {
     stopCamera();
     setScannerStatus("idle");
+    setCameraIssue(null);
     setScannedReservation(null);
     setMode(nextMode);
   };
@@ -251,6 +303,7 @@ function OwnerCheckInContent() {
             >
               <Stack align="center" justify="center" gap="sm" h="100%">
                 <video
+                  key={cameraSession}
                   ref={videoRef}
                   muted
                   playsInline
@@ -294,7 +347,9 @@ function OwnerCheckInContent() {
                   c={uiColors.textSecondary}
                   aria-live="polite"
                 >
-                  {t(`scanner.${scannerStatus}`)}
+                  {scannerStatus === "unavailable" && cameraIssue
+                    ? t(`cameraIssues.${cameraIssue}`)
+                    : t(`scanner.${scannerStatus}`)}
                 </Text>
 
                 {scannerStatus === "scanning" ? (
@@ -313,6 +368,7 @@ function OwnerCheckInContent() {
                       leftSection={<IconCamera size={18} />}
                       loading={
                         scannerStatus === "starting" ||
+                        scannerStatus === "reading-photo" ||
                         scannerStatus === "checking"
                       }
                       onClick={startCamera}
@@ -322,6 +378,7 @@ function OwnerCheckInContent() {
                         : t("scanAgain")}
                     </Button>
                     {scannerStatus === "not-found" ||
+                    scannerStatus === "photo-error" ||
                     scannerStatus === "unavailable" ? (
                       <Button
                         variant="default"
@@ -332,6 +389,18 @@ function OwnerCheckInContent() {
                     ) : null}
                   </Group>
                 )}
+
+                <FileButton accept="image/*" capture="environment" resetRef={resetPhotoRef}
+                  disabled={scannerStatus === "checking" || scannerStatus === "reading-photo"}
+                  onChange={file => {
+                    if (file) void scanPhoto(file);
+                    resetPhotoRef.current?.();
+                  }}>
+                  {props => <Button {...props} variant="subtle" leftSection={<IconQrcode size={18} />}
+                    disabled={scannerStatus === "checking" || scannerStatus === "reading-photo"}>
+                    {t("scanPhoto")}
+                  </Button>}
+                </FileButton>
               </Stack>
             </Card>
 
