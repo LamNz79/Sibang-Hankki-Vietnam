@@ -802,7 +802,9 @@
       "checking": "Checking in the guest...",
       "found": "Reservation found. Review it before checking in the guest.",
       "not-found": "This QR code does not match a reservation at this restaurant.",
-      "unavailable": "The camera could not be opened. Check camera permission or use manual lookup."
+      "unavailable": "The camera could not be opened. Check camera permission or use manual lookup.",
+      "reading-photo": "Reading the QR photo...",
+      "photo-error": "No readable QR code was found in this image. Take a clear photo of the QR code or use manual lookup."
     },
     "cameraLabel": "Reservation QR scanner camera",
     "stopCamera": "Stop camera",
@@ -838,7 +840,16 @@
       "lastVisit": "Last visit",
       "visits": "Visits",
       "points": "Points"
-    }
+    },
+    "cameraIssues": {
+      "insecure": "This page is using HTTP, so the browser cannot request camera permission. Open the HTTPS address in Safari/Chrome, or take/choose a QR photo below.",
+      "unsupported": "This browser does not provide camera access. Open this page directly in Safari or Chrome instead of the in-app browser, or take/choose a QR photo below.",
+      "denied": "Camera access was blocked by the browser or app. Allow camera access in the site's browser settings and your phone's app permissions, then try again. You can also open this page directly in Safari/Chrome.",
+      "missing": "No camera was found. Connect a camera or take/choose a QR photo below.",
+      "busy": "The camera is busy or could not start. Close other apps using the camera and try again, or take/choose a QR photo below.",
+      "unavailable": "The camera could not start. Try opening this page directly in Safari/Chrome, or take/choose a QR photo below."
+    },
+    "scanPhoto": "Take / choose a QR photo"
   },
   "Admin": {
     "shell": {

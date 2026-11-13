@@ -802,7 +802,9 @@
       "checking": "Đang check-in khách...",
       "found": "Đã tìm thấy đặt bàn. Hãy kiểm tra trước khi nhận khách.",
       "not-found": "Mã QR này không khớp với đặt bàn tại nhà hàng.",
-      "unavailable": "Không thể mở camera. Hãy kiểm tra quyền camera hoặc tìm thủ công."
+      "unavailable": "Không thể mở camera. Hãy kiểm tra quyền camera hoặc tìm thủ công.",
+      "reading-photo": "Đang đọc ảnh QR...",
+      "photo-error": "Không đọc được mã QR trong ảnh. Hãy chụp rõ mã QR hoặc tìm thủ công."
     },
     "cameraLabel": "Camera quét mã QR đặt bàn",
     "stopCamera": "Dừng camera",
@@ -838,7 +840,16 @@
       "lastVisit": "Lần gần nhất",
       "visits": "Số lần đến",
       "points": "Điểm"
-    }
+    },
+    "cameraIssues": {
+      "insecure": "Trang đang dùng HTTP nên trình duyệt không thể xin quyền camera. Hãy mở địa chỉ HTTPS bằng Safari/Chrome, hoặc chụp/chọn ảnh QR bên dưới.",
+      "unsupported": "Trình duyệt này không hỗ trợ truy cập camera. Hãy mở trang trực tiếp bằng Safari hoặc Chrome thay cho trình duyệt trong ứng dụng, hoặc chụp/chọn ảnh QR bên dưới.",
+      "denied": "Trình duyệt hoặc ứng dụng đang chặn camera. Hãy cho phép camera trong cài đặt trang web và quyền ứng dụng trên điện thoại rồi thử lại. Bạn cũng có thể mở trang trực tiếp bằng Safari/Chrome.",
+      "missing": "Không tìm thấy camera. Hãy kết nối camera hoặc chụp/chọn ảnh QR bên dưới.",
+      "busy": "Camera đang bận hoặc không khởi động được. Hãy đóng ứng dụng khác đang dùng camera rồi thử lại, hoặc chụp/chọn ảnh QR bên dưới.",
+      "unavailable": "Không thể khởi động camera. Hãy mở trang trực tiếp bằng Safari/Chrome hoặc chụp/chọn ảnh QR bên dưới."
+    },
+    "scanPhoto": "Chụp / chọn ảnh QR"
   },
   "Admin": {
     "shell": {
