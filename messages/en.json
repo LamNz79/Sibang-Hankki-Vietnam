@@ -1860,9 +1860,9 @@
   "Navigation": {
     "customer": {
       "home": "Home",
-      "nearby": "Nearby",
       "reservations": "Reservations",
-      "my": "My"
+      "my": "My",
+      "shop": "Shop"
     },
     "owner": {
       "today": "Today",
@@ -1980,6 +1980,63 @@
       "whenToRegenerateTitle": "When to regenerate",
       "regenerateNotice": "Saving business hours regenerates slots automatically. Use <b>Regenerate future slots</b> after changing capacity, interval, dining duration or booking window.",
       "existingReservationsNotice": "Existing reservations are preserved. Regeneration only replaces future slot data that is safe to rebuild."
+    }
+  },
+  "Shop": {
+    "title": "Shop",
+    "bag": "Your shopping bag",
+    "checkout": "Checkout",
+    "complete": "Demo order",
+    "preview": "DESIGN PREVIEW · No real orders or payments",
+    "back": "Back",
+    "saved": "Saved products",
+    "search": "Search products",
+    "sort": "Sort products",
+    "count": "{count} products",
+    "noProducts": "No matching products.",
+    "view": "View {name}",
+    "save": "Save {name}",
+    "addProduct": "Add {name} to bag",
+    "add": "Add to bag",
+    "added": "Added to your bag.",
+    "quantity": "Quantity",
+    "remove": "Remove {name}",
+    "summary": "Order summary",
+    "subtotal": "Subtotal ({count} items)",
+    "delivery": "Delivery",
+    "total": "Total",
+    "freeDelivery": "Demo: free delivery from {amount}",
+    "noCharge": "No payment will be charged. This is a sample order.",
+    "empty": "Your shopping bag is empty.",
+    "continue": "Continue shopping",
+    "sample": "Sample collection. Prices, stock and delivery terms are illustrative. No brand affiliation.",
+    "details": "Delivery details",
+    "sampleDetails": "Please use sample details. This form is not sent or saved.",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "address": "Delivery address",
+    "note": "Delivery note",
+    "hand": "Hand it to me",
+    "door": "Leave at the door",
+    "payment": "Online payment · DEMO ONLY",
+    "demoPayment": "No card information is required or collected.",
+    "acknowledge": "I understand this is a demo and no real order will be placed.",
+    "placeDemo": "Complete demo order",
+    "success": "Demo completed!",
+    "successDescription": "No real order was created and no payment was charged.",
+    "deliveryEstimate": "Sample delivery: Ho Chi Minh City · 2–3 days",
+    "categories": {
+      "all": "All",
+      "beauty": "Beauty",
+      "food": "Food",
+      "drinks": "Coffee & Tea",
+      "gifts": "Gifts"
+    },
+    "sorting": {
+      "featured": "Featured",
+      "low": "Price: low to high",
+      "high": "Price: high to low",
+      "name": "Name: A–Z"
     }
   }
 }

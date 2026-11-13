@@ -1860,9 +1860,9 @@
   "Navigation": {
     "customer": {
       "home": "Trang chủ",
-      "nearby": "Gần bạn",
       "reservations": "Đặt bàn",
-      "my": "Cá nhân"
+      "my": "Cá nhân",
+      "shop": "Mua sắm"
     },
     "owner": {
       "today": "Hôm nay",
@@ -1980,6 +1980,63 @@
       "whenToRegenerateTitle": "Khi nào cần tạo lại",
       "regenerateNotice": "Lưu giờ hoạt động sẽ tự động tạo lại các khung giờ. Hãy dùng <b>Tạo lại khung giờ tương lai</b> sau khi thay đổi sức chứa, khoảng cách, thời gian dùng bữa hoặc thời hạn đặt trước.",
       "existingReservationsNotice": "Các lượt đặt bàn hiện có được giữ nguyên. Quá trình tạo lại chỉ thay thế dữ liệu khung giờ tương lai an toàn để tạo lại."
+    }
+  },
+  "Shop": {
+    "title": "Mua sắm",
+    "bag": "Giỏ hàng của bạn",
+    "checkout": "Thanh toán",
+    "complete": "Đơn hàng mẫu",
+    "preview": "BẢN MẪU · Không tạo đơn hay thanh toán thật",
+    "back": "Quay lại",
+    "saved": "Sản phẩm yêu thích",
+    "search": "Tìm sản phẩm",
+    "sort": "Sắp xếp sản phẩm",
+    "count": "{count} sản phẩm",
+    "noProducts": "Không có sản phẩm phù hợp.",
+    "view": "Xem {name}",
+    "save": "Yêu thích {name}",
+    "addProduct": "Thêm {name} vào giỏ",
+    "add": "Thêm vào giỏ",
+    "added": "Đã thêm vào giỏ hàng.",
+    "quantity": "Số lượng",
+    "remove": "Xóa {name}",
+    "summary": "Tóm tắt đơn hàng",
+    "subtotal": "Tạm tính ({count} sản phẩm)",
+    "delivery": "Phí giao hàng",
+    "total": "Tổng cộng",
+    "freeDelivery": "Mẫu: miễn phí giao hàng từ {amount}",
+    "noCharge": "Không thu tiền. Đây là đơn hàng mẫu.",
+    "empty": "Giỏ hàng của bạn đang trống.",
+    "continue": "Tiếp tục mua sắm",
+    "sample": "Bộ sưu tập mẫu. Giá, tồn kho và giao hàng chỉ để minh họa. Không liên kết với các thương hiệu.",
+    "details": "Thông tin giao hàng",
+    "sampleDetails": "Vui lòng nhập thông tin mẫu. Biểu mẫu không được gửi hoặc lưu.",
+    "fullName": "Họ và tên",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ giao hàng",
+    "note": "Ghi chú giao hàng",
+    "hand": "Giao tận tay",
+    "door": "Để trước cửa",
+    "payment": "Thanh toán trực tuyến · CHỈ DEMO",
+    "demoPayment": "Không yêu cầu hoặc thu thập thông tin thẻ.",
+    "acknowledge": "Tôi hiểu đây là bản demo và không tạo đơn hàng thật.",
+    "placeDemo": "Hoàn tất đơn hàng mẫu",
+    "success": "Đã hoàn tất demo!",
+    "successDescription": "Không có đơn hàng thật được tạo và không thu tiền.",
+    "deliveryEstimate": "Giao hàng mẫu: TP. Hồ Chí Minh · 2–3 ngày",
+    "categories": {
+      "all": "Tất cả",
+      "beauty": "Làm đẹp",
+      "food": "Đồ ăn",
+      "drinks": "Cà phê & Trà",
+      "gifts": "Quà tặng"
+    },
+    "sorting": {
+      "featured": "Nổi bật",
+      "low": "Giá: thấp đến cao",
+      "high": "Giá: cao đến thấp",
+      "name": "Tên: A–Z"
     }
   }
 }

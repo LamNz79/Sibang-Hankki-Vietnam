@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Card, Group, Stack, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { Card, Group, Stack, Text, ThemeIcon } from "@mantine/core";
 import {
   IconCalendarTime,
   IconHome2,
-  IconMapSearch,
+  IconShoppingBag,
   IconUserCircle,
 } from "@tabler/icons-react";
 import { uiColors } from "@/theme";
@@ -16,9 +16,9 @@ const items = [
     icon: IconHome2
   },
   {
-    href: undefined,
-    labelKey: "nearby",
-    icon: IconMapSearch
+    href: "/shop",
+    labelKey: "shop",
+    icon: IconShoppingBag
   },
   {
     href: "/reservations",
@@ -50,7 +50,7 @@ export function BottomNav({ activePath }: BottomNavProps) {
     >
       <Group grow>
         {items.map((item) => {
-          const active = item.href ? activePath === item.href : false;
+          const active = activePath === item.href;
           const Icon = item.icon;
           const label = t(item.labelKey);
 
@@ -74,14 +74,6 @@ export function BottomNav({ activePath }: BottomNavProps) {
               </Text>
             </Stack>
           );
-
-          if (!item.href) {
-            return (
-              <UnstyledButton key={item.labelKey} style={{ cursor: "default" }}>
-                {content}
-              </UnstyledButton>
-            );
-          }
 
           return (
             <Link
