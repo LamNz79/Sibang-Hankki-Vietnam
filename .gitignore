@@ -27,6 +27,11 @@
 *.pem
 /Lam_*.xlsx
 /.tmp-report-profile/
+/.codex/
+/.tmp/
+/tmp/
+/tools/
+/outputs/
 /Lam_*.ods
 /Lam_*.pdf
 /doc/logos/
