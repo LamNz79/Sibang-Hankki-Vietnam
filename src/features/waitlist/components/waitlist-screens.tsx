@@ -96,18 +96,70 @@ export function VenueWaitlistScreen() {
 
       {!method ? (
         <Stack gap="md">
+          <Group gap="xs" align="center">
+            <ThemeIcon size={28} radius="xl" color="warmCoral">
+              <Text size="sm" fw={800} c="white">1</Text>
+            </ThemeIcon>
+            <Text size="sm" fw={750} c={uiColors.brandPrimary}>{t("stepOf")}</Text>
+          </Group>
           <Stack gap={4}>
             <Title order={3}>{t("chooseMethod")}</Title>
             <Text c={uiColors.textSecondary}>{t("chooseMethodHint")}</Text>
           </Stack>
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <Button size="xl" variant="default" leftSection={<IconPhone size={24} />} onClick={() => setMethod("phone")}>
-              {t("phone")}
-            </Button>
-            <Button size="xl" variant="default" leftSection={<IconQrcode size={24} />} onClick={() => setMethod("qr")}>
-              {t("memberQr")}
-            </Button>
-          </SimpleGrid>
+          <Stack gap="sm">
+            <Stack gap={4}>
+              <Button
+                fullWidth
+                size="lg"
+                variant="default"
+                leftSection={<IconPhone size={22} />}
+                onClick={() => setMethod("phone")}
+                styles={{ label: { whiteSpace: "normal" } }}
+              >
+                {t("phone")}
+              </Button>
+              <Text size="xs" c={uiColors.textSecondary} pl={12}>{t("phoneHint")}</Text>
+            </Stack>
+            <Stack gap={4}>
+              <Button
+                fullWidth
+                size="lg"
+                variant="default"
+                leftSection={<IconQrcode size={22} />}
+                onClick={() => setMethod("qr")}
+                styles={{ label: { whiteSpace: "normal" } }}
+              >
+                {t("memberQr")}
+              </Button>
+              <Text size="xs" c={uiColors.textSecondary} pl={12}>{t("memberQrHint")}</Text>
+            </Stack>
+          </Stack>
+          <Card withBorder radius="lg" p="md" style={{ background: uiColors.surfaceAlt }}>
+            <Group gap="sm" align="flex-start" wrap="nowrap">
+              <ThemeIcon size={34} radius="xl" variant="light" color="warmCoral">
+                <IconMapPin size={18} />
+              </ThemeIcon>
+              <Stack gap={2}>
+                <Text fw={750}>{t("onsiteTitle")}</Text>
+                <Text size="sm" c={uiColors.textSecondary}>{t("onsiteDescription")}</Text>
+              </Stack>
+            </Group>
+          </Card>
+          <Card withBorder radius="lg" p="md">
+            <Stack gap="sm">
+              <Title order={4}>{t("howItWorks")}</Title>
+              <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="sm">
+                {[t("howItWorksStep1"), t("howItWorksStep2"), t("howItWorksStep3")].map((label, index) => (
+                  <Group key={label} gap="xs" align="flex-start" wrap="nowrap">
+                    <ThemeIcon size={24} radius="xl" color="warmCoral">
+                      <Text size="xs" fw={800} c="white">{index + 1}</Text>
+                    </ThemeIcon>
+                    <Text size="sm" c={uiColors.textSecondary}>{label}</Text>
+                  </Group>
+                ))}
+              </SimpleGrid>
+            </Stack>
+          </Card>
         </Stack>
       ) : (
         <SurfaceCard p="lg">
