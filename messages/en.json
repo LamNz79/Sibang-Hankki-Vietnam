@@ -1868,6 +1868,45 @@
       "errorHint": "Your previous settings are still active. Try again."
     }
   },
+  "Waitlist": {
+    "venue": {
+      "title": "Join the waitlist",
+      "restaurantLabel": "Restaurant",
+      "waitingParties": "{count} parties waiting",
+      "stepOf": "Step 1",
+      "chooseMethod": "How would you like to join?",
+      "chooseMethodHint": "This waitlist is available at the restaurant.",
+      "phone": "Enter phone number",
+      "phoneHint": "We will use this to find your waitlist entry.",
+      "memberQr": "Scan app member QR",
+      "memberQrHint": "Use your Sibang Hankki member QR code.",
+      "changeMethod": "Change method",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "Enter phone number",
+      "qrScanned": "Member QR scanned (demo)",
+      "partySize": "Party size",
+      "confirm": "Confirm and get number",
+      "startAnother": "Start another registration",
+      "onsiteTitle": "You are at the restaurant",
+      "onsiteDescription": "Waitlist registration is available on-site only.",
+      "howItWorks": "How it works",
+      "howItWorksStep1": "Choose a registration method.",
+      "howItWorksStep2": "Receive your queue number.",
+      "howItWorksStep3": "Show this ticket when your number is called."
+    },
+    "ticket": {
+      "title": "Your waitlist ticket",
+      "waiting": "Waiting",
+      "called": "Called",
+      "waitingTitle": "You are in the queue",
+      "calledTitle": "It's your turn",
+      "calledHint": "Please check in with the restaurant team.",
+      "partySize": "Party size",
+      "previewStatus": "Preview status",
+      "viewRestaurant": "View restaurant",
+      "mockNotice": "Demo ticket - live notifications are not connected."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",
