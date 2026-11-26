@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Button,
@@ -59,7 +59,7 @@ export function VenueWaitlistScreen() {
 
   if (ticket) {
     return (
-      <TabletShell title={t("title")}>
+      <MobileShell title={t("title")} backHref="/" bottomNav={null}>
         <WaitlistTicketCard ticket={ticket} t={ticketT} />
         <Button
           variant="subtle"
@@ -68,14 +68,19 @@ export function VenueWaitlistScreen() {
         >
           {t("startAnother")}
         </Button>
-      </TabletShell>
+      </MobileShell>
     );
   }
 
   const canConfirm = method === "qr" || phone.replace(/\D/g, "").length >= 8;
 
   return (
-    <TabletShell title={t("title")}>
+    <MobileShell
+      title={t("title")}
+      backHref="/"
+      bottomNav={null}
+      headerAction={<LanguageSelect compact radius="md" />}
+    >
       <Paper p="md" radius="lg" withBorder style={{ background: uiColors.brandPrimarySubtle }}>
         <Group justify="space-between" align="flex-start" wrap="nowrap">
           <Stack gap={4}>
@@ -86,7 +91,6 @@ export function VenueWaitlistScreen() {
               <Text size="sm">{t("waitingParties", { count: demoRestaurant.waitingParties })}</Text>
             </Group>
           </Stack>
-          <LanguageSelect compact radius="md" />
         </Group>
       </Paper>
 
@@ -143,7 +147,7 @@ export function VenueWaitlistScreen() {
           </Stack>
         </SurfaceCard>
       )}
-    </TabletShell>
+    </MobileShell>
   );
 }
 
@@ -208,16 +212,3 @@ function WaitlistTicketCard({
   );
 }
 
-function TabletShell({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <main style={{ minHeight: "100dvh", background: uiColors.appBackground, padding: "clamp(16px, 4vw, 48px)" }}>
-      <Stack maw={900} mx="auto" gap="xl">
-        <Group justify="space-between">
-          <Title order={1}>{title}</Title>
-          <LanguageSelect compact radius="md" />
-        </Group>
-        {children}
-      </Stack>
-    </main>
-  );
-}
