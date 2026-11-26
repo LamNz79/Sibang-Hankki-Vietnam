@@ -1868,6 +1868,36 @@
       "errorHint": "이전 설정이 유지됩니다. 다시 시도하세요."
     }
   },
+  "Waitlist": {
+    "venue": {
+      "title": "대기 등록",
+      "restaurantLabel": "레스토랑",
+      "waitingParties": "{count}팀 대기 중",
+      "chooseMethod": "어떤 방법으로 등록할까요?",
+      "chooseMethodHint": "대기 등록은 레스토랑에서만 가능합니다.",
+      "phone": "전화번호 입력",
+      "memberQr": "앱 회원 QR 스캔",
+      "changeMethod": "방법 변경",
+      "phoneLabel": "전화번호",
+      "phonePlaceholder": "전화번호 입력",
+      "qrScanned": "회원 QR 스캔 완료 (데모)",
+      "partySize": "인원",
+      "confirm": "확인하고 번호 받기",
+      "startAnother": "다른 등록 시작"
+    },
+    "ticket": {
+      "title": "대기 번호",
+      "waiting": "대기 중",
+      "called": "호출됨",
+      "waitingTitle": "대기열에 등록되었습니다",
+      "calledTitle": "입장할 차례입니다",
+      "calledHint": "레스토랑 직원에게 확인해 주세요.",
+      "partySize": "인원",
+      "previewStatus": "상태 미리보기",
+      "viewRestaurant": "레스토랑 보기",
+      "mockNotice": "데모 번호 - 실시간 알림은 연결되지 않았습니다."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "홈",

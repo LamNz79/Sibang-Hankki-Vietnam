@@ -1868,6 +1868,36 @@
       "errorHint": "Cài đặt cũ vẫn đang được giữ. Hãy thử lại."
     }
   },
+  "Waitlist": {
+    "venue": {
+      "title": "Đăng ký hàng chờ",
+      "restaurantLabel": "Nhà hàng",
+      "waitingParties": "{count} nhóm đang chờ",
+      "chooseMethod": "Bạn muốn đăng ký bằng cách nào?",
+      "chooseMethodHint": "Hàng chờ chỉ đăng ký tại nhà hàng.",
+      "phone": "Nhập số điện thoại",
+      "memberQr": "Quét QR thành viên trên app",
+      "changeMethod": "Đổi phương thức",
+      "phoneLabel": "Số điện thoại",
+      "phonePlaceholder": "Nhập số điện thoại",
+      "qrScanned": "Đã quét QR thành viên (demo)",
+      "partySize": "Số người",
+      "confirm": "Xác nhận và lấy số",
+      "startAnother": "Đăng ký lượt khác"
+    },
+    "ticket": {
+      "title": "Số thứ tự của bạn",
+      "waiting": "Đang chờ",
+      "called": "Đã gọi",
+      "waitingTitle": "Bạn đang ở trong hàng chờ",
+      "calledTitle": "Đến lượt bạn",
+      "calledHint": "Vui lòng đến quầy và gặp nhân viên nhà hàng.",
+      "partySize": "Số người",
+      "previewStatus": "Xem thử trạng thái",
+      "viewRestaurant": "Xem nhà hàng",
+      "mockNotice": "Số demo - thông báo thật chưa được kết nối."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Trang chủ",

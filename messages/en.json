@@ -1868,6 +1868,36 @@
       "errorHint": "Your previous settings are still active. Try again."
     }
   },
+  "Waitlist": {
+    "venue": {
+      "title": "Join the waitlist",
+      "restaurantLabel": "Restaurant",
+      "waitingParties": "{count} parties waiting",
+      "chooseMethod": "How would you like to join?",
+      "chooseMethodHint": "This waitlist is available at the restaurant.",
+      "phone": "Enter phone number",
+      "memberQr": "Scan app member QR",
+      "changeMethod": "Change method",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "Enter phone number",
+      "qrScanned": "Member QR scanned (demo)",
+      "partySize": "Party size",
+      "confirm": "Confirm and get number",
+      "startAnother": "Start another registration"
+    },
+    "ticket": {
+      "title": "Your waitlist ticket",
+      "waiting": "Waiting",
+      "called": "Called",
+      "waitingTitle": "You are in the queue",
+      "calledTitle": "It's your turn",
+      "calledHint": "Please check in with the restaurant team.",
+      "partySize": "Party size",
+      "previewStatus": "Preview status",
+      "viewRestaurant": "View restaurant",
+      "mockNotice": "Demo ticket - live notifications are not connected."
+    }
+  },
   "Navigation": {
     "customer": {
       "home": "Home",
