@@ -271,7 +271,8 @@
     "pastCount": "지난 예약 {count}건",
     "comingSoon": "준비 중",
     "recentVisit": "최근 방문",
-    "completed": "완료"
+    "completed": "완료",
+    "coupons": "내 쿠폰"
   },
   "ReservationQr": {
     "home": {
@@ -2048,6 +2049,63 @@
       "low": "가격 낮은순",
       "high": "가격 높은순",
       "name": "이름: A–Z"
+    }
+  },
+  "Coupons": {
+    "wallet": {
+      "title": "내 쿠폰",
+      "heading": "당신을 위한 작은 혜택",
+      "available": "사용 가능 {count}",
+      "used": "사용 완료",
+      "expired": "기간 만료",
+      "empty": "쿠폰이 없습니다."
+    },
+    "kind": {
+      "restaurant": "레스토랑",
+      "birthday": "생일",
+      "shop": "샵"
+    },
+    "items": {
+      "restaurant100k": "100,000동 할인",
+      "birthdayDessert": "디저트를 선물해 드려요",
+      "shopFirstOrder": "첫 주문 10% 할인",
+      "restaurant50kUsed": "50,000동 할인",
+      "shopAutumnExpired": "가을 상품 15% 할인"
+    },
+    "scope": {
+      "shop": "샵 구매 전용",
+      "dineIn": "일부 매장 식사 레스토랑"
+    },
+    "condition": {
+      "minSpend": "{amount} 이상 결제 시",
+      "maxDiscount": "최대 할인 {amount}"
+    },
+    "validUntil": "{date}까지 사용 가능",
+    "validRange": "{from} - {until} 사용 가능",
+    "viewDetails": "자세히 보기",
+    "useForBooking": "예약에 사용하기",
+    "howToUse": {
+      "restaurant": "사용 가능한 예약에서 이 쿠폰을 선택하세요. 방문 시 직원이 사용을 확인합니다.",
+      "shop": "샵 결제 시 이 쿠폰을 적용하세요."
+    },
+    "apply": {
+      "title": "쿠폰 적용",
+      "guests": "{count}명",
+      "selectedMenu": "선택한 메뉴",
+      "eligible": "사용 가능",
+      "reason": {
+        "notAvailable": "사용 불가",
+        "shopOnly": "레스토랑 예약에는 사용할 수 없습니다",
+        "otherRestaurant": "다른 레스토랑 전용",
+        "minSpend": "최소 결제 금액 미달"
+      },
+      "subtotal": "메뉴 합계",
+      "discount": "쿠폰 할인",
+      "freeItem": "디저트 증정",
+      "payAtRestaurant": "레스토랑에서 결제",
+      "note": "예약당 쿠폰 1장만 사용할 수 있습니다. 레스토랑에서 직원이 확인합니다.",
+      "submit": "쿠폰 적용",
+      "applied": "쿠폰이 적용되었습니다 (데모)."
     }
   }
 }

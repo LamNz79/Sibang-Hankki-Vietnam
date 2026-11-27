@@ -271,7 +271,8 @@
     "pastCount": "{count, plural, one {# past} other {# past}}",
     "comingSoon": "Coming soon",
     "recentVisit": "Recent visit",
-    "completed": "Completed"
+    "completed": "Completed",
+    "coupons": "My coupons"
   },
   "ReservationQr": {
     "home": {
@@ -2048,6 +2049,63 @@
       "low": "Price: low to high",
       "high": "Price: high to low",
       "name": "Name: A–Z"
+    }
+  },
+  "Coupons": {
+    "wallet": {
+      "title": "My coupons",
+      "heading": "A little extra, for you",
+      "available": "Available {count}",
+      "used": "Used",
+      "expired": "Expired",
+      "empty": "No coupons here yet."
+    },
+    "kind": {
+      "restaurant": "Restaurant",
+      "birthday": "Birthday",
+      "shop": "Shop"
+    },
+    "items": {
+      "restaurant100k": "VND 100,000 off",
+      "birthdayDessert": "A dessert on us",
+      "shopFirstOrder": "10% off your first order",
+      "restaurant50kUsed": "VND 50,000 off",
+      "shopAutumnExpired": "15% off autumn picks"
+    },
+    "scope": {
+      "shop": "Shop purchases only",
+      "dineIn": "Selected dine-in restaurants"
+    },
+    "condition": {
+      "minSpend": "Spend {amount} or more",
+      "maxDiscount": "Maximum discount: {amount}"
+    },
+    "validUntil": "Valid until {date}",
+    "validRange": "Valid {from} - {until}",
+    "viewDetails": "View details",
+    "useForBooking": "Use for a booking",
+    "howToUse": {
+      "restaurant": "Select this coupon for an eligible reservation. Staff will confirm its use when you visit.",
+      "shop": "Apply this coupon at Shop checkout."
+    },
+    "apply": {
+      "title": "Apply a coupon",
+      "guests": "{count, plural, one {# guest} other {# guests}}",
+      "selectedMenu": "Selected menu",
+      "eligible": "Eligible",
+      "reason": {
+        "notAvailable": "Not available",
+        "shopOnly": "Not available for restaurant bookings",
+        "otherRestaurant": "Valid at another restaurant",
+        "minSpend": "Minimum spend not reached"
+      },
+      "subtotal": "Menu subtotal",
+      "discount": "Coupon discount",
+      "freeItem": "Free dessert",
+      "payAtRestaurant": "Pay at restaurant",
+      "note": "One coupon per booking. Staff will verify it at the restaurant.",
+      "submit": "Apply coupon",
+      "applied": "Coupon applied (demo)."
     }
   }
 }
