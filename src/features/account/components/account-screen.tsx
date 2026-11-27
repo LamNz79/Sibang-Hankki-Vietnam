@@ -31,6 +31,7 @@ import {
   IconLogout,
   IconMap2,
   IconSettings,
+  IconTicket,
 } from "@tabler/icons-react";
 import type { Icon } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -300,6 +301,14 @@ export function AccountScreen() {
           iconColor={uiColors.accentVipText}
           label={t("savedRestaurants")}
           meta={t("savedCount", { count: savedRestaurants.slugs.length })}
+        />
+        <Box h={1} ml={48} bg={uiColors.border} />
+        <AccountMenuItem
+          href="/my/coupons"
+          icon={IconTicket}
+          iconBackground={uiColors.brandPrimarySubtle}
+          iconColor={uiColors.brandPrimary}
+          label={t("coupons")}
         />
         <Box h={1} ml={48} bg={uiColors.border} />
         <AccountMenuItem

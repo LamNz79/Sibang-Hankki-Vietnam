@@ -271,7 +271,8 @@
     "pastCount": "{count} trước đây",
     "comingSoon": "Sắp ra mắt",
     "recentVisit": "Lần ghé gần đây",
-    "completed": "Đã hoàn tất"
+    "completed": "Đã hoàn tất",
+    "coupons": "Coupon của tôi"
   },
   "ReservationQr": {
     "home": {
@@ -2048,6 +2049,63 @@
       "low": "Giá: thấp đến cao",
       "high": "Giá: cao đến thấp",
       "name": "Tên: A–Z"
+    }
+  },
+  "Coupons": {
+    "wallet": {
+      "title": "Coupon của tôi",
+      "heading": "Một chút ưu đãi dành cho bạn",
+      "available": "Dùng được {count}",
+      "used": "Đã dùng",
+      "expired": "Hết hạn",
+      "empty": "Chưa có coupon nào."
+    },
+    "kind": {
+      "restaurant": "Nhà hàng",
+      "birthday": "Sinh nhật",
+      "shop": "Shop"
+    },
+    "items": {
+      "restaurant100k": "Giảm 100.000 ₫",
+      "birthdayDessert": "Tặng bạn một món tráng miệng",
+      "shopFirstOrder": "Giảm 10% đơn đầu tiên",
+      "restaurant50kUsed": "Giảm 50.000 ₫",
+      "shopAutumnExpired": "Giảm 15% sản phẩm mùa thu"
+    },
+    "scope": {
+      "shop": "Chỉ áp dụng khi mua ở Shop",
+      "dineIn": "Các nhà hàng ăn tại chỗ được chọn"
+    },
+    "condition": {
+      "minSpend": "Cho hóa đơn từ {amount}",
+      "maxDiscount": "Giảm tối đa {amount}"
+    },
+    "validUntil": "Hạn dùng đến {date}",
+    "validRange": "Hạn dùng {from} - {until}",
+    "viewDetails": "Xem chi tiết",
+    "useForBooking": "Dùng cho lượt đặt bàn",
+    "howToUse": {
+      "restaurant": "Chọn coupon này cho lượt đặt bàn đủ điều kiện. Nhân viên sẽ xác nhận khi bạn đến quán.",
+      "shop": "Áp dụng coupon này khi thanh toán ở Shop."
+    },
+    "apply": {
+      "title": "Áp dụng coupon",
+      "guests": "{count} khách",
+      "selectedMenu": "Món đã chọn",
+      "eligible": "Đủ điều kiện",
+      "reason": {
+        "notAvailable": "Không khả dụng",
+        "shopOnly": "Không áp dụng cho đặt bàn nhà hàng",
+        "otherRestaurant": "Chỉ dùng ở nhà hàng khác",
+        "minSpend": "Chưa đạt mức chi tiêu tối thiểu"
+      },
+      "subtotal": "Tạm tính món",
+      "discount": "Giảm giá coupon",
+      "freeItem": "Tặng tráng miệng",
+      "payAtRestaurant": "Thanh toán tại nhà hàng",
+      "note": "Mỗi lượt đặt bàn dùng một coupon. Nhân viên sẽ kiểm tra tại nhà hàng.",
+      "submit": "Áp dụng coupon",
+      "applied": "Đã áp dụng coupon (demo)."
     }
   }
 }
